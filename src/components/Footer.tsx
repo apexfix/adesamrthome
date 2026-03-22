@@ -24,14 +24,13 @@ export function Footer() {
               Adelaide's premier smart lock installation specialists. We combine cutting-edge security technology with flawless, flush-finish installations to protect what matters most.
             </p>
             
-            {/* 社交媒体真实链接接入 */}
+            {/* 社交媒体链接 */}
             <div className="flex flex-wrap gap-3 pt-2">
               <a 
                 href="https://www.facebook.com/profile.php?id=61571291020457" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 group"
-                aria-label="Visit our Facebook page"
               >
                 <Facebook className="w-4 h-4" />
               </a>
@@ -40,7 +39,6 @@ export function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
-                aria-label="Visit our Instagram page"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -49,22 +47,16 @@ export function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
-                aria-label="Visit our TikTok page"
               >
-                {/* 使用 SVG 替代缺少的 TikTok 图标，保持风格一致 */}
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
               <a 
                 href="https://xhslink.com/m/6Bv1zW0ClyZ" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 relative group"
-                aria-label="Visit our Little Red Book (Xiaohongshu) page"
               >
                 <Link2 className="w-4 h-4" />
-                {/* 增加一个细致的 Tooltip 提示这是小红书 */}
                 <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                   Xiaohongshu
                 </span>
@@ -72,7 +64,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 核心服务区 */}
+          {/* 核心服务区 - 已更新 */}
           <div>
             <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#c5a47e]" />
@@ -97,9 +89,15 @@ export function Footer() {
                   Samsung Digital Locks
                 </Link>
               </li>
+              {/* 新增项：表明你支持全品牌安装 */}
               <li>
-                <Link href="/contact" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300">
-                  <span className="w-1 h-1 bg-[#c5a47e] rounded-full" />
+                <Link href="/contact" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Other Smart Lock Brands
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
                   Book Professional Installation
                 </Link>
               </li>
