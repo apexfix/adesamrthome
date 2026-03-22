@@ -8,7 +8,7 @@ import { Menu, Phone, Mail, X, Instagram, Facebook } from "lucide-react";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Products", href: "/products" },
-  { name: "Gallery", href: "/gallery" }, // 确保这一行在代码里
+  { name: "Stories", href: "/blog" }, // 这里改掉
   { name: "Contact", href: "/contact" },
 ];
 
