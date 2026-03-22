@@ -5,16 +5,21 @@ import Link from "next/link";
 import { ShieldCheck, Plus } from "lucide-react";
 
 export function ProductCard({ product }: { product: any }) {
-  // 1. 【核心修复】处理价格：WooCommerce Store API 将价格放在 prices.price 中，且通常是 minor units（分）
-  // 我们将其转换为元，并确保它是一个数字
-  const rawPrice = product.prices?.price || "0";
+  // 1. 处理价格逻辑
   const minorUnit = product.prices?.currency_minor_unit || 2;
-  const displayPrice = (parseInt(rawPrice) / Math.pow(10, minorUnit)).toFixed(0);
-  
-  // 2. 【核心修复】处理图片：从 images 数组中获取第一张图的 src
-  const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
+  const divider = Math.pow(10, minorUnit);
 
-  // 3. 【核心修复】处理分类
+  // 现价（折扣后的价格）
+  const currentPrice = (parseInt(product.prices?.price || "0") / divider).toFixed(0);
+  
+  // 原价
+  const regularPrice = (parseInt(product.prices?.regular_price || "0") / divider).toFixed(0);
+
+  // 判断是否正在打折
+  const isOnSale = regularPrice !== currentPrice;
+
+  // 处理图片和分类
+  const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
   const displayCategory = product.categories?.[0]?.name || "Smart Lock";
 
   return (
@@ -32,6 +37,13 @@ export function ProductCard({ product }: { product: any }) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         
+        {/* Sale Badge - 如果打折则显示 */}
+        {isOnSale && (
+          <div className="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest z-10 animate-pulse">
+            Sale
+          </div>
+        )}
+
         {/* Installation Badge */}
         <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-[#c5a47e]/30 px-3 py-1.5 rounded-full z-10">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
@@ -52,11 +64,22 @@ export function ProductCard({ product }: { product: any }) {
 
         {/* 3. Price and Action */}
         <div className="flex items-center justify-between">
-          <div>
-            <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">Full Package Price</p>
-            <p className="text-2xl font-black text-[#c5a47e] tracking-tighter">
-              ${displayPrice}
+          <div className="flex flex-col">
+            <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
+              {isOnSale ? "Special Offer" : "Full Package Price"}
             </p>
+            <div className="flex items-baseline gap-2">
+              {/* 现价 */}
+              <p className="text-2xl font-black text-[#c5a47e] tracking-tighter">
+                ${currentPrice}
+              </p>
+              {/* 原价（仅在打折时显示） */}
+              {isOnSale && (
+                <p className="text-sm text-zinc-500 line-through decoration-zinc-600 font-medium">
+                  ${regularPrice}
+                </p>
+              )}
+            </div>
           </div>
           
           <div className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:bg-[#c5a47e] group-hover:border-[#c5a47e] transition-all duration-300">
