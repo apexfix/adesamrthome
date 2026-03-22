@@ -14,7 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
     : product?.price;
   
   // 2. 货币符号配置
-  const currencySymbol = product?.prices?.currency_symbol || "AUD$"; 
+  const currencySymbol = product?.prices?.currency_symbol || "AUD"; 
   
   // 3. 图片数据处理
   const imageSrc = product?.images?.[0]?.src || "/placeholder.jpg";
