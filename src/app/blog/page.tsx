@@ -8,19 +8,28 @@ import { Calendar, MapPin, ChevronRight } from "lucide-react";
 export default function BlogListPage() {
   const postsDirectory = path.join(process.cwd(), "content/posts");
   
-  // 容错处理：如果文件夹还没建好，先返回空列表
   let posts: any[] = [];
+  
   if (fs.existsSync(postsDirectory)) {
     const filenames = fs.readdirSync(postsDirectory);
-    posts = filenames.map((filename) => {
-      const filePath = path.join(postsDirectory, filename);
-      const fileContent = fs.readFileSync(filePath, "utf8");
-      const { data } = matter(fileContent);
-      return {
-        slug: filename.replace(".md", ""),
-        ...data,
-      };
-    });
+    
+    posts = filenames
+      .filter((filename) => {
+        // 核心修复：只处理以 .md 结尾的文件，排除掉文件夹或其他杂物
+        const filePath = path.join(postsDirectory, filename);
+        return filename.endsWith(".md") && fs.statSync(filePath).isFile();
+      })
+      .map((filename) => {
+        const filePath = path.join(postsDirectory, filename);
+        const fileContent = fs.readFileSync(filePath, "utf8");
+        const { data } = matter(fileContent);
+        return {
+          slug: filename.replace(".md", ""),
+          ...data,
+        };
+      })
+      // 按日期排序，最新的排在前面
+      .sort((a, b) => (new Date(b.date as string).getTime() - new Date(a.date as string).getTime()));
   }
 
   return (
@@ -35,33 +44,39 @@ export default function BlogListPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post: any) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/30 transition-all duration-500 flex flex-col">
-              <div className="aspect-[16/9] relative overflow-hidden">
-                <Image src={post.coverImage} alt={post.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute top-4 left-4 bg-[#c5a47e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                  {post.category}
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {posts.map((post: any) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/30 transition-all duration-500 flex flex-col">
+                <div className="aspect-[16/9] relative overflow-hidden">
+                  <Image src={post.coverImage || "/img/placeholder.jpg"} alt={post.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute top-4 left-4 bg-[#c5a47e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                    {post.category}
+                  </div>
                 </div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex items-center gap-4 text-zinc-500 text-xs mb-4 font-medium uppercase tracking-widest">
-                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {post.suburb}</span>
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="flex items-center gap-4 text-zinc-500 text-xs mb-4 font-medium uppercase tracking-widest">
+                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {post.suburb}</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#c5a47e] transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm font-light leading-relaxed line-clamp-3 mb-6">
+                    {post.description}
+                  </p>
+                  <div className="mt-auto flex items-center text-[#c5a47e] text-sm font-bold">
+                    View Case Study <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#c5a47e] transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-zinc-400 text-sm font-light leading-relaxed line-clamp-3 mb-6">
-                  {post.description}
-                </p>
-                <div className="mt-auto flex items-center text-[#c5a47e] text-sm font-bold">
-                  View Case Study <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 border border-dashed border-zinc-800 rounded-3xl">
+            <p className="text-zinc-500 text-lg">Coming soon: Our latest installation success stories.</p>
+          </div>
+        )}
       </div>
     </div>
   );
