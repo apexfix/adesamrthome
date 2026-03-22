@@ -2,7 +2,6 @@ import Image from "next/image";
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { ProductShowcase3D } from "@/components/ProductShowcase3D";
 import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
@@ -49,15 +48,6 @@ export default async function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 3D Product Showcase */}
-      <section className="py-12 bg-slate-50 overflow-hidden">
-        <div className="container mx-auto px-4 md:px-6 text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Latest Arrivals</h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">Discover our newest additions with our interactive 3D showcase.</p>
-        </div>
-        <ProductShowcase3D products={products} />
       </section>
 
       {/* Service Features */}
