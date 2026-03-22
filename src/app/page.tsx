@@ -7,9 +7,19 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
-import StoryCarousel from "@/components/StoryCarousel"; // Ensure this component is created
+import StoryCarousel from "@/components/StoryCarousel"; 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+
+// 1. 【核心修复】定义 Story 类型接口
+interface Story {
+  slug: string;
+  title: string;
+  coverImage: string;
+  category: string;
+  suburb: string;
+  date: string;
+}
 
 export default async function Home() {
   // 1. Fetch Products
@@ -22,7 +32,9 @@ export default async function Home() {
 
   // 2. Fetch Latest Installation Stories from Markdown
   const postsDirectory = path.join(process.cwd(), "content/posts");
-  let latestStories = [];
+  
+  // 2. 【核心修复】明确变量类型为 Story[]
+  let latestStories: Story[] = [];
 
   if (fs.existsSync(postsDirectory)) {
     const filenames = fs.readdirSync(postsDirectory);
@@ -32,6 +44,8 @@ export default async function Home() {
         const filePath = path.join(postsDirectory, filename);
         const fileContent = fs.readFileSync(filePath, "utf8");
         const { data } = matter(fileContent);
+        
+        // 强制转换解析出的数据为 Story 类型（排除 slug）
         return {
           slug: filename.replace(".md", ""),
           title: data.title || "Untitled Project",
@@ -39,11 +53,11 @@ export default async function Home() {
           category: data.category || "Installation",
           suburb: data.suburb || "Adelaide",
           date: data.date || ""
-        };
+        } as Story;
       })
-      // Sort by date descending
+      // 按日期倒序排列
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 6); // Display latest 6 stories
+      .slice(0, 6); 
   }
 
   return (
@@ -73,7 +87,7 @@ export default async function Home() {
 
       <ServiceFeatures />
 
-      {/* 2. Installation Stories Carousel (The "Social Proof" Section) */}
+      {/* 2. Installation Stories Carousel Section */}
       <section className="py-24 bg-black border-y border-zinc-900/50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -93,7 +107,6 @@ export default async function Home() {
             </Link>
           </div>
           
-          {/* Component that handles the scrolling/display */}
           <StoryCarousel stories={latestStories} />
         </div>
       </section>
