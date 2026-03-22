@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, Mail, X } from "lucide-react";
+import { Menu, Phone, Mail, X, Instagram, Facebook } from "lucide-react";
 
-// 优化 1: 将导航数据抽离，降低代码冗余，后续加新页面只需改这里
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Products", href: "/products" },
@@ -14,90 +13,105 @@ const navLinks = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black text-white">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    <header 
+      className={`fixed top-0 z-50 w-full transition-all duration-500 border-b ${
+        scrolled 
+          ? "bg-black/90 backdrop-blur-md border-white/10 py-2 shadow-lg" 
+          : "bg-black/40 backdrop-blur-sm border-transparent py-4"
+      } text-white`}
+    >
+      <div className="container mx-auto max-w-7xl flex items-center justify-between px-6 md:px-8">
         
-        <div className="flex items-center gap-8">
-          {/* Logo 区域优化: 调整了响应式尺寸，并增加了 priority 以提升 SEO 首屏加载速度 */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="relative w-40 h-10 md:w-48 md:h-12">
+        <div className="flex items-center gap-10">
+          <Link href="/" className="flex items-center gap-2 relative group">
+            <div className={`relative transition-all duration-500 ${scrolled ? "w-36 h-10" : "w-44 h-12"}`}>
               <Image 
                 src="/img/logo.png" 
                 alt="ADE Smart Home Logo" 
                 fill 
                 priority
-                className="object-contain object-left"
+                className="object-contain object-left group-hover:opacity-80 transition-opacity"
               />
             </div>
           </Link>
           
-          {/* 桌面端导航优化: Hover 状态统一使用品牌金色 */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className="transition-colors hover:text-[#c5a47e] text-white/80"
+                className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
               >
                 {link.name}
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
               </Link>
             ))}
           </nav>
         </div>
 
-        <div className="flex items-center gap-6">
-          {/* 桌面端联系方式优化: 同样接入品牌金色，并在屏幕变窄时自动隐藏过长的邮箱地址 */}
-          <div className="hidden md:flex items-center gap-6 text-sm text-white/80">
-             <a href="tel:0493343981" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors">
-               <Phone className="h-4 w-4" />
-               <span>0493343981</span>
-             </a>
-             <a href="mailto:smarthomeade@gmail.com" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors">
-               <Mail className="h-4 w-4" />
-               <span className="hidden lg:inline">smarthomeade@gmail.com</span>
-             </a>
+        <div className="flex items-center gap-6 md:gap-8">
+          {/* 桌面端社交媒体与联系方式 */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* 社交图标组 */}
+            <div className="flex items-center gap-4 border-r border-white/10 pr-6 mr-2">
+              <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
+                <span className="text-xs font-bold tracking-tighter">小红书</span>
+              </a>
+              <a href="https://www.tiktok.com/@adesmarthome" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/adesmarthome/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors">
+                <Instagram className="h-4 w-4" />
+              </a>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-6 text-sm text-white/90">
+               <a href="tel:0493343981" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
+                 <Phone className="h-4 w-4 text-[#c5a47e]" />
+                 <span className="font-medium">0493343981</span>
+               </a>
+            </div>
           </div>
           
-          {/* 移动端菜单按钮优化: 增加无障碍阅读属性 aria-expanded */}
           <button 
-            className="md:hidden p-2 hover:bg-white/10 hover:text-[#c5a47e] rounded-md transition-colors"
+            className="md:hidden p-2 text-white/80 hover:text-[#c5a47e] transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-expanded={isMenuOpen}
-            aria-label="Toggle Menu"
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* 移动端下拉菜单优化: 扩大了点击热区 (padding)，优化了弹出动画和背景反馈 */}
+      {/* 移动端菜单 */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-black absolute w-full left-0 top-16 shadow-2xl animate-in slide-in-from-top-2 fade-in duration-200">
-          <div className="container mx-auto flex flex-col p-4 gap-2">
-            <nav className="flex flex-col gap-1 text-sm font-medium">
+        <div className="md:hidden bg-black/95 backdrop-blur-xl absolute w-full left-0 top-full border-t border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2">
+          <div className="container mx-auto p-6 flex flex-col gap-8">
+            <nav className="flex flex-col gap-4 text-lg font-medium">
               {navLinks.map((link) => (
-                <Link 
-                  key={link.name}
-                  href={link.href} 
-                  className="p-3 hover:bg-white/5 hover:text-[#c5a47e] rounded-md transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
                   {link.name}
                 </Link>
               ))}
             </nav>
-            <div className="border-t border-white/10 mt-2 pt-4 flex flex-col gap-2">
-               <a href="tel:0493343981" className="flex items-center gap-3 text-white/80 hover:text-[#c5a47e] p-3 hover:bg-white/5 rounded-md transition-colors">
-                 <Phone className="h-5 w-5" />
-                 <span>0493343981</span>
-               </a>
-               <a href="mailto:smarthomeade@gmail.com" className="flex items-center gap-3 text-white/80 hover:text-[#c5a47e] p-3 hover:bg-white/5 rounded-md transition-colors">
-                 <Mail className="h-5 w-5" />
-                 <span>smarthomeade@gmail.com</span>
-               </a>
+            <div className="flex gap-6 py-4 border-y border-white/5">
+              <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
+              <a href="https://www.tiktok.com/@adesmarthome" target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
+              <a href="https://www.instagram.com/adesmarthome/" target="_blank" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
             </div>
+            <a href="tel:0493343981" className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
+              <Phone className="h-5 w-5" /> 0493343981
+            </a>
           </div>
         </div>
       )}
