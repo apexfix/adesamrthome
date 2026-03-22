@@ -3,35 +3,22 @@ import Image from "next/image";
 import { Product } from "@/types";
 
 interface ProductCardProps {
-  product: any; // Using any for now to handle potential Store API vs V3 differences, or I should use the proper type if I'm confident.
+  product: any; // Using any for now to handle potential Store API vs V3 differences
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  // Store API returns 'prices' object, Admin API returns 'price' string.
-  // Store API: prices.price (string), prices.currency_code (string), etc.
-  // Or prices.price is an integer in cents sometimes.
-  // Let's inspect the data later, but for now handle both or assume Store API structure which is often:
-  // prices: { price: "1000", regular_price: "1000", sale_price: "1000", ... }
-  // Actually Store API prices are usually objects.
+  // 1. 安全计算价格逻辑
+  const rawPrice = product?.prices?.price;
+  const price = rawPrice 
+    ? (parseInt(rawPrice) / 100).toFixed(2) 
+    : product?.price;
   
-  // Let's assume standard object structure for now and use safe access.
-  const price = product.prices?.price ? (parseInt(product.prices.price) / 100).toFixed(2) : product.price;
-  const currency = product.prices?.currency_code || "CNY";
-  const imageSrc = product.images?.[0]?.src || "/placeholder.jpg";
-  const imageAlt = product.images?.[0]?.alt || product.name;
-
-  return (
-export function ProductCard({ product }: ProductCardProps) {
-  // 保持你原有的价格计算逻辑
-  const price = product.prices?.price 
-    ? (parseInt(product.prices.price) / 100).toFixed(2) 
-    : product.price;
+  // 2. 货币符号配置
+  const currencySymbol = product?.prices?.currency_symbol || "AUD$"; 
   
-  // 假设你的货币是澳元或人民币，可以根据实际调整
-  const currencySymbol = product.prices?.currency_symbol || "AUD"; 
-  
-  const imageSrc = product.images?.[0]?.src || "/placeholder.jpg";
-  const imageAlt = product.images?.[0]?.alt || product.name;
+  // 3. 图片数据处理
+  const imageSrc = product?.images?.[0]?.src || "/placeholder.jpg";
+  const imageAlt = product?.images?.[0]?.alt || product?.name || "Product Image";
 
   return (
     <div className="group relative border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
@@ -48,14 +35,17 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="p-4">
         {/* 1. 商品名称 */}
         <h3 className="text-lg font-bold text-gray-900 line-clamp-1 mb-1">
-          <Link href={`/products/${product.slug}`}>
+          <Link href={`/products/${product?.slug || ""}`}>
             <span aria-hidden="true" className="absolute inset-0" />
-            {product.name}
+            {product?.name || "Unnamed Product"}
           </Link>
         </h3>
 
         {/* 2. 商品简短描述 */}
-        <p className="text-sm text-gray-500 mb-2 line-clamp-2" dangerouslySetInnerHTML={{ __html: product.short_description || "" }} />
+        <p 
+          className="text-sm text-gray-500 mb-2 line-clamp-2" 
+          dangerouslySetInnerHTML={{ __html: product?.short_description || "" }} 
+        />
 
         {/* 3. 价格与操作区域 */}
         <div className="flex items-center justify-between mt-4">
@@ -65,14 +55,14 @@ export function ProductCard({ product }: ProductCardProps) {
               {price ? `${currencySymbol}${price}` : "Enquire Now"}
             </span>
             {/* 如果有折扣标签，显示在价格下方 */}
-            {product.on_sale && (
+            {product?.on_sale && (
               <span className="text-[10px] text-red-500 font-medium uppercase tracking-tighter">
                 Special Offer
               </span>
             )}
           </div>
 
-          <span className="inline-flex items-center justify-center px-4 py-2 bg-black text-white text-xs font-semibold rounded-md group-hover:bg-[#c5a47e] transition-colors duration-300">
+          <span className="inline-flex items-center justify-center px-4 py-2 bg-black text-white text-xs font-semibold rounded-md group-hover:bg-[#c5a47e] transition-colors duration-300 z-10 relative">
             Learn More
           </span>
         </div>
