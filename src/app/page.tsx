@@ -7,11 +7,12 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
+import { FAQSection } from "@/components/FAQSection"; // 1. 导入新组件
 import StoryCarousel from "@/components/StoryCarousel"; 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
-// 1. 【核心修复】定义 Story 类型接口
+// 定义 Story 类型接口
 interface Story {
   slug: string;
   title: string;
@@ -32,8 +33,6 @@ export default async function Home() {
 
   // 2. Fetch Latest Installation Stories from Markdown
   const postsDirectory = path.join(process.cwd(), "content/posts");
-  
-  // 2. 【核心修复】明确变量类型为 Story[]
   let latestStories: Story[] = [];
 
   if (fs.existsSync(postsDirectory)) {
@@ -45,7 +44,6 @@ export default async function Home() {
         const fileContent = fs.readFileSync(filePath, "utf8");
         const { data } = matter(fileContent);
         
-        // 强制转换解析出的数据为 Story 类型（排除 slug）
         return {
           slug: filename.replace(".md", ""),
           title: data.title || "Untitled Project",
@@ -55,7 +53,6 @@ export default async function Home() {
           date: data.date || ""
         } as Story;
       })
-      // 按日期倒序排列
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 6); 
   }
@@ -63,7 +60,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col bg-black">
       {/* 1. Hero Section */}
-      <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center text-white overflow-hidden">
+      <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center text-white overflow-hidden border-b border-zinc-900/50">
         <HeroCarousel />
         <div className="relative z-10 container px-4 md:px-6 flex flex-col items-center text-center">
           <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
@@ -115,7 +112,7 @@ export default async function Home() {
       <section className="py-24 bg-zinc-950 relative">
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col items-center justify-center mb-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">Featured Products</h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">Featured Collection</h2>
             <div className="h-1 w-20 bg-[#c5a47e] rounded-full" />
           </div>
           {products.length > 0 ? (
@@ -133,6 +130,10 @@ export default async function Home() {
       </section>
 
       <GoogleReviews />
+
+      {/* 4. FAQ Section - 放置在联系表单前，解答最后顾虑 */}
+      <FAQSection />
+
       <ContactForm />
     </div>
   );
