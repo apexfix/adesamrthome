@@ -58,8 +58,8 @@ export default function BlogListPage() {
             Real craftsmanship, real security upgrades. Explore our latest work across Adelaide.
           </p>
 
-          {/* Achievement Badge (English) */}
-          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 rounded-3xl bg-zinc-900/50 border border-[#c5a47e]/20 backdrop-blur-sm relative overflow-hidden group">
+          {/* Achievement Badge */}
+          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 rounded-3xl bg-zinc-900/50 border border-[#c5a47e]/20 backdrop-blur-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#c5a47e]/5 blur-3xl rounded-full" />
             
             <div className="flex items-center gap-3">
@@ -94,13 +94,13 @@ export default function BlogListPage() {
                 href={`/blog/${post.slug}`} 
                 className="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/30 transition-all duration-500 flex flex-col"
               >
-                {/* 封面图容器：改为 contain 模式防止裁剪 */}
-                <div className="aspect-[16/9] relative overflow-hidden bg-zinc-900/80 border-b border-zinc-800 flex items-center justify-center">
+                {/* 封面图容器：恢复为 object-cover 模式 */}
+                <div className="aspect-[16/9] relative overflow-hidden bg-zinc-900">
                   <Image 
                     src={post.coverImage || "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800"} 
                     alt={post.title || "Case Study"} 
                     fill 
-                    className="object-contain p-6 transition-transform duration-700 group-hover:scale-105" 
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                   />
                   <div className="absolute top-4 left-4 bg-[#c5a47e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest z-10">
                     {post.category || "Installation"}
