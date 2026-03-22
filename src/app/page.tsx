@@ -1,17 +1,49 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
+import StoryCarousel from "@/components/StoryCarousel"; // Ensure this component is created
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default async function Home() {
+  // 1. Fetch Products
   let products = [];
   try {
     products = await getProducts(1, 10);
   } catch (error) {
     console.error("Failed to fetch products", error);
+  }
+
+  // 2. Fetch Latest Installation Stories from Markdown
+  const postsDirectory = path.join(process.cwd(), "content/posts");
+  let latestStories = [];
+
+  if (fs.existsSync(postsDirectory)) {
+    const filenames = fs.readdirSync(postsDirectory);
+    latestStories = filenames
+      .filter((fn) => fn.endsWith(".md"))
+      .map((filename) => {
+        const filePath = path.join(postsDirectory, filename);
+        const fileContent = fs.readFileSync(filePath, "utf8");
+        const { data } = matter(fileContent);
+        return {
+          slug: filename.replace(".md", ""),
+          title: data.title || "Untitled Project",
+          coverImage: data.coverImage || "",
+          category: data.category || "Installation",
+          suburb: data.suburb || "Adelaide",
+          date: data.date || ""
+        };
+      })
+      // Sort by date descending
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 6); // Display latest 6 stories
   }
 
   return (
@@ -41,7 +73,32 @@ export default async function Home() {
 
       <ServiceFeatures />
 
-      {/* 2. Featured Products */}
+      {/* 2. Installation Stories Carousel (The "Social Proof" Section) */}
+      <section className="py-24 bg-black border-y border-zinc-900/50">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div className="max-w-xl">
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                Recent <span className="text-[#c5a47e]">Works</span>
+              </h2>
+              <p className="text-zinc-500 font-light leading-relaxed">
+                Real results from real Adelaide homes. See our professional craftsmanship across 400+ successful installations.
+              </p>
+            </div>
+            <Link 
+              href="/blog" 
+              className="group flex items-center gap-2 text-[#c5a47e] font-bold uppercase tracking-widest text-xs hover:opacity-80 transition-opacity"
+            >
+              View All Stories <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+          
+          {/* Component that handles the scrolling/display */}
+          <StoryCarousel stories={latestStories} />
+        </div>
+      </section>
+
+      {/* 3. Featured Products */}
       <section className="py-24 bg-zinc-950 relative">
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col items-center justify-center mb-16 text-center">
