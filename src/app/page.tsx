@@ -6,7 +6,6 @@ import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 export default async function Home() {
   let products = [];
@@ -18,7 +17,9 @@ export default async function Home() {
   }
 
   return (
-    <div className="space-y-12">
+    // 1. 去掉了 space-y-12，改为普通的垂直弹性盒子
+    <div className="flex flex-col">
+      
       {/* Hero Section */}
       <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
         <HeroCarousel />
@@ -27,7 +28,7 @@ export default async function Home() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter">
               Protect Your Home
               <br />
-              <span className="text-blue-400">Smart</span> & <span className="text-blue-400">Secure</span>
+              <span className="text-[#c5a47e]">Smart</span> & <span className="text-[#c5a47e]">Secure</span>
             </h1>
             <p className="text-xl text-slate-200 mx-auto max-w-2xl">
               Explore our latest series of smart locks, combining cutting-edge biometrics with modern design for an unparalleled security experience.
@@ -35,48 +36,4 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
               <Link
                 href="/products"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-white px-8 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50"
-              >
-                Shop Now
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-slate-700 bg-transparent px-8 text-sm font-medium text-white shadow-sm transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 disabled:pointer-events-none disabled:opacity-50"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Features */}
-      <ServiceFeatures />
-
-      {/* Featured Products */}
-      <section className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-center mb-8">
-          <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
-        </div>
-        
-        {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {products.map((product: any) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-           <div className="text-center py-12 text-gray-500 bg-slate-50 rounded-lg">
-             <p>No products available or failed to load.</p>
-           </div>
-        )}
-      </section>
-
-      {/* Google Reviews */}
-      <GoogleReviews />
-
-      {/* Contact Form Section */}
-      <ContactForm />
-    </div>
-  );
-}
+                className="inline-flex
