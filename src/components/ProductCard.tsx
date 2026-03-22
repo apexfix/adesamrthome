@@ -28,7 +28,7 @@ export function ProductCard({ product }: ProductCardProps) {
     : product.price;
   
   // 假设你的货币是澳元或人民币，可以根据实际调整
-  const currencySymbol = product.prices?.currency_symbol || "$"; 
+  const currencySymbol = product.prices?.currency_symbol || "AUD"; 
   
   const imageSrc = product.images?.[0]?.src || "/placeholder.jpg";
   const imageAlt = product.images?.[0]?.alt || product.name;
