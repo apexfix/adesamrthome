@@ -16,12 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // 标题：品牌 + 核心业务 + 地区 + 核心卖点（2年质保）
   title: "Best Smart Lock Installation Adelaide | ADE Smart Home | 2-Year Warranty",
-  // 描述：包含品牌名(Philips/Samsung)、服务数量(350+)、服务地区(Adelaide)
   description: "Professional Smart Lock Installation in Adelaide. Specialized in Philips, Samsung & Yale. 350+ installs with neat-clean-flushed finish. 24-month warranty. Best price guaranteed in South Australia.",
   keywords: ["Smart Lock Installation Adelaide", "Digital Lock Installer Adelaide", "Philips Smart Lock Australia", "Samsung Smart Lock Installation", "Locksmith Adelaide"],
-  // 增加 OpenGraph，让你的网站发在 WhatsApp 或 Facebook 时显示更好看
   openGraph: {
     title: "ADE Smart Home | Expert Smart Lock Installation in Adelaide",
     description: "Professional, neat, and secure smart lock solutions for Adelaide homes.",
@@ -32,6 +29,48 @@ export const metadata: Metadata = {
   },
 };
 
+// 构造 JSON-LD 结构化数据 (LocalBusiness / Locksmith)
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "Locksmith", // 搜索引擎能精准识别这是一个锁匠/安防服务商
+  "name": "ADE Smart Home",
+  "image": "https://www.adesmarthome.com.au/img/logo.png", // 确保这是你的绝对路径 Logo
+  "@id": "https://www.adesmarthome.com.au",
+  "url": "https://www.adesmarthome.com.au",
+  "telephone": "+61493343981", // 国际格式电话
+  "email": "smarthomeade@gmail.com",
+  "priceRange": "$$", // 表明价格区间，对转化率有帮助
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Adelaide", // 锁定城市
+    "addressRegion": "SA", // 锁定州
+    "addressCountry": "AU" // 锁定国家
+  },
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": -34.9285, // 阿德莱德市中心纬度
+      "longitude": 138.6007  // 阿德莱德市中心经度
+    },
+    "geoRadius": "50000" // 服务半径：以阿德市中心为圆心50公里内 (覆盖整个大阿德区)
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+      ],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ],
+  "sameAs": [
+    // 如果你有 Facebook Page, Instagram 或小红书链接，可以填在这里，增加企业权威度
+    // "https://www.facebook.com/yourpage", 
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -39,6 +78,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* 在 head 中注入 JSON-LD 脚本，不影响页面渲染，专门给搜索引擎爬虫看 */}
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
@@ -47,6 +93,8 @@ export default function RootLayout({
         <main className="flex-1">
           {children}
         </main>
+        {/* 如果你之前没有引入 Footer 组件，记得在这里引入 */}
+        <Footer />
       </body>
     </html>
   );
