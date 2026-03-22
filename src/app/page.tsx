@@ -36,4 +36,48 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
               <Link
                 href="/products"
-                className="inline-flex
+                className="inline-flex h-12 items-center justify-center rounded-md bg-[#c5a47e] px-8 text-sm font-bold text-white shadow transition-colors hover:bg-black hover:text-[#c5a47e] border border-[#c5a47e] focus-visible:outline-none"
+              >
+                Shop Now
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-12 items-center justify-center rounded-md border border-slate-700 bg-transparent px-8 text-sm font-medium text-white shadow-sm transition-colors hover:bg-slate-800 focus-visible:outline-none"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Features - 现在它会和上面的 Hero 无缝衔接 */}
+      <ServiceFeatures />
+
+      {/* Featured Products - 2. 单独为这个模块增加了 py-20 (上下内边距)，保证它不会和上下模块挤在一起 */}
+      <section className="container mx-auto px-4 md:px-6 py-20 bg-white">
+        <div className="flex items-center justify-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Featured Products</h2>
+        </div>
+        
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+           <div className="text-center py-12 text-gray-500 bg-slate-50 rounded-lg">
+             <p>No products available or failed to load.</p>
+           </div>
+        )}
+      </section>
+
+      {/* Google Reviews */}
+      <GoogleReviews />
+
+      {/* Contact Form Section */}
+      <ContactForm />
+    </div>
+  );
+}
