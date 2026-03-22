@@ -19,13 +19,21 @@ The initial door setup prior to the upgrade:
 Installing imported hardware requires a deep understanding of varying international standards. This project demanded significant modification to the timber door to ensure the large-format mortise body was seated securely and operated with perfect mechanical alignment.
 
 **Key Technical Steps:**
-1. **System Disassembly**: Carefully removing the existing mechanical hardware to assess the door's internal structure.
-2. **Precision Mortising**: Using specialized tools to expand the door cavity to accommodate the Dessmann's robust lock body.
-3. **Alignment & Positioning**: Utilizing center-positioning drills to ensure the external and internal panels are perfectly parallel.
-4. **Custom Component Fitting**: Precise cutting of spindles and connecting rods to match the specific thickness of the solid timber door.
 
-![Precision Mortising](https://res.cloudinary.com/dheogdojt/image/upload/v1774183064/7c51f7128ff2601a5278c55987f94a5a_bchaxq.jpg)
-![Installing Components](https://res.cloudinary.com/dheogdojt/image/upload/v1774183065/61998c6cc46db3ae9e193e7b16eac1fb_ja8y0f.jpg)
+Disassembling the existing hardware:
+![Disassembling Old Lock](https://res.cloudinary.com/dheogdojt/image/upload/v1774183065/a120e5ff28fca743043fd7de1e6b5943_dyn1af.jpg)
+
+We used specialized precision mortising tools to ensure a perfect fit for the new mortise:
+![Precision Mortising Timber Door](https://res.cloudinary.com/dheogdojt/image/upload/v1774183064/7c51f7128ff2601a5278c55987f94a5a_bchaxq.jpg)
+
+A center positioning drill was critical to maintain vertical alignment for the panels:
+![Center Positioning Drill](https://res.cloudinary.com/dheogdojt/image/upload/v1774183066/a922729957d42af046fd2455201510c6_aoqxo5.jpg)
+
+Cutting the spindles to the exact length required by the specific door thickness:
+![Cutting Length to Fit](https://res.cloudinary.com/dheogdojt/image/upload/v1774183067/5c0b5826446ba51e80073c6557b8b5ec_ry6qad.jpg)
+
+**[Crucial Step]** Connecting and integrating the intricate wiring before securing the panels. This cropped detail shows the complex Face ID and camera connections:
+![Installing Front and Back Panels (Detail View)](https://res.cloudinary.com/dheogdojt/image/upload/c_crop,g_north_west,h_1707,w_999,x_281/61998c6cc46db3ae9e193e7b16eac1fb_ja8y0f.jpg)
 
 ## The Result: Flagship Performance
 The final installation is a seamless integration of premium security and modern convenience. The system is now fully operational, providing the homeowner with multiple layers of biometric and digital protection.
