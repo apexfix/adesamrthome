@@ -1,16 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/types";
 
 interface ProductCardProps {
-  product: any; // Using any for now to handle potential Store API vs V3 differences
+  product: any;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  // 1. 获取基础货币符号
+  // 1. 价格逻辑 (保留你原本强大的 API 兼容性)
   const currencySymbol = product?.prices?.currency_symbol || "AUD$"; 
-
-  // 2. 智能提取价格 (兼容多种 API 返回结构)
   const currentRawPrice = product?.prices?.price || product?.prices?.sale_price || product?.price || product?.sale_price;
   const currentPrice = currentRawPrice 
     ? (typeof currentRawPrice === 'string' && parseInt(currentRawPrice) > 1000 ? (parseInt(currentRawPrice) / 100).toFixed(2) : parseFloat(currentRawPrice).toFixed(2)) 
@@ -23,66 +20,71 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const isDiscounted = regularPrice && currentPrice && !isNaN(parseFloat(regularPrice)) && !isNaN(parseFloat(currentPrice)) && parseFloat(regularPrice) > parseFloat(currentPrice);
 
-  // 3. 图片数据处理
   const imageSrc = product?.images?.[0]?.src || "/placeholder.jpg";
   const imageAlt = product?.images?.[0]?.alt || product?.name || "Product Image";
-  
-  // 4. 获取目标链接 (优先使用 slug，如果拿不到则退化使用 id)
   const targetUrl = `/products/${product?.slug || product?.id || ""}`;
 
   return (
-    <div className="group relative border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+    <div className="group relative flex flex-col h-full rounded-2xl overflow-hidden bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-sm transition-all duration-500 hover:border-[#c5a47e]/50 hover:shadow-[0_0_30px_rgba(197,164,126,0.15)]">
       
-      {/* 隐藏的全局点击层：让用户点击卡片的任何空白处都能跳转 */}
-      <Link href={targetUrl} className="absolute inset-0 z-0">
-        <span className="sr-only">View {product?.name || "Product"}</span>
+      {/* 全局点击层 */}
+      <Link href={targetUrl} className="absolute inset-0 z-20">
+        <span className="sr-only">View {product?.name}</span>
       </Link>
 
-      <div className="aspect-square relative bg-gray-100 pointer-events-none">
+      {/* 图片区域：增加深色叠加层 */}
+      <div className="aspect-square relative bg-zinc-800 overflow-hidden">
         <Image 
           src={imageSrc} 
           alt={imageAlt}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-80 group-hover:opacity-100"
+          sizes="(max-width: 768px) 100vw, 25vw"
         />
+        {/* 图片上的暗角渐变，增强深度感 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60" />
+        
+        {/* 折扣标签优化 */}
+        {isDiscounted && (
+          <div className="absolute top-3 left-3 z-30 bg-[#c5a47e] text-black text-[10px] font-bold px-2 py-1 rounded-full tracking-tighter uppercase shadow-lg">
+            Special Offer
+          </div>
+        )}
       </div>
 
-      <div className="p-4 relative z-10 pointer-events-none">
-        {/* 商品名称：限制高度，保持布局整齐 */}
-        <h3 className="text-sm md:text-base font-bold text-gray-900 line-clamp-2 mb-1 h-10 md:h-12 leading-tight">
-          {product?.name || "Unnamed Product"}
+      {/* 内容区域 */}
+      <div className="p-5 flex flex-col flex-1 relative z-10">
+        <h3 className="text-white font-semibold text-sm md:text-base line-clamp-2 mb-3 h-10 md:h-12 leading-snug group-hover:text-[#c5a47e] transition-colors">
+          {product?.name || "Premium Smart Lock"}
         </h3>
 
-        {/* 价格与操作区域：使用金色统一风格 */}
-        <div className="flex items-end justify-between mt-4">
+        <div className="mt-auto pt-4 flex flex-col gap-4">
           <div className="flex flex-col">
-            
-            {/* 折扣价逻辑 */}
             {isDiscounted ? (
-              <>
-                <span className="text-gray-400 text-xs md:text-sm line-through mb-0.5">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-zinc-500 text-xs line-through tracking-tight">
                   Was {currencySymbol}{regularPrice}
                 </span>
-                <span className="text-[#c5a47e] text-lg md:text-xl font-bold leading-none">
-                  Now {currencySymbol}{currentPrice}
+                <span className="text-[#c5a47e] text-xl font-bold tracking-tight">
+                  {currencySymbol}{currentPrice}
                 </span>
-              </>
+              </div>
             ) : (
-              <span className="text-[#c5a47e] text-lg md:text-xl font-bold">
+              <span className="text-[#c5a47e] text-xl font-bold tracking-tight">
                 {currentPrice ? `${currencySymbol}${currentPrice}` : "Enquire Now"}
               </span>
             )}
-            
           </div>
 
-          {/* 将 span 彻底替换为真实的 Link 标签，恢复指针交互 */}
-          <Link 
-            href={targetUrl}
-            className="inline-flex items-center justify-center px-3 py-1.5 bg-[#c5a47e] text-white text-xs font-semibold rounded group-hover:bg-black transition-colors duration-300 pointer-events-auto"
-          >
-            View Details
-          </Link>
+          {/* 按钮：改为胶囊状，增加吸附感 */}
+          <div className="relative z-30">
+            <Link 
+              href={targetUrl}
+              className="inline-flex w-full items-center justify-center px-4 py-2.5 bg-zinc-800 text-[#c5a47e] text-xs font-bold rounded-full border border-[#c5a47e]/20 transition-all duration-300 hover:bg-[#c5a47e] hover:text-black hover:border-[#c5a47e] hover:shadow-[0_0_15px_rgba(197,164,126,0.3)]"
+            >
+              View Details
+            </Link>
+          </div>
         </div>
       </div>
     </div>
