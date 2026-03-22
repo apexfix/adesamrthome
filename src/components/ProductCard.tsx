@@ -10,29 +10,35 @@ export function ProductCard({ product }: ProductCardProps) {
   // 1. 获取基础货币符号
   const currencySymbol = product?.prices?.currency_symbol || "AUD$"; 
 
-  // 2. 智能提取价格 (兼容多种 API 返回结构，且增加更强的防御性检测)
-  // 获取现价/促销价
+  // 2. 智能提取价格 (兼容多种 API 返回结构)
   const currentRawPrice = product?.prices?.price || product?.prices?.sale_price || product?.price || product?.sale_price;
   const currentPrice = currentRawPrice 
     ? (typeof currentRawPrice === 'string' && parseInt(currentRawPrice) > 1000 ? (parseInt(currentRawPrice) / 100).toFixed(2) : parseFloat(currentRawPrice).toFixed(2)) 
     : null;
 
-  // 获取原价 (用于划线)
   const regularRawPrice = product?.prices?.regular_price || product?.regular_price;
   const regularPrice = regularRawPrice 
     ? (typeof regularRawPrice === 'string' && parseInt(regularRawPrice) > 1000 ? (parseInt(regularRawPrice) / 100).toFixed(2) : parseFloat(regularRawPrice).toFixed(2)) 
     : null;
 
-  // 判断是否真的在打折 (原价必须存在且有效，现价也必须存在且有效，且原价大于现价)
   const isDiscounted = regularPrice && currentPrice && !isNaN(parseFloat(regularPrice)) && !isNaN(parseFloat(currentPrice)) && parseFloat(regularPrice) > parseFloat(currentPrice);
 
   // 3. 图片数据处理
   const imageSrc = product?.images?.[0]?.src || "/placeholder.jpg";
   const imageAlt = product?.images?.[0]?.alt || product?.name || "Product Image";
+  
+  // 4. 获取目标链接 (优先使用 slug，如果拿不到则退化使用 id)
+  const targetUrl = `/products/${product?.slug || product?.id || ""}`;
 
   return (
     <div className="group relative border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
-      <div className="aspect-square relative bg-gray-100">
+      
+      {/* 隐藏的全局点击层：让用户点击卡片的任何空白处都能跳转 */}
+      <Link href={targetUrl} className="absolute inset-0 z-0">
+        <span className="sr-only">View {product?.name || "Product"}</span>
+      </Link>
+
+      <div className="aspect-square relative bg-gray-100 pointer-events-none">
         <Image 
           src={imageSrc} 
           alt={imageAlt}
@@ -42,13 +48,10 @@ export function ProductCard({ product }: ProductCardProps) {
         />
       </div>
 
-      <div className="p-4">
-        {/* 商品名称：限制高度 */}
+      <div className="p-4 relative z-10 pointer-events-none">
+        {/* 商品名称：限制高度，保持布局整齐 */}
         <h3 className="text-sm md:text-base font-bold text-gray-900 line-clamp-2 mb-1 h-10 md:h-12 leading-tight">
-          <Link href={`/products/${product?.slug || ""}`}>
-            <span aria-hidden="true" className="absolute inset-0" />
-            {product?.name || "Unnamed Product"}
-          </Link>
+          {product?.name || "Unnamed Product"}
         </h3>
 
         {/* 价格与操作区域：使用金色统一风格 */}
@@ -58,17 +61,14 @@ export function ProductCard({ product }: ProductCardProps) {
             {/* 折扣价逻辑 */}
             {isDiscounted ? (
               <>
-                {/* 原价：灰色、删除线、更低调 */}
                 <span className="text-gray-400 text-xs md:text-sm line-through mb-0.5">
                   Was {currencySymbol}{regularPrice}
                 </span>
-                {/* 促销价：替换为金色，大字号 */}
                 <span className="text-[#c5a47e] text-lg md:text-xl font-bold leading-none">
                   Now {currencySymbol}{currentPrice}
                 </span>
               </>
             ) : (
-              /* 普通价格：金色、加粗 */
               <span className="text-[#c5a47e] text-lg md:text-xl font-bold">
                 {currentPrice ? `${currencySymbol}${currentPrice}` : "Enquire Now"}
               </span>
@@ -76,10 +76,13 @@ export function ProductCard({ product }: ProductCardProps) {
             
           </div>
 
-          {/* 购买按钮换成了更小巧的图标或文字，适应一行5个的紧凑布局，颜色也变为金色统一 */}
-          <span className="inline-flex items-center justify-center px-3 py-1.5 bg-[#c5a47e] text-white text-xs font-semibold rounded group-hover:bg-black transition-colors duration-300 z-10 relative">
+          {/* 将 span 彻底替换为真实的 Link 标签，恢复指针交互 */}
+          <Link 
+            href={targetUrl}
+            className="inline-flex items-center justify-center px-3 py-1.5 bg-[#c5a47e] text-white text-xs font-semibold rounded group-hover:bg-black transition-colors duration-300 pointer-events-auto"
+          >
             View Details
-          </span>
+          </Link>
         </div>
       </div>
     </div>
