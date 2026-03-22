@@ -1,93 +1,143 @@
-import { getProducts } from "@/lib/api";
-import { ProductCard } from "@/components/ProductCard";
-import { HeroCarousel } from "@/components/HeroCarousel";
-import { ServiceFeatures } from "@/components/ServiceFeatures";
-import { GoogleReviews } from "@/components/GoogleReviews";
-import { ContactForm } from "@/components/ContactForm";
-import Link from "next/link";
+"use client";
 
-export default async function Home() {
-  let products = [];
-  try {
-    // 抓取商品数据
-    products = await getProducts(1, 10);
-  } catch (error) {
-    console.error("Failed to fetch products", error);
-  }
+import { useState } from "react";
+import Image from "next/image";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { MapPin, CheckCircle2, Camera } from "lucide-react";
+
+// 这里是你未来的作品数据中心，每次做完漂亮的活儿就往里加一条
+const projects = [
+  {
+    id: 1,
+    title: "Philips DDL720 Installation",
+    suburb: "Mawson Lakes",
+    description: "Full mortise replacement on a modern timber door. Achieved a perfect flush finish with zero gap.",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800", // 替换为你真实的现场图
+    category: "Philips"
+  },
+  {
+    id: 2,
+    title: "Samsung Push-Pull Upgrade",
+    suburb: "Glenelg",
+    description: "Replaced an old mechanical deadbolt with high-tech biometric security. Custom plate used for a clean look.",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800",
+    category: "Samsung"
+  },
+  {
+    id: 3,
+    title: "EZVIZ DL05 Smart Setup",
+    suburb: "Burnside",
+    description: "Weather-resistant smart lock installation for a front gate entry. Integrated with home Wi-Fi.",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800",
+    category: "EZVIZ"
+  },
+  // ... 更多作品
+];
+
+const categories = ["All", "Philips", "Samsung", "EZVIZ", "Other"];
+
+export default function GalleryPage() {
+  const [filter, setFilter] = useState("All");
+
+  const filteredProjects = filter === "All" 
+    ? projects 
+    : projects.filter(p => p.category === filter);
 
   return (
-    <div className="flex flex-col bg-black">
+    <div className="flex flex-col min-h-screen bg-zinc-950">
+      <Header />
       
-      {/* 1. Hero Section: 升级为旗舰级排版和动效 */}
-      <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center text-white overflow-hidden">
-        <HeroCarousel />
-        <div className="relative z-10 container px-4 md:px-6 flex flex-col items-center text-center">
-          <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight">
-              Protect Your Home
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a47e] via-[#e8d0a9] to-[#c5a47e]">
-                Smart & Secure
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-zinc-300 font-light mx-auto max-w-2xl leading-relaxed">
-              Experience the future of home security in Adelaide. Precision-installed smart locks combining biometrics with world-class design.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 pt-4 justify-center">
-              <Link
-                href="/products"
-                className="inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#c5a47e] to-[#b39169] px-10 text-sm font-bold tracking-wide text-black shadow-[0_0_30px_rgba(197,164,126,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(197,164,126,0.5)]"
-              >
-                Shop Now
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-10 text-sm font-bold tracking-wide text-white transition-all hover:bg-white hover:text-black"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Service Features: 无缝衔接的品牌卖点 */}
-      <ServiceFeatures />
-
-      {/* 3. Featured Products: 彻底告别大白底，进入暗黑模式 */}
-      <section className="py-24 bg-zinc-950 relative overflow-hidden">
-        {/* 背景微弱装饰，防止纯黑太单调 */}
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-[#c5a47e]/5 blur-[120px] rounded-full pointer-events-none" />
-        
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="flex flex-col items-center justify-center mb-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
-              Featured Products
-            </h2>
-            <div className="h-1 w-20 bg-[#c5a47e] rounded-full" />
-          </div>
+      <main className="flex-1 pt-32 pb-20">
+        <div className="container mx-auto px-4 md:px-6">
           
-          {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-              {products.map((product: any) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          ) : (
-             <div className="text-center py-20 text-zinc-500 border border-zinc-900 rounded-3xl bg-zinc-900/50 backdrop-blur-sm">
-               <p className="text-lg">Preparing our latest smart lock collection...</p>
-             </div>
-          )}
+          {/* 页面头部 */}
+          <div className="max-w-3xl mb-16">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              Our <span className="text-[#c5a47e]">Craftsmanship</span>
+            </h1>
+            <p className="text-zinc-400 text-lg font-light leading-relaxed">
+              Explore our portfolio of professional smart lock installations across Adelaide. 
+              We take pride in every cut, every screw, and every seamless finish.
+            </p>
+          </div>
+
+          {/* 分类筛选器 */}
+          <div className="flex flex-wrap gap-4 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+                  filter === cat 
+                    ? "bg-[#c5a47e] text-black shadow-[0_0_20px_rgba(197,164,126,0.3)]" 
+                    : "bg-zinc-900 text-zinc-500 hover:text-white border border-zinc-800"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* 作品网格 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project) => (
+              <div 
+                key={project.id} 
+                className="group bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/30 transition-all duration-500"
+              >
+                {/* 图片容器 */}
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <Image 
+                    src={project.image} 
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-2 text-[10px] font-bold text-[#c5a47e] uppercase tracking-widest">
+                    <Camera className="w-3 h-3" /> {project.category}
+                  </div>
+                </div>
+
+                {/* 文字内容 */}
+                <div className="p-8">
+                  <div className="flex items-center gap-2 text-[#c5a47e] text-xs font-bold mb-3 uppercase tracking-tighter">
+                    <MapPin className="w-3 h-3" /> {project.suburb}, Adelaide
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#c5a47e] transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed font-light mb-6">
+                    {project.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-zinc-500 text-xs italic border-t border-zinc-800 pt-6">
+                    <CheckCircle2 className="w-4 h-4 text-green-900" />
+                    Verified ADE Installation
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 底部引导 */}
+          <div className="mt-20 p-12 rounded-3xl bg-zinc-900 border border-zinc-800 text-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-[#c5a47e]" />
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Want a similar result for your home?</h2>
+            <p className="text-zinc-400 mb-8 max-w-xl mx-auto font-light">
+              Our specialists are ready to provide the same level of precision and care to your security upgrade.
+            </p>
+            <a 
+              href="/contact" 
+              className="inline-flex h-14 items-center justify-center rounded-full bg-[#c5a47e] px-10 text-sm font-bold text-black hover:shadow-[0_0_30px_rgba(197,164,126,0.4)] transition-all"
+            >
+              Get a Free Quote
+            </a>
+          </div>
+
         </div>
-      </section>
+      </main>
 
-      {/* 4. Google Reviews: 统一在深色背景下展示信任感 */}
-      <div className="bg-zinc-950">
-        <GoogleReviews />
-      </div>
-
-      {/* 5. Contact Form Section: 最后的业务收口 */}
-      <ContactForm />
+      <Footer />
     </div>
   );
 }
