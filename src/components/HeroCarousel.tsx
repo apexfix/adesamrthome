@@ -1,72 +1,104 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper"; 
-import { Autoplay, EffectFade } from "swiper/modules";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import Image from "next/image";
+import Link from "next/link";
 
-// 【必须引入】Swiper 核心样式
+// 必须引入的样式文件
 import "swiper/css";
 import "swiper/css/effect-fade";
-
-// 显式加载模块
-SwiperCore.use([Autoplay, EffectFade]);
+import "swiper/css/pagination";
 
 const slides = [
-  // 1. 【还原】原始版本（幻灯片 1）：现代深色大门与温馨灯光
   {
     title: "Protect Your Home",
     highlight: "Smart & Secure",
     description: "Experience the future of home security in Adelaide. Precision-installed smart locks combining biometrics with world-class design.",
-    // 【物理检查】请确保你的 public/img/ 下有这两张图
-    imagePath: "/img/hero-1.jpg", 
+    imagePath: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2000",
+    btn1Text: "SHOP NOW",
+    btn1Link: "/products",
+    btn2Text: "LEARN MORE",
+    btn2Link: "/contact"
   },
-  // 2. 【还原】原始版本（幻灯片 2）：暗调高级门禁特写
   {
     title: "Military Grade",
     highlight: "Biometrics",
     description: "3D Facial Recognition and Fingerprint access. Never worry about losing keys again.",
-    imagePath: "/img/hero-2.jpg", 
+    imagePath: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=2000",
+    btn1Text: "EXPLORE LOCKS",
+    btn1Link: "/products?category=SMART+LOCK",
+    btn2Text: "LEARN MORE",
+    btn2Link: "/contact"
   },
-  // 3. 【新增】追加的 CCTV 选项，不干扰原本设计感
   {
     title: "24/7 Crystal Clear",
     highlight: "CCTV Systems",
-    description: "Monitor your perimeter remotely. Expert installation of perimeter security and access control in Adelaide.",
-    // 将此处路径改为你准备好的 CCTV 豪宅外墙图
-    imagePath: "/img/hero-cctv.jpg", 
+    description: "Monitor your perimeter remotely. Expert installation and setup in Adelaide.",
+    imagePath: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=2000",
+    btn1Text: "VIEW CCTV",
+    btn1Link: "/products?category=CCTV",
+    btn2Text: "LEARN MORE",
+    btn2Link: "/contact"
   }
 ];
 
 export function HeroCarousel() {
   return (
-    <div className="absolute inset-0 z-0 bg-zinc-950">
+    <div className="absolute inset-0 z-0 bg-black">
       <Swiper
+        // 【核心修复】直接在这里注入模块，不使用 SwiperCore
+        modules={[Autoplay, EffectFade, Pagination]}
         effect="fade"
         speed={1500}
         autoplay={{
-          delay: 7000, // 停留时间
+          delay: 7000,
           disableOnInteraction: false,
+        }}
+        pagination={{ 
+          clickable: true,
         }}
         loop={true}
         className="h-full w-full"
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="relative h-full w-full overflow-hidden bg-zinc-950">
-            {/* 渐变遮罩：确保上方的文字绝对清晰可见 */}
+          <SwiperSlide key={index} className="relative h-full w-full overflow-hidden bg-black flex items-center justify-center">
+            
+            {/* 渐变遮罩 */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black/95 z-10" />
             
-            {/* 背景图片 - 增加了高级的缓慢推拉动画 */}
-            <Image
+            {/* 使用原生 img 绕过 Next.js 外部图片限制 */}
+            <img
               src={slide.imagePath}
               alt={`${slide.title} ${slide.highlight}`}
-              fill
-              className="object-cover object-center transform scale-105 transition-transform duration-[15000ms] ease-out hover:scale-110"
-              priority={index === 0} // 第一张图优先加载
-              quality={90}
+              className="absolute inset-0 w-full h-full object-cover object-center transform scale-105 transition-transform duration-[15000ms] ease-out hover:scale-110"
             />
-            
-            {/* 底部品牌金暗光装饰 */}
+
+            {/* 内容区：100% 还原昨晚定稿的结构 */}
+            <div className="relative z-20 container px-4 md:px-6 flex flex-col items-center text-center">
+              <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight text-white">
+                  {slide.title}
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a47e] via-[#e8d0a9] to-[#c5a47e]">
+                    {slide.highlight}
+                  </span>
+                </h1>
+                <p className="text-lg md:text-xl text-zinc-300 font-light mx-auto max-w-2xl leading-relaxed">
+                  {slide.description}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 pt-4 justify-center">
+                  <Link href={slide.btn1Link} className="inline-flex h-14 items-center justify-center rounded-full bg-[#c5a47e] px-10 text-sm font-bold text-black shadow-lg hover:scale-105 transition-all">
+                    {slide.btn1Text}
+                  </Link>
+                  <Link href={slide.btn2Link} className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-10 text-sm font-bold text-white transition-all hover:bg-white hover:text-black">
+                    {slide.btn2Text}
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* 底部金光装饰 */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#c5a47e]/15 blur-[180px] rounded-full pointer-events-none z-20" />
           </SwiperSlide>
         ))}
