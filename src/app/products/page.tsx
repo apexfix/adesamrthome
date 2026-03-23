@@ -1,15 +1,17 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 
-export default async function ProductsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  // 1. 获取 URL 中的 category 参数 (例如 "SMART LOCK" 或 "CCTV")
-  const categoryParam = typeof searchParams.category === 'string' ? searchParams.category : null;
+// 1. 【核心修复】强制每次访问都进行动态渲染，严禁使用打包时的静态缓存
+export const dynamic = "force-dynamic";
 
-  // 2. 从 WordPress 获取产品数据 (拉取前 50 个以确保覆盖两个分类)
+export default async function ProductsPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  // 2. 兼容 Next.js 最新版本的异步参数读取逻辑
+  const params = props.searchParams ? await props.searchParams : {};
+  const categoryParam = typeof params.category === 'string' ? params.category : null;
+
+  // 3. 从 WordPress 获取产品数据
   let allProducts = [];
   try {
     allProducts = await getProducts(1, 50);
@@ -17,16 +19,16 @@ export default async function ProductsPage({
     console.error("Failed to fetch products", error);
   }
 
-  // 3. 核心过滤逻辑：根据后端分类名匹配
+  // 4. 核心过滤逻辑：严格匹配参数与 WP 分类名
   const displayedProducts = categoryParam
     ? allProducts.filter((product: any) =>
         product.categories?.some(
           (cat: any) => cat.name.toUpperCase() === categoryParam.toUpperCase()
         )
       )
-    : allProducts; // 如果没有参数（直接点击 Products），则显示全部
+    : allProducts;
 
-  // 4. 动态页面标题
+  // 5. 动态页面标题
   const pageTitle = categoryParam === "SMART LOCK" 
     ? "Smart Locks" 
     : categoryParam === "CCTV" 
@@ -50,21 +52,4 @@ export default async function ProductsPage({
           )}
         </div>
 
-        {/* 产品网格展示 */}
-        {displayedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {displayedProducts.map((product: any) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-3xl bg-zinc-900/50 max-w-3xl mx-auto">
-            <p className="text-xl">No products found in this category.</p>
-            <p className="text-sm mt-2">Please check if the category names in WordPress match exactly.</p>
-          </div>
-        )}
-        
-      </div>
-    </div>
-  );
-}
+        {
