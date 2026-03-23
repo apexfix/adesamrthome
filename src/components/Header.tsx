@@ -65,13 +65,13 @@ export function Header() {
                       href="/products?category=SMART+LOCK" 
                       className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 border-b border-zinc-800/50 transition-colors"
                     >
-                      Smart Locks (智能锁门锁)
+                      Smart Locks
                     </Link>
                     <Link 
                       href="/products?category=CCTV" 
                       className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
                     >
-                      CCTV Systems (监控安装)
+                      CCTV Systems
                     </Link>
                   </div>
                 </div>
