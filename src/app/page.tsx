@@ -30,16 +30,22 @@ export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 3. 【核心修复】根据选择的分类动态获取产品
+// 3. 【核心修复】拉取产品并在前端按 WordPress 分类名进行过滤
   useEffect(() => {
     async function fetchCategorizedProducts() {
       setIsLoading(true);
       try {
-        // 假设 getProducts 接受分类名称作为参数
-        const data = await getProducts(1, 10, selectedCategory); 
-        setProducts(data);
+        // 恢复为 2 个参数（获取前 50 个产品以确保涵盖两个分类）
+        const data = await getProducts(1, 50); 
+        
+        // 过滤逻辑：检查产品的 categories 数组中，是否有名字匹配当前选中标签的
+        const filteredData = data.filter((product: any) => 
+          product.categories?.some((cat: any) => cat.name.toUpperCase() === selectedCategory)
+        );
+        
+        setProducts(filteredData);
       } catch (error) {
-        console.error(`Failed to fetch ${selectedCategory} products`, error);
+        console.error(`Failed to fetch products`, error);
         setProducts([]);
       } finally {
         setIsLoading(false);
