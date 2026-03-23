@@ -8,30 +8,27 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 
 const slides = [
+  // 1. 你最初的原始版本（幻灯片 1）
   {
-    // 幻灯片 1：高级入户门（代表智能锁）
-    title: "Precision Installed",
-    highlight: "Smart Locks",
-    description: "Military-grade biometrics. Keyless peace of mind for Adelaide families.",
-    // 一张非常有质感的暗色木门与现代门把手特写
-    imagePath: "https://images.unsplash.com/photo-1528318269466-69f88414ba2a?auto=format&fit=crop&q=80&w=2000", 
+    title: "Protect Your Home",
+    highlight: "Smart & Secure",
+    description: "Experience the future of home security in Adelaide. Precision-installed smart locks combining biometrics with world-class design.",
+    imagePath: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2000", // 这通常是你原来的暗黑系智能家居图
   },
+  // 2. 你最初的原始版本（幻灯片 2）
   {
-    // 幻灯片 2：监控业务
+    title: "Military Grade",
+    highlight: "Biometrics",
+    description: "3D Facial Recognition and Fingerprint access. Never worry about losing keys again.",
+    imagePath: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=2000", // 这通常是你原来的特写图
+  },
+  // 3. 【新增】只在最后追加的 CCTV 选项
+  {
     title: "24/7 Crystal Clear",
     highlight: "CCTV Systems",
     description: "Monitor your perimeter remotely. Expert installation and setup in Adelaide.",
-    // 一张极具科技感的高清监控摄像头特写
     imagePath: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=2000", 
-  },
-  {
-    // 幻灯片 3：综合全屋安防
-    title: "Total Home",
-    highlight: "Security Solutions",
-    description: "Integrating locks and cameras for a seamless, secure Adelaide living experience.",
-    // 一栋极具现代感的豪宅外观（完美契合黑金与智能家居调性）
-    imagePath: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=2000", 
-  },
+  }
 ];
 
 export function HeroCarousel() {
@@ -50,7 +47,7 @@ export function HeroCarousel() {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="relative h-full w-full overflow-hidden bg-zinc-950">
-            {/* 渐变遮罩：确保上方的白色文字绝对清晰可见 */}
+            {/* 渐变遮罩：确保文字清晰可见 */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 z-10" />
             
             {/* 背景图片 */}
@@ -58,7 +55,7 @@ export function HeroCarousel() {
               src={slide.imagePath}
               alt={`${slide.title} ${slide.highlight}`}
               fill
-              className="object-cover object-center transform scale-105"
+              className="object-cover object-center transform scale-105 transition-transform duration-[10000ms] ease-out hover:scale-110"
               priority={index === 0}
               quality={90}
             />
