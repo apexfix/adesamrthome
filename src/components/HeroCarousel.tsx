@@ -1,11 +1,16 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper"; // 1. 【核心修复】引入 Swiper 核心
 import { Autoplay, EffectFade } from "swiper/modules";
 
-// 必须引入 Swiper 样式
+// 必须引入 Swiper 样式才能正常显示
 import "swiper/css";
 import "swiper/css/effect-fade";
+
+// 2. 【关键修正】显式向 Swiper Core 注册模块
+// 这一步如果不做，即使开启了 autoplay 也没有任何效果
+SwiperCore.use([Autoplay, EffectFade]);
 
 // 包含你原始的图片链接和追加的 CCTV 选项
 const slides = [
@@ -33,7 +38,7 @@ export function HeroCarousel() {
   return (
     <div className="absolute inset-0 z-0 bg-black">
       <Swiper
-        modules={[Autoplay, EffectFade]}
+        // 模块已经通过 .use() 加载，无需再在此处显式写 modules={[...]}
         effect="fade"
         speed={1500}
         autoplay={{
@@ -45,10 +50,10 @@ export function HeroCarousel() {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="relative h-full w-full overflow-hidden bg-black">
-            {/* 渐变遮罩 */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black/95 z-10" />
+            {/* 渐变遮罩：确保上方的文字绝对清晰可见 */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/95 z-10" />
             
-            {/* 核心修复：使用原生的 img 标签，彻底绕过 Next.js 的拦截机制 */}
+            {/* 保留原生 img 标签，彻底绕过 Next.js 的拦截机制（解决黑屏问题） */}
             <img
               src={slide.imagePath}
               alt={`${slide.title} ${slide.highlight}`}
