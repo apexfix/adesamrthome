@@ -2,36 +2,30 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import Image from "next/image";
 
-// 必须引入 Swiper 样式才能正常显示
+// 必须引入 Swiper 样式
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-// 幻灯片数据 - 【关键】全部使用本地 public/img/ 下的静态图片路径
+// 包含你原始的图片链接和追加的 CCTV 选项
 const slides = [
   {
     title: "Protect Your Home",
     highlight: "Smart & Secure",
-    // 这是你原始的纯净版文案
     description: "Experience the future of home security in Adelaide. Precision-installed smart locks combining biometrics with world-class design.",
-    // 【物理检查】请确保 public/img/hero-lock-1.jpg 存在
-    imagePath: "/img/hero-lock-1.jpg", 
+    imagePath: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2000", 
   },
   {
     title: "Military Grade",
     highlight: "Biometrics",
     description: "3D Facial Recognition and Fingerprint access. Never worry about losing keys again.",
-    // 【物理检查】请确保 public/img/hero-lock-2.jpg 存在
-    imagePath: "/img/hero-lock-2.jpg", 
+    imagePath: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=2000", 
   },
-  // --- 【新增】在纯净版基础上，只在最后追加一个监控选项 ---
   {
     title: "24/7 Crystal Clear",
     highlight: "CCTV Systems",
     description: "Monitor your perimeter remotely. Expert installation and setup in Adelaide.",
-    // 【物理检查】请确保 public/img/hero-cctv.jpg 存在 (或者暂时用锁的图片代替，名字改对即可)
-    imagePath: "/img/hero-cctv.jpg", 
+    imagePath: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=2000", 
   }
 ];
 
@@ -41,9 +35,9 @@ export function HeroCarousel() {
       <Swiper
         modules={[Autoplay, EffectFade]}
         effect="fade"
-        speed={1500} // 平滑渐变速度
+        speed={1500}
         autoplay={{
-          delay: 7000, // 停留时间
+          delay: 7000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -51,17 +45,14 @@ export function HeroCarousel() {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="relative h-full w-full overflow-hidden bg-black">
-            {/* 渐变遮罩：确保文字绝对清晰可见 */}
+            {/* 渐变遮罩 */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black/95 z-10" />
             
-            {/* 背景图片 - 增加了高级的缓慢推拉动画 */}
-            <Image
+            {/* 核心修复：使用原生的 img 标签，彻底绕过 Next.js 的拦截机制 */}
+            <img
               src={slide.imagePath}
               alt={`${slide.title} ${slide.highlight}`}
-              fill
-              className="object-cover object-center transform scale-105 transition-transform duration-[15000ms] ease-out hover:scale-110"
-              priority={index === 0} // 第一张图优先加载
-              quality={90}
+              className="absolute inset-0 w-full h-full object-cover object-center transform scale-105 transition-transform duration-[15000ms] ease-out hover:scale-110"
             />
             
             {/* 底部品牌金暗光装饰 */}
