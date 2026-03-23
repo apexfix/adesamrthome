@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, Mail, X, Instagram, Facebook } from "lucide-react";
+import { Menu, Phone, X, Instagram, Facebook, ChevronDown } from "lucide-react"; // 新增 ChevronDown 图标
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Products", href: "/products" },
-  { name: "Stories", href: "/blog" }, // 这里改掉
+  { name: "Stories", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -49,14 +49,43 @@ export function Header() {
           
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href} 
-                className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-              </Link>
+              link.name === "Products" ? (
+                /* 产品下拉菜单 - 桌面端 */
+                <div key={link.name} className="relative group py-4">
+                  <Link 
+                    href={link.href} 
+                    className="flex items-center gap-1 text-white/80 hover:text-[#c5a47e] transition-colors"
+                  >
+                    {link.name} <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                  </Link>
+                  
+                  {/* 下拉菜单面板 */}
+                  <div className="absolute left-0 top-full mt-0 w-56 bg-zinc-950 border border-zinc-800 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50 overflow-hidden">
+                    <Link 
+                      href="/products?category=SMART+LOCK" 
+                      className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 border-b border-zinc-800/50 transition-colors"
+                    >
+                      Smart Locks (智能锁门锁)
+                    </Link>
+                    <Link 
+                      href="/products?category=CCTV" 
+                      className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
+                    >
+                      CCTV Systems (监控安装)
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                /* 普通菜单项 */
+                <Link 
+                  key={link.name} 
+                  href={link.href} 
+                  className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
+                >
+                  {link.name}
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                </Link>
+              )
             ))}
           </nav>
         </div>
@@ -64,42 +93,17 @@ export function Header() {
         <div className="flex items-center gap-6 md:gap-8">
           {/* 桌面端社交媒体与联系方式 */}
           <div className="hidden md:flex items-center gap-6">
-            {/* 社交图标组 - 补全了 Facebook */}
             <div className="flex items-center gap-5 border-r border-white/10 pr-6 mr-2">
-              <a 
-                href="https://www.facebook.com/profile.php?id=61571291020457" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white/60 hover:text-[#c5a47e] transition-colors"
-                title="Facebook"
-              >
+              <a href="https://www.facebook.com/profile.php?id=61571291020457" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Facebook">
                 <Facebook className="h-4 w-4" />
               </a>
-              <a 
-                href="https://www.instagram.com/adesmarthome/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white/60 hover:text-[#c5a47e] transition-colors"
-                title="Instagram"
-              >
+              <a href="https://www.instagram.com/adesmarthome/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Instagram">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a 
-                href="https://www.tiktok.com/@adesmarthome" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white/60 hover:text-[#c5a47e] transition-colors"
-                title="TikTok"
-              >
+              <a href="https://www.tiktok.com/@adesmarthome" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="TikTok">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
-              <a 
-                href="https://xhslink.com/m/6Bv1zW0ClyZ" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-white/60 hover:text-[#c5a47e] transition-colors"
-                title="Xiaohongshu"
-              >
+              <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
                 <span className="text-[11px] font-bold tracking-tighter">小红书</span>
               </a>
             </div>
@@ -127,9 +131,24 @@ export function Header() {
           <div className="container mx-auto p-6 flex flex-col gap-8">
             <nav className="flex flex-col gap-4 text-lg font-medium">
               {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                  {link.name}
-                </Link>
+                link.name === "Products" ? (
+                  /* 移动端产品及其子菜单 */
+                  <div key={link.name} className="flex flex-col gap-3">
+                    <Link href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                      {link.name}
+                    </Link>
+                    <Link href="/products?category=SMART+LOCK" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
+                      └ Smart Locks (智能锁门锁)
+                    </Link>
+                    <Link href="/products?category=CCTV" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
+                      └ CCTV Systems (监控安装)
+                    </Link>
+                  </div>
+                ) : (
+                  <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                    {link.name}
+                  </Link>
+                )
               ))}
             </nav>
             <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
