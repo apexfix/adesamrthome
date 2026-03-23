@@ -7,12 +7,11 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
-import { FAQSection } from "@/components/FAQSection"; // 1. 导入新组件
+import { FAQSection } from "@/components/FAQSection";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
-// 定义 Story 类型接口
 interface Story {
   slug: string;
   title: string;
@@ -23,15 +22,15 @@ interface Story {
 }
 
 export default async function Home() {
-  // 1. Fetch Products
+  // Fetch Products
   let products = [];
   try {
     products = await getProducts(1, 10);
   } catch (error) {
-    console.error("Failed to fetch products", error);
+    console.error("Home page API Error:", error);
   }
 
-  // 2. Fetch Latest Installation Stories from Markdown
+  // Fetch Latest Stories
   const postsDirectory = path.join(process.cwd(), "content/posts");
   let latestStories: Story[] = [];
 
@@ -59,11 +58,15 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col bg-black">
-      {/* 1. Hero Section */}
+      {/* 1. 【还原】原始纯净版 Hero Section：轮播图在底层，文字浮在上面 */}
       <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center text-white overflow-hidden border-b border-zinc-900/50">
+        
+        {/* 背景轮播图组件 */}
         <HeroCarousel />
+        
         <div className="relative z-10 container px-4 md:px-6 flex flex-col items-center text-center">
           <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            {/* 你昨晚定稿的大气标语 */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight">
               Protect Your Home
               <br />
@@ -74,9 +77,10 @@ export default async function Home() {
             <p className="text-lg md:text-xl text-zinc-300 font-light mx-auto max-w-2xl leading-relaxed">
               Experience the future of home security in Adelaide. Precision-installed smart locks combining biometrics with world-class design.
             </p>
+            {/* 按钮样式和阴影还原你昨晚的最佳设定 */}
             <div className="flex flex-col sm:flex-row gap-6 pt-4 justify-center">
-              <Link href="/products" className="inline-flex h-14 items-center justify-center rounded-full bg-[#c5a47e] px-10 text-sm font-bold text-black shadow-lg hover:scale-105 transition-all">Shop Now</Link>
-              <Link href="/contact" className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-10 text-sm font-bold text-white transition-all hover:bg-white hover:text-black">Learn More</Link>
+              <Link href="/products" className="inline-flex h-14 items-center justify-center rounded-full bg-[#c5a47e] px-10 text-sm font-black text-black shadow-[0_0_30px_rgba(197,164,126,0.3)] hover:scale-105 transition-all uppercase tracking-widest">Shop Collection</Link>
+              <Link href="/contact" className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-10 text-sm font-bold text-white transition-all hover:bg-white hover:text-black uppercase tracking-widest">Get a Quote</Link>
             </div>
           </div>
         </div>
@@ -85,28 +89,30 @@ export default async function Home() {
       <ServiceFeatures />
 
       {/* 2. Installation Stories Carousel Section */}
-      <section className="py-24 bg-black border-y border-zinc-900/50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div className="max-w-xl">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                Recent <span className="text-[#c5a47e]">Works</span>
-              </h2>
-              <p className="text-zinc-500 font-light leading-relaxed">
-                Real results from real Adelaide homes. See our professional craftsmanship across 400+ successful installations.
-              </p>
+      {latestStories.length > 0 && (
+        <section className="py-24 bg-black border-y border-zinc-900/50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+              <div className="max-w-xl">
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  Recent <span className="text-[#c5a47e]">Works</span>
+                </h2>
+                <p className="text-zinc-500 font-light leading-relaxed">
+                  Real results from real Adelaide homes. See our professional craftsmanship across 400+ successful installations.
+                </p>
+              </div>
+              <Link 
+                href="/blog" 
+                className="group flex items-center gap-2 text-[#c5a47e] font-bold uppercase tracking-widest text-xs hover:opacity-80 transition-opacity"
+              >
+                View All Stories <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
-            <Link 
-              href="/blog" 
-              className="group flex items-center gap-2 text-[#c5a47e] font-bold uppercase tracking-widest text-xs hover:opacity-80 transition-opacity"
-            >
-              View All Stories <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            
+            <StoryCarousel stories={latestStories} />
           </div>
-          
-          <StoryCarousel stories={latestStories} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 3. Featured Products */}
       <section className="py-24 bg-zinc-950 relative">
@@ -123,17 +129,14 @@ export default async function Home() {
             </div>
           ) : (
              <div className="text-center py-20 text-zinc-500 border border-zinc-900 rounded-3xl bg-zinc-900/50">
-               <p className="text-lg">Preparing our latest smart lock collection...</p>
+               <p className="text-lg animate-pulse">Preparing our latest smart lock collection...</p>
              </div>
           )}
         </div>
       </section>
 
       <GoogleReviews />
-
-      {/* 4. FAQ Section - 放置在联系表单前，解答最后顾虑 */}
       <FAQSection />
-
       <ContactForm />
     </div>
   );
