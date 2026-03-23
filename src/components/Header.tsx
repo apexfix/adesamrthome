@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, Phone, X, Instagram, Facebook, ChevronDown } from "lucide-react";
 
+// 顶层导航链路
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Products", href: "/products" },
@@ -35,6 +36,7 @@ export function Header() {
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-6 md:px-8">
         
         <div className="flex items-center gap-10">
+          {/* Logo 区域 */}
           <Link href="/" className="flex items-center gap-2 relative group">
             <div className={`relative transition-all duration-500 ${scrolled ? "w-36 h-10" : "w-44 h-12"}`}>
               <Image 
@@ -47,10 +49,11 @@ export function Header() {
             </div>
           </Link>
           
+          {/* 桌面端导航 */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
               link.name === "Products" ? (
-                /* 产品下拉菜单结构 */
+                /* 产品下拉菜单 - 纯 CSS 悬浮逻辑 */
                 <div key={link.name} className="relative group py-4">
                   <Link 
                     href={link.href} 
@@ -59,6 +62,7 @@ export function Header() {
                     {link.name} <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                   </Link>
                   
+                  {/* 下拉菜单实体 */}
                   <div className="absolute left-0 top-full mt-0 w-48 bg-zinc-950 border border-zinc-800 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50 overflow-hidden">
                     <Link 
                       href="/products?category=SMART+LOCK" 
@@ -89,6 +93,7 @@ export function Header() {
           </nav>
         </div>
 
+        {/* 右侧联系方式与社交媒体 */}
         <div className="flex items-center gap-6 md:gap-8">
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-5 border-r border-white/10 pr-6 mr-2">
@@ -114,6 +119,7 @@ export function Header() {
             </div>
           </div>
           
+          {/* 移动端菜单按钮 */}
           <button 
             className="md:hidden p-2 text-white/80 hover:text-[#c5a47e] transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -123,7 +129,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* 移动端菜单结构优化：支持子分类 */}
+      {/* 移动端菜单下拉 - 支持子菜单 */}
       {isMenuOpen && (
         <div className="md:hidden bg-black/95 backdrop-blur-xl absolute w-full left-0 top-full border-t border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2">
           <div className="container mx-auto p-6 flex flex-col gap-8">
@@ -134,6 +140,7 @@ export function Header() {
                     <Link href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
                       {link.name}
                     </Link>
+                    {/* 子菜单入口 */}
                     <Link href="/products?category=SMART+LOCK" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
                       └ Smart Locks
                     </Link>
@@ -148,6 +155,7 @@ export function Header() {
                 )
               ))}
             </nav>
+            {/* 移动端联系方式 */}
             <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
               <a href="https://www.facebook.com/profile.php?id=61571291020457" target="_blank" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
               <a href="https://www.instagram.com/adesmarthome/" target="_blank" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
