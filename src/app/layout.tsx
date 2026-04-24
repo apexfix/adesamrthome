@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { businessInfo, coreServices, serviceAreas, siteUrl, smartLockBrands } from "@/lib/seoData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,41 +16,56 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. 深度优化的元数据
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.adesmarthome.com.au"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "ADE Smart Home | Professional Smart Lock Installation Adelaide",
-    template: "%s | ADE Smart Home"
+    default: "Smart Lock Installation Adelaide | ADE Smart Home",
+    template: "%s | ADE Smart Home",
   },
-  description: "Adelaide's premier smart lock specialists. 400+ successful installs of Philips, EZVIZ, and imported locks. Neat, flush-finish installation with a 2-year warranty.",
+  description:
+    "Professional smart lock installation in Adelaide for timber, aluminium and selected security screen doors. Philips, EZVIZ, Samsung, Aqara and imported smart locks. 400+ local installations, free door compatibility check and local after-sales support.",
   keywords: [
-    "Smart Lock Installation Adelaide", 
-    "Digital Door Lock Installer SA", 
-    "Philips EasyKey Adelaide", 
-    "EZVIZ Lock Installation", 
-    "Imported Smart Lock Installer",
-    "Locksmith Adelaide"
+    "Smart Lock Installation Adelaide",
+    "Digital Door Lock Installation Adelaide",
+    "Fingerprint Lock Installer Adelaide",
+    "Smart Door Lock Adelaide",
+    "Philips Smart Lock Adelaide",
+    "EZVIZ Smart Lock Adelaide",
+    "Samsung Digital Lock Adelaide",
+    "Aqara Smart Lock Adelaide",
+    "Imported Smart Lock Installer Adelaide",
+    "CCTV Installation Adelaide",
+    "阿德莱德智能锁安装",
+    "阿德莱德电子锁安装",
+    "阿德莱德指纹锁安装",
+    "阿德莱德监控安装",
   ],
+  authors: [{ name: "ADE Smart Home" }],
+  creator: "ADE Smart Home",
+  publisher: "ADE Smart Home",
   alternates: {
-    canonical: "https://www.adesmarthome.com.au",
+    canonical: siteUrl,
+    languages: {
+      "en-AU": siteUrl,
+      "zh-CN": `${siteUrl}/zh`,
+    },
   },
-  // 【核心修复】指定图标路径，解决黑色圆球问题
   icons: {
-    icon: "/icon.png", // 请确保 public 文件夹下有 icon.png
-    apple: "/apple-icon.png",
+    icon: "/img/logo.png",
+    apple: "/img/logo.png",
   },
   openGraph: {
-    title: "ADE Smart Home | Expert Smart Lock Installation in Adelaide",
-    description: "400+ homes secured with precision-installed smart locks. Best price and 2-year warranty in South Australia.",
-    url: "https://www.adesmarthome.com.au",
+    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    description:
+      "Adelaide smart lock installation specialists. 400+ local installations for Philips, EZVIZ, Samsung, Aqara and imported smart locks. Free door compatibility check.",
+    url: siteUrl,
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/og-image.jpg", // 建议准备一张 1200x630 的安装实拍图放在 public 文件夹
+        url: "/img/hero1.jpg",
         width: 1200,
         height: 630,
-        alt: "ADE Smart Home Installation Gallery",
+        alt: "ADE Smart Home smart lock installation in Adelaide",
       },
     ],
     locale: "en_AU",
@@ -56,80 +73,157 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ADE Smart Home Adelaide",
-    description: "Professional Smart Lock Installation & Retrofitting.",
-    images: ["/og-image.jpg"],
+    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    description:
+      "Professional smart lock installation, CCTV installation and smart home setup across Adelaide.",
+    images: ["/img/hero1.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
-// 2. 增强型结构化数据
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "Locksmith",
-  "name": "ADE Smart Home",
-  "image": "https://www.adesmarthome.com.au/icon.png",
-  "@id": "https://www.adesmarthome.com.au",
-  "url": "https://www.adesmarthome.com.au",
-  "telephone": "+61493343981",
-  "email": "smarthomeade@gmail.com",
-  "priceRange": "$$",
-  "address": {
+  "@type": ["LocalBusiness", "Locksmith"],
+  "@id": `${siteUrl}/#business`,
+  name: businessInfo.name,
+  url: siteUrl,
+  image: `${siteUrl}/img/logo.png`,
+  logo: `${siteUrl}/img/logo.png`,
+  telephone: businessInfo.phoneInternational,
+  email: businessInfo.email,
+  priceRange: "$$",
+  description:
+    "ADE Smart Home provides professional smart lock installation, digital door lock installation, CCTV installation and smart home setup across Adelaide. The team has completed 400+ local installations with a focus on neat flush-finish workmanship and local after-sales support.",
+  address: {
     "@type": "PostalAddress",
-    "streetAddress": "Adelaide Metro Area",
-    "addressLocality": "Adelaide",
-    "addressRegion": "SA",
-    "postalCode": "5000",
-    "addressCountry": "AU"
+    addressLocality: businessInfo.addressLocality,
+    addressRegion: businessInfo.addressRegion,
+    postalCode: businessInfo.postalCode,
+    addressCountry: businessInfo.country,
   },
-  "geo": {
+  geo: {
     "@type": "GeoCoordinates",
-    "latitude": -34.9285,
-    "longitude": 138.6007
+    latitude: businessInfo.latitude,
+    longitude: businessInfo.longitude,
   },
-  "areaServed": {
-    "@type": "GeoCircle",
-    "geoMidpoint": {
-      "@type": "GeoCoordinates",
-      "latitude": -34.9285,
-      "longitude": 138.6007
+  areaServed: serviceAreas.map((area) => ({
+    "@type": "City",
+    name: area.name,
+  })),
+  knowsAbout: [
+    ...coreServices,
+    ...smartLockBrands.map((brand) => `${brand} smart lock installation`),
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Smart Lock and Smart Home Installation Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Smart Lock Installation Adelaide",
+          description:
+            "Professional installation of fingerprint, keypad, video and app-controlled smart locks across Adelaide.",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "CCTV Installation Adelaide",
+          description:
+            "Home security camera installation and smart surveillance setup across Adelaide.",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Door Compatibility Check",
+          description:
+            "Free door photo assessment before smart lock installation to check compatibility and installation requirements.",
+        },
+      },
+    ],
+  },
+  additionalProperty: [
+    {
+      "@type": "PropertyValue",
+      name: "Completed local installations",
+      value: "400+",
     },
-    "geoRadius": "50000"
-  },
-  "openingHoursSpecification": [
+    {
+      "@type": "PropertyValue",
+      name: "Warranty",
+      value: "2-year local product warranty and workmanship support",
+    },
+  ],
+  openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "opens": "08:00",
-      "closes": "20:00"
-    }
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "08:00",
+      closes: "20:00",
+    },
   ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "400" // 与你的 400+ 安装量背书匹配
-  }
+  sameAs: [
+    "https://www.facebook.com/",
+    "https://www.instagram.com/",
+    "https://www.tiktok.com/",
+  ],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  url: siteUrl,
+  name: "ADE Smart Home",
+  description:
+    "Smart lock installation, digital door lock installation, CCTV installation and smart home services in Adelaide.",
+  inLanguage: ["en-AU", "zh-CN"],
+  publisher: {
+    "@id": `${siteUrl}/#business`,
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
+    <html lang="en-AU">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-black`}
-      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <Header />
-        <main className="flex-1">
-          {children}
-        </main>
+        {children}
         <Footer />
       </body>
     </html>
