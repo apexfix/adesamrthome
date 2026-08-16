@@ -19,7 +19,80 @@ const v5MaxImages = [
   "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/2_63165421-28fb-4338-9d28-e529b890e5ce.png?v=1766733143",
 ];
 
+const s50mProImages = [
+  "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-01.png",
+  "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-02.png",
+  "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-03.png",
+  "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-04.png",
+  "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-05.png",
+];
+
 export const localProducts = [
+  {
+    id: 900002,
+    name: "Lockin S50M Pro Smart Lock",
+    slug: "lockin-s50m-pro-smart-lock",
+    sku: "LOCKIN-S50M-PRO",
+    short_description:
+      "Premium Lockin camera smart lock with finger-vein access, app control, Apple Home integration, NFC, PIN code and mechanical key backup. Available with Adelaide installation by ADE Smart Home.",
+    description: `
+      <h2>Lockin S50M Pro Smart Lock</h2>
+      <p>The Lockin S50M Pro is a premium camera smart lock for Adelaide homes, apartments, Airbnb properties and smart-ready builds. It combines biometric access, app control, video monitoring and automatic locking in one front-door upgrade.</p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>Finger-vein, app, Apple Home, Bluetooth key, PIN code, NFC card and mechanical key access.</li>
+        <li>1536P HD camera with wide-angle viewing and night vision.</li>
+        <li>Two-way voice communication and visitor monitoring through the mobile app.</li>
+        <li>Alerts for tampering, repeated incorrect attempts, door ajar and low battery.</li>
+        <li>Automatic mortise with fast biometric unlock and auto relock.</li>
+        <li>Long battery life for everyday residential use.</li>
+      </ul>
+      <h2>Adelaide Installation</h2>
+      <p>Before booking, send photos of your door, frame and existing lock. ADE Smart Home will confirm compatibility and provide an installed price for your property.</p>
+      <h2>Best For</h2>
+      <ul>
+        <li>Family homes that need keyless entry and camera visibility.</li>
+        <li>Airbnb and rental properties needing secure temporary access.</li>
+        <li>New builds and premium renovations wanting a clean smart-ready front door.</li>
+      </ul>
+      <h2>Compatibility Notes</h2>
+      <p>Door preparation, mortise size, frame clearance and security screen spacing must be checked before installation. Some retrofits may require extra cutting or strike-plate work.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 3, name: "Smart Locks with Camera", slug: "smart-locks-with-camera" },
+    ],
+    tags: [
+      { id: 1, name: "Lockin", slug: "lockin" },
+      { id: 2, name: "S50M Pro", slug: "s50m-pro" },
+      { id: 3, name: "Camera Smart Lock", slug: "camera-smart-lock" },
+      { id: 4, name: "Apple Home", slug: "apple-home" },
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+    ],
+    prices: {
+      price: "95000",
+      regular_price: "99900",
+      sale_price: "95000",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    images: s50mProImages.map((src, index) => ({
+      id: 900101 + index,
+      src,
+      alt: "Lockin S50M Pro smart lock product image",
+    })),
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["S50M Pro"] },
+      { id: 3, name: "Access Methods", options: ["Finger vein", "App", "Apple Home", "Bluetooth key", "PIN code", "NFC card", "Mechanical key"] },
+      { id: 4, name: "Camera", options: ["1536P HD camera", "Night vision", "Wide-angle viewing"] },
+      { id: 5, name: "Connectivity", options: ["Wi-Fi", "Bluetooth", "MI Home app"] },
+      { id: 6, name: "Door Thickness", options: ["40 mm - 120 mm"] },
+      { id: 7, name: "Material", options: ["Aluminium alloy", "Stainless steel lock tongue"] },
+    ],
+  },
   {
     id: 900001,
     name: "Lockin V5 Max Smart Lock",

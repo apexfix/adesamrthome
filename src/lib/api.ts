@@ -3,6 +3,7 @@ import { localProducts } from "./localProducts";
 
 // Use Plain Permalinks format since /wp-json/ is not working
 const STORE_API_BASE = "/?rest_route=/wc/store/v1";
+const USE_WORDPRESS_PRODUCTS = process.env.USE_WORDPRESS_PRODUCTS === "true";
 
 export async function fetchStoreAPI(path: string, options: RequestInit = {}) {
   // Handle query parameters for Plain Permalinks
@@ -31,6 +32,10 @@ export async function fetchStoreAPI(path: string, options: RequestInit = {}) {
 }
 
 export async function getProducts(page = 1, perPage = 20) {
+  if (!USE_WORDPRESS_PRODUCTS) {
+    return localProducts.slice((page - 1) * perPage, page * perPage);
+  }
+
   // Store API uses 'page' and 'per_page'
   try {
     const products = await fetchStoreAPI(`/products?page=${page}&per_page=${perPage}`);
@@ -51,6 +56,10 @@ export async function getProduct(slug: string) {
     return localProduct;
   }
 
+  if (!USE_WORDPRESS_PRODUCTS) {
+    return null;
+  }
+
   // Store API allows filtering by slug? 
   // /products?slug=abc
   const products = await fetchStoreAPI(`/products?slug=${slug}`);
@@ -61,5 +70,13 @@ export async function getProduct(slug: string) {
 }
 
 export async function getCategories() {
+  if (!USE_WORDPRESS_PRODUCTS) {
+    return [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 3, name: "CCTV", slug: "cctv" },
+    ];
+  }
+
   return fetchStoreAPI("/products/categories");
 }
