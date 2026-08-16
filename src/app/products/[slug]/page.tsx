@@ -72,7 +72,7 @@ const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> =
       alt: "Lockin smart lock installed on timber entry door",
     },
   ],
-  "lockin-v5-max-smart-lock": Array.from({ length: 22 }, (_, index) => ({
+  "lockin-v5-max-smart-lock": Array.from({ length: 6 }, (_, index) => ({
     src: `/img/products/lockin-v5-max/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
     alt: "Lockin V5 Max smart lock installed on an Adelaide front door",
   })),
@@ -197,7 +197,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </span>
                 )}
                 <span className="ml-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                  Inc. GST & Adelaide Install
+                  Adelaide Install Included
                 </span>
               </div>
 
