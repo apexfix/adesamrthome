@@ -1,10 +1,10 @@
 import { getProduct } from "@/lib/api";
 import { notFound } from "next/navigation";
-import { ShieldCheck, Calendar, Phone, Mail, CheckCircle2, ChevronRight, Zap, Camera } from "lucide-react";
+import { ShieldCheck, Calendar, Phone, ChevronRight, Zap } from "lucide-react";
 import { ProductGallery } from "@/components/ProductGallery";
+import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
 import Link from "next/link";
-import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -287,42 +287,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
 
-        {installationPhotos.length > 0 && (
-          <section className="mt-24 pt-20 border-t border-zinc-900">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
-              <div>
-                <p className="text-[#c5a47e] text-[10px] font-bold uppercase tracking-[0.3em] mb-3">
-                  Real Installations
-                </p>
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Adelaide On-Door Photos
-                </h2>
-              </div>
-              <p className="text-zinc-500 max-w-xl text-sm leading-relaxed">
-                Real front doors, real retrofits, and real finish quality from local Adelaide installations.
-              </p>
-            </div>
-
-            <div className="-mx-4 overflow-x-auto px-4 pb-4">
-              <div className="flex gap-4">
-                {installationPhotos.map((photo) => (
-                  <div
-                    key={photo.src}
-                    className="relative aspect-[4/5] w-[220px] md:w-[260px] shrink-0 overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800"
-                  >
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      className="object-cover transition-transform duration-500 hover:scale-105"
-                      sizes="260px"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        <InstallationPhotoStrip photos={installationPhotos} />
 
         {/* 【新增】：关联安装案例区域 */}
         {relatedStories.length > 0 && (
