@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface InstallationPhoto {
   src: string;
@@ -11,6 +11,66 @@ interface InstallationPhoto {
 
 export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[] }) {
   const [selectedPhoto, setSelectedPhoto] = useState<InstallationPhoto | null>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ active: false, moved: false, startX: 0, scrollLeft: 0 });
+
+  const scrollPhotos = (direction: "left" | "right") => {
+    const scroller = scrollerRef.current;
+
+    if (!scroller) {
+      return;
+    }
+
+    scroller.scrollBy({
+      left: direction === "left" ? -320 : 320,
+      behavior: "smooth",
+    });
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current;
+
+    if (!scroller) {
+      return;
+    }
+
+    dragState.current = {
+      active: true,
+      moved: false,
+      startX: event.clientX,
+      scrollLeft: scroller.scrollLeft,
+    };
+    scroller.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current;
+
+    if (!scroller || !dragState.current.active) {
+      return;
+    }
+
+    const distance = event.clientX - dragState.current.startX;
+
+    if (Math.abs(distance) > 6) {
+      dragState.current.moved = true;
+    }
+
+    scroller.scrollLeft = dragState.current.scrollLeft - distance;
+  };
+
+  const handlePointerUp = () => {
+    dragState.current.active = false;
+  };
+
+  const handlePhotoClick = (photo: InstallationPhoto) => {
+    if (dragState.current.moved) {
+      dragState.current.moved = false;
+      return;
+    }
+
+    setSelectedPhoto(photo);
+  };
 
   useEffect(() => {
     if (!selectedPhoto) {
@@ -53,13 +113,39 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
           </p>
         </div>
 
-        <div className="-mx-4 overflow-x-auto px-4 pb-2 no-scrollbar">
+        <div className="flex justify-end gap-3 mb-5">
+          <button
+            type="button"
+            onClick={() => scrollPhotos("left")}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/70 text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
+            aria-label="Scroll installation photos left"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollPhotos("right")}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/70 text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
+            aria-label="Scroll installation photos right"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div
+          ref={scrollerRef}
+          className="-mx-4 overflow-x-auto px-4 pb-2 no-scrollbar cursor-grab active:cursor-grabbing select-none touch-pan-x"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+        >
           <div className="flex gap-4">
             {photos.map((photo) => (
               <button
                 key={photo.src}
                 type="button"
-                onClick={() => setSelectedPhoto(photo)}
+                onClick={() => handlePhotoClick(photo)}
                 className="group relative aspect-[4/5] w-[220px] md:w-[260px] shrink-0 overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
                 aria-label={`Open photo: ${photo.alt}`}
               >
