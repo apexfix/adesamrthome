@@ -27,7 +27,87 @@ const s50mProImages = [
   "/img/products/lockin-s50m-pro/gallery/s50m-pro-gallery-05.png",
 ];
 
+const sv40Images = [
+  "/img/products/lockin-sv40/gallery/sv40-gallery-01.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-02.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-03.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-04.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-05.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-06.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-07.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-08.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-09.png",
+  "/img/products/lockin-sv40/gallery/sv40-gallery-10.png",
+];
+
 export const localProducts = [
+  {
+    id: 900003,
+    name: "Lockin SV40 Smart Lock",
+    slug: "lockin-sv40-smart-lock",
+    sku: "LOCKIN-SV40",
+    short_description:
+      "Stylish Lockin finger-vein smart lock with push-pull access, app control, Bluetooth, NFC, passcode and mechanical key backup. Available with Adelaide installation by ADE Smart Home.",
+    description: `
+      <h2>Effortless Finger-Vein Smart Lock</h2>
+      <p>The Lockin SV40 is a stylish mid-tier smart lock for Adelaide homes that want fast keyless entry without moving into a full camera lock. It combines finger-vein recognition, app control, Bluetooth, NFC, passcode access and a clean push-pull design.</p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>Finger-vein access designed for fast, reliable family entry.</li>
+        <li>MI Home ecosystem support with Bluetooth and remote-access-ready setup.</li>
+        <li>Passcode, NFC card, mobile app and physical key backup.</li>
+        <li>Auto-lock convenience for families, rental homes and Airbnb check-ins.</li>
+        <li>Up to 12-month battery life for everyday residential use.</li>
+        <li>Works across -20 C to 55 C conditions.</li>
+        <li>C-grade security cylinder and forced-entry alarm support.</li>
+      </ul>
+      <h2>Adelaide Installation</h2>
+      <p>The listed price includes standard Adelaide installation. Before booking, send photos of your door, frame, existing lock and any screen door so ADE Smart Home can confirm compatibility.</p>
+      <h2>Best For</h2>
+      <ul>
+        <li>Families who want simple keyless entry for kids and grandparents.</li>
+        <li>Airbnb hosts who want easier guest access without managing physical keys.</li>
+        <li>Builders and renovators looking for a clean modern lock at a practical price.</li>
+      </ul>
+      <h2>Compatibility Notes</h2>
+      <p>Door thickness, lock body space, glass clearance and security screen clearance must be checked before installation. Some doors may require extra preparation or may suit another model better.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 4, name: "Fingerprint Smart Locks", slug: "fingerprint-smart-locks" },
+    ],
+    tags: [
+      { id: 1, name: "Lockin", slug: "lockin" },
+      { id: 2, name: "SV40", slug: "sv40" },
+      { id: 3, name: "Finger Vein", slug: "finger-vein" },
+      { id: 4, name: "NFC Card", slug: "nfc-card" },
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+    ],
+    prices: {
+      price: "79900",
+      regular_price: "79900",
+      sale_price: "79900",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    images: sv40Images.map((src, index) => ({
+      id: 900201 + index,
+      src,
+      alt: "Lockin SV40 smart lock product image",
+    })),
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["SV40"] },
+      { id: 3, name: "Access Methods", options: ["Finger vein", "Passcode", "NFC card", "Mobile app", "Bluetooth", "Physical key"] },
+      { id: 4, name: "Connectivity", options: ["MI Home ecosystem", "Bluetooth", "Remote access ready", "Smart scene compatible"] },
+      { id: 5, name: "Battery Life", options: ["Up to 12 months"] },
+      { id: 6, name: "Security", options: ["C-grade security cylinder", "Forced-entry alarm"] },
+      { id: 7, name: "Operation Temperature", options: ["-20 C to 55 C"] },
+      { id: 8, name: "Colour", options: ["Grey"] },
+    ],
+  },
   {
     id: 900002,
     name: "Lockin S50M Pro Smart Lock",
