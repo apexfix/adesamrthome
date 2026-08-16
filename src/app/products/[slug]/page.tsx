@@ -80,6 +80,10 @@ const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> =
     src: `/img/products/lockin-sv40/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
     alt: "Lockin SV40 smart lock installed on an Adelaide front door",
   })),
+  "lockin-s6-max-smart-lock": Array.from({ length: 4 }, (_, index) => ({
+    src: `/img/products/lockin-s6-max/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
+    alt: "Lockin S6 Max smart lock installed on an Adelaide front door",
+  })),
 };
 
 export default async function ProductPage({ params }: ProductPageProps) {

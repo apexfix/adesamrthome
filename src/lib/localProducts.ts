@@ -40,7 +40,88 @@ const sv40Images = [
   "/img/products/lockin-sv40/gallery/sv40-gallery-10.png",
 ];
 
+const s6MaxImages = [
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-01.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-02.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-03.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-04.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-05.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-06.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-07.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-08.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-09.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-10.png",
+  "/img/products/lockin-s6-max/gallery/s6-max-gallery-11.png",
+];
+
 export const localProducts = [
+  {
+    id: 900004,
+    name: "Lockin S6 Max Smart Lock",
+    slug: "lockin-s6-max-smart-lock",
+    sku: "LOCKIN-S6-MAX",
+    short_description:
+      "Premium Lockin camera smart lock with 3D face recognition, third-generation finger-vein access, dual cameras, remote video calling and Adelaide installation by ADE Smart Home.",
+    description: `
+      <h2>High-Security Camera Smart Lock</h2>
+      <p>The Lockin S6 Max is a premium smart lock for Adelaide homes that need strong biometric security, a built-in camera view and multiple ways to unlock. It combines 3D face recognition, third-generation finger-vein recognition, passcode, app Bluetooth, one-time code, mechanical key backup and optional NFC or Bluetooth key access.</p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>3D face recognition plus third-generation finger-vein recognition.</li>
+        <li>Financial-grade dual biometrics with chip-level protection.</li>
+        <li>Dual camera system with active detection and capture.</li>
+        <li>Remote video calling for visitor checks and secure access control.</li>
+        <li>4.7-inch indoor display for clear front-door viewing.</li>
+        <li>Mechanical deadbolt backup with C-grade lock protection.</li>
+        <li>Low-battery, forced-entry, lingering, unlocked-door and tamper alerts.</li>
+      </ul>
+      <h2>Adelaide Installation</h2>
+      <p>The listed price includes standard Adelaide installation. Send door, frame, lock position, glass clearance and screen-door clearance photos before booking so ADE Smart Home can confirm the installation is suitable.</p>
+      <h2>Best For</h2>
+      <ul>
+        <li>Families who want face, vein and app-based entry in one lock.</li>
+        <li>Homes needing video monitoring at the front door without a separate doorbell.</li>
+        <li>Owners who want a premium lock with strong physical and biometric backup.</li>
+      </ul>
+      <h2>Compatibility Notes</h2>
+      <p>S6 Max needs careful compatibility checking because camera locks and mortise locks require suitable door thickness, lock body room, frame alignment and screen-door clearance. Some retrofits may require extra preparation.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 3, name: "Smart Locks with Camera", slug: "smart-locks-with-camera" },
+    ],
+    tags: [
+      { id: 1, name: "Lockin", slug: "lockin" },
+      { id: 2, name: "S6 Max", slug: "s6-max" },
+      { id: 3, name: "Face ID", slug: "face-id" },
+      { id: 4, name: "Finger Vein", slug: "finger-vein" },
+      { id: 5, name: "Camera Smart Lock", slug: "camera-smart-lock" },
+    ],
+    prices: {
+      price: "119900",
+      regular_price: "119900",
+      sale_price: "119900",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    images: s6MaxImages.map((src, index) => ({
+      id: 900301 + index,
+      src,
+      alt: "Lockin S6 Max smart lock product image",
+    })),
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["S6 Max"] },
+      { id: 3, name: "Access Methods", options: ["3D face recognition", "Finger vein", "Passcode", "App Bluetooth", "One-time code", "Mechanical key", "Optional NFC card", "Optional Bluetooth key"] },
+      { id: 4, name: "Camera", options: ["Dual camera system", "Remote video calling", "Active detection and capture"] },
+      { id: 5, name: "Display", options: ["4.7-inch indoor display"] },
+      { id: 6, name: "Security", options: ["Financial-grade dual biometrics", "Mechanical deadbolt backup", "C-grade lock"] },
+      { id: 7, name: "Alerts", options: ["Low battery", "Forced entry", "Lingering", "Unlocked door", "Repeated tampering"] },
+      { id: 8, name: "Colour", options: ["Black"] },
+    ],
+  },
   {
     id: 900003,
     name: "Lockin SV40 Smart Lock",
