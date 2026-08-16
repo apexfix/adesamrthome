@@ -17,6 +17,7 @@ export function ProductCard({ product }: { product: any }) {
 
   // 判断是否正在打折
   const isOnSale = regularPrice !== currentPrice;
+  const hasPrice = parseInt(product.prices?.price || "0") > 0;
 
   // 处理图片和分类
   const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
@@ -66,15 +67,15 @@ export function ProductCard({ product }: { product: any }) {
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
             <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
-              {isOnSale ? "Special Offer" : "Full Package Price"}
+              {!hasPrice ? "Installed Quote" : isOnSale ? "Special Offer" : "Full Package Price"}
             </p>
             <div className="flex items-baseline gap-2">
               {/* 现价 */}
               <p className="text-2xl font-black text-[#c5a47e] tracking-tighter">
-                ${currentPrice}
+                {hasPrice ? `$${currentPrice}` : "Quote Required"}
               </p>
               {/* 原价（仅在打折时显示） */}
-              {isOnSale && (
+              {hasPrice && isOnSale && (
                 <p className="text-sm text-zinc-500 line-through decoration-zinc-600 font-medium">
                   ${regularPrice}
                 </p>

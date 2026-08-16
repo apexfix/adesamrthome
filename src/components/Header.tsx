@@ -68,6 +68,12 @@ export function Header() {
                       Smart Locks
                     </Link>
                     <Link 
+                      href="/products?category=Lockin" 
+                      className="block px-5 py-4 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-900 border-b border-zinc-800/50 transition-colors"
+                    >
+                      Lockin
+                    </Link>
+                    <Link 
                       href="/products?category=CCTV" 
                       className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
                     >
@@ -139,6 +145,9 @@ export function Header() {
                     </Link>
                     <Link href="/products?category=SMART+LOCK" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
                       └ Smart Locks (智能锁门锁)
+                    </Link>
+                    <Link href="/products?category=Lockin" className="pl-8 text-zinc-500 hover:text-[#c5a47e] text-sm" onClick={() => setIsMenuOpen(false)}>
+                      └ Lockin
                     </Link>
                     <Link href="/products?category=CCTV" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
                       └ CCTV Systems (监控安装)

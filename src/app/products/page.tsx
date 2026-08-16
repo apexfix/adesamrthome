@@ -4,6 +4,66 @@ import { ProductCard } from "@/components/ProductCard";
 // 强制每次访问都进行动态渲染，严禁使用打包时的静态缓存
 export const dynamic = "force-dynamic";
 
+const SMART_LOCK_CHILD_CATEGORIES = new Set([
+  "smartlock",
+  "smartlocks",
+  "smartlockwithcamera",
+  "lockin",
+  "philips",
+  "ezviz",
+  "samsung",
+  "dessmann",
+  "aqara",
+  "kaadas",
+  "eufy",
+  "yale",
+]);
+
+function normalizeCategory(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function productMatchesCategory(product: any, categoryParam: string) {
+  const requested = normalizeCategory(categoryParam);
+  const categories = product.categories || [];
+
+  return categories.some((cat: any) => {
+    const categoryName = normalizeCategory(cat.name || "");
+    const categorySlug = normalizeCategory(cat.slug || "");
+
+    if (categoryName === requested || categorySlug === requested) {
+      return true;
+    }
+
+    if (requested === "smartlock" || requested === "smartlocks") {
+      return (
+        SMART_LOCK_CHILD_CATEGORIES.has(categoryName) ||
+        SMART_LOCK_CHILD_CATEGORIES.has(categorySlug)
+      );
+    }
+
+    return false;
+  });
+}
+
+function getPageTitle(categoryParam: string | null) {
+  const normalized = categoryParam ? normalizeCategory(categoryParam) : "";
+
+  if (normalized === "smartlock" || normalized === "smartlocks") {
+    return "Smart Locks";
+  }
+
+  if (normalized === "cctv") {
+    return "CCTV Systems";
+  }
+
+  if (normalized === "lockin") {
+    return "Lockin Smart Locks";
+  }
+
+  return categoryParam || "All Products";
+}
+
 export default async function ProductsPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
@@ -19,21 +79,11 @@ export default async function ProductsPage(props: {
     console.error("Failed to fetch products", error);
   }
 
-  // 核心过滤逻辑：严格匹配参数与 WP 分类名
   const displayedProducts = categoryParam
-    ? allProducts.filter((product: any) =>
-        product.categories?.some(
-          (cat: any) => cat.name.toUpperCase() === categoryParam.toUpperCase()
-        )
-      )
+    ? allProducts.filter((product: any) => productMatchesCategory(product, categoryParam))
     : allProducts;
 
-  // 动态页面标题
-  const pageTitle = categoryParam === "SMART LOCK" 
-    ? "Smart Locks" 
-    : categoryParam === "CCTV" 
-    ? "CCTV Systems" 
-    : "All Products";
+  const pageTitle = getPageTitle(categoryParam);
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">
