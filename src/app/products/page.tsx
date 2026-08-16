@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
+import Link from "next/link";
 
 // 强制每次访问都进行动态渲染，严禁使用打包时的静态缓存
 export const dynamic = "force-dynamic";
@@ -18,6 +19,8 @@ const SMART_LOCK_CHILD_CATEGORIES = new Set([
   "eufy",
   "yale",
 ]);
+
+const SMART_LOCK_BRANDS = ["Lockin", "Philips", "EZVIZ", "Samsung", "Dessmann"];
 
 function normalizeCategory(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -46,6 +49,19 @@ function productMatchesCategory(product: any, categoryParam: string) {
   });
 }
 
+function productMatchesBrand(product: any, brandParam: string) {
+  const requested = normalizeCategory(brandParam);
+  const searchableValues = [
+    ...(product.tags || []).map((tag: any) => tag.name || tag.slug || ""),
+    ...(product.brands || []).map((brand: any) => brand.name || brand.slug || ""),
+    ...(product.categories || []).map((cat: any) => cat.name || cat.slug || ""),
+    product.name || "",
+    product.sku || "",
+  ];
+
+  return searchableValues.some((value) => normalizeCategory(value).includes(requested));
+}
+
 function getPageTitle(categoryParam: string | null) {
   const normalized = categoryParam ? normalizeCategory(categoryParam) : "";
 
@@ -70,6 +86,7 @@ export default async function ProductsPage(props: {
   // 兼容 Next.js 最新版本的异步参数读取逻辑
   const params = props.searchParams ? await props.searchParams : {};
   const categoryParam = typeof params.category === 'string' ? params.category : null;
+  const brandParam = typeof params.brand === 'string' ? params.brand : null;
 
   // 从 WordPress 获取产品数据
   let allProducts = [];
@@ -79,11 +96,18 @@ export default async function ProductsPage(props: {
     console.error("Failed to fetch products", error);
   }
 
-  const displayedProducts = categoryParam
+  const categoryProducts = categoryParam
     ? allProducts.filter((product: any) => productMatchesCategory(product, categoryParam))
     : allProducts;
 
+  const displayedProducts = brandParam
+    ? categoryProducts.filter((product: any) => productMatchesBrand(product, brandParam))
+    : categoryProducts;
+
   const pageTitle = getPageTitle(categoryParam);
+  const isSmartLocksPage =
+    categoryParam !== null &&
+    ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">
@@ -99,6 +123,33 @@ export default async function ProductsPage(props: {
              <p className="mt-6 text-zinc-400 max-w-2xl mx-auto">
                Showing all available products in the {pageTitle} category.
              </p>
+          )}
+          {isSmartLocksPage && (
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/products?category=SMART+LOCK"
+                className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
+                  !brandParam
+                    ? "border-[#c5a47e] bg-[#c5a47e] text-black"
+                    : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                }`}
+              >
+                All Brands
+              </Link>
+              {SMART_LOCK_BRANDS.map((brand) => (
+                <Link
+                  key={brand}
+                  href={`/products?category=SMART+LOCK&brand=${encodeURIComponent(brand)}`}
+                  className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
+                    brandParam && normalizeCategory(brandParam) === normalizeCategory(brand)
+                      ? "border-[#c5a47e] bg-[#c5a47e] text-black"
+                      : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                  }`}
+                >
+                  {brand}
+                </Link>
+              ))}
+            </div>
           )}
         </div>
 
