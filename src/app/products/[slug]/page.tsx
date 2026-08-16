@@ -1,6 +1,6 @@
 import { getProduct } from "@/lib/api";
 import { notFound } from "next/navigation";
-import { ShieldCheck, Calendar, Phone, ChevronRight, Zap } from "lucide-react";
+import { ShieldCheck, Calendar, Ruler, ChevronRight, Zap } from "lucide-react";
 import { ProductGallery } from "@/components/ProductGallery";
 import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
@@ -240,13 +240,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <Calendar className="w-5 h-5" />
                   Book Install
                 </Link>
-                <a 
-                  href="tel:0493343981"
+                <Link 
+                  href="/blog/smart-lock-door-compatibility-check"
                   className="h-16 bg-transparent text-white border-2 border-zinc-800 hover:border-[#c5a47e] rounded-full font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
-                  <Phone className="w-5 h-5" />
-                  Call Expert
-                </a>
+                  <Ruler className="w-5 h-5" />
+                  Check Door Fit
+                </Link>
               </div>
             </div>
           </div>

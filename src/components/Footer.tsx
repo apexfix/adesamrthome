@@ -123,11 +123,11 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="tel:0493343981" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
+                <a href="tel:0431060390" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
                   <Phone className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
                   <div>
                     <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Phone</div>
-                    <div>0493343981</div>
+                    <div>0431060390</div>
                   </div>
                 </a>
               </li>

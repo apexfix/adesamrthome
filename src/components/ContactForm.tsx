@@ -78,7 +78,7 @@ export function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-bold text-zinc-200">Phone</h4>
-                    <p className="text-zinc-400 mt-1 text-sm">0493343981</p>
+                    <p className="text-zinc-400 mt-1 text-sm">0431060390</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 group">

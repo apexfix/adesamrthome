@@ -109,9 +109,9 @@ export function Header() {
             </div>
 
             <div className="hidden lg:flex items-center gap-6 text-sm text-white/90">
-               <a href="tel:0493343981" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
+               <a href="tel:0431060390" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
                  <Phone className="h-4 w-4 text-[#c5a47e]" />
-                 <span className="font-medium tracking-wide">0493343981</span>
+                 <span className="font-medium tracking-wide">0431060390</span>
                </a>
             </div>
           </div>
@@ -157,8 +157,8 @@ export function Header() {
               <a href="https://www.tiktok.com/@adesmarthome" target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
               <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
             </div>
-            <a href="tel:0493343981" className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
-              <Phone className="h-5 w-5" /> 0493343981
+            <a href="tel:0431060390" className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
+              <Phone className="h-5 w-5" /> 0431060390
             </a>
           </div>
         </div>

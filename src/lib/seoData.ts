@@ -2,8 +2,8 @@ export const siteUrl = "https://www.adesmarthome.com.au";
 
 export const businessInfo = {
   name: "ADE Smart Home",
-  phone: "0493343981",
-  phoneInternational: "+61493343981",
+  phone: "0431060390",
+  phoneInternational: "+61431060390",
   email: "smarthomeade@gmail.com",
   addressLocality: "Adelaide",
   addressRegion: "SA",
