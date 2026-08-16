@@ -1,4 +1,5 @@
 import { WORDPRESS_URL } from "./constants";
+import { localProducts } from "./localProducts";
 
 // Use Plain Permalinks format since /wp-json/ is not working
 const STORE_API_BASE = "/?rest_route=/wc/store/v1";
@@ -31,10 +32,25 @@ export async function fetchStoreAPI(path: string, options: RequestInit = {}) {
 
 export async function getProducts(page = 1, perPage = 20) {
   // Store API uses 'page' and 'per_page'
-  return fetchStoreAPI(`/products?page=${page}&per_page=${perPage}`);
+  try {
+    const products = await fetchStoreAPI(`/products?page=${page}&per_page=${perPage}`);
+    const existingSlugs = new Set(products.map((product: any) => product.slug));
+    const additionalProducts = localProducts.filter((product) => !existingSlugs.has(product.slug));
+
+    return [...products, ...additionalProducts];
+  } catch (error) {
+    console.error("Failed to fetch WordPress products, using local products", error);
+    return localProducts;
+  }
 }
 
 export async function getProduct(slug: string) {
+  const localProduct = localProducts.find((product) => product.slug === slug);
+
+  if (localProduct) {
+    return localProduct;
+  }
+
   // Store API allows filtering by slug? 
   // /products?slug=abc
   const products = await fetchStoreAPI(`/products?slug=${slug}`);
