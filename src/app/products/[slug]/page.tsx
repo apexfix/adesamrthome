@@ -4,6 +4,7 @@ import { ShieldCheck, Calendar, Phone, Mail, CheckCircle2, ChevronRight, Zap, Ca
 import { ProductGallery } from "@/components/ProductGallery";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
 import Link from "next/link";
+import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -36,6 +37,43 @@ function getAttributeValues(attribute: any) {
   return [];
 }
 
+const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> = {
+  "lockin-s50m-pro-smart-lock": [
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-01.jpg",
+      alt: "Lockin smart lock installed on black glass entry door in Adelaide",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-02.jpg",
+      alt: "Close-up of Lockin smart lock keypad and camera after installation",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-03.jpg",
+      alt: "Close-up view of Lockin smart lock camera module on black door",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-04.jpg",
+      alt: "Lockin smart lock installed on white front door with sidelights",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-05.jpg",
+      alt: "Lockin smart lock product front and interior panel",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-06.jpg",
+      alt: "Lockin smart lock installed beside stainless pull handle",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-07.jpg",
+      alt: "Real installation close-up of Lockin keypad smart lock",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-08.jpg",
+      alt: "Lockin smart lock installed on timber entry door",
+    },
+  ],
+};
+
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   let product = null;
@@ -60,6 +98,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
     : [{ src: "/placeholder.jpg", alt: product.name }];
+  const installationPhotos = installationPhotosBySlug[slug] || [];
 
   // 2. 【新增】获取关联的安装案例
   const postsDirectory = path.join(process.cwd(), "content/posts");
@@ -125,12 +164,42 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start mb-32">
           {/* 左侧：图片展示 */}
-          <div className="relative rounded-[2.5rem] overflow-hidden border border-zinc-900 bg-zinc-900/50 shadow-2xl">
-            <ProductGallery images={galleryImages} />
-            {isOnSale && (
-              <div className="absolute top-8 right-8 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg z-20">
-                Special Offer
-              </div>
+          <div className="space-y-8">
+            <div className="relative rounded-[2.5rem] overflow-hidden border border-zinc-900 bg-zinc-900/50 shadow-2xl">
+              <ProductGallery images={galleryImages} />
+              {isOnSale && (
+                <div className="absolute top-8 right-8 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg z-20">
+                  Special Offer
+                </div>
+              )}
+            </div>
+
+            {installationPhotos.length > 0 && (
+              <section className="rounded-[2rem] border border-zinc-900 bg-zinc-900/40 p-5 md:p-6">
+                <div className="mb-5">
+                  <p className="text-[#c5a47e] text-[10px] font-bold uppercase tracking-[0.3em] mb-2">
+                    Real Installations
+                  </p>
+                  <h2 className="text-xl font-bold text-white">Adelaide On-Door Photos</h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {installationPhotos.map((photo) => (
+                    <div
+                      key={photo.src}
+                      className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800"
+                    >
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 hover:scale-105"
+                        sizes="(max-width: 1024px) 50vw, 25vw"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
           </div>
 
