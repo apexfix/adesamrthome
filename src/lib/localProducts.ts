@@ -131,9 +131,9 @@ export const localProducts = [
       { id: 5, name: "Camera", slug: "camera" },
     ],
     prices: {
-      price: "111900",
+      price: "139900",
       regular_price: "139900",
-      sale_price: "111900",
+      sale_price: "139900",
       currency_code: "AUD",
       currency_symbol: "$",
       currency_minor_unit: 2,
