@@ -24,6 +24,18 @@ interface Story {
   date: string;
 }
 
+function getAttributeValues(attribute: any) {
+  if (Array.isArray(attribute.options)) {
+    return attribute.options;
+  }
+
+  if (Array.isArray(attribute.terms)) {
+    return attribute.terms.map((term: any) => term.name || term.slug).filter(Boolean);
+  }
+
+  return [];
+}
+
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   let product = null;
@@ -209,12 +221,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             {product.attributes && (
               <dl className="space-y-6">
-                {product.attributes.map((attr: any) => (
-                  <div key={attr.id} className="border-b border-zinc-900 pb-4">
-                    <dt className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-1">{attr.name}</dt>
-                    <dd className="text-white font-medium">{attr.options.join(", ")}</dd>
-                  </div>
-                ))}
+                {product.attributes.map((attr: any, index: number) => {
+                  const values = getAttributeValues(attr);
+
+                  if (values.length === 0) {
+                    return null;
+                  }
+
+                  return (
+                    <div key={`${attr.name}-${attr.id || index}`} className="border-b border-zinc-900 pb-4">
+                      <dt className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-1">{attr.name}</dt>
+                      <dd className="text-white font-medium">{values.join(", ")}</dd>
+                    </div>
+                  );
+                })}
               </dl>
             )}
           </div>
