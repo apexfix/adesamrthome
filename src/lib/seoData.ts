@@ -4,7 +4,7 @@ export const businessInfo = {
   name: "ADE Smart Home",
   phone: "0431060390",
   phoneInternational: "+61431060390",
-  email: "smarthomeade@gmail.com",
+  email: "info@adesmarthome.com.au",
   addressLocality: "Adelaide",
   addressRegion: "SA",
   postalCode: "5000",

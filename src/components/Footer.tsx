@@ -132,11 +132,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:smarthomeade@gmail.com" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
+                <a href="mailto:info@adesmarthome.com.au" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
                   <Mail className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
                   <div className="overflow-hidden">
                     <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Email</div>
-                    <div className="truncate">smarthomeade@gmail.com</div>
+                    <div className="truncate">info@adesmarthome.com.au</div>
                   </div>
                 </a>
               </li>

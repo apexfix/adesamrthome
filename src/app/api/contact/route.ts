@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     // Email content
     const mailOptions = {
       from: '"SmartLock Website" <zhuge202322@gmail.com>',
-      to: 'smarthomeade@gmail.com', // Recipient email
+      to: 'info@adesmarthome.com.au', // Recipient email
       replyTo: email, // Allow replying directly to the customer
       subject: `New Inquiry: ${subject}`,
       text: `

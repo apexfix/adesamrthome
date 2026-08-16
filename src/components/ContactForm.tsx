@@ -87,7 +87,7 @@ export function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-bold text-zinc-200">Email</h4>
-                    <p className="text-zinc-400 mt-1 text-sm break-all">smarthomeade@gmail.com</p>
+                    <p className="text-zinc-400 mt-1 text-sm break-all">info@adesmarthome.com.au</p>
                   </div>
                 </div>
                 <div className="pt-6 border-t border-zinc-800 flex items-center gap-3">
