@@ -1,11 +1,38 @@
 ---
 title: "Can Your Door Take a Smart Lock? ADE's Adelaide Door Compatibility Check"
 date: "2026-08-16"
-description: "A practical guide for Adelaide homeowners to check whether their front door, frame, handle position and lock body are suitable for a smart lock installation."
-coverImage: "/img/products/lockin-s50m-pro/real-install-02.jpg"
+description: "Check door edge clearance, door thickness and screen door clearance before booking a smart lock installation in Adelaide."
+coverImage: "/img/smart-lock-door-measurement-requirements.png"
 category: "Buyer Guide"
 suburb: "Adelaide Metro"
 ---
+
+![Smart Lock Door Measurement Requirements](/img/smart-lock-door-measurement-requirements.png)
+
+## Smart Lock Door Measurement Requirements
+Before installation, please check the following measurements:
+
+### 1. Door Edge to Glass
+If your door has a glass panel, the distance from the **edge of the door to the glass should generally be more than 105 mm**.
+
+### 2. Door Thickness
+The door should be **more than 40 mm thick**.
+
+### 3. Security / Screen Door Clearance
+If there is a security door or screen door in front of the main door, please make sure the **clearance between the two doors is more than 70 mm** so the smart lock does not interfere with the screen door when closing.
+
+## Send Us Door Photos to Confirm Suitability
+Please send us photos of your front door before booking or purchasing a lock. We can check the photos and confirm whether your door is suitable for smart lock installation, whether custom work is needed, or whether another model would be a better fit.
+
+Please send clear photos of:
+
+- The front and back of the door
+- The edge/side of the door
+- The door thickness measurement
+- The distance from the door edge to the glass, if applicable
+- The clearance between the main door and screen/security door, if applicable
+
+These measurements and photos help us confirm whether your door is suitable for smart lock installation and ensure a smoother setup.
 
 ## Before You Buy: Check the Door First
 Most smart locks can be installed cleanly on common Adelaide timber doors, security doors and many modern entry doors. The important part is checking the door and frame before choosing the model.
@@ -21,18 +48,6 @@ Use this checklist before booking an installation or ordering a lock.
 4. **Existing lock position**: If the current handle or deadbolt is too close to the door edge, glass panel or metal frame, the lock choice matters.
 5. **Pull handle clearance**: Long pull handles can clash with wide smart lock bodies if the spacing is too tight.
 6. **Door alignment**: If the door already rubs, drops or needs lifting to lock, it should be adjusted before fitting a smart lock.
-
-## Photos We Need From You
-To confirm compatibility quickly, send us clear photos of:
-
-- The whole door from outside
-- A close-up of the current handle and lock
-- The door edge with the latch visible
-- The door frame where the latch goes in
-- The inside handle area
-- Any glass panel, pull handle or security screen near the lock
-
-These photos usually let us tell you whether the lock can be installed normally, whether it needs custom work, or whether another model would be a better fit.
 
 ## Doors That Usually Work Well
 Smart locks usually work well on standard hinged front doors with enough flat space around the existing handle. Timber doors are the most flexible because the mortise pocket, latch hole and strike plate can be adjusted neatly.
