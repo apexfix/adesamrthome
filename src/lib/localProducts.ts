@@ -54,7 +54,85 @@ const s6MaxImages = [
   "/img/products/lockin-s6-max/gallery/s6-max-gallery-11.png",
 ];
 
+const x9Images = [
+  "/img/products/lockin-x9/gallery/x9-gallery-01.jpg",
+  "/img/products/lockin-x9/gallery/x9-gallery-02.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-03.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-04.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-05.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-06.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-07.png",
+  "/img/products/lockin-x9/gallery/x9-gallery-08.png",
+];
+
 export const localProducts = [
+  {
+    id: 900005,
+    name: "Lockin X9 Smart Lock",
+    slug: "lockin-x9-smart-lock",
+    sku: "LOCKIN-X9",
+    short_description:
+      "Reliable Lockin multi-access smart lock with fingerprint, PIN, app, NFC card, Bluetooth key, backup key and Adelaide installation by ADE Smart Home.",
+    description: `
+      <h2>Reliable Everyday Smart Lock</h2>
+      <p>The Lockin X9 is a practical smart lock for Adelaide homes, rentals and small projects that need secure keyless entry without moving into a large camera lock. It gives families and guests multiple access methods while keeping a clean front-door look.</p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>Fingerprint, passcode, app, NFC card, Bluetooth key and physical key access.</li>
+        <li>Adaptive fingerprint recognition for everyday family use.</li>
+        <li>Works with 1000+ smart devices, scene automation and voice-control-ready setups.</li>
+        <li>Anti-peep password protection for safer PIN entry.</li>
+        <li>Forced-entry alarm support for extra front-door security.</li>
+        <li>Aircraft-grade aluminium body with C-grade security cylinder.</li>
+        <li>Designed for -20 C to 60 C operation.</li>
+      </ul>
+      <h2>Adelaide Installation</h2>
+      <p>The listed price includes standard Adelaide installation. Before booking, send clear photos of your door, frame, existing lock, door edge, glass clearance and any screen door so ADE Smart Home can confirm the installation is suitable.</p>
+      <h2>Best For</h2>
+      <ul>
+        <li>Families wanting a simple fingerprint and passcode smart lock.</li>
+        <li>Rental and Airbnb properties that need temporary access options.</li>
+        <li>Builders or renovators looking for a clean, cost-effective smart lock.</li>
+      </ul>
+      <h2>Compatibility Notes</h2>
+      <p>X9 suitability depends on door thickness, lock position, frame alignment, glass clearance and screen-door clearance. Some doors may need extra preparation or may suit a different model better.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 4, name: "Fingerprint Smart Locks", slug: "fingerprint-smart-locks" },
+    ],
+    tags: [
+      { id: 1, name: "Lockin", slug: "lockin" },
+      { id: 2, name: "X9", slug: "x9" },
+      { id: 3, name: "Fingerprint", slug: "fingerprint" },
+      { id: 4, name: "NFC Card", slug: "nfc-card" },
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+    ],
+    prices: {
+      price: "65000",
+      regular_price: "65000",
+      sale_price: "65000",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    images: x9Images.map((src, index) => ({
+      id: 900401 + index,
+      src,
+      alt: "Lockin X9 smart lock product image",
+    })),
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["X9"] },
+      { id: 3, name: "Access Methods", options: ["Fingerprint", "Passcode", "Mobile app", "NFC card", "Bluetooth key", "Physical key"] },
+      { id: 4, name: "Connectivity", options: ["Wi-Fi", "Bluetooth", "Smart home kit", "Scene automation", "Voice control ready"] },
+      { id: 5, name: "Security", options: ["C-grade cylinder", "Anti-peep password", "Forced-entry alarm"] },
+      { id: 6, name: "Material", options: ["Aircraft-grade aluminium"] },
+      { id: 7, name: "Operation Temperature", options: ["-20 C to 60 C"] },
+      { id: 8, name: "Colour", options: ["Black"] },
+    ],
+  },
   {
     id: 900004,
     name: "Lockin S6 Max Smart Lock",

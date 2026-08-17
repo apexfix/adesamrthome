@@ -5,6 +5,7 @@ description: "Check door edge clearance, door thickness and screen door clearanc
 coverImage: "/img/smart-lock-door-measurement-requirements.png"
 category: "Buyer Guide"
 suburb: "Adelaide Metro"
+pinned: true
 ---
 
 ![Smart Lock Door Measurement Requirements](/img/smart-lock-door-measurement-requirements.png)
