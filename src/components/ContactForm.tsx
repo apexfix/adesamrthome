@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, Phone, MapPin, Send, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle2 } from "lucide-react";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -89,10 +89,6 @@ export function ContactForm() {
                     <h4 className="font-bold text-zinc-200">Email</h4>
                     <p className="text-zinc-400 mt-1 text-sm break-all">info@adesmarthome.com.au</p>
                   </div>
-                </div>
-                <div className="pt-6 border-t border-zinc-800 flex items-center gap-3">
-                  <ShieldCheck className="w-5 h-5 text-[#c5a47e]" />
-                  <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">Licensed & Insured in Adelaide</p>
                 </div>
               </div>
             </div>
