@@ -256,9 +256,9 @@ export default function SupplyInstallationPage() {
             <span className="block text-[#d9b98f]">and Installed in Adelaide</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
-            Compare four installed-price smart locks from $650. We check your door,
-            recommend a suitable model, install it and help with basic setup. Already bought a
-            compatible smart lock? We also provide installation-only service.
+            Supply-and-install packages start at $650. Already bought a compatible smart lock?
+            Installation-only service is $150 for smaller locks and $350 for larger locks,
+            subject to a door compatibility check.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -294,9 +294,9 @@ export default function SupplyInstallationPage() {
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
             {[
-              "Packages from $650",
-              "Standard installation included",
-              "Customer-supplied locks welcome",
+              "Supply + install from $650",
+              "Small lock installation $150",
+              "Large lock installation $350",
               "Door checked before booking",
             ].map(
               (item) => (
@@ -411,8 +411,9 @@ export default function SupplyInstallationPage() {
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">
               Bought a Lockin, Philips, Aqara, Yale, Eufy or another smart lock elsewhere? Send
-              the exact model listing and clear photos of your door. We check compatibility first,
-              then confirm the installation scope and price before booking.
+              the exact model listing and clear photos of your door. Small smart lock installation
+              is $150 and large smart lock installation is $350, subject to a compatibility check.
+              We confirm the installation scope before booking.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -447,8 +448,8 @@ export default function SupplyInstallationPage() {
                 "Door material, existing holes and required modification are checked before booking.",
               ],
               [
-                "No surprise pricing",
-                "Installation-only work is quoted after the compatibility review.",
+                "Clear installation pricing",
+                "Small locks are $150; large locks are $350 after the compatibility review.",
               ],
             ].map(([title, detail]) => (
               <article key={title} className="bg-[#f5f1eb] p-6">

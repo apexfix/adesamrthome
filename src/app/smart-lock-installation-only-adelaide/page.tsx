@@ -20,7 +20,7 @@ const pageUrl = `${siteUrl}/smart-lock-installation-only-adelaide`;
 export const metadata: Metadata = {
   title: "Smart Lock Installation Only Adelaide",
   description:
-    "Already bought a smart lock? Get professional installation in Adelaide for compatible customer-supplied fingerprint, keypad, video and imported smart locks. Send the model and door photos for assessment.",
+    "Already bought a smart lock? Adelaide installation-only service is $150 for smaller compatible smart locks and $350 for larger smart locks. Send the model and door photos for assessment.",
   keywords: [
     "smart lock installation only Adelaide",
     "customer supplied smart lock installation Adelaide",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Customer-Supplied Smart Lock Installation Adelaide",
     description:
-      "Professional installation for compatible smart locks you already own. Send the model and door photos before booking.",
+      "Installation-only service: $150 for smaller compatible smart locks and $350 for larger smart locks. Send the model and door photos before booking.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Lock Installation Only Adelaide",
     description:
-      "Professional installation for compatible customer-supplied smart locks across Adelaide.",
+      "$150 small-lock and $350 large-lock installation-only service for compatible customer-supplied smart locks across Adelaide.",
     images: ["/img/products/lockin-v5-max/real-install-04.jpg"],
   },
 };
@@ -111,7 +111,7 @@ const faqs = [
   {
     question: "How much does installation-only service cost?",
     answer:
-      "The price depends on the lock type, door material, existing holes and the amount of cutting or modification required. We quote after reviewing the model and door photos rather than applying one price to every installation.",
+      "Small smart lock installation is $150 and large smart lock installation is $350, subject to a compatibility check. Door material, existing holes and any non-standard cutting or repair work are reviewed before booking.",
   },
   {
     question: "Can you install imported Chinese smart locks?",
@@ -219,8 +219,9 @@ export default function InstallationOnlyPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
             Professional installation for compatible customer-supplied smart locks across
-            Adelaide. Send the exact model and door photos first so we can confirm the
-            likely scope before booking.
+            Adelaide. Small smart lock installation is $150 and large smart lock installation is
+            $350. Send the exact model and door photos first so we can confirm compatibility
+            before booking.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -241,7 +242,12 @@ export default function InstallationOnlyPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
-            {["400+ local installations", "Compatibility checked first", "No upfront payment"].map(
+            {[
+              "Small lock installation $150",
+              "Large lock installation $350",
+              "Compatibility checked first",
+              "No upfront payment",
+            ].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-2">
                   <Check className="h-4 w-4 text-emerald-400" aria-hidden="true" />
