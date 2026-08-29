@@ -1,17 +1,17 @@
-import { ContactForm } from "@/components/ContactForm";
-import { ShieldCheck, Phone, Clock } from "lucide-react";
 import type { Metadata } from "next";
+import { Clock, Phone, ShieldCheck } from "lucide-react";
+import { ContactForm } from "@/components/ContactForm";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "Contact Adelaide Smart Lock Installers",
+  title: "Get a Smart Lock or CCTV Quote in Adelaide",
   description:
-    "Send door photos for a free smart lock compatibility check and installed quote in Adelaide. Call 0431 060 390 or email info@adesmarthome.com.au.",
+    "Request a smart lock supply and installation quote, installation-only service or CCTV consultation in Adelaide. Call 0431 060 390.",
   alternates: { canonical: `${siteUrl}/contact` },
   openGraph: {
-    title: "Contact ADE Smart Home Adelaide",
+    title: "Get a Quote | ADE Smart Home Adelaide",
     description:
-      "Request a free door compatibility check and installed smart lock quote from our Adelaide team.",
+      "Request smart lock supply and installation, installation-only service or a CCTV consultation in Adelaide.",
     url: `${siteUrl}/contact`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
@@ -20,7 +20,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = searchParams ? await searchParams : {};
+  const initialService =
+    typeof params.service === "string" ? params.service : undefined;
+  const initialProduct =
+    typeof params.product === "string" ? params.product : undefined;
+
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -35,58 +45,58 @@ export default function ContactPage() {
   };
 
   return (
-    // 1. 全局背景统一为 zinc-950
-    <div className="min-h-screen bg-zinc-950 text-white pt-32">
+    <main className="min-h-screen bg-zinc-950 pt-28 text-white md:pt-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
-      
-      {/* 2. 精简后的 Hero 头部：去除白底，直接进入暗色模式 */}
-      <div className="container mx-auto px-4 md:px-6 mb-16 md:mb-24 relative">
-        {/* 背景光晕装饰 */}
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#c5a47e]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
+      <header className="container mx-auto px-4 pb-10 md:px-6 md:pb-14">
         <div className="max-w-4xl">
-          <p className="text-[#c5a47e] font-bold uppercase tracking-[0.4em] text-[10px] mb-6 animate-in fade-in slide-in-from-bottom-2 duration-700">
-            Adelaide&apos;s Smart Security Experts
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c5a47e]">
+            Adelaide smart security
           </p>
-          <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            Let&apos;s Secure <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a47e] via-[#e8d0a9] to-[#c5a47e]">Your Home.</span>
+          <h1 className="text-4xl font-black tracking-tight md:text-6xl">
+            Get the Right Advice Before You Book
           </h1>
-          <p className="text-zinc-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
-            Whether you need a custom quote for a complex retrofit or have a simple technical question, our Adelaide team is standing by to provide expert guidance.
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
+            Tell us whether you need a new smart lock, installation for a lock
+            you already own, CCTV, or help choosing. We will confirm the scope
+            and price before any booking.
           </p>
         </div>
-      </div>
+      </header>
 
-      {/* 3. 引入你的 ContactForm 组件：它自带 zinc-900 背景，能产生完美的层级感 */}
-      <div className="border-t border-zinc-900">
-        <ContactForm />
-      </div>
+      <ContactForm
+        initialService={initialService}
+        initialProduct={initialProduct}
+      />
 
-      {/* 4. 底部信任背书区 */}
-      <div className="py-20 bg-black border-t border-zinc-900/50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-            <div className="space-y-4">
-              <ShieldCheck className="w-10 h-10 text-[#c5a47e] mx-auto md:mx-0" />
-              <h4 className="font-bold text-lg">Professional Installation</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed">Specialized tools, careful door preparation and clean finishing for smart lock installations across Adelaide.</p>
-            </div>
-            <div className="space-y-4">
-              <Clock className="w-10 h-10 text-[#c5a47e] mx-auto md:mx-0" />
-              <h4 className="font-bold text-lg">Fast Response</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed">We respect your time. Expect a response to your digital inquiries within 2 business hours.</p>
-            </div>
-            <div className="space-y-4">
-              <Phone className="w-10 h-10 text-[#c5a47e] mx-auto md:mx-0" />
-              <h4 className="font-bold text-lg">Local Support</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed">No offshore call centers. You deal directly with our expert installers based right here in Adelaide.</p>
-            </div>
+      <section className="border-t border-zinc-900 bg-black py-16">
+        <div className="container mx-auto grid gap-10 px-4 md:grid-cols-3 md:px-6">
+          <div>
+            <ShieldCheck className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
+            <h2 className="mt-4 text-lg font-bold">Careful Installation</h2>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              Door suitability is checked before work begins, with clean preparation and finishing.
+            </p>
+          </div>
+          <div>
+            <Clock className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
+            <h2 className="mt-4 text-lg font-bold">Clear Next Steps</h2>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              We explain what photos or measurements are needed and confirm availability before booking.
+            </p>
+          </div>
+          <div>
+            <Phone className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
+            <h2 className="mt-4 text-lg font-bold">Local Adelaide Support</h2>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              Call 0431 060 390 to discuss smart locks, installation-only jobs or CCTV requirements.
+            </p>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

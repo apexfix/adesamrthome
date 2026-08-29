@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import { Calendar, MapPin, ArrowLeft, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/seoData";
@@ -172,7 +173,17 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               // 让 Markdown 里的图片自动适配样式
               img: ({node, ...props}) => {
                 void node;
-                return <img {...props} className="rounded-3xl border border-zinc-800 my-10 shadow-2xl w-full" alt={props.alt || "Installation Photo"} />;
+                if (typeof props.src !== "string") return null;
+                return (
+                  <Image
+                    src={props.src}
+                    alt={props.alt || "ADE Smart Home installation in Adelaide"}
+                    width={1400}
+                    height={900}
+                    sizes="(max-width: 1024px) 100vw, 900px"
+                    className="my-10 h-auto w-full rounded-md border border-zinc-800"
+                  />
+                );
               },
               // 让标题更好看
               h2: ({node, ...props}) => {
@@ -194,7 +205,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <div className="absolute top-0 left-0 w-full h-1 bg-[#c5a47e]" />
           <h3 className="text-2xl font-bold mb-4">Need a similar upgrade?</h3>
           <p className="text-zinc-500 mb-8 max-w-md mx-auto text-sm font-light">Contact Adelaide&apos;s smart lock specialists for a clean, reliable retrofit.</p>
-          <Link href="/contact" className="inline-flex h-14 items-center justify-center rounded-full bg-[#c5a47e] px-10 text-sm font-bold text-black hover:shadow-[0_0_30px_rgba(197,164,126,0.4)] transition-all active:scale-95">
+          <Link href="/contact?service=not-sure" className="inline-flex h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-10 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
             Get a Free Quote
           </Link>
         </div>

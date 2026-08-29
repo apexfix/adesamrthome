@@ -27,7 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link 
       href={`/products/${product.slug || product.id}`}
-      className="group relative flex flex-col bg-zinc-900/40 rounded-[2rem] overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/40 transition-all duration-500"
+      className="group relative flex flex-col overflow-hidden rounded-md border border-zinc-800/50 bg-zinc-900/40 transition-all duration-300 hover:border-[#c5a47e]/60"
     >
       {/* 1. Image Section */}
       <div className="aspect-square relative overflow-hidden bg-zinc-950">
@@ -35,21 +35,21 @@ export function ProductCard({ product }: { product: Product }) {
           src={displayImage} 
           alt={product.name || "Smart Lock"}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         
         {/* Sale Badge - 如果打折则显示 */}
         {isOnSale && (
-          <div className="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest z-10 animate-pulse">
+          <div className="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest z-10">
             Sale
           </div>
         )}
 
         {/* Installation Badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-[#c5a47e]/30 px-3 py-1.5 rounded-full z-10">
+        <div className="absolute top-4 left-4 flex items-center gap-1.5 border border-[#c5a47e]/30 bg-black/70 px-3 py-1.5 z-10">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
-          <span className="text-[9px] font-bold text-white uppercase tracking-widest">Installation Included</span>
+          <span className="text-[9px] font-bold text-white uppercase tracking-widest">Standard Install Included</span>
         </div>
       </div>
 
@@ -68,7 +68,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
             <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
-              {!hasPrice ? "Installed Quote" : isOnSale ? "Special Offer" : "Full Package Price"}
+              {!hasPrice ? "Installed Quote" : isOnSale ? "Special Offer" : "Installed Package"}
             </p>
             <div className="flex items-baseline gap-2">
               {/* 现价 */}
@@ -84,7 +84,7 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           </div>
           
-          <div className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:bg-[#c5a47e] group-hover:border-[#c5a47e] transition-all duration-300">
+          <div className="flex h-10 w-10 items-center justify-center border border-zinc-700 bg-zinc-800 transition-all duration-300 group-hover:border-[#c5a47e] group-hover:bg-[#c5a47e]">
             <Plus className="w-5 h-5 text-white group-hover:text-black transition-colors" />
           </div>
         </div>

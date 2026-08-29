@@ -1,187 +1,292 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Mail, Phone, Send, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import {
+  ArrowRight,
+  Camera,
+  CheckCircle2,
+  Phone,
+  Send,
+} from "lucide-react";
 
-export function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
-  });
+const serviceOptions = [
+  { value: "supply-install", label: "Supply & install" },
+  { value: "installation-only", label: "Installation only" },
+  { value: "cctv", label: "CCTV" },
+  { value: "not-sure", label: "Not sure" },
+] as const;
+
+const initialFormData = {
+  service: "supply-install",
+  product: "",
+  name: "",
+  phone: "",
+  suburb: "",
+  email: "",
+  message: "",
+};
+
+type ContactFormProps = {
+  initialService?: string;
+  initialProduct?: string;
+};
+
+export function ContactForm({
+  initialService,
+  initialProduct,
+}: ContactFormProps = {}) {
+  const selectedService =
+    serviceOptions.find((option) => option.value === initialService)?.value ??
+    initialFormData.service;
+  const [formData, setFormData] = useState(() => ({
+    ...initialFormData,
+    service: selectedService,
+    product: initialProduct?.trim().slice(0, 150) ?? "",
+  }));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (submitted) {
-      timer = setTimeout(() => setSubmitted(false), 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [submitted]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (isSubmitting) return;
 
     setIsSubmitting(true);
-    
+    setErrorMessage("");
+
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      const result = (await response.json().catch(() => null)) as
+        | { message?: string }
+        | null;
 
-      if (response.ok) {
-        setSubmitted(true);
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        console.error('Submission failed');
+      if (!response.ok) {
+        throw new Error(
+          result?.message || "We could not send your request. Please call us instead.",
+        );
       }
+
+      setSubmitted(true);
+      setFormData((current) => ({
+        ...initialFormData,
+        service: current.service,
+      }));
     } catch (error) {
-      console.error('Network error:', error);
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "We could not send your request. Please call us instead.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   return (
-    <section className="bg-zinc-900 py-20 md:py-32 relative overflow-hidden">
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-[#c5a47e]/5 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="flex flex-col items-center justify-center text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-white">
-            Ready to <span className="text-[#c5a47e]">Upgrade?</span>
+    <section id="quote" className="border-y border-zinc-800 bg-zinc-950 py-16 md:py-24">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mb-10 max-w-3xl">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-[#c5a47e]">
+            Fast Adelaide quote
+          </p>
+          <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
+            Tell Us What You Need
           </h2>
-          <p className="text-zinc-400 max-w-2xl text-lg font-light">
-            Expert advice and precision installation are just a message away.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
+            Leave your number and service type. We will confirm the next step,
+            including any door photos or measurements we need.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 max-w-6xl mx-auto">
-          
-          {/* 左侧信息区 */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-black/50 p-8 rounded-3xl border border-zinc-800 h-full flex flex-col justify-center">
-              <h3 className="text-2xl font-bold mb-8 text-white">Get in Touch</h3>
-              <div className="space-y-8">
-                <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#c5a47e] shrink-0 border border-zinc-800 transition-all group-hover:bg-[#c5a47e] group-hover:text-black shadow-lg">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-zinc-200">Phone</h4>
-                    <p className="text-zinc-400 mt-1 text-sm">0431060390</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#c5a47e] shrink-0 border border-zinc-800 transition-all group-hover:bg-[#c5a47e] group-hover:text-black shadow-lg">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-zinc-200">Email</h4>
-                    <p className="text-zinc-400 mt-1 text-sm break-all">info@adesmarthome.com.au</p>
-                  </div>
-                </div>
-              </div>
+        <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
+          <aside className="border border-zinc-800 bg-black p-6 md:p-8">
+            <h3 className="text-xl font-bold text-white">Prefer to contact us directly?</h3>
+            <div className="mt-6 space-y-3">
+              <a
+                href="tel:+61431060390"
+                className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+              >
+                <Phone className="h-5 w-5" aria-hidden="true" />
+                0431 060 390
+              </a>
+              <a
+                href="mailto:info@adesmarthome.com.au?subject=Door%20photos%20for%20installation%20check"
+                className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+              >
+                <Camera className="h-5 w-5" aria-hidden="true" />
+                Email door photos
+              </a>
             </div>
-          </div>
 
-          {/* 右侧表单区 */}
-          <div className="lg:col-span-3 relative">
-            <div className="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl border border-slate-100 relative overflow-hidden h-full">
-              
-              {/* 成功状态层 */}
-              <div className={`absolute inset-0 z-50 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8 transition-all duration-500 ${
-                submitted ? "opacity-100 pointer-events-auto scale-100" : "opacity-0 pointer-events-none scale-95"
-              }`}>
-                <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-emerald-600" />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-2">Message Received!</h3>
-                <p className="text-slate-500 max-w-xs text-sm">
-                  Thanks for reaching out. Our Adelaide team will get back to you within 2 hours.
+            <div className="mt-8 border-t border-zinc-800 pt-7">
+              <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
+                What happens next
+              </h3>
+              <ol className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
+                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>We call or email you.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">2.</strong>You send door or site photos.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">3.</strong>We confirm suitability, price and availability.</li>
+              </ol>
+              <Link
+                href="/blog/smart-lock-door-compatibility-check"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#c5a47e] hover:text-white"
+              >
+                View door measurement guide
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </aside>
+
+          <div className="relative border border-slate-200 bg-white p-6 shadow-2xl md:p-9">
+            {submitted ? (
+              <div className="flex min-h-[470px] flex-col items-center justify-center text-center">
+                <CheckCircle2 className="h-14 w-14 text-emerald-600" aria-hidden="true" />
+                <h3 className="mt-5 text-2xl font-black text-slate-950">Request received</h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
+                  Thank you. We will contact you shortly to confirm the details and next step.
                 </p>
-                <button 
+                <button
                   type="button"
                   onClick={() => setSubmitted(false)}
-                  className="mt-8 text-[#c5a47e] text-[10px] font-bold uppercase tracking-widest hover:underline"
+                  className="mt-7 text-sm font-bold text-[#8a6b48] hover:text-black"
                 >
-                  Send another message
+                  Send another request
                 </button>
               </div>
+            ) : (
+              <>
+                <h3 className="text-2xl font-black tracking-tight text-slate-950">
+                  {formData.product ? `Ask about ${formData.product}` : "Request a callback"}
+                </h3>
+                <p className="mt-2 text-sm text-slate-600">Name and phone are the only required fields.</p>
 
-              <h3 className="text-2xl font-bold mb-2 text-slate-900 tracking-tight">Send a Message</h3>
-              <p className="text-slate-500 mb-8 text-xs font-light tracking-wide">Expected response: Under 2 hours.</p>
-              
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
-                    <input
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full h-12 px-4 bg-slate-50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#c5a47e]/20 focus:border-[#c5a47e] transition-all outline-none text-slate-900 text-sm"
-                      placeholder="Your Name"
-                    />
+                <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+                  <fieldset>
+                    <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                      Service needed
+                    </legend>
+                    <div className="grid grid-cols-2 gap-px bg-slate-300 p-px sm:grid-cols-4">
+                      {serviceOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => setFormData((current) => ({ ...current, service: option.value }))}
+                          className={`min-h-12 px-2 text-xs font-bold transition-colors ${
+                            formData.service === option.value
+                              ? "bg-slate-950 text-white"
+                              : "bg-white text-slate-700 hover:bg-slate-100"
+                          }`}
+                          aria-pressed={formData.service === option.value}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <input type="hidden" name="product" value={formData.product} />
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                      Name
+                      <input
+                        name="name"
+                        autoComplete="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                        placeholder="Your name"
+                      />
+                    </label>
+                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                      Phone
+                      <input
+                        name="phone"
+                        type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        required
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                        placeholder="04xx xxx xxx"
+                      />
+                    </label>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full h-12 px-4 bg-slate-50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#c5a47e]/20 focus:border-[#c5a47e] transition-all outline-none text-slate-900 text-sm"
-                      placeholder="email@example.com"
-                    />
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                      Suburb <span className="font-normal normal-case text-slate-400">optional</span>
+                      <input
+                        name="suburb"
+                        autoComplete="address-level2"
+                        value={formData.suburb}
+                        onChange={handleChange}
+                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                        placeholder="e.g. Norwood"
+                      />
+                    </label>
+                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                      Email <span className="font-normal normal-case text-slate-400">optional</span>
+                      <input
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                        placeholder="email@example.com"
+                      />
+                    </label>
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Subject</label>
-                  <input
-                    name="subject"
-                    required
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="w-full h-12 px-4 bg-slate-50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#c5a47e]/20 focus:border-[#c5a47e] transition-all outline-none text-slate-900 text-sm"
-                    placeholder="e.g. Philips DDL720 Installation"
-                  />
-                </div>
 
-                <div className="space-y-2">
-                  <label className="text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Message</label>
-                  <textarea
-                    name="message"
-                    required
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full p-4 bg-slate-50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#c5a47e]/20 focus:border-[#c5a47e] transition-all outline-none text-slate-900 resize-none text-sm"
-                    placeholder="Tell us about your door..."
-                  />
-                </div>
+                  <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                    Details <span className="font-normal normal-case text-slate-400">optional</span>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                      placeholder="Tell us about your door, existing lock or CCTV needs."
+                    />
+                  </label>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full h-14 bg-black text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-xl hover:bg-[#c5a47e] hover:text-black transition-all duration-500 disabled:opacity-50 flex items-center justify-center gap-3 shadow-xl"
-                >
-                  {isSubmitting ? "Processing..." : <>Send Message <Send className="w-4 h-4" /></>}
-                </button>
-              </form>
-            </div>
+                  {errorMessage && (
+                    <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
+                      {errorMessage} Call 0431 060 390 if the problem continues.
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
+                  >
+                    {isSubmitting ? "Sending..." : "Request a callback"}
+                    {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
+                  </button>
+                  <p className="text-center text-xs text-slate-500">
+                    No payment required. We confirm scope and pricing before booking.
+                  </p>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>

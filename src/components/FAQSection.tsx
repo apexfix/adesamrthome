@@ -46,6 +46,16 @@ const faqs = [
       "Yes, we install many imported smart locks. However, imported locks often require more careful fitting because the lock body, mortise size, language settings and app compatibility may differ from standard Australian lock setups.",
   },
   {
+    question: "Can you install a smart lock that I bought elsewhere?",
+    answer:
+      "Yes, we offer installation-only service for suitable customer-supplied smart locks. Send us the exact model, photos of the lock and photos of both sides and the edge of your door. We will check compatibility and quote the installation scope before booking.",
+  },
+  {
+    question: "Do you also install CCTV systems?",
+    answer:
+      "Yes. We install CCTV systems for Adelaide homes and small businesses. Camera quantity, recording requirements, cable routes and property layout affect the scope, so CCTV work is quoted after a short site and coverage assessment.",
+  },
+  {
     question: "How much does smart lock installation cost in Adelaide?",
     answer:
       "The installation cost depends on the lock type, door material, existing lock structure and whether extra cutting or modification is required. A simple installation is usually cheaper, while a full mortise smart lock or complex retrofit will cost more. Send us door photos for a more accurate quote.",
@@ -106,7 +116,7 @@ export function FAQSection() {
           </p>
         </div>
 
-        <div className="mt-10 divide-y divide-neutral-200 rounded-3xl bg-white shadow-sm ring-1 ring-neutral-200">
+        <div className="mt-10 divide-y divide-neutral-200 rounded-md bg-white shadow-sm ring-1 ring-neutral-200">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
 
@@ -140,7 +150,7 @@ export function FAQSection() {
           })}
         </div>
 
-        <div className="mt-10 rounded-3xl bg-neutral-950 p-8 text-center text-white">
+        <div className="mt-10 rounded-md bg-neutral-950 p-8 text-center text-white">
           <h3 className="text-2xl font-bold">
             Not sure if your door can fit a smart lock?
           </h3>
@@ -151,8 +161,8 @@ export function FAQSection() {
 
           <div className="mt-6">
             <Link
-              href="/contact"
-              className="inline-flex rounded-full bg-white px-6 py-3 font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              href="/contact?service=not-sure"
+              className="inline-flex bg-white px-6 py-3 font-semibold text-neutral-950 transition hover:bg-neutral-200"
             >
               Send Door Photos for Free Check
             </Link>

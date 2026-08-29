@@ -5,6 +5,7 @@ import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
+import { ServicePathways } from "@/components/ServicePathways";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import path from "path";
 import fs from "fs";
@@ -104,7 +105,7 @@ export default async function Home() {
         <HeroCarousel />
       </section>
 
-      <ServiceFeatures />
+      <ServicePathways />
       
       {latestStories.length > 0 && (
         <section className="py-24 bg-black border-y border-zinc-900/50">
@@ -130,6 +131,7 @@ export default async function Home() {
         </div>
       </section>
 
+      <ServiceFeatures />
       <GoogleReviews />
       <FAQSection />
       <ContactForm />

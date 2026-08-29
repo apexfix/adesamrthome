@@ -20,7 +20,7 @@ export const socialProfiles = [
   "https://xhslink.com/m/6Bv1zW0ClyZ",
 ];
 
-export const siteLastModified = "2026-08-17";
+export const siteLastModified = "2026-08-29";
 
 export const serviceAreas = [
   {
@@ -123,6 +123,8 @@ export const smartLockBrands = [
 ];
 
 export const coreServices = [
+  "Smart lock supply and installation",
+  "Customer-supplied smart lock installation",
   "Smart lock installation",
   "Digital door lock installation",
   "Fingerprint lock installation",

@@ -66,7 +66,7 @@ export function HeroCarousel() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/contact"
+              href="/contact?service=not-sure"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-white/50 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white hover:text-black"
             >
               Get a Quote

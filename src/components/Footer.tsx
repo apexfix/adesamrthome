@@ -64,7 +64,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 核心服务区 - 已更新 */}
           <div>
             <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#c5a47e]" />
@@ -72,33 +71,32 @@ export function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/products" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                <Link href="/products?category=SMART+LOCK" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Philips Smart Locks
+                  Supplied Smart Lock Packages
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                <Link href="/contact?service=installation-only" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  EZVIZ Security Systems
+                  Customer-Supplied Lock Installation
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                <Link href="/contact?service=cctv" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Samsung Digital Locks
-                </Link>
-              </li>
-              {/* 新增项：表明你支持全品牌安装 */}
-              <li>
-                <Link href="/contact" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Other Smart Lock Brands
+                  CCTV Installation
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
-                  Book Professional Installation
+                <Link href="/blog/smart-lock-door-compatibility-check" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Door Compatibility Check
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
+                  Request a Quote
                 </Link>
               </li>
             </ul>
@@ -112,7 +110,8 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li><Link href="/" className="hover:text-[#c5a47e] transition-colors">Home</Link></li>
               <li><Link href="/products" className="hover:text-[#c5a47e] transition-colors">All Products</Link></li>
-              <li><Link href="/contact" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
+              <li><Link href="/blog" className="hover:text-[#c5a47e] transition-colors">Installation Guides</Link></li>
+              <li><Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
             </ul>
           </div>
 

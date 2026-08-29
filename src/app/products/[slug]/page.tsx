@@ -373,21 +373,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 text-emerald-500 text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                In Stock & Ready for Installation
+                <div className="h-2 w-2 bg-emerald-500" />
+                Ask for current availability
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link 
-                  href="/contact"
-                  className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-full font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all shadow-[0_0_30px_rgba(197,164,126,0.2)]"
+                  href={`/contact?service=supply-install&product=${encodeURIComponent(product.name)}`}
+                  className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Calendar className="w-5 h-5" />
-                  Book Install
+                  Check Price &amp; Availability
                 </Link>
                 <Link 
                   href="/blog/smart-lock-door-compatibility-check"
-                  className="h-16 bg-transparent text-white border-2 border-zinc-800 hover:border-[#c5a47e] rounded-full font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
+                  className="h-16 bg-transparent text-white border-2 border-zinc-800 hover:border-[#c5a47e] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Ruler className="w-5 h-5" />
                   Check Door Fit

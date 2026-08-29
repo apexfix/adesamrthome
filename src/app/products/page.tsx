@@ -204,6 +204,23 @@ export default async function ProductsPage(props: {
               ))}
             </div>
           )}
+          <div className="mt-8 border-y border-zinc-800 px-5 py-4 text-sm text-zinc-300">
+            Already have a smart lock?{" "}
+            <Link
+              href="/contact?service=installation-only"
+              className="font-semibold text-[#c5a47e] hover:text-white"
+            >
+              Request an installation-only quote
+            </Link>
+            . Need cameras instead?{" "}
+            <Link
+              href="/contact?service=cctv"
+              className="font-semibold text-[#c5a47e] hover:text-white"
+            >
+              Ask about CCTV installation
+            </Link>
+            .
+          </div>
         </div>
 
         {/* 产品网格展示 */}
@@ -214,7 +231,7 @@ export default async function ProductsPage(props: {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-3xl bg-zinc-900/50 max-w-3xl mx-auto">
+          <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-md bg-zinc-900/50 max-w-3xl mx-auto">
             <p className="text-xl">No products found in this category.</p>
             <p className="text-sm mt-2">Try another category or contact us for current availability.</p>
           </div>

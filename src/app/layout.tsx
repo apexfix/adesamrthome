@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { MobileContactBar } from "@/components/MobileContactBar";
 import {
   businessInfo,
   coreServices,
@@ -135,6 +136,15 @@ const localBusinessSchema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
+          name: "Customer-Supplied Smart Lock Installation Adelaide",
+          description:
+            "Compatibility assessment and professional installation for suitable smart locks purchased by the customer.",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
           name: "CCTV Installation Adelaide",
           description:
             "Home security camera installation and smart surveillance setup across Adelaide.",
@@ -160,7 +170,7 @@ const localBusinessSchema = {
     {
       "@type": "PropertyValue",
       name: "Warranty",
-      value: "2-year local product warranty and workmanship support",
+      value: "Local support with warranty terms confirmed for each product and installation package",
     },
   ],
   openingHoursSpecification: [
@@ -215,6 +225,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <MobileContactBar />
       </body>
     </html>
   );
