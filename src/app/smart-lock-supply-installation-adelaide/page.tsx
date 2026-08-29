@@ -140,6 +140,11 @@ const faqs = [
       "The Lockin X9 is the lowest-priced everyday option, while the SV40 adds finger-vein recognition and a push-pull design. Both provide multiple keyless access methods without moving into a full camera lock.",
   },
   {
+    question: "Can you install a smart lock I bought from another seller?",
+    answer:
+      "Yes, for compatible customer-supplied locks. Send the exact model or product listing, along with photos of both sides of the door, the door edge and the frame. We confirm likely compatibility, scope and price before booking.",
+  },
+  {
     question: "Which models include a camera or video doorbell?",
     answer:
       "The S6 Max includes dual cameras and remote video calling. The V5 Max includes a 2K camera and built-in video doorbell, together with premium biometric access.",
@@ -252,7 +257,8 @@ export default function SupplyInstallationPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
             Compare four installed-price smart locks from $650. We check your door,
-            recommend a suitable model, install it and help with basic setup.
+            recommend a suitable model, install it and help with basic setup. Already bought a
+            compatible smart lock? We also provide installation-only service.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -270,6 +276,13 @@ export default function SupplyInstallationPage() {
               Check My Door
               <DoorOpen className="h-4 w-4" aria-hidden="true" />
             </Link>
+            <Link
+              href="#installation-only"
+              className="inline-flex min-h-12 items-center justify-center gap-2 px-4 text-sm font-bold text-white hover:text-[#d9b98f]"
+            >
+              Already bought a lock?
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
             <a
               href={`tel:${businessInfo.phoneInternational}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 px-4 text-sm font-bold text-white hover:text-[#d9b98f]"
@@ -280,7 +293,12 @@ export default function SupplyInstallationPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
-            {["Packages from $650", "Standard installation included", "Door checked before booking"].map(
+            {[
+              "Packages from $650",
+              "Standard installation included",
+              "Customer-supplied locks welcome",
+              "Door checked before booking",
+            ].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-2">
                   <Check className="h-4 w-4 text-emerald-400" aria-hidden="true" />
@@ -373,6 +391,70 @@ export default function SupplyInstallationPage() {
                 </p>
                 <h3 className="mt-3 text-lg font-black">{choice}</h3>
                 <p className="mt-3 text-sm leading-6 text-slate-600">{detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="installation-only"
+        className="scroll-mt-24 border-y border-slate-200 bg-[#f5f1eb] py-16 md:py-24"
+      >
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[1.1fr_0.9fr] md:items-center lg:px-12">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+              Installation only
+            </p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-black md:text-5xl">
+              Already bought a smart lock? We can install it.
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">
+              Bought a Lockin, Philips, Aqara, Yale, Eufy or another smart lock elsewhere? Send
+              the exact model listing and clear photos of your door. We check compatibility first,
+              then confirm the installation scope and price before booking.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/smart-lock-installation-only-adelaide"
+                className="inline-flex min-h-12 items-center justify-center gap-2 bg-slate-950 px-6 text-sm font-bold text-white transition-colors hover:bg-[#9c7953]"
+              >
+                Request Installation Only
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <a
+                href={`tel:${businessInfo.phoneInternational}`}
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-slate-950 px-6 text-sm font-bold text-slate-950 transition-colors hover:bg-white"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                Call {businessInfo.phone}
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-px bg-[#d7c6af] sm:grid-cols-2">
+            {[
+              [
+                "Your lock, your choice",
+                "Customer-supplied smart locks are assessed on the actual model and door.",
+              ],
+              [
+                "Other brands welcome",
+                "We install compatible fingerprint, keypad, app and video smart locks.",
+              ],
+              [
+                "Clear scope first",
+                "Door material, existing holes and required modification are checked before booking.",
+              ],
+              [
+                "No surprise pricing",
+                "Installation-only work is quoted after the compatibility review.",
+              ],
+            ].map(([title, detail]) => (
+              <article key={title} className="bg-[#f5f1eb] p-6">
+                <Check className="h-6 w-6 text-[#8a6b48]" aria-hidden="true" />
+                <h3 className="mt-4 font-black text-slate-950">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-700">{detail}</p>
               </article>
             ))}
           </div>
