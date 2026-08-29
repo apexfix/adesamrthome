@@ -81,7 +81,6 @@ Products -> Categories
 
 ```text
 SMART LOCK
-CCTV
 ```
 
 ## 6. 创建产品
@@ -101,7 +100,7 @@ Products -> Add New
 - Product description：详细介绍/规格
 - Product image：主图
 - Product gallery：更多图片
-- Categories：选择 `SMART LOCK` 或 `CCTV`
+- Categories：选择 `SMART LOCK`
 - Attributes：用于产品页 Technical Specs
 
 发布后测试：
@@ -160,4 +159,3 @@ Development
 - 检查主机 PHP/MySQL 服务
 - 检查域名 DNS 是否指向新主机
 - 检查 SSL 是否签发成功
-

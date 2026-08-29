@@ -130,7 +130,5 @@ export const coreServices = [
   "Fingerprint lock installation",
   "Video smart lock installation",
   "Keypad lock installation",
-  "Smart doorbell installation",
-  "CCTV installation",
   "Door compatibility check",
 ];

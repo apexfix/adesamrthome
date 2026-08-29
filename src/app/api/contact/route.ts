@@ -48,7 +48,6 @@ export async function POST(request: Request) {
     const allowedServices = new Set([
       'supply-install',
       'installation-only',
-      'cctv',
       'not-sure',
     ]);
     const phoneDigits = phone.replace(/\D/g, '');

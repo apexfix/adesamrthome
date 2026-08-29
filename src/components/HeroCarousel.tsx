@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Camera,
   Check,
   LockKeyhole,
   Phone,
@@ -20,11 +19,6 @@ const services = [
     title: "Installation-only service",
     detail: "For compatible smart locks you already own",
   },
-  {
-    icon: Camera,
-    title: "CCTV installation",
-    detail: "Tailored systems for homes and businesses",
-  },
 ];
 
 export function HeroCarousel() {
@@ -32,7 +26,7 @@ export function HeroCarousel() {
     <div className="absolute inset-0 overflow-hidden bg-black">
       <Image
         src="/img/hero1.avif"
-        alt="Smart security installation completed by ADE Smart Home in Adelaide"
+        alt="Smart lock installation completed by ADE Smart Home in Adelaide"
         fill
         priority
         sizes="100vw"
@@ -43,18 +37,18 @@ export function HeroCarousel() {
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl items-start px-5 pb-6 pt-24 sm:items-center sm:px-8 sm:py-10 lg:px-12">
         <div className="w-full max-w-5xl">
           <p className="mb-2 text-xs font-semibold uppercase text-[#d9b98f] sm:mb-4 sm:text-sm">
-            Adelaide smart security installation
+            Adelaide smart lock installation
           </p>
 
           <h1 className="max-w-4xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Smart Locks &amp; CCTV,
+            Smart Locks,
             <span className="block text-[#d9b98f]">Installed Properly</span>
           </h1>
 
           <p className="mt-3 max-w-3xl text-base leading-6 text-zinc-200 sm:mt-5 sm:text-lg sm:leading-7">
-            Choose a supplied-and-installed smart lock, book installation for a
-            compatible lock you already own, or request a tailored CCTV system
-            for your home or business.
+            Choose a supplied-and-installed smart lock, or book professional
+            installation for a compatible lock you already own. We check your
+            door and confirm the scope before booking.
           </p>
 
           <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-7 sm:flex sm:flex-row sm:flex-wrap">
@@ -81,7 +75,7 @@ export function HeroCarousel() {
             </a>
           </div>
 
-          <div className="mt-4 grid max-w-5xl gap-2 border-t border-white/25 pt-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 sm:pt-5">
+          <div className="mt-4 grid max-w-5xl gap-2 border-t border-white/25 pt-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 sm:pt-5">
             {services.map(({ icon: Icon, title, detail }) => (
               <div key={title} className="flex min-w-0 items-start gap-3">
                 <Icon

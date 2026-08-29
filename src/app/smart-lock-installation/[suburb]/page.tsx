@@ -42,7 +42,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `smart door lock ${area.name}`,
       `Philips smart lock ${area.name}`,
       `EZVIZ smart lock ${area.name}`,
-      `CCTV installation ${area.name}`,
       "smart lock installation Adelaide",
     ],
     alternates: {
@@ -289,10 +288,10 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
               <ul className="mt-5 space-y-3 text-neutral-700">
                 <li>Fingerprint smart lock installation</li>
                 <li>Keypad and passcode lock installation</li>
-                <li>Video smart lock and doorbell setup</li>
+                <li>Video smart lock and app setup</li>
                 <li>App connection and user management setup</li>
                 <li>Existing digital lock replacement</li>
-                <li>CCTV and smart home security setup</li>
+                <li>Customer-supplied smart lock installation</li>
               </ul>
             </div>
           </div>
@@ -307,8 +306,8 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
             </h2>
             <div className="mt-6 space-y-5 leading-8 text-neutral-700">
               <p>
-                ADE Smart Home specialises in smart lock and smart home security
-                installation across Adelaide. We have completed 400+ local
+                ADE Smart Home specialises in smart lock installation across
+                Adelaide. We have completed 400+ local
                 installations and understand the common door types used in South
                 Australian homes.
               </p>
@@ -321,7 +320,8 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
               <p>
                 For customers in {area.name}, we can help with new smart lock
                 installation, replacement of existing digital locks, imported smart
-                lock installation and CCTV security upgrades.
+                lock installation and installation-only service for compatible
+                customer-supplied locks.
               </p>
             </div>
           </div>

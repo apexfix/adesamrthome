@@ -43,11 +43,10 @@ export const metadata: Metadata = {
     "Samsung Digital Lock Adelaide",
     "Aqara Smart Lock Adelaide",
     "Imported Smart Lock Installer Adelaide",
-    "CCTV Installation Adelaide",
     "阿德莱德智能锁安装",
     "阿德莱德电子锁安装",
     "阿德莱德指纹锁安装",
-    "阿德莱德监控安装",
+    "阿德莱德自购智能锁安装",
   ],
   authors: [{ name: "ADE Smart Home" }],
   creator: "ADE Smart Home",
@@ -76,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
-      "Professional smart lock installation, CCTV installation and smart home setup across Adelaide.",
+      "Professional smart lock supply and installation, installation-only service and door compatibility checks across Adelaide.",
     images: ["/img/hero1.avif"],
   },
   robots: {
@@ -104,7 +103,7 @@ const localBusinessSchema = {
   email: businessInfo.email,
   priceRange: "$$",
   description:
-    "ADE Smart Home provides professional smart lock installation, digital door lock installation, CCTV installation and smart home setup across Adelaide. The team has completed 400+ local installations with a focus on neat flush-finish workmanship and local after-sales support.",
+    "ADE Smart Home provides professional smart lock supply and installation plus installation-only service for compatible customer-supplied locks across Adelaide. The team has completed 400+ local installations with a focus on neat flush-finish workmanship and local after-sales support.",
   address: {
     "@type": "PostalAddress",
     addressLocality: businessInfo.addressLocality,
@@ -122,7 +121,7 @@ const localBusinessSchema = {
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Smart Lock and Smart Home Installation Services",
+    name: "Smart Lock Installation Services",
     itemListElement: [
       {
         "@type": "Offer",
@@ -140,15 +139,6 @@ const localBusinessSchema = {
           name: "Customer-Supplied Smart Lock Installation Adelaide",
           description:
             "Compatibility assessment and professional installation for suitable smart locks purchased by the customer.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "CCTV Installation Adelaide",
-          description:
-            "Home security camera installation and smart surveillance setup across Adelaide.",
         },
       },
       {
@@ -200,7 +190,7 @@ const websiteSchema = {
   url: siteUrl,
   name: "ADE Smart Home",
   description:
-    "Smart lock installation, digital door lock installation, CCTV installation and smart home services in Adelaide.",
+    "Smart lock supply and installation, customer-supplied smart lock installation and door compatibility checks in Adelaide.",
   inLanguage: ["en-AU", "zh-CN"],
   publisher: {
     "@id": `${siteUrl}/#business`,

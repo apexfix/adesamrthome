@@ -83,12 +83,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact?service=cctv" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  CCTV Installation
-                </Link>
-              </li>
-              <li>
                 <Link href="/blog/smart-lock-door-compatibility-check" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
                   Door Compatibility Check

@@ -14,7 +14,6 @@ import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
   { value: "installation-only", label: "Installation only" },
-  { value: "cctv", label: "CCTV" },
   { value: "not-sure", label: "Not sure" },
 ] as const;
 
@@ -190,7 +189,7 @@ export function ContactForm({
                     <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                       Service needed
                     </legend>
-                    <div className="grid grid-cols-2 gap-px bg-slate-300 p-px sm:grid-cols-4">
+                    <div className="grid gap-px bg-slate-300 p-px sm:grid-cols-3">
                       {serviceOptions.map((option) => (
                         <button
                           key={option.value}
@@ -274,7 +273,7 @@ export function ContactForm({
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                      placeholder="Tell us about your door, existing lock or CCTV needs."
+                      placeholder="Tell us about your door, existing lock or smart lock model."
                     />
                   </label>
 

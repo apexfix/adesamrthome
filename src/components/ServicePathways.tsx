@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Camera, PackageCheck, Wrench } from "lucide-react";
+import { ArrowRight, PackageCheck, Wrench } from "lucide-react";
 
 const pathways = [
   {
@@ -20,15 +20,6 @@ const pathways = [
     href: "/contact?service=installation-only",
     action: "Request installation quote",
   },
-  {
-    icon: Camera,
-    label: "CCTV Installation",
-    title: "Security cameras for your property",
-    description:
-      "Tailored CCTV installation for Adelaide homes and small businesses, based on coverage and site requirements.",
-    href: "/contact?service=cctv",
-    action: "Request CCTV quote",
-  },
 ];
 
 export function ServicePathways() {
@@ -48,7 +39,7 @@ export function ServicePathways() {
           </p>
         </div>
 
-        <div className="grid border-y border-zinc-800 md:grid-cols-3">
+        <div className="grid border-y border-zinc-800 md:grid-cols-2">
           {pathways.map((pathway, index) => {
             const Icon = pathway.icon;
 

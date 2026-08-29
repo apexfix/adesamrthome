@@ -86,10 +86,6 @@ function getPageTitle(categoryParam: string | null) {
     return "Smart Locks";
   }
 
-  if (normalized === "cctv") {
-    return "CCTV Systems";
-  }
-
   if (normalized === "lockin") {
     return "Lockin Smart Locks";
   }
@@ -211,13 +207,6 @@ export default async function ProductsPage(props: {
               className="font-semibold text-[#c5a47e] hover:text-white"
             >
               Request an installation-only quote
-            </Link>
-            . Need cameras instead?{" "}
-            <Link
-              href="/contact?service=cctv"
-              className="font-semibold text-[#c5a47e] hover:text-white"
-            >
-              Ask about CCTV installation
             </Link>
             .
           </div>

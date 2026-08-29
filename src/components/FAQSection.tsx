@@ -51,11 +51,6 @@ const faqs = [
       "Yes, we offer installation-only service for suitable customer-supplied smart locks. Send us the exact model, photos of the lock and photos of both sides and the edge of your door. We will check compatibility and quote the installation scope before booking.",
   },
   {
-    question: "Do you also install CCTV systems?",
-    answer:
-      "Yes. We install CCTV systems for Adelaide homes and small businesses. Camera quantity, recording requirements, cable routes and property layout affect the scope, so CCTV work is quoted after a short site and coverage assessment.",
-  },
-  {
     question: "How much does smart lock installation cost in Adelaide?",
     answer:
       "The installation cost depends on the lock type, door material, existing lock structure and whether extra cutting or modification is required. A simple installation is usually cheaper, while a full mortise smart lock or complex retrofit will cost more. Send us door photos for a more accurate quote.",

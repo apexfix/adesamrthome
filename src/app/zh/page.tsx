@@ -4,17 +4,17 @@ import Link from "next/link";
 import { businessInfo, serviceAreas, siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "阿德莱德智能锁安装 | 电子锁 指纹锁 监控安装",
+  title: "阿德莱德智能锁安装 | 电子锁 指纹锁",
   description:
-    "ADE Smart Home 提供阿德莱德智能锁安装、电子锁安装、指纹锁安装、可视门铃、监控和智能家居安装服务。400+ 本地安装案例，支持 Philips、EZVIZ、Samsung、Aqara 及进口智能锁，提供免费门型评估和本地售后。",
+    "ADE Smart Home 提供阿德莱德智能锁销售安装，以及客户自购智能锁仅安装服务。400+ 本地安装案例，支持 Philips、EZVIZ、Samsung、Aqara 及进口智能锁，提供免费门型评估和本地售后。",
   keywords: [
     "阿德莱德智能锁安装",
     "阿德莱德电子锁安装",
     "阿德莱德指纹锁安装",
     "阿德莱德智能门锁",
     "阿德莱德换锁",
-    "阿德莱德监控安装",
-    "阿德莱德智能家居",
+    "阿德莱德智能锁仅安装",
+    "阿德莱德自购智能锁安装",
     "Adelaide smart lock installation",
     "Adelaide digital door lock",
   ],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "阿德莱德智能锁安装 | ADE Smart Home",
     description:
-      "阿德莱德智能锁、电子锁、指纹锁、可视门铃和监控安装。400+ 本地安装案例，免费门型评估，本地售后支持。",
+      "阿德莱德智能锁、电子锁、指纹锁销售安装及客户自购智能锁仅安装。400+ 本地安装案例，免费门型评估，本地售后支持。",
     url: `${siteUrl}/zh`,
     siteName: "ADE Smart Home",
     images: [
@@ -69,7 +69,7 @@ export default function ChineseLandingPage() {
       addressCountry: "AU",
     },
     description:
-      "ADE Smart Home 提供阿德莱德智能锁安装、电子锁安装、指纹锁安装、可视门铃和监控安装服务，支持 Philips、EZVIZ、Samsung、Aqara 及进口智能锁。",
+      "ADE Smart Home 提供阿德莱德智能锁销售安装，以及客户自购智能锁仅安装服务，支持 Philips、EZVIZ、Samsung、Aqara 及进口智能锁。",
   };
 
   return (
@@ -90,7 +90,7 @@ export default function ChineseLandingPage() {
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-200">
-            提供智能门锁、电子锁、指纹锁、可视门铃、监控和智能家居安装服务。
+            提供智能门锁、电子锁、指纹锁和可视智能锁的销售安装，也提供客户自购智能锁仅安装服务。
             我们专注于阿德莱德本地安装，已完成 400+ 本地安装案例，支持木门、铝合金门及部分防盗纱门的门型评估与安装。
           </p>
 
@@ -124,10 +124,10 @@ export default function ChineseLandingPage() {
 
           <div className="rounded-3xl border border-neutral-200 p-8 shadow-sm">
             <h2 className="text-xl font-bold text-neutral-950">
-              监控与门铃安装
+              客户自购智能锁安装
             </h2>
             <p className="mt-4 leading-7 text-neutral-700">
-              提供家庭监控、智能门铃、太阳能摄像头、NVR 录像机和基础智能安防系统安装服务。
+              已经购买智能锁也可以联系我们。请发送智能锁型号，以及门的正面、背面、侧边和门框照片，我们确认兼容性和安装范围后再报价。
             </p>
           </div>
 

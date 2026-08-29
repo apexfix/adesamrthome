@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, X, Instagram, Facebook, ChevronDown } from "lucide-react"; // 新增 ChevronDown 图标
+import { Menu, Phone, X, Instagram, Facebook } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -49,43 +49,14 @@ export function Header() {
           
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
-              link.name === "Products" ? (
-                /* 产品下拉菜单 - 桌面端 */
-                <div key={link.name} className="relative group py-4">
-                  <Link 
-                    href={link.href} 
-                    className="flex items-center gap-1 text-white/80 hover:text-[#c5a47e] transition-colors"
-                  >
-                    {link.name} <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
-                  </Link>
-                  
-                  {/* 下拉菜单面板 */}
-                  <div className="absolute left-0 top-full mt-0 w-56 bg-zinc-950 border border-zinc-800 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50 overflow-hidden">
-                    <Link 
-                      href="/products?category=SMART+LOCK" 
-                      className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 border-b border-zinc-800/50 transition-colors"
-                    >
-                      Smart Locks
-                    </Link>
-                    <Link 
-                      href="/products?category=CCTV" 
-                      className="block px-5 py-4 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
-                    >
-                      CCTV Systems
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                /* 普通菜单项 */
-                <Link 
-                  key={link.name} 
-                  href={link.href} 
-                  className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
-                >
-                  {link.name}
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-                </Link>
-              )
+              <Link
+                key={link.name}
+                href={link.href}
+                className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
+              >
+                {link.name}
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+              </Link>
             ))}
           </nav>
         </div>
@@ -131,24 +102,9 @@ export function Header() {
           <div className="container mx-auto p-6 flex flex-col gap-8">
             <nav className="flex flex-col gap-4 text-lg font-medium">
               {navLinks.map((link) => (
-                link.name === "Products" ? (
-                  /* 移动端产品及其子菜单 */
-                  <div key={link.name} className="flex flex-col gap-3">
-                    <Link href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                      {link.name}
-                    </Link>
-                    <Link href="/products?category=SMART+LOCK" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
-                      └ Smart Locks (智能锁门锁)
-                    </Link>
-                    <Link href="/products?category=CCTV" className="pl-4 text-zinc-400 hover:text-[#c5a47e] text-base" onClick={() => setIsMenuOpen(false)}>
-                      └ CCTV Systems (监控安装)
-                    </Link>
-                  </div>
-                ) : (
-                  <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                    {link.name}
-                  </Link>
-                )
+                <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                  {link.name}
+                </Link>
               ))}
             </nav>
             <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
