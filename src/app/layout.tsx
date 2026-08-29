@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileContactBar } from "@/components/MobileContactBar";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import {
   businessInfo,
   coreServices,
@@ -226,6 +227,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <MobileContactBar />
+        <SiteAnalytics />
       </body>
     </html>
   );

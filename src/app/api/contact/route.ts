@@ -32,6 +32,19 @@ export async function POST(request: Request) {
     const service = readField(payload.service, 50);
     const product = readField(payload.product, 150);
     const message = readField(payload.message, 5000);
+    const attributionPayload =
+      payload.attribution && typeof payload.attribution === 'object'
+        ? payload.attribution as Record<string, unknown>
+        : {};
+    const attribution = {
+      source: readField(attributionPayload.source, 100) || 'direct',
+      medium: readField(attributionPayload.medium, 100) || 'none',
+      campaign: readField(attributionPayload.campaign, 150),
+      content: readField(attributionPayload.content, 150),
+      term: readField(attributionPayload.term, 150),
+      landingPage: readField(attributionPayload.landingPage, 500),
+      referrer: readField(attributionPayload.referrer, 500),
+    };
     const allowedServices = new Set([
       'supply-install',
       'installation-only',
@@ -84,6 +97,14 @@ export async function POST(request: Request) {
         Service: ${service}
         Product: ${product || 'Not specified'}
 
+        Lead source: ${attribution.source}
+        Medium: ${attribution.medium}
+        Campaign: ${attribution.campaign || 'Not provided'}
+        Ad content: ${attribution.content || 'Not provided'}
+        Search term: ${attribution.term || 'Not provided'}
+        Landing page: ${attribution.landingPage || 'Not recorded'}
+        Referrer: ${attribution.referrer || 'Not recorded'}
+
         Message:
         ${message || 'No additional details provided.'}
       `,
@@ -95,6 +116,15 @@ export async function POST(request: Request) {
         <p><strong>Suburb:</strong> ${escapeHtml(suburb || 'Not provided')}</p>
         <p><strong>Service:</strong> ${escapeHtml(service)}</p>
         <p><strong>Product:</strong> ${escapeHtml(product || 'Not specified')}</p>
+        <hr/>
+        <h4>Lead source</h4>
+        <p><strong>Source:</strong> ${escapeHtml(attribution.source)}</p>
+        <p><strong>Medium:</strong> ${escapeHtml(attribution.medium)}</p>
+        <p><strong>Campaign:</strong> ${escapeHtml(attribution.campaign || 'Not provided')}</p>
+        <p><strong>Ad content:</strong> ${escapeHtml(attribution.content || 'Not provided')}</p>
+        <p><strong>Search term:</strong> ${escapeHtml(attribution.term || 'Not provided')}</p>
+        <p><strong>Landing page:</strong> ${escapeHtml(attribution.landingPage || 'Not recorded')}</p>
+        <p><strong>Referrer:</strong> ${escapeHtml(attribution.referrer || 'Not recorded')}</p>
         <br/>
         <p><strong>Message:</strong></p>
         <p>${escapeHtml(message || 'No additional details provided.').replace(/\n/g, '<br>')}</p>

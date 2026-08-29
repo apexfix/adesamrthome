@@ -9,6 +9,7 @@ import {
   Phone,
   Send,
 } from "lucide-react";
+import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
@@ -56,10 +57,15 @@ export function ContactForm({
     setErrorMessage("");
 
     try {
+      const submittedService = formData.service;
+      const submittedProduct = formData.product;
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          attribution: captureLeadAttribution(),
+        }),
       });
       const result = (await response.json().catch(() => null)) as
         | { message?: string }
@@ -72,6 +78,11 @@ export function ContactForm({
       }
 
       setSubmitted(true);
+      trackEvent("generate_lead", {
+        service: submittedService,
+        product: submittedProduct,
+        form_name: "website_enquiry",
+      });
       setFormData((current) => ({
         ...initialFormData,
         service: current.service,
