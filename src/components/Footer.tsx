@@ -77,7 +77,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact?service=installation-only" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                <Link href="/smart-lock-installation-only-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
                   Customer-Supplied Lock Installation
                 </Link>

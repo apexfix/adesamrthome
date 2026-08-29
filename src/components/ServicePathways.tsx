@@ -17,7 +17,7 @@ const pathways = [
     title: "Already bought a smart lock?",
     description:
       "Send the lock model and door photos. We will check compatibility and quote the installation scope first.",
-    href: "/contact?service=installation-only",
+    href: "/smart-lock-installation-only-adelaide",
     action: "Request installation quote",
   },
 ];

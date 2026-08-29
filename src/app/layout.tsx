@@ -137,6 +137,7 @@ const localBusinessSchema = {
         itemOffered: {
           "@type": "Service",
           name: "Customer-Supplied Smart Lock Installation Adelaide",
+          url: `${siteUrl}/smart-lock-installation-only-adelaide`,
           description:
             "Compatibility assessment and professional installation for suitable smart locks purchased by the customer.",
         },

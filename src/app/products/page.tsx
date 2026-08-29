@@ -203,7 +203,7 @@ export default async function ProductsPage(props: {
           <div className="mt-8 border-y border-zinc-800 px-5 py-4 text-sm text-zinc-300">
             Already have a smart lock?{" "}
             <Link
-              href="/contact?service=installation-only"
+              href="/smart-lock-installation-only-adelaide"
               className="font-semibold text-[#c5a47e] hover:text-white"
             >
               Request an installation-only quote
