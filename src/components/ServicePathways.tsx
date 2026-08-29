@@ -8,7 +8,7 @@ const pathways = [
     title: "Choose an installed smart lock",
     description:
       "Compare installed-price packages from $650. We check your door before confirming the model and booking.",
-    href: "/products?category=SMART+LOCK",
+    href: "/smart-lock-supply-installation-adelaide",
     action: "View smart locks",
   },
   {

@@ -71,7 +71,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/products?category=SMART+LOCK" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                <Link href="/smart-lock-supply-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
                   Supplied Smart Lock Packages
                 </Link>
