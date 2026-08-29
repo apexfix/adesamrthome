@@ -9,7 +9,11 @@ import {
   Phone,
   Send,
 } from "lucide-react";
-import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
+import {
+  captureLeadAttribution,
+  trackEvent,
+  trackGoogleAdsLead,
+} from "@/lib/analytics";
 
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
@@ -82,6 +86,7 @@ export function ContactForm({
         product: submittedProduct,
         form_name: "website_enquiry",
       });
+      trackGoogleAdsLead();
       setFormData((current) => ({
         ...initialFormData,
         service: current.service,

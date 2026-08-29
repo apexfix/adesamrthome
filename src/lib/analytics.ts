@@ -14,6 +14,9 @@ type AnalyticsParameters = Record<
   AnalyticsValue | null | undefined
 >;
 
+const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim();
+const googleAdsLeadLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL?.trim();
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
@@ -143,4 +146,19 @@ export function trackEvent(
   );
 
   window.gtag("event", eventName, safeParameters);
+}
+
+export function trackGoogleAdsLead() {
+  if (
+    typeof window === "undefined" ||
+    !window.gtag ||
+    !googleAdsId ||
+    !googleAdsLeadLabel
+  ) {
+    return;
+  }
+
+  window.gtag("event", "conversion", {
+    send_to: `${googleAdsId}/${googleAdsLeadLabel}`,
+  });
 }

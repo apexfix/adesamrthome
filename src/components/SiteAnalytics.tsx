@@ -6,6 +6,9 @@ import { useEffect, useRef } from "react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 
 const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim();
+const googleTagIds = [...new Set([measurementId, googleAdsId].filter(Boolean))];
+const primaryGoogleTagId = googleTagIds[0];
 
 function getLinkLabel(link: HTMLAnchorElement): string {
   return (link.dataset.analyticsLabel || link.textContent || "")
@@ -91,12 +94,12 @@ export function SiteAnalytics() {
     });
   }, [pathname]);
 
-  if (!measurementId) return null;
+  if (!primaryGoogleTagId) return null;
 
   return (
     <>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${primaryGoogleTagId}`}
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -105,7 +108,9 @@ export function SiteAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
           gtag('js', new Date());
-          gtag('config', '${measurementId}');
+          ${googleTagIds
+            .map((id) => `gtag('config', ${JSON.stringify(id)});`)
+            .join("\n          ")}
         `}
       </Script>
     </>
