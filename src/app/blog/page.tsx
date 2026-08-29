@@ -4,6 +4,25 @@ import matter from "gray-matter";
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, ChevronRight, TrendingUp, ShieldCheck } from "lucide-react";
+import type { Metadata } from "next";
+import { siteUrl } from "@/lib/seoData";
+
+export const metadata: Metadata = {
+  title: "Adelaide Smart Lock Installation Guides & Projects",
+  description:
+    "Read Adelaide smart lock installation projects, door compatibility advice, product guidance and real local case studies from ADE Smart Home.",
+  alternates: { canonical: `${siteUrl}/blog` },
+  openGraph: {
+    title: "Adelaide Smart Lock Installation Guides & Projects",
+    description:
+      "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
+    url: `${siteUrl}/blog`,
+    siteName: "ADE Smart Home",
+    images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
+    locale: "en_AU",
+    type: "website",
+  },
+};
 
 interface Post {
   slug: string;
@@ -49,8 +68,30 @@ export default function BlogListPage() {
       });
   }
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${siteUrl}/blog#blog`,
+    url: `${siteUrl}/blog`,
+    name: "ADE Smart Home Installation Guides & Projects",
+    publisher: { "@id": `${siteUrl}/#business` },
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: `${siteUrl}/blog/${post.slug}`,
+      datePublished: post.date,
+      image: post.coverImage
+        ? new URL(post.coverImage, siteUrl).toString()
+        : undefined,
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 pt-32 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
       <div className="container mx-auto px-4 md:px-6 text-white">
         
         {/* Header Section */}
@@ -80,7 +121,7 @@ export default function BlogListPage() {
 
             <div className="flex-1">
               <p className="text-zinc-300 text-sm font-light leading-relaxed">
-                <span className="text-white font-bold">Experience Matters:</span> We have completed over <span className="text-[#c5a47e] font-bold">400+</span> smart lock installations in Adelaide, with the number growing daily. This portfolio is being updated with our extensive project history.
+                <span className="text-white font-bold">Experience Matters:</span> We have completed more than <span className="text-[#c5a47e] font-bold">400</span> smart lock installations in Adelaide, with the number growing daily. This portfolio is being updated with our extensive project history.
               </p>
               <div className="flex items-center gap-2 mt-2 text-[#c5a47e] text-[10px] font-bold uppercase tracking-widest">
                 <TrendingUp className="w-3 h-3 animate-pulse" /> Growing Daily in Adelaide

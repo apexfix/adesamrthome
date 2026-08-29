@@ -9,6 +9,46 @@ import StoryCarousel from "@/components/StoryCarousel";
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
+import type { Metadata } from "next";
+import { siteUrl } from "@/lib/seoData";
+import type { Product } from "@/types";
+
+export const metadata: Metadata = {
+  title: { absolute: "Smart Lock Installation Adelaide | ADE Smart Home" },
+  description:
+    "Professional smart lock installation in Adelaide with 400+ local installations, installed-price smart locks, free door compatibility checks and local support.",
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      "en-AU": siteUrl,
+      "zh-CN": `${siteUrl}/zh`,
+    },
+  },
+  openGraph: {
+    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    description:
+      "Adelaide smart lock specialists with 400+ local installations, free door compatibility checks and local after-sales support.",
+    url: siteUrl,
+    siteName: "ADE Smart Home",
+    images: [
+      {
+        url: "/img/hero1.avif",
+        width: 1200,
+        height: 630,
+        alt: "ADE Smart Home smart lock installation in Adelaide",
+      },
+    ],
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    description:
+      "Professional smart lock installation with installed-price options and free door compatibility checks across Adelaide.",
+    images: ["/img/hero1.avif"],
+  },
+};
 
 // 1. 修改接口名称为 LocalStory，避开命名空间冲突
 // 同时移除所有 "?"，确保类型是严格的 string
@@ -22,7 +62,7 @@ interface LocalStory {
 }
 
 export default async function Home() {
-  let products = [];
+  let products: Product[] = [];
   try {
     products = await getProducts(1, 10);
   } catch (e) {
@@ -72,8 +112,7 @@ export default async function Home() {
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
               Recent <span className="text-[#c5a47e]">Works</span>
             </h2>
-            {/* 3. 使用 as any 绕过最后一道类型校验障眼法 */}
-            <StoryCarousel stories={latestStories as any} />
+            <StoryCarousel stories={latestStories} />
           </div>
         </section>
       )}
@@ -84,7 +123,7 @@ export default async function Home() {
             Featured Collection
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {products.map((product: any) => (
+            {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

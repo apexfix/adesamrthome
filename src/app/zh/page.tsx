@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/img/hero1.jpg",
+        url: "/img/hero1.avif",
         width: 1200,
         height: 630,
         alt: "阿德莱德智能锁安装 ADE Smart Home",
@@ -55,7 +55,7 @@ export default function ChineseLandingPage() {
     alternateName: "Smart Lock Installation Adelaide",
     serviceType: "Smart Lock Installation",
     provider: {
-      "@type": ["LocalBusiness", "Locksmith"],
+      "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteUrl}/#business`,
       name: businessInfo.name,
       telephone: businessInfo.phoneInternational,

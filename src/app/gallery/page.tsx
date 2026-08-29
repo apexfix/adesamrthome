@@ -2,29 +2,52 @@
 
 import { useState } from "react";
 import Image from "next/image";
-// ❌ 删掉 Header 和 Footer 的 import
-import { MapPin, Camera } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 const projects = [
   {
     id: 1,
-    title: "Philips DDL720 Installation",
-    suburb: "Mawson Lakes",
-    description: "Professional installation with zero gap. Integrated video doorbell and face unlock.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800",
-    category: "Philips"
+    title: "Lockin S50M Pro Installation",
+    suburb: "Adelaide",
+    description: "Camera smart lock fitted neatly beside a pull handle on a modern entry door.",
+    image: "/img/products/lockin-s50m-pro/real-install-01.jpg",
+    category: "S50M Pro"
   },
   {
     id: 2,
-    title: "Samsung Biometric Setup",
-    suburb: "Glenelg",
-    description: "Replaced deadbolt with clean, modern finish. Enhanced security for coastal home.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800",
-    category: "Samsung"
+    title: "Lockin V5 Max Installation",
+    suburb: "Adelaide",
+    description: "Face-recognition smart lock installed with an indoor screen for visitor viewing.",
+    image: "/img/products/lockin-v5-max/real-install-02.jpg",
+    category: "V5 Max"
+  },
+  {
+    id: 3,
+    title: "Lockin SV40 Installation",
+    suburb: "Adelaide",
+    description: "Slim finger-vein smart lock installed on a residential timber entry door.",
+    image: "/img/products/lockin-sv40/real-install-03.jpg",
+    category: "SV40"
+  },
+  {
+    id: 4,
+    title: "Lockin S6 Max Installation",
+    suburb: "Adelaide",
+    description: "Premium camera smart lock fitted to a narrow timber door stile after a compatibility check.",
+    image: "/img/products/lockin-s6-max/real-install-04.jpg",
+    category: "S6 Max"
+  },
+  {
+    id: 5,
+    title: "Lockin X9 Installation",
+    suburb: "Adelaide",
+    description: "Compact fingerprint and passcode smart lock installed on a modern front door.",
+    image: "/img/products/lockin-x9/real-install-02.jpg",
+    category: "X9"
   }
 ];
 
-const categories = ["All", "Philips", "Samsung", "EZVIZ", "Other"];
+const categories = ["All", "S50M Pro", "V5 Max", "SV40", "S6 Max", "X9"];
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState("All");
@@ -39,7 +62,7 @@ export default function GalleryPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mb-16">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Our <span className="text-[#c5a47e]">Gallery</span></h1>
-            <p className="text-zinc-400 text-lg font-light leading-relaxed">Adelaide's trusted smart lock specialists. Real photos, real results.</p>
+            <p className="text-zinc-400 text-lg font-light leading-relaxed">Real smart lock installations completed across Adelaide.</p>
           </div>
           
           <div className="flex flex-wrap gap-4 mb-12">

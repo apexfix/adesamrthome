@@ -8,6 +8,10 @@ import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { Metadata } from "next";
+import { localProducts } from "@/lib/localProducts";
+import { businessInfo, siteUrl } from "@/lib/seoData";
+import type { Product, ProductAttribute, ProductImage } from "@/types";
 
 interface ProductPageProps {
   params: Promise<{
@@ -25,13 +29,70 @@ interface Story {
   date: string;
 }
 
-function getAttributeValues(attribute: any) {
+function stripHtml(value: string) {
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function getPrice(product: Product) {
+  const minorUnit = product.prices?.currency_minor_unit || 2;
+  const divider = Math.pow(10, minorUnit);
+  const current = (parseInt(product.prices?.price || "0", 10) / divider).toFixed(0);
+  const regular = (
+    parseInt(product.prices?.regular_price || product.prices?.price || "0", 10) /
+    divider
+  ).toFixed(0);
+
+  return { current, regular, isOnSale: regular !== current };
+}
+
+export function generateStaticParams() {
+  return localProducts.map((product) => ({ slug: product.slug }));
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+
+  if (!product) {
+    return { title: "Product Not Found", robots: { index: false, follow: false } };
+  }
+
+  const { current } = getPrice(product);
+  const url = `${siteUrl}/products/${product.slug}`;
+  const image = product.images?.[0]?.src
+    ? new URL(product.images[0].src, siteUrl).toString()
+    : `${siteUrl}/img/hero1.avif`;
+  const description = `${product.name} from $${current} with standard Adelaide installation included. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
+
+  return {
+    title: `${product.name} Installed in Adelaide`,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${product.name} with Adelaide Installation`,
+      description,
+      url,
+      siteName: "ADE Smart Home",
+      images: [{ url: image, alt: product.name }],
+      locale: "en_AU",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.name} with Adelaide Installation`,
+      description,
+      images: [image],
+    },
+  };
+}
+
+function getAttributeValues(attribute: ProductAttribute) {
   if (Array.isArray(attribute.options)) {
     return attribute.options;
   }
 
   if (Array.isArray(attribute.terms)) {
-    return attribute.terms.map((term: any) => term.name || term.slug).filter(Boolean);
+    return attribute.terms.map((term) => term.name || term.slug).filter(Boolean) as string[];
   }
 
   return [];
@@ -104,17 +165,77 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   // 1. 价格计算逻辑
-  const minorUnit = product.prices?.currency_minor_unit || 2;
-  const divider = Math.pow(10, minorUnit);
-  const currentPrice = (parseInt(product.prices?.price || "0") / divider).toFixed(0);
-  const regularPrice = (parseInt(product.prices?.regular_price || "0") / divider).toFixed(0);
-  const isOnSale = regularPrice !== currentPrice;
+  const { current: currentPrice, regular: regularPrice, isOnSale } = getPrice(product);
   const currencySymbol = product.prices?.currency_symbol || "$";
   
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
     : [{ src: "/placeholder.jpg", alt: product.name }];
   const installationPhotos = installationPhotosBySlug[slug] || [];
+  const productUrl = `${siteUrl}/products/${product.slug}`;
+  const productDescription = stripHtml(
+    product.short_description || product.description || ""
+  );
+  const productImages = galleryImages.map((image: ProductImage) =>
+    new URL(image.src, siteUrl).toString()
+  );
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `${productUrl}#product`,
+    name: product.name,
+    description: productDescription,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: "Lockin" },
+    category: "Smart Lock",
+    image: productImages,
+    offers: {
+      "@type": "Offer",
+      url: productUrl,
+      priceCurrency: product.prices?.currency_code || "AUD",
+      price: currentPrice,
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@id": `${siteUrl}/#business` },
+      areaServed: {
+        "@type": "City",
+        name: businessInfo.addressLocality,
+      },
+    },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Standard Adelaide installation",
+        value: "Included",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Door compatibility check",
+        value: "Free before booking",
+      },
+    ],
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Smart Locks",
+        item: `${siteUrl}/products`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.name,
+        item: productUrl,
+      },
+    ],
+  };
 
   // 2. 【新增】获取关联的安装案例
   const postsDirectory = path.join(process.cwd(), "content/posts");
@@ -167,6 +288,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="bg-zinc-950 min-h-screen text-white pt-32 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container mx-auto px-4 md:px-6">
         
         {/* 面包屑导航 */}
@@ -276,7 +405,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             {product.attributes && (
               <dl className="space-y-6">
-                {product.attributes.map((attr: any, index: number) => {
+                {product.attributes.map((attr, index) => {
                   const values = getAttributeValues(attr);
 
                   if (values.length === 0) {

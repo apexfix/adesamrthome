@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const title = `Smart Lock Installation ${area.name} | Digital Door Lock Installer`;
-  const description = `Professional smart lock installation in ${area.name} and nearby suburbs including ${area.nearby}. ADE Smart Home installs Philips, EZVIZ, Samsung, Aqara and imported smart locks with free door compatibility checks.`;
+  const description = `Smart lock installation in ${area.name}, Adelaide. Lockin fingerprint, camera and face-recognition locks with standard installation and free door checks.`;
 
   return {
     title,
@@ -42,7 +42,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `smart door lock ${area.name}`,
       `Philips smart lock ${area.name}`,
       `EZVIZ smart lock ${area.name}`,
-      `locksmith ${area.name}`,
       `CCTV installation ${area.name}`,
       "smart lock installation Adelaide",
     ],
@@ -56,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: "ADE Smart Home",
       images: [
         {
-          url: "/img/hero1.jpg",
+          url: "/img/hero1.avif",
           width: 1200,
           height: 630,
           alt: `Smart lock installation in ${area.name} by ADE Smart Home`,
@@ -85,7 +84,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
     name: `Smart Lock Installation in ${area.name}`,
     serviceType: "Smart Lock Installation",
     provider: {
-      "@type": ["LocalBusiness", "Locksmith"],
+      "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteUrl}/#business`,
       name: businessInfo.name,
       telephone: businessInfo.phoneInternational,
@@ -145,6 +144,26 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
     ],
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Adelaide Smart Lock Installation",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: area.name,
+        item: pageUrl,
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <script
@@ -154,6 +173,10 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <section className="bg-neutral-950 text-white">

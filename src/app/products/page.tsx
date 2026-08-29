@@ -1,9 +1,26 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import Link from "next/link";
+import type { Metadata } from "next";
+import { siteUrl } from "@/lib/seoData";
+import type { Product } from "@/types";
 
-// 强制每次访问都进行动态渲染，严禁使用打包时的静态缓存
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Smart Locks with Adelaide Installation",
+  description:
+    "Compare Lockin smart locks with standard Adelaide installation included. View fingerprint, finger-vein, face recognition and camera models from $650.",
+  alternates: { canonical: `${siteUrl}/products` },
+  openGraph: {
+    title: "Smart Locks with Adelaide Installation",
+    description:
+      "Compare installed-price Lockin smart locks and request a free Adelaide door compatibility check.",
+    url: `${siteUrl}/products`,
+    siteName: "ADE Smart Home",
+    images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
+    locale: "en_AU",
+    type: "website",
+  },
+};
 
 const SMART_LOCK_CHILD_CATEGORIES = new Set([
   "smartlock",
@@ -26,11 +43,11 @@ function normalizeCategory(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-function productMatchesCategory(product: any, categoryParam: string) {
+function productMatchesCategory(product: Product, categoryParam: string) {
   const requested = normalizeCategory(categoryParam);
   const categories = product.categories || [];
 
-  return categories.some((cat: any) => {
+  return categories.some((cat) => {
     const categoryName = normalizeCategory(cat.name || "");
     const categorySlug = normalizeCategory(cat.slug || "");
 
@@ -49,12 +66,12 @@ function productMatchesCategory(product: any, categoryParam: string) {
   });
 }
 
-function productMatchesBrand(product: any, brandParam: string) {
+function productMatchesBrand(product: Product, brandParam: string) {
   const requested = normalizeCategory(brandParam);
   const searchableValues = [
-    ...(product.tags || []).map((tag: any) => tag.name || tag.slug || ""),
-    ...(product.brands || []).map((brand: any) => brand.name || brand.slug || ""),
-    ...(product.categories || []).map((cat: any) => cat.name || cat.slug || ""),
+    ...(product.tags || []).map((tag) => tag.name || tag.slug || ""),
+    ...(product.brands || []).map((brand) => brand.name || brand.slug || ""),
+    ...(product.categories || []).map((cat) => cat.name || cat.slug || ""),
     product.name || "",
     product.sku || "",
   ];
@@ -88,20 +105,14 @@ export default async function ProductsPage(props: {
   const categoryParam = typeof params.category === 'string' ? params.category : null;
   const brandParam = typeof params.brand === 'string' ? params.brand : null;
 
-  // 从 WordPress 获取产品数据
-  let allProducts = [];
-  try {
-    allProducts = await getProducts(1, 50);
-  } catch (error) {
-    console.error("Failed to fetch products", error);
-  }
+  const allProducts: Product[] = await getProducts(1, 50);
 
   const categoryProducts = categoryParam
-    ? allProducts.filter((product: any) => productMatchesCategory(product, categoryParam))
+    ? allProducts.filter((product) => productMatchesCategory(product, categoryParam))
     : allProducts;
 
   const displayedProducts = brandParam
-    ? categoryProducts.filter((product: any) => productMatchesBrand(product, brandParam))
+    ? categoryProducts.filter((product) => productMatchesBrand(product, brandParam))
     : categoryProducts;
 
   const pageTitle = getPageTitle(categoryParam);
@@ -109,8 +120,50 @@ export default async function ProductsPage(props: {
     categoryParam !== null &&
     ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${siteUrl}/products#collection`,
+    url: `${siteUrl}/products`,
+    name: "Smart Locks with Adelaide Installation",
+    description:
+      "Smart locks supplied with standard Adelaide installation and a free door compatibility check.",
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: allProducts.length,
+      itemListElement: allProducts.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `${siteUrl}/products/${product.slug}`,
+        name: product.name,
+      })),
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Smart Locks",
+        item: `${siteUrl}/products`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container mx-auto px-4 md:px-6">
         
         {/* 页面标题区域 */}
@@ -156,14 +209,14 @@ export default async function ProductsPage(props: {
         {/* 产品网格展示 */}
         {displayedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {displayedProducts.map((product: any) => (
+            {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
           <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-3xl bg-zinc-900/50 max-w-3xl mx-auto">
             <p className="text-xl">No products found in this category.</p>
-            <p className="text-sm mt-2">Please check if the category names in WordPress match exactly.</p>
+            <p className="text-sm mt-2">Try another category or contact us for current availability.</p>
           </div>
         )}
         

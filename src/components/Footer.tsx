@@ -21,7 +21,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm leading-relaxed">
-              Adelaide's premier smart lock installation specialists. We combine cutting-edge security technology with flawless, flush-finish installations to protect what matters most.
+              Adelaide&apos;s smart lock installation specialists. We combine reliable security technology with neat, carefully finished installations and local support.
             </p>
             
             {/* 社交媒体链接 */}

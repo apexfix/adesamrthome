@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -48,12 +49,14 @@ export function HeroCarousel() {
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           )}
         >
-          {/* 背景图片 */}
-          <img
+          <Image
             src={slide.imagePath}
             alt={slide.title}
+            fill
+            priority={index === 0}
+            sizes="100vw"
             className={cn(
-              "absolute inset-0 w-full h-full object-cover transition-transform duration-[15000ms] ease-out",
+              "object-cover transition-transform duration-[15000ms] ease-out",
               index === current ? "scale-110" : "scale-105"
             )}
           />

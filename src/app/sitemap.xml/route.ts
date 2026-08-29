@@ -2,45 +2,31 @@ import { getProducts } from "@/lib/api";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { serviceAreas, siteUrl } from "@/lib/seoData";
+import { serviceAreas, siteLastModified, siteUrl } from "@/lib/seoData";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400;
 
-function xmlUrl(
-  loc: string,
-  lastmod: string,
-  changefreq: "daily" | "weekly" | "monthly" | "yearly",
-  priority: string
-) {
+function xmlUrl(loc: string, lastmod: string) {
   return `
   <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
   </url>`;
 }
 
 export async function GET() {
-  const now = new Date().toISOString();
-
   const staticPages = [
-    xmlUrl(`${siteUrl}/`, now, "weekly", "1.0"),
-    xmlUrl(`${siteUrl}/products`, now, "weekly", "0.9"),
-    xmlUrl(`${siteUrl}/blog`, now, "weekly", "0.8"),
-    xmlUrl(`${siteUrl}/gallery`, now, "monthly", "0.7"),
-    xmlUrl(`${siteUrl}/contact`, now, "monthly", "0.8"),
-    xmlUrl(`${siteUrl}/zh`, now, "weekly", "0.9"),
+    xmlUrl(`${siteUrl}/`, siteLastModified),
+    xmlUrl(`${siteUrl}/products`, siteLastModified),
+    xmlUrl(`${siteUrl}/blog`, siteLastModified),
+    xmlUrl(`${siteUrl}/gallery`, siteLastModified),
+    xmlUrl(`${siteUrl}/contact`, siteLastModified),
+    xmlUrl(`${siteUrl}/zh`, siteLastModified),
   ].join("");
 
   const suburbPages = serviceAreas
     .map((area) =>
-      xmlUrl(
-        `${siteUrl}/smart-lock-installation/${area.slug}`,
-        now,
-        "monthly",
-        "0.85"
-      )
+      xmlUrl(`${siteUrl}/smart-lock-installation/${area.slug}`, siteLastModified)
     )
     .join("");
 
@@ -50,9 +36,9 @@ export async function GET() {
     const products = await getProducts(1, 100);
 
     productPages = products
-      .map((product: any) => {
+      .map((product) => {
         const slug = product.slug || product.id;
-        return xmlUrl(`${siteUrl}/products/${slug}`, now, "monthly", "0.8");
+        return xmlUrl(`${siteUrl}/products/${slug}`, siteLastModified);
       })
       .join("");
   } catch (error) {
@@ -75,9 +61,11 @@ export async function GET() {
 
         const { data } = matter(fileContent);
         const slug = fileName.replace(".md", "");
-        const lastmod = new Date(data.date || now).toISOString();
+        const lastmod = new Date(
+          data.updated || data.date || siteLastModified
+        ).toISOString();
 
-        return xmlUrl(`${siteUrl}/blog/${slug}`, lastmod, "monthly", "0.7");
+        return xmlUrl(`${siteUrl}/blog/${slug}`, lastmod);
       })
       .join("");
   }

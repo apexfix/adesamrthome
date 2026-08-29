@@ -13,6 +13,15 @@ export const businessInfo = {
   longitude: 138.6007,
 };
 
+export const socialProfiles = [
+  "https://www.facebook.com/profile.php?id=61571291020457",
+  "https://www.instagram.com/adesmarthome/",
+  "https://www.tiktok.com/@adesmarthome",
+  "https://xhslink.com/m/6Bv1zW0ClyZ",
+];
+
+export const siteLastModified = "2026-08-17";
+
 export const serviceAreas = [
   {
     slug: "adelaide-cbd",
@@ -101,6 +110,7 @@ export const serviceAreas = [
 ];
 
 export const smartLockBrands = [
+  "Lockin",
   "Philips",
   "EZVIZ",
   "Samsung",

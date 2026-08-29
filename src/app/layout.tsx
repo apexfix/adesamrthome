@@ -4,7 +4,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { businessInfo, coreServices, serviceAreas, siteUrl, smartLockBrands } from "@/lib/seoData";
+import {
+  businessInfo,
+  coreServices,
+  serviceAreas,
+  siteUrl,
+  smartLockBrands,
+  socialProfiles,
+} from "@/lib/seoData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,13 +50,6 @@ export const metadata: Metadata = {
   authors: [{ name: "ADE Smart Home" }],
   creator: "ADE Smart Home",
   publisher: "ADE Smart Home",
-  alternates: {
-    canonical: siteUrl,
-    languages: {
-      "en-AU": siteUrl,
-      "zh-CN": `${siteUrl}/zh`,
-    },
-  },
   icons: {
     icon: "/img/logo.png",
     apple: "/img/logo.png",
@@ -58,11 +58,10 @@ export const metadata: Metadata = {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
       "Adelaide smart lock installation specialists. 400+ local installations for Philips, EZVIZ, Samsung, Aqara and imported smart locks. Free door compatibility check.",
-    url: siteUrl,
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/img/hero1.jpg",
+        url: "/img/hero1.avif",
         width: 1200,
         height: 630,
         alt: "ADE Smart Home smart lock installation in Adelaide",
@@ -76,7 +75,7 @@ export const metadata: Metadata = {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
       "Professional smart lock installation, CCTV installation and smart home setup across Adelaide.",
-    images: ["/img/hero1.jpg"],
+    images: ["/img/hero1.avif"],
   },
   robots: {
     index: true,
@@ -93,7 +92,7 @@ export const metadata: Metadata = {
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "Locksmith"],
+  "@type": ["LocalBusiness", "ProfessionalService"],
   "@id": `${siteUrl}/#business`,
   name: businessInfo.name,
   url: siteUrl,
@@ -110,11 +109,6 @@ const localBusinessSchema = {
     addressRegion: businessInfo.addressRegion,
     postalCode: businessInfo.postalCode,
     addressCountry: businessInfo.country,
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: businessInfo.latitude,
-    longitude: businessInfo.longitude,
   },
   areaServed: serviceAreas.map((area) => ({
     "@type": "City",
@@ -185,11 +179,7 @@ const localBusinessSchema = {
       closes: "20:00",
     },
   ],
-  sameAs: [
-    "https://www.facebook.com/",
-    "https://www.instagram.com/",
-    "https://www.tiktok.com/",
-  ],
+  sameAs: socialProfiles,
 };
 
 const websiteSchema = {

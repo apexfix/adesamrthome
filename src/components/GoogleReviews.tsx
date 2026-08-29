@@ -49,7 +49,7 @@ export function GoogleReviews() {
             Trusted by Adelaide Homeowners
           </h2>
           <p className="text-zinc-400 max-w-2xl text-lg font-light leading-relaxed">
-            Don't just take our word for it. Join over 400+ satisfied customers who upgraded their home security with ADE Smart Home.
+            Don&apos;t just take our word for it. Explore feedback from Adelaide customers who upgraded their home security with ADE Smart Home.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ export function GoogleReviews() {
               </div>
 
               <p className="text-zinc-300 text-sm md:text-base leading-relaxed flex-grow font-light">
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
 
               <div className="mt-8 flex gap-1">

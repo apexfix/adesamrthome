@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, Plus } from "lucide-react";
+import type { Product } from "@/types";
 
-export function ProductCard({ product }: { product: any }) {
+export function ProductCard({ product }: { product: Product }) {
   // 1. 处理价格逻辑
   const minorUnit = product.prices?.currency_minor_unit || 2;
   const divider = Math.pow(10, minorUnit);

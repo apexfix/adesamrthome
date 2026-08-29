@@ -20,7 +20,7 @@ export function ServiceFeatures() {
               Precision Installation
             </h3>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
-              Over 350+ flawless installations across Adelaide. We guarantee a neat, clean, and flushed finish without compromising your door's structural integrity.
+              Over 400 local installations across Adelaide. We focus on a neat, clean, flush finish while protecting your door&apos;s structural integrity.
             </p>
           </div>
 
@@ -33,7 +33,7 @@ export function ServiceFeatures() {
               Top-Tier Security
             </h3>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
-              We supply only the best: Philips, EZVIZ, and Samsung. Weather-resistant and built for modern homes to ensure your family's ultimate protection.
+              We supply carefully selected Lockin smart locks for different doors, budgets and access needs, backed by compatibility checks before installation.
             </p>
           </div>
 
