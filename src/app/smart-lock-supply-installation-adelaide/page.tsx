@@ -8,7 +8,7 @@ import {
   DoorOpen,
   Fingerprint,
   PackageCheck,
-  Phone,
+  MessageSquareText,
   ScanFace,
   ShieldCheck,
   Smartphone,
@@ -289,11 +289,11 @@ export default function SupplyInstallationPage() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <a
-              href={`tel:${businessInfo.phoneInternational}`}
+              href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote.`}
               className="inline-flex min-h-12 items-center justify-center gap-2 px-4 text-sm font-bold text-white hover:text-[#d9b98f]"
             >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              {businessInfo.phone}
+              <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+              Text us
             </a>
           </div>
 
@@ -434,11 +434,11 @@ export default function SupplyInstallationPage() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <a
-                href={`tel:${businessInfo.phoneInternational}`}
+                href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20an%20installation-only%20quote.`}
                 className="inline-flex min-h-12 items-center justify-center gap-2 border border-slate-950 px-6 text-sm font-bold text-slate-950 transition-colors hover:bg-white"
               >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                Call {businessInfo.phone}
+                <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+                Text us
               </a>
             </div>
           </div>

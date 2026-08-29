@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Clock, Phone, ShieldCheck } from "lucide-react";
+import { Clock, MessageSquareText, ShieldCheck } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
   title: "Get a Smart Lock Quote in Adelaide",
   description:
-    "Request a smart lock supply and installation quote or installation-only service for a compatible customer-supplied lock in Adelaide. Call 0431 060 390.",
+    "Request a smart lock supply and installation quote or installation-only service for a compatible customer-supplied lock in Adelaide. We reply by SMS or email.",
   alternates: { canonical: `${siteUrl}/contact` },
   openGraph: {
     title: "Get a Quote | ADE Smart Home Adelaide",
@@ -89,10 +89,10 @@ export default async function ContactPage({
             </p>
           </div>
           <div>
-            <Phone className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
-            <h2 className="mt-4 text-lg font-bold">Local Adelaide Support</h2>
+            <MessageSquareText className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
+            <h2 className="mt-4 text-lg font-bold">Message-Friendly Support</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              Call 0431 060 390 to discuss smart lock packages or installation-only jobs.
+              Text 0431 060 390 or email us about smart lock packages or installation-only jobs.
             </p>
           </div>
         </div>

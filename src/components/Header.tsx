@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, X, Instagram, Facebook } from "lucide-react";
+import { Menu, MessageSquareText, X, Instagram, Facebook } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -80,9 +80,9 @@ export function Header() {
             </div>
 
             <div className="hidden lg:flex items-center gap-6 text-sm text-white/90">
-               <a href="tel:0431060390" className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
-                 <Phone className="h-4 w-4 text-[#c5a47e]" />
-                 <span className="font-medium tracking-wide">0431060390</span>
+               <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
+                 <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
+                 <span className="font-medium tracking-wide">Text 0431 060 390</span>
                </a>
             </div>
           </div>
@@ -113,8 +113,8 @@ export function Header() {
               <a href="https://www.tiktok.com/@adesmarthome" target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
               <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
             </div>
-            <a href="tel:0431060390" className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
-              <Phone className="h-5 w-5" /> 0431060390
+            <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
+              <MessageSquareText className="h-5 w-5" /> Text 0431 060 390
             </a>
           </div>
         </div>

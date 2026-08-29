@@ -6,7 +6,7 @@ import {
   ArrowRight,
   Camera,
   CheckCircle2,
-  Phone,
+  MessageSquareText,
   Send,
 } from "lucide-react";
 import {
@@ -76,7 +76,7 @@ export function ContactForm({
 
       if (!response.ok) {
         throw new Error(
-          result?.message || "We could not send your request. Please call us instead.",
+          result?.message || "We could not send your request. Please text or email us instead.",
         );
       }
 
@@ -95,7 +95,7 @@ export function ContactForm({
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "We could not send your request. Please call us instead.",
+          : "We could not send your request. Please text or email us instead.",
       );
     } finally {
       setIsSubmitting(false);
@@ -122,21 +122,21 @@ export function ContactForm({
             Tell Us What You Need
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Leave your number and service type. We will confirm the next step,
+            Leave your details and service type. We will reply by SMS or email with the next step,
             including any door photos or measurements we need.
           </p>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
           <aside className="border border-zinc-800 bg-black p-6 md:p-8">
-            <h3 className="text-xl font-bold text-white">Prefer to contact us directly?</h3>
+            <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
-                href="tel:+61431060390"
+                href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote."
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
-                <Phone className="h-5 w-5" aria-hidden="true" />
-                0431 060 390
+                <MessageSquareText className="h-5 w-5" aria-hidden="true" />
+                Text 0431 060 390
               </a>
               <a
                 href="mailto:info@adesmarthome.com.au?subject=Door%20photos%20for%20installation%20check"
@@ -152,7 +152,7 @@ export function ContactForm({
                 What happens next
               </h3>
               <ol className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
-                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>We call or email you.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>We reply by SMS or email.</li>
                 <li><strong className="mr-2 text-[#c5a47e]">2.</strong>You send door or site photos.</li>
                 <li><strong className="mr-2 text-[#c5a47e]">3.</strong>We confirm suitability, price and availability.</li>
               </ol>
@@ -172,7 +172,7 @@ export function ContactForm({
                 <CheckCircle2 className="h-14 w-14 text-emerald-600" aria-hidden="true" />
                 <h3 className="mt-5 text-2xl font-black text-slate-950">Request received</h3>
                 <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
-                  Thank you. We will contact you shortly to confirm the details and next step.
+                  Thank you. We will reply by SMS or email to confirm the details and next step.
                 </p>
                 <button
                   type="button"
@@ -185,9 +185,9 @@ export function ContactForm({
             ) : (
               <>
                 <h3 className="text-2xl font-black tracking-tight text-slate-950">
-                  {formData.product ? `Ask about ${formData.product}` : "Request a callback"}
+                  {formData.product ? `Ask about ${formData.product}` : "Request a reply"}
                 </h3>
-                <p className="mt-2 text-sm text-slate-600">Name and phone are the only required fields.</p>
+                <p className="mt-2 text-sm text-slate-600">Name and mobile are the only required fields. We reply by SMS or email.</p>
 
                 <form onSubmit={handleSubmit} className="mt-7 space-y-5">
                   <fieldset>
@@ -284,7 +284,7 @@ export function ContactForm({
 
                   {errorMessage && (
                     <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
-                      {errorMessage} Call 0431 060 390 if the problem continues.
+                      {errorMessage} Text 0431 060 390 or email us if the problem continues.
                     </p>
                   )}
 
@@ -293,7 +293,7 @@ export function ContactForm({
                     disabled={isSubmitting}
                     className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
                   >
-                    {isSubmitting ? "Sending..." : "Request a callback"}
+                    {isSubmitting ? "Sending..." : "Request a reply"}
                     {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
                   </button>
                   <p className="text-center text-xs text-slate-500">

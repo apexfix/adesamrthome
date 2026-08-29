@@ -4,7 +4,7 @@ import {
   ArrowRight,
   Check,
   LockKeyhole,
-  Phone,
+  MessageSquareText,
   Wrench,
 } from "lucide-react";
 
@@ -67,11 +67,11 @@ export function HeroCarousel() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <a
-              href="tel:+61431060390"
+              href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote."
               className="inline-flex min-h-12 items-center justify-center gap-2 px-3 text-sm font-semibold text-white transition-colors hover:text-[#d9b98f]"
             >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              0431 060 390
+              <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+              Text us
             </a>
           </div>
 

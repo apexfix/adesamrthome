@@ -7,7 +7,7 @@ import {
   ClipboardCheck,
   DoorOpen,
   PackageCheck,
-  Phone,
+  MessageSquareText,
   Ruler,
   Smartphone,
   Wrench,
@@ -233,11 +233,11 @@ export default function InstallationOnlyPage() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <a
-              href={`tel:${businessInfo.phoneInternational}`}
+              href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20an%20installation-only%20quote.`}
               className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/60 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black"
             >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              {businessInfo.phone}
+              <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+              Text us
             </a>
           </div>
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
+import { MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -116,11 +116,11 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="tel:0431060390" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
-                  <Phone className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
+                <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
+                  <MessageSquareText className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
                   <div>
-                    <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Phone</div>
-                    <div>0431060390</div>
+                    <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Text / SMS</div>
+                    <div>0431 060 390</div>
                   </div>
                 </a>
               </li>
