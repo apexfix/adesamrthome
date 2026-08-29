@@ -100,26 +100,30 @@ const priorities = [
   {
     icon: Fingerprint,
     title: "Best value",
-    choice: "Lockin X9 · $650 installed",
-    detail: "A practical choice for fingerprint, PIN, NFC and app access without a built-in camera.",
+    choice: "Lockin X9 · $650 all-inclusive",
+    detail:
+      "Includes the Lockin X9, standard installation and a 2-year local warranty. A practical choice for fingerprint, PIN, NFC and app access.",
   },
   {
     icon: Smartphone,
     title: "Fast family access",
-    choice: "Lockin SV40 · $799 installed",
-    detail: "Finger-vein recognition and a push-pull body make everyday entry quick and simple.",
+    choice: "Lockin SV40 · $799 all-inclusive",
+    detail:
+      "Includes the Lockin SV40, standard installation and a 2-year local warranty. Finger-vein recognition and a push-pull body make entry quick and simple.",
   },
   {
     icon: ScanFace,
     title: "Face recognition",
-    choice: "Lockin S6 Max · $1199 installed",
-    detail: "Combines 3D Face ID, finger-vein access and dual cameras for higher-security entry.",
+    choice: "Lockin S6 Max · $1199 all-inclusive",
+    detail:
+      "Includes the Lockin S6 Max, standard installation and a 2-year local warranty. It combines 3D Face ID, finger-vein access and dual cameras.",
   },
   {
     icon: Camera,
     title: "Premium connected entry",
-    choice: "Lockin V5 Max · $1399 installed",
-    detail: "Palm vein, 3D Face ID, a 2K video doorbell and Apple HomeKit in the flagship package.",
+    choice: "Lockin V5 Max · $1399 all-inclusive",
+    detail:
+      "Includes the Lockin V5 Max, standard installation and a 2-year local warranty. Palm vein, 3D Face ID, a 2K video doorbell and Apple HomeKit.",
   },
 ];
 
@@ -127,7 +131,7 @@ const faqs = [
   {
     question: "Do the listed prices include installation?",
     answer:
-      "Yes. The package prices shown include standard installation after we confirm the selected lock is suitable for your door. Unusual door construction, extensive modification or repair work is discussed and quoted before booking.",
+      "Yes. Each all-inclusive package price includes the selected smart lock, standard installation and a 2-year local warranty after we confirm the lock is suitable for your door. Unusual door construction, extensive modification or repair work is discussed and quoted before booking.",
   },
   {
     question: "How do I know which smart lock fits my door?",
@@ -258,7 +262,8 @@ export default function SupplyInstallationPage() {
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
             Supply-and-install packages start at $650. Already bought a compatible smart lock?
             Installation-only service is $150 for smaller locks and $350 for larger locks,
-            subject to a door compatibility check.
+            subject to a door compatibility check. Every supply-and-install package includes the
+            lock, standard installation and a 2-year local warranty.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -295,9 +300,9 @@ export default function SupplyInstallationPage() {
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
             {[
               "Supply + install from $650",
+              "Lock + installation + 2-year warranty",
               "Small lock installation $150",
               "Large lock installation $350",
-              "Door checked before booking",
             ].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-2">
@@ -318,9 +323,9 @@ export default function SupplyInstallationPage() {
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Choose the level that fits your home</h2>
             <p className="mt-5 text-base leading-7 text-slate-600">
-              Every listed price includes the smart lock and standard Adelaide installation,
-              subject to a door compatibility check. Any non-standard modification is explained
-              and quoted before booking.
+              Every displayed package price is all-inclusive: the selected smart lock, standard
+              Adelaide installation and a 2-year local warranty. It is not an installation-only
+              fee. Any non-standard modification is explained and quoted before booking.
             </p>
           </div>
 
@@ -346,7 +351,12 @@ export default function SupplyInstallationPage() {
                   <p className="mt-1 text-sm text-slate-600">{item.bestFor}</p>
                   <p className="mt-5 text-3xl font-black text-slate-950">
                     ${item.price}
-                    <span className="ml-2 text-xs font-semibold uppercase text-slate-500">installed</span>
+                    <span className="ml-2 text-xs font-semibold uppercase text-slate-500">
+                      all-inclusive
+                    </span>
+                  </p>
+                  <p className="mt-2 text-xs font-medium leading-5 text-slate-600">
+                    Lock + standard installation + 2-year local warranty
                   </p>
                   <ul className="mt-5 space-y-2 text-sm text-slate-700">
                     {item.features.map((feature) => (
