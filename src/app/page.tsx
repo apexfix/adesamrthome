@@ -14,9 +14,9 @@ import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
 
 export const metadata: Metadata = {
-  title: { absolute: "Smart Lock Installation Adelaide | ADE Smart Home" },
+  title: { absolute: "Smart Lock & CCTV Installation Adelaide | ADE Smart Home" },
   description:
-    "Professional smart lock installation in Adelaide with 400+ local installations, installed-price smart locks, free door compatibility checks and local support.",
+    "Smart lock supply and installation, installation-only for compatible customer-supplied locks, and tailored CCTV installation across Adelaide.",
   alternates: {
     canonical: siteUrl,
     languages: {
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    title: "Smart Lock & CCTV Installation Adelaide | ADE Smart Home",
     description:
-      "Adelaide smart lock specialists with 400+ local installations, free door compatibility checks and local after-sales support.",
+      "Adelaide smart lock and CCTV installers offering installed-price products, installation-only service and free door compatibility checks.",
     url: siteUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    title: "Smart Lock & CCTV Installation Adelaide | ADE Smart Home",
     description:
-      "Professional smart lock installation with installed-price options and free door compatibility checks across Adelaide.",
+      "Smart lock supply and installation, installation-only service and tailored CCTV installation across Adelaide.",
     images: ["/img/hero1.avif"],
   },
 };
@@ -100,7 +100,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col bg-black">
-      <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center overflow-hidden border-b border-zinc-900/50">
+      <section className="relative h-[82svh] min-h-[650px] max-h-[820px] overflow-hidden border-b border-zinc-900/50">
         <HeroCarousel />
       </section>
 
