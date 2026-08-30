@@ -32,11 +32,11 @@ export function Header() {
           : "bg-black/40 backdrop-blur-sm border-transparent py-4"
       } text-white`}
     >
-      <div className="container mx-auto max-w-7xl flex items-center justify-between px-6 md:px-8">
+      <div className="container mx-auto flex max-w-[1500px] items-center justify-between px-5 md:px-8 xl:px-10">
         
         <div className="flex items-center gap-10">
-          <Link href="/" className="flex items-center gap-2 relative group">
-            <div className={`relative transition-all duration-500 ${scrolled ? "w-36 h-10" : "w-44 h-12"}`}>
+          <Link href="/" className="group relative flex items-center gap-3">
+            <div className={`relative shrink-0 transition-all duration-500 ${scrolled ? "h-10 w-10" : "h-12 w-12"}`}>
               <Image 
                 src="/img/logo.png" 
                 alt="ADE Smart Home Logo" 
@@ -45,14 +45,18 @@ export function Header() {
                 className="object-contain object-left group-hover:opacity-80 transition-opacity"
               />
             </div>
+            <div className="hidden flex-col xl:flex">
+              <span className="text-base font-bold uppercase text-white">ADE Smart Home</span>
+              <span className="text-xs text-white/60">Smart Lock Adelaide</span>
+            </div>
           </Link>
           
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+          <nav className="hidden items-center gap-9 text-base font-semibold md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative py-2 text-white/80 hover:text-[#c5a47e] transition-colors group"
+                className="group relative py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
@@ -79,7 +83,7 @@ export function Header() {
               </a>
             </div>
 
-            <div className="hidden lg:flex items-center gap-6 text-sm text-white/90">
+            <div className="hidden items-center gap-6 text-base text-white/90 lg:flex">
                <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
                  <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
                  <span className="font-medium tracking-wide">Text 0431 060 390</span>

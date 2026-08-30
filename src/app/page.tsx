@@ -101,7 +101,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col bg-black">
-      <section className="relative h-[82svh] min-h-[650px] max-h-[820px] overflow-hidden border-b border-zinc-900/50">
+      <section className="relative h-[82svh] min-h-[680px] max-h-[900px] overflow-hidden border-b border-zinc-900/50">
         <HeroCarousel />
       </section>
 
@@ -109,7 +109,7 @@ export default async function Home() {
       
       {latestStories.length > 0 && (
         <section className="py-24 bg-black border-y border-zinc-900/50">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
               Recent <span className="text-[#c5a47e]">Works</span>
             </h2>
@@ -119,7 +119,7 @@ export default async function Home() {
       )}
 
       <section className="py-24 bg-zinc-950">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto max-w-[1500px] px-5 text-center md:px-8 xl:px-10">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
             Featured Collection
           </h2>
