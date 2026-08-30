@@ -161,6 +161,56 @@ const faqs = [
 ];
 
 export default function SupplyInstallationPage() {
+  const packageOffers = packages.map((item) => {
+    const productUrl = `${siteUrl}/products/${item.slug}`;
+    const offer = {
+      "@type": "Offer",
+      price: item.price,
+      priceCurrency: "AUD",
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+      url: productUrl,
+      seller: {
+        "@id": `${siteUrl}/#business`,
+      },
+      areaServed: {
+        "@type": "City",
+        name: "Adelaide",
+        addressRegion: "SA",
+        addressCountry: "AU",
+      },
+    };
+
+    return {
+      ...offer,
+      itemOffered: {
+        "@type": "Product",
+        "@id": `${productUrl}#product`,
+        name: item.name,
+        description: `${item.name} all-inclusive Adelaide package with the smart lock, standard installation and a 2-year local warranty.`,
+        image: `${siteUrl}${item.image}`,
+        brand: {
+          "@type": "Brand",
+          name: "Lockin",
+        },
+        category: "Smart Lock",
+        offers: offer,
+        additionalProperty: [
+          {
+            "@type": "PropertyValue",
+            name: "Standard Adelaide installation",
+            value: "Included",
+          },
+          {
+            "@type": "PropertyValue",
+            name: "Local warranty",
+            value: "2 years",
+          },
+        ],
+      },
+    };
+  });
+
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -179,18 +229,7 @@ export default function SupplyInstallationPage() {
       addressRegion: "SA",
       addressCountry: "AU",
     },
-    offers: packages.map((item) => ({
-      "@type": "Offer",
-      price: item.price,
-      priceCurrency: "AUD",
-      availability: "https://schema.org/InStock",
-      url: `${siteUrl}/products/${item.slug}`,
-      itemOffered: {
-        "@type": "Product",
-        name: item.name,
-        image: `${siteUrl}${item.image}`,
-      },
-    })),
+    offers: packageOffers,
   };
 
   const faqSchema = {
