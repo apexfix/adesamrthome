@@ -20,7 +20,7 @@ export const socialProfiles = [
   "https://xhslink.com/m/6Bv1zW0ClyZ",
 ];
 
-export const siteLastModified = "2026-08-29";
+export const siteLastModified = "2026-08-30";
 
 export const serviceAreas = [
   {

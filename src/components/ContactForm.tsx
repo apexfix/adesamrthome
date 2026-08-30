@@ -297,7 +297,12 @@ export function ContactForm({
                     {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
                   </button>
                   <p className="text-center text-xs text-slate-500">
-                    No payment required. We confirm scope and pricing before booking.
+                    No payment required. We confirm scope and pricing before booking. By submitting,
+                    you agree that we may use these details to respond to your enquiry. See our{" "}
+                    <Link href="/privacy-policy" className="font-semibold text-[#8a6b48] underline underline-offset-2 hover:text-black">
+                      Privacy Policy
+                    </Link>
+                    .
                   </p>
                 </form>
               </>

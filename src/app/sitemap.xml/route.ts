@@ -23,6 +23,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/blog`, siteLastModified),
     xmlUrl(`${siteUrl}/gallery`, siteLastModified),
     xmlUrl(`${siteUrl}/contact`, siteLastModified),
+    xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
     xmlUrl(`${siteUrl}/zh`, siteLastModified),
   ].join("");
 

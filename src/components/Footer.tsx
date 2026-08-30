@@ -148,7 +148,7 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
           <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
           <div className="flex gap-4">
-            <span className="hover:text-zinc-400 transition-colors cursor-pointer">Privacy Policy</span>
+            <Link href="/privacy-policy" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
             <span className="hover:text-zinc-400 transition-colors cursor-pointer">Terms of Service</span>
           </div>
         </div>
