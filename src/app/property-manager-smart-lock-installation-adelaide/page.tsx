@@ -177,7 +177,7 @@ export default function PropertyManagerSmartLockInstallationPage() {
       ]}
       faqTitle="Property manager smart-lock FAQ"
       faqs={faqs}
-      initialService="not-sure"
+      initialService="portfolio-project"
       initialProduct="Property manager / portfolio trial"
     />
   );

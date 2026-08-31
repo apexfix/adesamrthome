@@ -16,6 +16,7 @@ import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
   { value: "installation-only", label: "Installation only" },
+  { value: "portfolio-project", label: "Property / project" },
   { value: "not-sure", label: "Not sure" },
 ] as const;
 
@@ -339,7 +340,7 @@ export function ContactForm({
                 <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                   Service needed
                 </legend>
-                <div className="grid gap-px bg-slate-300 p-px sm:grid-cols-3">
+                <div className="grid grid-cols-2 gap-px bg-slate-300 p-px sm:grid-cols-4">
                   {serviceOptions.map((option) => (
                     <button
                       key={option.value}

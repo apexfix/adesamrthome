@@ -177,7 +177,7 @@ export default function NewHomeSmartLockInstallationPage() {
       ]}
       faqTitle="New-home smart-lock FAQ"
       faqs={faqs}
-      initialService="not-sure"
+      initialService="portfolio-project"
       initialProduct="New home / renovation"
     />
   );

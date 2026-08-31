@@ -98,7 +98,11 @@ type AudienceServicePageProps = {
   relatedLinks: RelatedLink[];
   faqTitle: string;
   faqs: FAQItem[];
-  initialService?: "supply-install" | "installation-only" | "not-sure";
+  initialService?:
+    | "supply-install"
+    | "installation-only"
+    | "portfolio-project"
+    | "not-sure";
   initialProduct: string;
 };
 

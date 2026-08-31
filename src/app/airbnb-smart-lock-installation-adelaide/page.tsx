@@ -438,7 +438,10 @@ export default function AirbnbSmartLockInstallationPage() {
         </div>
       </section>
 
-      <ContactForm initialService="not-sure" initialProduct="Airbnb / short-stay property" />
+      <ContactForm
+        initialService="portfolio-project"
+        initialProduct="Airbnb / short-stay property"
+      />
     </main>
   );
 }

@@ -7,7 +7,12 @@ const MAX_PHOTO_COUNT = 4;
 const MAX_PHOTO_BYTES = 1_000_000;
 const MAX_TOTAL_PHOTO_BYTES = 3_500_000;
 const allowedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-const allowedServices = new Set(["supply-install", "installation-only", "not-sure"]);
+const allowedServices = new Set([
+  "supply-install",
+  "installation-only",
+  "portfolio-project",
+  "not-sure",
+]);
 const allowedPropertyTypes = new Set([
   "house",
   "apartment",
@@ -25,6 +30,7 @@ const allowedTimings = new Set([
 const serviceLabels: Record<string, string> = {
   "supply-install": "Supply and installation",
   "installation-only": "Installation only",
+  "portfolio-project": "Property portfolio / building project",
   "not-sure": "Not sure / recommendation needed",
 };
 
