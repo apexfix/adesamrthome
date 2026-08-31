@@ -89,6 +89,24 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/apartment-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Apartments & Units
+                </Link>
+              </li>
+              <li>
+                <Link href="/property-manager-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Property Managers
+                </Link>
+              </li>
+              <li>
+                <Link href="/new-home-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  New Homes & Renovations
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog/smart-lock-door-compatibility-check" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
                   Door Compatibility Check

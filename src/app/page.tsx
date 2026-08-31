@@ -6,6 +6,7 @@ import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
 import { ServicePathways } from "@/components/ServicePathways";
+import { AudiencePathways } from "@/components/AudiencePathways";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import path from "path";
 import fs from "fs";
@@ -106,6 +107,7 @@ export default async function Home() {
       </section>
 
       <ServicePathways />
+      <AudiencePathways />
       
       {latestStories.length > 0 && (
         <section className="py-24 bg-black border-y border-zinc-900/50">
