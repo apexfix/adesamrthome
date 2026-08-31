@@ -11,7 +11,7 @@ import {
   Send,
   X,
 } from "lucide-react";
-import { captureLeadAttribution } from "@/lib/analytics";
+import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
@@ -117,6 +117,7 @@ export function ContactForm({
 }: ContactFormProps = {}) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formStartedRef = useRef(false);
   const selectedService =
     serviceOptions.find((option) => option.value === initialService)?.value ??
     initialFormData.service;
@@ -131,10 +132,37 @@ export function ContactForm({
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
 
+  const trackFormStart = () => {
+    if (formStartedRef.current) return;
+
+    formStartedRef.current = true;
+    trackEvent("form_start", {
+      form_name: "website_enquiry",
+      service: formData.service,
+      product: formData.product || "not-specified",
+    });
+  };
+
+  const handleServiceSelection = (service: string) => {
+    trackFormStart();
+    setFormData((current) => ({ ...current, service }));
+    trackEvent("form_service_selected", {
+      form_name: "website_enquiry",
+      service,
+    });
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isSubmitting || isPreparingPhotos) return;
 
+    trackFormStart();
+    trackEvent("form_submit_attempt", {
+      form_name: "website_enquiry",
+      service: formData.service,
+      product: formData.product || "not-specified",
+      photo_count: photos.length,
+    });
     setIsSubmitting(true);
     setErrorMessage("");
 
@@ -166,8 +194,19 @@ export function ContactForm({
           photoCount: photos.length,
         }),
       );
+      trackEvent("form_submit_success", {
+        form_name: "website_enquiry",
+        service: formData.service,
+        product: formData.product || "not-specified",
+        photo_count: photos.length,
+      });
       router.push("/contact/thank-you");
     } catch (error) {
+      trackEvent("form_submit_error", {
+        form_name: "website_enquiry",
+        service: formData.service,
+        photo_count: photos.length,
+      });
       setErrorMessage(
         error instanceof Error
           ? error.message
@@ -194,9 +233,15 @@ export function ContactForm({
     if (!selectedFiles.length) return;
     if (photos.length + selectedFiles.length > MAX_PHOTOS) {
       setPhotoError(`Please add no more than ${MAX_PHOTOS} photos.`);
+      trackEvent("form_photo_error", {
+        form_name: "website_enquiry",
+        reason: "maximum-photo-count",
+        attempted_photo_count: photos.length + selectedFiles.length,
+      });
       return;
     }
 
+    trackFormStart();
     setIsPreparingPhotos(true);
 
     try {
@@ -204,7 +249,16 @@ export function ContactForm({
         selectedFiles.map((file, index) => compressPhoto(file, photos.length + index)),
       );
       setPhotos((current) => [...current, ...prepared]);
+      trackEvent("form_photo_added", {
+        form_name: "website_enquiry",
+        selected_photo_count: prepared.length,
+        total_photo_count: photos.length + prepared.length,
+      });
     } catch (error) {
+      trackEvent("form_photo_error", {
+        form_name: "website_enquiry",
+        reason: "photo-preparation-failed",
+      });
       setPhotoError(
         error instanceof Error ? error.message : "The selected photos could not be prepared.",
       );
@@ -276,7 +330,11 @@ export function ContactForm({
               Name and mobile are required. Photos are optional but help us assess the door sooner.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+            <form
+              onSubmit={handleSubmit}
+              onFocusCapture={trackFormStart}
+              className="mt-7 space-y-5"
+            >
               <fieldset>
                 <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                   Service needed
@@ -286,7 +344,7 @@ export function ContactForm({
                     <button
                       key={option.value}
                       type="button"
-                      onClick={() => setFormData((current) => ({ ...current, service: option.value }))}
+                      onClick={() => handleServiceSelection(option.value)}
                       className={`min-h-12 px-2 text-xs font-bold transition-colors ${
                         formData.service === option.value
                           ? "bg-slate-950 text-white"
