@@ -4,6 +4,10 @@ export type LeadAttribution = {
   campaign: string;
   content: string;
   term: string;
+  gclid: string;
+  wbraid: string;
+  gbraid: string;
+  fbclid: string;
   landingPage: string;
   referrer: string;
 };
@@ -33,6 +37,10 @@ const emptyAttribution: LeadAttribution = {
   campaign: "",
   content: "",
   term: "",
+  gclid: "",
+  wbraid: "",
+  gbraid: "",
+  fbclid: "",
   landingPage: "",
   referrer: "",
 };
@@ -56,6 +64,10 @@ function readStoredAttribution(): LeadAttribution | null {
       campaign: typeof record.campaign === "string" ? record.campaign : "",
       content: typeof record.content === "string" ? record.content : "",
       term: typeof record.term === "string" ? record.term : "",
+      gclid: typeof record.gclid === "string" ? record.gclid : "",
+      wbraid: typeof record.wbraid === "string" ? record.wbraid : "",
+      gbraid: typeof record.gbraid === "string" ? record.gbraid : "",
+      fbclid: typeof record.fbclid === "string" ? record.fbclid : "",
       landingPage:
         typeof record.landingPage === "string" ? record.landingPage : "",
       referrer: typeof record.referrer === "string" ? record.referrer : "",
@@ -80,21 +92,31 @@ export function captureLeadAttribution(): LeadAttribution {
   if (typeof window === "undefined") return emptyAttribution;
 
   const searchParams = new URLSearchParams(window.location.search);
-  const campaignKeys = [
+  const attributionKeys = [
     "utm_source",
     "utm_medium",
     "utm_campaign",
     "utm_content",
     "utm_term",
+    "gclid",
+    "wbraid",
+    "gbraid",
+    "fbclid",
   ];
-  const hasCampaignParameters = campaignKeys.some((key) =>
+  const hasAttributionParameters = attributionKeys.some((key) =>
     searchParams.has(key),
   );
   const storedAttribution = readStoredAttribution();
 
-  if (storedAttribution && !hasCampaignParameters) {
+  if (storedAttribution && !hasAttributionParameters) {
     return storedAttribution;
   }
+
+  const gclid = cleanValue(searchParams.get("gclid"), 300);
+  const wbraid = cleanValue(searchParams.get("wbraid"), 300);
+  const gbraid = cleanValue(searchParams.get("gbraid"), 300);
+  const fbclid = cleanValue(searchParams.get("fbclid"), 300);
+  const hasGoogleClickId = Boolean(gclid || wbraid || gbraid);
 
   const referrer = getSafeReferrer();
   let referrerHost = "";
@@ -110,14 +132,22 @@ export function captureLeadAttribution(): LeadAttribution {
   const attribution: LeadAttribution = {
     source:
       cleanValue(searchParams.get("utm_source"), 100) ||
+      (hasGoogleClickId ? "google" : "") ||
+      (fbclid ? "facebook" : "") ||
       referrerHost ||
       "direct",
     medium:
       cleanValue(searchParams.get("utm_medium"), 100) ||
+      (hasGoogleClickId ? "cpc" : "") ||
+      (fbclid ? "paid_social" : "") ||
       (referrerHost ? "referral" : "none"),
     campaign: cleanValue(searchParams.get("utm_campaign"), 150),
     content: cleanValue(searchParams.get("utm_content"), 150),
     term: cleanValue(searchParams.get("utm_term"), 150),
+    gclid,
+    wbraid,
+    gbraid,
+    fbclid,
     landingPage: `${window.location.pathname}${window.location.search}`.slice(
       0,
       500,

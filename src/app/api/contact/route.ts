@@ -125,6 +125,10 @@ export async function POST(request: Request) {
       campaign: readField(attributionPayload.campaign, 150),
       content: readField(attributionPayload.content, 150),
       term: readField(attributionPayload.term, 150),
+      gclid: readField(attributionPayload.gclid, 300),
+      wbraid: readField(attributionPayload.wbraid, 300),
+      gbraid: readField(attributionPayload.gbraid, 300),
+      fbclid: readField(attributionPayload.fbclid, 300),
       landingPage: readField(attributionPayload.landingPage, 500),
       referrer: readField(attributionPayload.referrer, 500),
     };
@@ -216,6 +220,10 @@ Medium: ${attribution.medium}
 Campaign: ${attribution.campaign || "Not provided"}
 Ad content: ${attribution.content || "Not provided"}
 Search term: ${attribution.term || "Not provided"}
+Google click ID (gclid): ${attribution.gclid || "Not provided"}
+Google web-to-app ID (wbraid): ${attribution.wbraid || "Not provided"}
+Google app-to-web ID (gbraid): ${attribution.gbraid || "Not provided"}
+Meta click ID (fbclid): ${attribution.fbclid || "Not provided"}
 Landing page: ${attribution.landingPage || "Not recorded"}
 Referrer: ${attribution.referrer || "Not recorded"}
 
@@ -240,6 +248,10 @@ ${message || "No additional details provided."}
         <p><strong>Campaign:</strong> ${escapeHtml(attribution.campaign || "Not provided")}</p>
         <p><strong>Ad content:</strong> ${escapeHtml(attribution.content || "Not provided")}</p>
         <p><strong>Search term:</strong> ${escapeHtml(attribution.term || "Not provided")}</p>
+        <p><strong>Google click ID (gclid):</strong> ${escapeHtml(attribution.gclid || "Not provided")}</p>
+        <p><strong>Google web-to-app ID (wbraid):</strong> ${escapeHtml(attribution.wbraid || "Not provided")}</p>
+        <p><strong>Google app-to-web ID (gbraid):</strong> ${escapeHtml(attribution.gbraid || "Not provided")}</p>
+        <p><strong>Meta click ID (fbclid):</strong> ${escapeHtml(attribution.fbclid || "Not provided")}</p>
         <p><strong>Landing page:</strong> ${escapeHtml(attribution.landingPage || "Not recorded")}</p>
         <p><strong>Referrer:</strong> ${escapeHtml(attribution.referrer || "Not recorded")}</p>
         <hr>

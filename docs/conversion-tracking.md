@@ -32,6 +32,19 @@ The website sends privacy-safe funnel events through the configured Google tag a
 
 The public website currently determines which integrations are active at build time. Adding or changing an ID requires a production deployment and a live event test.
 
+## Lead Attribution In Enquiry Emails
+
+The enquiry form preserves the first acquisition details for the current browser session and sends them only with the business enquiry email. This is separate from the anonymous analytics events above.
+
+Captured fields:
+
+- `utm_source`, `utm_medium`, `utm_campaign`, `utm_content` and `utm_term`
+- Google Ads click identifiers: `gclid`, `wbraid` and `gbraid`
+- Meta click identifier: `fbclid`
+- the first landing page and a URL-safe referrer without page content
+
+When a Google click identifier is present without UTMs, the email labels the source as `google` and medium as `cpc`. When `fbclid` is present without UTMs, the email labels the source as `facebook` and medium as `paid_social`. No name, phone number, email address, message or photo is sent to Google or Meta through this attribution record.
+
 ## Weekly Funnel
 
 Use one weekly date range and report:
