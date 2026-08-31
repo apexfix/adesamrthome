@@ -13,7 +13,7 @@ const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim();
 const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
 const googleTagIds = [...new Set([measurementId, googleAdsId].filter(Boolean))];
-const primaryGoogleTagId = googleTagIds[0];
+const primaryGoogleTagId = googleAdsId || measurementId;
 
 function getLinkLabel(link: HTMLAnchorElement): string {
   return (link.dataset.analyticsLabel || link.textContent || "")
