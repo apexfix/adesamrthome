@@ -1,25 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   Camera,
-  CheckCircle2,
+  ImagePlus,
   MessageSquareText,
   Send,
+  X,
 } from "lucide-react";
-import {
-  captureLeadAttribution,
-  trackEvent,
-  trackGoogleAdsLead,
-  trackMetaLead,
-} from "@/lib/analytics";
+import { captureLeadAttribution } from "@/lib/analytics";
 
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
   { value: "installation-only", label: "Installation only" },
   { value: "not-sure", label: "Not sure" },
+] as const;
+
+const propertyOptions = [
+  { value: "", label: "Select property type" },
+  { value: "house", label: "House" },
+  { value: "apartment", label: "Apartment" },
+  { value: "airbnb-rental", label: "Airbnb / rental" },
+  { value: "new-build", label: "New build" },
+  { value: "commercial-other", label: "Commercial / other" },
+] as const;
+
+const timingOptions = [
+  { value: "", label: "Select preferred timing" },
+  { value: "as-soon-as-possible", label: "As soon as possible" },
+  { value: "within-one-week", label: "Within 1 week" },
+  { value: "within-two-to-four-weeks", label: "Within 2–4 weeks" },
+  { value: "flexible", label: "Flexible / researching" },
 ] as const;
 
 const initialFormData = {
@@ -29,18 +43,80 @@ const initialFormData = {
   phone: "",
   suburb: "",
   email: "",
+  propertyType: "",
+  preferredTiming: "",
   message: "",
 };
+
+const MAX_PHOTOS = 4;
+const MAX_PHOTO_BYTES = 850_000;
+const MAX_PHOTO_DIMENSION = 1600;
+const acceptedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 type ContactFormProps = {
   initialService?: string;
   initialProduct?: string;
 };
 
+function formatFileSize(bytes: number) {
+  return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+}
+
+async function compressPhoto(file: File, index: number): Promise<File> {
+  if (!acceptedPhotoTypes.has(file.type)) {
+    throw new Error("Please use JPEG, PNG or WebP photos.");
+  }
+
+  if (file.size <= MAX_PHOTO_BYTES) {
+    return file;
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const element = document.createElement("img");
+      element.onload = () => resolve(element);
+      element.onerror = () => reject(new Error("One photo could not be prepared. Please try a JPEG image."));
+      element.src = objectUrl;
+    });
+    const scale = Math.min(
+      1,
+      MAX_PHOTO_DIMENSION / Math.max(image.naturalWidth, image.naturalHeight),
+    );
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("One photo could not be prepared. Please try again.");
+    }
+
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, "image/jpeg", 0.72);
+    });
+
+    if (!blob || blob.size > 1_000_000) {
+      throw new Error("One photo is still too large. Please crop it or choose a smaller image.");
+    }
+
+    const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]+/g, "-");
+    return new File([blob], `${baseName || `door-photo-${index + 1}`}.jpg`, {
+      type: "image/jpeg",
+    });
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
 export function ContactForm({
   initialService,
   initialProduct,
 }: ContactFormProps = {}) {
+  const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const selectedService =
     serviceOptions.find((option) => option.value === initialService)?.value ??
     initialFormData.service;
@@ -49,27 +125,28 @@ export function ContactForm({
     service: selectedService,
     product: initialProduct?.trim().slice(0, 150) ?? "",
   }));
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [isPreparingPhotos, setIsPreparingPhotos] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [photoError, setPhotoError] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isSubmitting) return;
+    if (isSubmitting || isPreparingPhotos) return;
 
     setIsSubmitting(true);
     setErrorMessage("");
 
     try {
-      const submittedService = formData.service;
-      const submittedProduct = formData.product;
+      const payload = new FormData();
+      Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
+      payload.append("attribution", JSON.stringify(captureLeadAttribution()));
+      photos.forEach((photo) => payload.append("photos", photo, photo.name));
+
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          attribution: captureLeadAttribution(),
-        }),
+        body: payload,
       });
       const result = (await response.json().catch(() => null)) as
         | { message?: string }
@@ -81,39 +158,59 @@ export function ContactForm({
         );
       }
 
-      setSubmitted(true);
-      trackEvent("generate_lead", {
-        service: submittedService,
-        product: submittedProduct,
-        form_name: "website_enquiry",
-      });
-      trackGoogleAdsLead();
-      trackMetaLead({
-        content_name: submittedProduct || submittedService,
-        service: submittedService,
-      });
-      setFormData((current) => ({
-        ...initialFormData,
-        service: current.service,
-      }));
+      sessionStorage.setItem(
+        "ade_completed_lead",
+        JSON.stringify({
+          service: formData.service,
+          product: formData.product,
+          photoCount: photos.length,
+        }),
+      );
+      router.push("/contact/thank-you");
     } catch (error) {
       setErrorMessage(
         error instanceof Error
           ? error.message
           : "We could not send your request. Please text or email us instead.",
       );
-    } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     setFormData((current) => ({
       ...current,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const handlePhotoSelection = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files ?? []);
+    event.target.value = "";
+    setPhotoError("");
+
+    if (!selectedFiles.length) return;
+    if (photos.length + selectedFiles.length > MAX_PHOTOS) {
+      setPhotoError(`Please add no more than ${MAX_PHOTOS} photos.`);
+      return;
+    }
+
+    setIsPreparingPhotos(true);
+
+    try {
+      const prepared = await Promise.all(
+        selectedFiles.map((file, index) => compressPhoto(file, photos.length + index)),
+      );
+      setPhotos((current) => [...current, ...prepared]);
+    } catch (error) {
+      setPhotoError(
+        error instanceof Error ? error.message : "The selected photos could not be prepared.",
+      );
+    } finally {
+      setIsPreparingPhotos(false);
+    }
   };
 
   return (
@@ -124,11 +221,11 @@ export function ContactForm({
             Fast Adelaide quote
           </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            Tell Us What You Need
+            Tell Us About Your Door
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Leave your details and service type. We will reply by SMS or email with the next step,
-            including any door photos or measurements we need.
+            Add your suburb, preferred timing and door photos for a faster compatibility check.
+            We will review the details and reply by SMS or email with the next step.
           </p>
         </div>
 
@@ -154,12 +251,12 @@ export function ContactForm({
 
             <div className="mt-8 border-t border-zinc-800 pt-7">
               <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
-                What happens next
+                Helpful photo angles
               </h3>
               <ol className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
-                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>We reply by SMS or email.</li>
-                <li><strong className="mr-2 text-[#c5a47e]">2.</strong>You send door or site photos.</li>
-                <li><strong className="mr-2 text-[#c5a47e]">3.</strong>We confirm suitability, price and availability.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>Outside face of the door.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">2.</strong>Inside face and current lock.</li>
+                <li><strong className="mr-2 text-[#c5a47e]">3.</strong>Door edge and door frame.</li>
               </ol>
               <Link
                 href="/blog/smart-lock-door-compatibility-check"
@@ -172,146 +269,227 @@ export function ContactForm({
           </aside>
 
           <div className="relative border border-slate-200 bg-white p-6 shadow-2xl md:p-9">
-            {submitted ? (
-              <div className="flex min-h-[470px] flex-col items-center justify-center text-center">
-                <CheckCircle2 className="h-14 w-14 text-emerald-600" aria-hidden="true" />
-                <h3 className="mt-5 text-2xl font-black text-slate-950">Request received</h3>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
-                  Thank you. We will reply by SMS or email to confirm the details and next step.
-                </p>
+            <h3 className="text-2xl font-black tracking-tight text-slate-950">
+              {formData.product ? `Ask about ${formData.product}` : "Request an installation quote"}
+            </h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Name and mobile are required. Photos are optional but help us assess the door sooner.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+              <fieldset>
+                <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Service needed
+                </legend>
+                <div className="grid gap-px bg-slate-300 p-px sm:grid-cols-3">
+                  {serviceOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setFormData((current) => ({ ...current, service: option.value }))}
+                      className={`min-h-12 px-2 text-xs font-bold transition-colors ${
+                        formData.service === option.value
+                          ? "bg-slate-950 text-white"
+                          : "bg-white text-slate-700 hover:bg-slate-100"
+                      }`}
+                      aria-pressed={formData.service === option.value}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Name
+                  <input
+                    name="name"
+                    autoComplete="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    placeholder="Your name"
+                  />
+                </label>
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Mobile
+                  <input
+                    name="phone"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    placeholder="04xx xxx xxx"
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Suburb / postcode
+                  <input
+                    name="suburb"
+                    autoComplete="postal-code"
+                    required
+                    value={formData.suburb}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    placeholder="e.g. Norwood 5067"
+                  />
+                </label>
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Email <span className="font-normal normal-case text-slate-400">optional</span>
+                  <input
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    placeholder="email@example.com"
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Property type
+                  <select
+                    name="propertyType"
+                    required
+                    value={formData.propertyType}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  >
+                    {propertyOptions.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Preferred timing
+                  <select
+                    name="preferredTiming"
+                    required
+                    value={formData.preferredTiming}
+                    onChange={handleChange}
+                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  >
+                    {timingOptions.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                Preferred model <span className="font-normal normal-case text-slate-400">optional</span>
+                <input
+                  name="product"
+                  list="smart-lock-models"
+                  value={formData.product}
+                  onChange={handleChange}
+                  className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  placeholder="e.g. Lockin X9, customer-supplied lock, or not sure"
+                />
+                <datalist id="smart-lock-models">
+                  <option value="Not sure – please recommend" />
+                  <option value="Customer-supplied smart lock" />
+                  <option value="Lockin X9" />
+                  <option value="Lockin SV40" />
+                  <option value="Lockin S6 Max" />
+                  <option value="Lockin V5 Max" />
+                </datalist>
+              </label>
+
+              <fieldset>
+                <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  Door photos <span className="font-normal normal-case text-slate-400">optional, up to 4</span>
+                </legend>
                 <button
                   type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-7 text-sm font-bold text-[#8a6b48] hover:text-black"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isPreparingPhotos || photos.length >= MAX_PHOTOS}
+                  className="mt-2 flex min-h-20 w-full items-center justify-center gap-3 border border-dashed border-slate-400 bg-slate-50 px-4 text-sm font-bold text-slate-700 transition-colors hover:border-[#9c7953] hover:bg-[#f8f3ec] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Send another request
+                  <ImagePlus className="h-5 w-5 text-[#8a6b48]" aria-hidden="true" />
+                  {isPreparingPhotos
+                    ? "Preparing photos…"
+                    : photos.length
+                      ? "Add another photo"
+                      : "Add door photos"}
                 </button>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-2xl font-black tracking-tight text-slate-950">
-                  {formData.product ? `Ask about ${formData.product}` : "Request a reply"}
-                </h3>
-                <p className="mt-2 text-sm text-slate-600">Name and mobile are the only required fields. We reply by SMS or email.</p>
-
-                <form onSubmit={handleSubmit} className="mt-7 space-y-5">
-                  <fieldset>
-                    <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                      Service needed
-                    </legend>
-                    <div className="grid gap-px bg-slate-300 p-px sm:grid-cols-3">
-                      {serviceOptions.map((option) => (
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  onChange={handlePhotoSelection}
+                  className="sr-only"
+                />
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  Best angles: outside, inside, door edge and frame. Large images are resized before sending.
+                </p>
+                {photos.length > 0 && (
+                  <ul className="mt-3 divide-y divide-slate-200 border-y border-slate-200">
+                    {photos.map((photo, index) => (
+                      <li key={`${photo.name}-${photo.lastModified}-${index}`} className="flex min-h-11 items-center justify-between gap-3 py-2 text-xs text-slate-600">
+                        <span className="min-w-0 truncate">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
                         <button
-                          key={option.value}
                           type="button"
-                          onClick={() => setFormData((current) => ({ ...current, service: option.value }))}
-                          className={`min-h-12 px-2 text-xs font-bold transition-colors ${
-                            formData.service === option.value
-                              ? "bg-slate-950 text-white"
-                              : "bg-white text-slate-700 hover:bg-slate-100"
-                          }`}
-                          aria-pressed={formData.service === option.value}
+                          onClick={() => setPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))}
+                          className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-black"
+                          aria-label={`Remove ${photo.name}`}
                         >
-                          {option.label}
+                          <X className="h-4 w-4" aria-hidden="true" />
                         </button>
-                      ))}
-                    </div>
-                  </fieldset>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {photoError && <p className="mt-2 text-sm text-red-700">{photoError}</p>}
+              </fieldset>
 
-                  <input type="hidden" name="product" defaultValue={formData.product} />
+              <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                Anything else? <span className="font-normal normal-case text-slate-400">optional</span>
+                <textarea
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  placeholder="Tell us about the existing lock, security screen, building access or any special requirements."
+                />
+              </label>
 
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                      Name
-                      <input
-                        name="name"
-                        autoComplete="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                        placeholder="Your name"
-                      />
-                    </label>
-                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                      Phone
-                      <input
-                        name="phone"
-                        type="tel"
-                        inputMode="tel"
-                        autoComplete="tel"
-                        required
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                        placeholder="04xx xxx xxx"
-                      />
-                    </label>
-                  </div>
+              {errorMessage && (
+                <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
+                  {errorMessage} Text 0431 060 390 or email us if the problem continues.
+                </p>
+              )}
 
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                      Suburb <span className="font-normal normal-case text-slate-400">optional</span>
-                      <input
-                        name="suburb"
-                        autoComplete="address-level2"
-                        value={formData.suburb}
-                        onChange={handleChange}
-                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                        placeholder="e.g. Norwood"
-                      />
-                    </label>
-                    <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                      Email <span className="font-normal normal-case text-slate-400">optional</span>
-                      <input
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                        placeholder="email@example.com"
-                      />
-                    </label>
-                  </div>
-
-                  <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                    Details <span className="font-normal normal-case text-slate-400">optional</span>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                      placeholder="Tell us about your door, existing lock or smart lock model."
-                    />
-                  </label>
-
-                  {errorMessage && (
-                    <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
-                      {errorMessage} Text 0431 060 390 or email us if the problem continues.
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
-                  >
-                    {isSubmitting ? "Sending..." : "Request a reply"}
-                    {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
-                  </button>
-                  <p className="text-center text-xs text-slate-500">
-                    No payment required. We confirm scope and pricing before booking. By submitting,
-                    you agree that we may use these details to respond to your enquiry. See our{" "}
-                    <Link href="/privacy-policy" className="font-semibold text-[#8a6b48] underline underline-offset-2 hover:text-black">
-                      Privacy Policy
-                    </Link>
-                    .
-                  </p>
-                </form>
-              </>
-            )}
+              <button
+                type="submit"
+                disabled={isSubmitting || isPreparingPhotos}
+                className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
+              >
+                {isSubmitting ? "Sending…" : "Request an installation quote"}
+                {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
+              </button>
+              <p className="text-center text-xs text-slate-500">
+                No payment required. We confirm scope and pricing before booking. By submitting,
+                you agree that we may use these details and photos to respond to your enquiry. See our{" "}
+                <Link href="/privacy-policy" className="font-semibold text-[#8a6b48] underline underline-offset-2 hover:text-black">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
+            </form>
           </div>
         </div>
       </div>
