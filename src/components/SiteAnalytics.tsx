@@ -38,6 +38,14 @@ export function SiteAnalytics() {
         page_path: window.location.pathname,
       };
 
+      if (href.startsWith("sms:")) {
+        trackEvent("sms_click", {
+          ...commonParameters,
+          contact_method: "sms",
+        });
+        return;
+      }
+
       if (href.startsWith("tel:")) {
         trackEvent("phone_click", commonParameters);
         return;
