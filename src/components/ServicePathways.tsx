@@ -5,7 +5,7 @@ const pathways = [
   {
     icon: PackageCheck,
     label: "Supply & Install",
-    title: "Choose an installed smart lock",
+    title: "Smart locks supplied and installed in Adelaide",
     description:
       "Compare installed-price packages from $650. We check your door before confirming the model and booking.",
     href: "/smart-lock-supply-installation-adelaide",
@@ -14,7 +14,7 @@ const pathways = [
   {
     icon: Wrench,
     label: "Installation Only",
-    title: "Already bought a smart lock?",
+    title: "Smart lock installation only in Adelaide",
     description:
       "Send the lock model and door photos. We will check compatibility and quote the installation scope first.",
     href: "/smart-lock-installation-only-adelaide",

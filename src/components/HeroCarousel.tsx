@@ -35,12 +35,12 @@ export function HeroCarousel() {
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] items-start px-5 pb-6 pt-24 sm:items-center sm:px-8 sm:py-10 lg:px-12 xl:px-16">
         <div className="w-full max-w-6xl">
           <p className="mb-2 text-sm font-semibold uppercase text-[#d9b98f] sm:mb-4 sm:text-base">
-            Adelaide smart lock installation
+            Supply &amp; install or installation only
           </p>
 
           <h1 className="max-w-5xl text-4xl font-bold leading-[1.08] text-white sm:text-6xl lg:text-7xl">
-            Smart Locks,
-            <span className="block text-[#d9b98f]">Installed Properly</span>
+            Smart Lock Installation
+            <span className="block text-[#d9b98f]">Across Adelaide</span>
           </h1>
 
           <p className="mt-3 max-w-4xl text-lg leading-8 text-zinc-100 sm:mt-6 sm:text-xl sm:leading-8 lg:text-[1.35rem]">

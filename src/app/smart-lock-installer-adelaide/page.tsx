@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Lock Installer Adelaide",
     description:
-      "Certified local smart lock installer for Adelaide homes and properties, with package and installation-only options.",
+      "Local smart lock installation service for Adelaide homes and properties, with package and installation-only options.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -75,7 +75,7 @@ export default function SmartLockInstallerAdelaidePage() {
     <AudienceServicePage
       pageUrl={pageUrl}
       serviceName="Smart Lock Installer Adelaide"
-      serviceType="Licensed smart lock installer for Adelaide properties"
+      serviceType="Smart lock installation service for Adelaide properties"
       schemaDescription="Local Adelaide smart lock installer offering supply-and-install and installation-only services with compatibility assessment."
       audienceType="Adelaide homeowners, tenants, and property owners seeking installation support"
       breadcrumbName="Smart Lock Installer Adelaide"
