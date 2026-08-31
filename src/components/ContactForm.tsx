@@ -13,6 +13,7 @@ import {
   captureLeadAttribution,
   trackEvent,
   trackGoogleAdsLead,
+  trackMetaLead,
 } from "@/lib/analytics";
 
 const serviceOptions = [
@@ -87,6 +88,10 @@ export function ContactForm({
         form_name: "website_enquiry",
       });
       trackGoogleAdsLead();
+      trackMetaLead({
+        content_name: submittedProduct || submittedService,
+        service: submittedService,
+      });
       setFormData((current) => ({
         ...initialFormData,
         service: current.service,

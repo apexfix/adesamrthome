@@ -20,6 +20,7 @@ const googleAdsLeadLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL?.trim()
 declare global {
   interface Window {
     dataLayer?: unknown[];
+    fbq?: (...args: unknown[]) => void;
     gtag?: (...args: unknown[]) => void;
   }
 }
@@ -161,4 +162,22 @@ export function trackGoogleAdsLead() {
   window.gtag("event", "conversion", {
     send_to: `${googleAdsId}/${googleAdsLeadLabel}`,
   });
+}
+
+export function trackMetaPageView() {
+  if (typeof window === "undefined" || !window.fbq) return;
+
+  window.fbq("track", "PageView");
+}
+
+export function trackMetaLead(parameters: AnalyticsParameters = {}) {
+  if (typeof window === "undefined" || !window.fbq) return;
+
+  const safeParameters = Object.fromEntries(
+    Object.entries(parameters).filter(
+      ([, value]) => value !== undefined && value !== null && value !== "",
+    ),
+  );
+
+  window.fbq("track", "Lead", safeParameters);
 }
