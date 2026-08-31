@@ -1,5 +1,9 @@
 export const siteUrl = "https://www.adesmarthome.com.au";
 
+export const deliveryAndReturnsUrl = `${siteUrl}/delivery-and-returns`;
+export const installationDeliveryServiceId = `${deliveryAndReturnsUrl}#installation-delivery`;
+export const merchantReturnPolicyId = `${deliveryAndReturnsUrl}#return-policy`;
+
 export const businessInfo = {
   name: "ADE Smart Home",
   phone: "0431060390",

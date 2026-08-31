@@ -194,7 +194,7 @@ export function Footer() {
           <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy-policy" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
-            <span className="hover:text-zinc-400 transition-colors cursor-pointer">Terms of Service</span>
+            <Link href="/delivery-and-returns" className="hover:text-zinc-400 transition-colors">Delivery & Returns</Link>
           </div>
         </div>
       </div>

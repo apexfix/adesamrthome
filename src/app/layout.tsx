@@ -9,6 +9,9 @@ import { SiteAnalytics } from "@/components/SiteAnalytics";
 import {
   businessInfo,
   coreServices,
+  deliveryAndReturnsUrl,
+  installationDeliveryServiceId,
+  merchantReturnPolicyId,
   serviceAreas,
   siteUrl,
   smartLockBrands,
@@ -153,6 +156,32 @@ const localBusinessSchema = {
         },
       },
     ],
+  },
+  hasShippingService: {
+    "@type": "ShippingService",
+    "@id": installationDeliveryServiceId,
+    name: "Adelaide installation appointment delivery",
+    description:
+      "Supplied smart locks are brought to the confirmed Adelaide installation address. There is no separate shipping charge for standard all-inclusive packages.",
+    fulfillmentType: "https://schema.org/FulfillmentTypeDelivery",
+    shippingConditions: {
+      "@type": "ShippingConditions",
+      shippingDestination: {
+        "@type": "DefinedRegion",
+        addressCountry: "AU",
+        addressRegion: "SA",
+      },
+      shippingRate: {
+        "@type": "MonetaryAmount",
+        value: 0,
+        currency: "AUD",
+      },
+    },
+  },
+  hasMerchantReturnPolicy: {
+    "@type": "MerchantReturnPolicy",
+    "@id": merchantReturnPolicyId,
+    merchantReturnLink: deliveryAndReturnsUrl,
   },
   additionalProperty: [
     {

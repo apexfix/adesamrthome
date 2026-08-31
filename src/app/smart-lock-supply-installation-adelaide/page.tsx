@@ -14,7 +14,12 @@ import {
   Smartphone,
 } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
-import { businessInfo, siteUrl } from "@/lib/seoData";
+import {
+  businessInfo,
+  installationDeliveryServiceId,
+  merchantReturnPolicyId,
+  siteUrl,
+} from "@/lib/seoData";
 
 const pageUrl = `${siteUrl}/smart-lock-supply-installation-adelaide`;
 
@@ -173,6 +178,11 @@ export default function SupplyInstallationPage() {
       seller: {
         "@id": `${siteUrl}/#business`,
       },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        hasShippingService: { "@id": installationDeliveryServiceId },
+      },
+      hasMerchantReturnPolicy: { "@id": merchantReturnPolicyId },
       areaServed: {
         "@type": "City",
         name: "Adelaide",

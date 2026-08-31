@@ -31,6 +31,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/gallery`, siteLastModified),
     xmlUrl(`${siteUrl}/contact`, siteLastModified),
     xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
+    xmlUrl(`${siteUrl}/delivery-and-returns`, siteLastModified),
     xmlUrl(`${siteUrl}/zh`, siteLastModified),
   ].join("");
 

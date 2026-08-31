@@ -19,7 +19,12 @@ import path from "path";
 import matter from "gray-matter";
 import type { Metadata } from "next";
 import { localProducts } from "@/lib/localProducts";
-import { businessInfo, siteUrl } from "@/lib/seoData";
+import {
+  businessInfo,
+  installationDeliveryServiceId,
+  merchantReturnPolicyId,
+  siteUrl,
+} from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
 
 interface ProductPageProps {
@@ -214,6 +219,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        hasShippingService: { "@id": installationDeliveryServiceId },
+      },
+      hasMerchantReturnPolicy: { "@id": merchantReturnPolicyId },
       areaServed: {
         "@type": "City",
         name: businessInfo.addressLocality,
