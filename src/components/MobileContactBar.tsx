@@ -24,7 +24,7 @@ export function MobileContactBar() {
 
   return (
     <>
-      <div className="h-16 md:hidden" aria-hidden="true" />
+      <div className="h-28 md:hidden" aria-hidden="true" />
       <div className="fixed inset-x-0 bottom-0 z-[70] grid grid-cols-2 border-t border-zinc-700 bg-black p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] md:hidden">
         <a
           href={smsHref}
