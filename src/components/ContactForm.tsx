@@ -12,10 +12,14 @@ import {
   X,
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
+import { businessInfo } from "@/lib/seoData";
 
 const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
-  { value: "installation-only", label: "Installation only" },
+  {
+    value: "installation-only",
+    label: "Installation only (other compatible brands supported)",
+  },
   { value: "portfolio-project", label: "Property / project" },
   { value: "not-sure", label: "Not sure" },
 ] as const;
@@ -178,7 +182,7 @@ export function ContactForm({
         body: payload,
       });
       const result = (await response.json().catch(() => null)) as
-        | { message?: string }
+        | { message?: string; leadId?: string }
         | null;
 
       if (!response.ok) {
@@ -193,6 +197,8 @@ export function ContactForm({
           service: formData.service,
           product: formData.product,
           photoCount: photos.length,
+          preferredTiming: formData.preferredTiming,
+          leadId: result?.leadId,
         }),
       );
       trackEvent("form_submit_success", {
@@ -289,14 +295,14 @@ export function ContactForm({
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
-                href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote."
+                href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote.`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5" aria-hidden="true" />
                 Text 0431 060 390
               </a>
               <a
-                href="mailto:info@adesmarthome.com.au?subject=Door%20photos%20for%20installation%20check"
+                href={`mailto:${businessInfo.email}?subject=Door%20photos%20for%20installation%20check`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <Camera className="h-5 w-5" aria-hidden="true" />
@@ -328,7 +334,8 @@ export function ContactForm({
               {formData.product ? `Ask about ${formData.product}` : "Request an installation quote"}
             </h3>
             <p className="mt-2 text-sm text-slate-600">
-              Name and mobile are required. Photos are optional but help us assess the door sooner.
+              Name, mobile, email, suburb, property type and preferred timing are required.
+              Door photos are recommended to get a faster quote.
             </p>
 
             <form
@@ -402,11 +409,12 @@ export function ContactForm({
                   />
                 </label>
                 <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                  Email <span className="font-normal normal-case text-slate-400">optional</span>
+                  Email
                   <input
                     name="email"
                     type="email"
                     autoComplete="email"
+                    required
                     value={formData.email}
                     onChange={handleChange}
                     className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
@@ -459,6 +467,11 @@ export function ContactForm({
                 <datalist id="smart-lock-models">
                   <option value="Not sure – please recommend" />
                   <option value="Customer-supplied smart lock" />
+                  <option value="Other brand smart lock (compatible model link)" />
+                  <option value="Philips lock" />
+                  <option value="Samsung lock" />
+                  <option value="Aqara lock" />
+                  <option value="Yale lock" />
                   <option value="Lockin X9" />
                   <option value="Lockin SV40" />
                   <option value="Lockin S6 Max" />
@@ -468,7 +481,7 @@ export function ContactForm({
 
               <fieldset>
                 <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                  Door photos <span className="font-normal normal-case text-slate-400">optional, up to 4</span>
+                  Door photos <span className="font-normal normal-case text-slate-400">recommended, up to 4</span>
                 </legend>
                 <button
                   type="button"
@@ -492,7 +505,8 @@ export function ContactForm({
                   className="sr-only"
                 />
                 <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Best angles: outside, inside, door edge and frame. Large images are resized before sending.
+                  Best angles: outside face, inside lock side, door edge, and frame.
+                  Large images are resized before sending.
                 </p>
                 {photos.length > 0 && (
                   <ul className="mt-3 divide-y divide-slate-200 border-y border-slate-200">

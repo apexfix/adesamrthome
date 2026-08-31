@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
+import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 
 export const metadata: Metadata = {
   title: "Smart Locks with Adelaide Installation",
@@ -210,6 +211,8 @@ export default async function ProductsPage(props: {
             </Link>
             .
           </div>
+
+          <TrackingCTAs context="products" />
         </div>
 
         {/* 产品网格展示 */}

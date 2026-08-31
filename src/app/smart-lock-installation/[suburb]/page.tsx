@@ -202,10 +202,10 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
               Send Door Photo for Free Check
             </Link>
             <a
-              href={`tel:${businessInfo.phone}`}
+              href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote.`}
               className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
             >
-              Call {businessInfo.phone}
+              Text {businessInfo.phoneInternational}
             </a>
           </div>
 

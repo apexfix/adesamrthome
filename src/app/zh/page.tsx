@@ -102,10 +102,10 @@ export default function ChineseLandingPage() {
               发送门的照片，免费评估
             </Link>
             <a
-              href={`tel:${businessInfo.phone}`}
+              href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20need%20a%20smart%20lock%20estimate.`}
               className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
             >
-              电话咨询 {businessInfo.phone}
+              短信咨询 {businessInfo.phoneInternational}
             </a>
           </div>
         </div>

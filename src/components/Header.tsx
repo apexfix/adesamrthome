@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, MessageSquareText, X, Instagram, Facebook } from "lucide-react";
+import { businessInfo, socialProfiles } from "@/lib/seoData";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -69,24 +70,24 @@ export function Header() {
           {/* 桌面端社交媒体与联系方式 */}
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-5 border-r border-white/10 pr-6 mr-2">
-              <a href="https://www.facebook.com/profile.php?id=61571291020457" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Facebook">
+              <a href={socialProfiles[0]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Facebook">
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="https://www.instagram.com/adesmarthome/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Instagram">
+              <a href={socialProfiles[1]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Instagram">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="https://www.tiktok.com/@adesmarthome" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="TikTok">
+              <a href={socialProfiles[2]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="TikTok">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
-              <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
+              <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
                 <span className="text-[11px] font-bold tracking-tighter">小红书</span>
               </a>
             </div>
 
             <div className="hidden items-center gap-6 text-base text-white/90 lg:flex">
-               <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
+                 <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`} className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
                  <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-                 <span className="font-medium tracking-wide">Text 0431 060 390</span>
+                 <span className="font-medium tracking-wide">Text {businessInfo.phone}</span>
                </a>
             </div>
           </div>
@@ -112,13 +113,13 @@ export function Header() {
               ))}
             </nav>
             <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
-              <a href="https://www.facebook.com/profile.php?id=61571291020457" target="_blank" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
-              <a href="https://www.instagram.com/adesmarthome/" target="_blank" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
-              <a href="https://www.tiktok.com/@adesmarthome" target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
-              <a href="https://xhslink.com/m/6Bv1zW0ClyZ" target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
+              <a href={socialProfiles[0]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
+              <a href={socialProfiles[1]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
+              <a href={socialProfiles[2]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
+              <a href={socialProfiles[3]} target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
             </div>
-            <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
-              <MessageSquareText className="h-5 w-5" /> Text 0431 060 390
+            <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`} className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
+              <MessageSquareText className="h-5 w-5" /> Text {businessInfo.phone}
             </a>
           </div>
         </div>

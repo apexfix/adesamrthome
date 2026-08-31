@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
+import { businessInfo, socialProfiles } from "@/lib/seoData";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const textSmsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`;
+  const emailHref = `mailto:${businessInfo.email}`;
 
   return (
     <footer className="bg-zinc-950 border-t border-zinc-900 text-zinc-400">
@@ -27,7 +30,7 @@ export function Footer() {
             {/* 社交媒体链接 */}
             <div className="flex flex-wrap gap-3 pt-2">
               <a 
-                href="https://www.facebook.com/profile.php?id=61571291020457" 
+                href={socialProfiles[0]}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 group"
@@ -35,7 +38,7 @@ export function Footer() {
                 <Facebook className="w-4 h-4" />
               </a>
               <a 
-                href="https://www.instagram.com/adesmarthome/" 
+                href={socialProfiles[1]}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
@@ -43,7 +46,7 @@ export function Footer() {
                 <Instagram className="w-4 h-4" />
               </a>
               <a 
-                href="https://www.tiktok.com/@adesmarthome" 
+                href={socialProfiles[2]}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
@@ -51,7 +54,7 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
               <a 
-                href="https://xhslink.com/m/6Bv1zW0ClyZ" 
+                href={socialProfiles[3]}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 relative group"
@@ -80,6 +83,24 @@ export function Footer() {
                 <Link href="/smart-lock-installation-only-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
                   Customer-Supplied Lock Installation
+                </Link>
+              </li>
+              <li>
+                <Link href="/smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Smart Lock Installation
+                </Link>
+              </li>
+              <li>
+                <Link href="/digital-door-lock-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Digital Door Lock Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/smart-lock-installer-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Smart Lock Installer
                 </Link>
               </li>
               <li>
@@ -140,20 +161,20 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote." className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
+                <a href={textSmsHref} className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
                   <MessageSquareText className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
                   <div>
                     <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Text / SMS</div>
-                    <div>0431 060 390</div>
+                    <div>{businessInfo.phone}</div>
                   </div>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@adesmarthome.com.au" className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
+                <a href={emailHref} className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
                   <Mail className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
                   <div className="overflow-hidden">
                     <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Email</div>
-                    <div className="truncate">info@adesmarthome.com.au</div>
+                    <div className="truncate">{businessInfo.email}</div>
                   </div>
                 </a>
               </li>

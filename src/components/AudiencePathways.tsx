@@ -32,13 +32,13 @@ export function AudiencePathways() {
   return (
     <section className="border-y border-zinc-900 bg-black py-20 text-white md:py-24">
       <div className="mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#c5a47e]">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c5a47e]">
           Choose your property type
         </p>
         <h2 className="mt-3 max-w-3xl text-3xl font-bold md:text-5xl">
           Smart-lock planning for the door you actually have
         </h2>
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 md:text-base">
+        <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg">
           Different properties have different access, approval and door-hardware requirements.
           Start with the route that matches your project.
         </p>
@@ -54,8 +54,8 @@ export function AudiencePathways() {
             >
               <Icon className="h-7 w-7 text-[#c5a47e]" strokeWidth={1.6} aria-hidden="true" />
               <h3 className="mt-5 text-lg font-bold">{title}</h3>
-              <p className="mt-3 min-h-16 text-sm leading-6 text-zinc-400">{detail}</p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#c5a47e]">
+              <p className="mt-3 min-h-16 text-base leading-6 text-zinc-400">{detail}</p>
+              <span className="mt-5 inline-flex items-center gap-2 text-base font-bold text-[#c5a47e]">
                 View service
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"

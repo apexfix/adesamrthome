@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { randomUUID } from "node:crypto";
 
 export const runtime = "nodejs";
 
@@ -148,12 +149,14 @@ export async function POST(request: Request) {
       !allowedServices.has(service) ||
       !allowedPropertyTypes.has(propertyType) ||
       !allowedTimings.has(preferredTiming) ||
-      (email && !/^\S+@\S+\.\S+$/.test(email))
+      !email ||
+      !/^\S+@\S+\.\S+$/.test(email)
     ) {
       return NextResponse.json(
         {
           success: false,
-          message: "Please complete your name, mobile, suburb, property type and preferred timing.",
+          message:
+            "Please complete your name, mobile, email, suburb, property type and preferred timing.",
         },
         { status: 400 },
       );
@@ -201,16 +204,20 @@ export async function POST(request: Request) {
     const serviceLabel = serviceLabels[service] || service;
     const propertyLabel = propertyLabels[propertyType] || propertyType;
     const timingLabel = timingLabels[preferredTiming] || preferredTiming;
+    const receivedAt = new Date();
+    const leadId = `ADE-${receivedAt.toISOString().slice(0, 10).replace(/-/g, "")}-${randomUUID().slice(0, 8).toUpperCase()}`;
 
     await transporter.sendMail({
       from: `"ADE Smart Home Website" <${smtpUser}>`,
       to: contactEmail,
       ...(email ? { replyTo: email } : {}),
-      subject: `New Website Inquiry: ${product || serviceLabel}`,
+      subject: `New Website Inquiry [${leadId}]: ${product || serviceLabel}`,
       attachments,
       text: `
 New enquiry from the ADE Smart Home website.
 
+Lead ID: ${leadId}
+Received: ${receivedAt.toLocaleString("en-AU", { timeZone: "Australia/Adelaide" })}
 Name: ${name}
 Mobile: ${phone}
 Email: ${email || "Not provided"}
@@ -238,6 +245,8 @@ ${message || "No additional details provided."}
       `,
       html: `
         <h2>New ADE Smart Home enquiry</h2>
+        <p><strong>Lead ID:</strong> ${leadId}</p>
+        <p><strong>Received:</strong> ${escapeHtml(receivedAt.toLocaleString("en-AU", { timeZone: "Australia/Adelaide" }))}</p>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Mobile:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email || "Not provided")}</p>
@@ -272,15 +281,24 @@ ${message || "No additional details provided."}
           from: `"ADE Smart Home" <${smtpUser}>`,
           to: email,
           replyTo: contactEmail,
-          subject: "We received your smart lock enquiry | ADE Smart Home",
-          text: `Hi ${name},
+          subject: `We received your smart lock enquiry [${leadId}] | ADE Smart Home`,
+      text: `Hi ${name},
 
 Thank you for contacting ADE Smart Home. We have received your smart lock enquiry${photoFiles.length ? ` and ${photoFiles.length} door photo${photoFiles.length === 1 ? "" : "s"}` : ""}.
 
+Your enquiry reference is ${leadId}.
+
 What happens next:
-1. We review the door, current lock and requested service.
+1. We review the door, current lock and requested service within 24 hours.
 2. If we need another photo or measurement, we will ask by SMS or email.
 3. We confirm suitability, scope and pricing before any booking.
+4. If all details are complete, we will provide a quote or scope within 48 hours.
+
+To speed this up, please send these 4 angles:
+- Door outside
+- Door inside near the lock side
+- Door edge
+- Door frame
 
 You can add more door photos by replying to this email, or text 0431 060 390.
 
@@ -291,13 +309,16 @@ https://www.adesmarthome.com.au/
           html: `
             <p>Hi ${escapeHtml(name)},</p>
             <p>Thank you for contacting ADE Smart Home. We have received your smart lock enquiry${photoFiles.length ? ` and ${photoFiles.length} door photo${photoFiles.length === 1 ? "" : "s"}` : ""}.</p>
+            <p>Your enquiry reference is <strong>${leadId}</strong>.</p>
             <h3>What happens next</h3>
             <ol>
-              <li>We review the door, current lock and requested service.</li>
+              <li>We review the door, current lock and requested service within 24 hours.</li>
               <li>If we need another photo or measurement, we will ask by SMS or email.</li>
               <li>We confirm suitability, scope and pricing before any booking.</li>
+              <li>If all information is complete, we normally send a quote within 48 hours.</li>
             </ol>
-            <p>You can add more door photos by replying to this email, or text <strong>0431 060 390</strong>.</p>
+            <p>You can add more door photos by replying to this email. Best angles: outside, inside lock side, edge, and frame.</p>
+            <p>If you need urgent confirmation, text <strong>0431 060 390</strong>.</p>
             <p>ADE Smart Home<br>Adelaide smart lock supply and installation<br><a href="https://www.adesmarthome.com.au/">adesmarthome.com.au</a></p>
           `,
         });
@@ -306,7 +327,11 @@ https://www.adesmarthome.com.au/
       }
     }
 
-    return NextResponse.json({ success: true, message: "Enquiry sent successfully" });
+    return NextResponse.json({
+      success: true,
+      message: "Enquiry sent successfully",
+      leadId,
+    });
   } catch (error) {
     console.error("Failed to send enquiry email:", error);
     return NextResponse.json(

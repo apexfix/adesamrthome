@@ -1,12 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
 import {
-  ArrowRight,
   Check,
   LockKeyhole,
-  MessageSquareText,
   Wrench,
 } from "lucide-react";
+import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 
 const services = [
   {
@@ -36,7 +34,7 @@ export function HeroCarousel() {
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] items-start px-5 pb-6 pt-24 sm:items-center sm:px-8 sm:py-10 lg:px-12 xl:px-16">
         <div className="w-full max-w-6xl">
-          <p className="mb-2 text-xs font-semibold uppercase text-[#d9b98f] sm:mb-4 sm:text-base">
+          <p className="mb-2 text-sm font-semibold uppercase text-[#d9b98f] sm:mb-4 sm:text-base">
             Adelaide smart lock installation
           </p>
 
@@ -45,35 +43,13 @@ export function HeroCarousel() {
             <span className="block text-[#d9b98f]">Installed Properly</span>
           </h1>
 
-          <p className="mt-3 max-w-4xl text-base leading-7 text-zinc-100 sm:mt-6 sm:text-xl sm:leading-8 lg:text-[1.35rem]">
+          <p className="mt-3 max-w-4xl text-lg leading-8 text-zinc-100 sm:mt-6 sm:text-xl sm:leading-8 lg:text-[1.35rem]">
             Choose a supplied-and-installed smart lock, or book professional
             installation for a compatible lock you already own. We check your
             door and confirm the scope before booking.
           </p>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-8 sm:flex sm:flex-row sm:flex-wrap sm:gap-4">
-            <Link
-              href="/blog/smart-lock-door-compatibility-check"
-              className="col-span-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-[#d9b98f] px-6 text-sm font-bold text-black transition-colors hover:bg-white sm:col-span-1 sm:min-h-14 sm:px-8 sm:text-base"
-            >
-              Check Your Door
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/contact?service=not-sure"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-white/50 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white hover:text-black sm:min-h-14 sm:px-8 sm:text-base"
-            >
-              Get a Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a
-              href="sms:+61431060390?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote."
-              className="inline-flex min-h-12 items-center justify-center gap-2 px-3 text-sm font-semibold text-white transition-colors hover:text-[#d9b98f] sm:min-h-14 sm:px-5 sm:text-base"
-            >
-              <MessageSquareText className="h-4 w-4" aria-hidden="true" />
-              Text us
-            </a>
-          </div>
+          <TrackingCTAs context="hero" />
 
           <div className="mt-4 grid max-w-6xl gap-2 border-t border-white/25 pt-3 sm:mt-9 sm:grid-cols-2 sm:gap-8 sm:pt-6">
             {services.map(({ icon: Icon, title, detail }) => (

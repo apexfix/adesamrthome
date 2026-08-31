@@ -20,17 +20,18 @@ const nextSteps = [
   {
     number: "01",
     title: "We review the details",
-    detail: "We check the door, current lock, requested service and any photos you supplied.",
+    detail: "We review the door, current lock, requested service and any photos you supplied within 24 hours.",
   },
   {
     number: "02",
     title: "We ask for anything missing",
-    detail: "If another photo or measurement is needed, we will contact you by SMS or email.",
+    detail: "If we need another photo or measurement, we will contact you by SMS or email.",
   },
   {
     number: "03",
     title: "You receive the next step",
-    detail: "We confirm suitability, scope and pricing before you decide whether to book.",
+    detail:
+      "We confirm suitability, scope and pricing (normally within 48 hours) before you decide whether to book.",
   },
 ];
 
@@ -49,8 +50,9 @@ export default function ThankYouPage() {
             Thank You. We Have Your Details.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 md:text-lg">
-            We will review your smart lock requirements and reply by SMS or email. If you entered
-            an email address, a confirmation should also arrive in your inbox.
+            We will review your smart lock requirements and reply by SMS or email.
+            If you entered an email address, a confirmation and checklist should
+            also arrive in your inbox within a short time.
           </p>
         </div>
       </section>

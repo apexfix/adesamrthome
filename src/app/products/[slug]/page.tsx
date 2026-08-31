@@ -1,6 +1,15 @@
 import { getProduct } from "@/lib/api";
 import { notFound } from "next/navigation";
-import { ShieldCheck, Calendar, Ruler, ChevronRight, Zap } from "lucide-react";
+import {
+  Calendar,
+  Camera,
+  ChevronRight,
+  MessageSquareText,
+  Ruler,
+  ShieldCheck,
+  Tag,
+  Zap,
+} from "lucide-react";
 import { ProductGallery } from "@/components/ProductGallery";
 import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
@@ -178,6 +187,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
   );
   const productImages = galleryImages.map((image: ProductImage) =>
     new URL(image.src, siteUrl).toString()
+  );
+  const encodedProductName = encodeURIComponent(product.name);
+  const quotePrefill = encodeURIComponent(
+    `Hi ADE Smart Home, I would like a quote for ${product.name} in Adelaide.`
+  );
+  const emailPrefill = encodeURIComponent(
+    `Hi ADE Smart Home,\nI need help with smart lock installation and would like a quote.\nProduct: ${product.name}\nSuburb:\nPhotos: attached`
   );
 
   const productSchema = {
@@ -369,6 +385,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Adelaide Local Team</p>
                 </div>
               </div>
+
+              <p className="text-sm text-zinc-400">
+                Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation.
+              </p>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -378,8 +398,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Link 
-                  href={`/contact?service=supply-install&product=${encodeURIComponent(product.name)}`}
+                <Link
+                  href={`/contact?service=supply-install&product=${encodedProductName}`}
                   className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Calendar className="w-5 h-5" />
@@ -391,6 +411,27 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 >
                   <Ruler className="w-5 h-5" />
                   Check Door Fit
+                </Link>
+                <a
+                  href={`sms:${businessInfo.phoneInternational}?body=${quotePrefill}`}
+                  className="h-16 bg-[#111827] text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
+                >
+                  <MessageSquareText className="w-5 h-5" />
+                  Text Quote
+                </a>
+                <a
+                  href={`mailto:${businessInfo.email}?subject=Door%20Photos%20for%20Install&body=${emailPrefill}`}
+                  className="h-16 bg-transparent text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
+                >
+                  <Camera className="w-5 h-5" />
+                  Send Door Photos
+                </a>
+                <Link
+                  href={`/contact?service=installation-only&product=${encodedProductName}`}
+                  className="h-16 bg-transparent text-[#d9b98f] border border-zinc-700 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all col-span-1 sm:col-span-2"
+                >
+                  <Tag className="w-5 h-5" />
+                  Installation-only for my lock
                 </Link>
               </div>
             </div>
