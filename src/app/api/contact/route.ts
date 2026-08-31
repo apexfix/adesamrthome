@@ -275,6 +275,8 @@ ${message || "No additional details provided."}
       `,
     });
 
+    let acknowledgementSent = false;
+
     if (email) {
       try {
         await transporter.sendMail({
@@ -322,6 +324,7 @@ https://www.adesmarthome.com.au/
             <p>ADE Smart Home<br>Adelaide smart lock supply and installation<br><a href="https://www.adesmarthome.com.au/">adesmarthome.com.au</a></p>
           `,
         });
+        acknowledgementSent = true;
       } catch (customerReplyError) {
         console.warn("Customer acknowledgement email could not be sent:", customerReplyError);
       }
@@ -331,6 +334,7 @@ https://www.adesmarthome.com.au/
       success: true,
       message: "Enquiry sent successfully",
       leadId,
+      acknowledgementSent,
     });
   } catch (error) {
     console.error("Failed to send enquiry email:", error);
