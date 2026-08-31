@@ -41,6 +41,13 @@ const timingOptions = [
   { value: "flexible", label: "Flexible / researching" },
 ] as const;
 
+const photoChecklist = [
+  { title: "Outside face", detail: "Show the full door and outside lock." },
+  { title: "Inside face", detail: "Show the inside door and current lock." },
+  { title: "Door edge", detail: "Show the latch or mortise in the door edge." },
+  { title: "Door frame", detail: "Show the strike area and nearby clearance." },
+] as const;
+
 const initialFormData = {
   service: "supply-install",
   product: "",
@@ -387,12 +394,15 @@ export function ContactForm({
 
             <div className="mt-8 border-t border-zinc-800 pt-7">
               <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
-                Helpful photo angles
+                Four helpful photo angles
               </h3>
               <ol className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
-                <li><strong className="mr-2 text-[#c5a47e]">1.</strong>Outside face of the door.</li>
-                <li><strong className="mr-2 text-[#c5a47e]">2.</strong>Inside face and current lock.</li>
-                <li><strong className="mr-2 text-[#c5a47e]">3.</strong>Door edge and door frame.</li>
+                {photoChecklist.map((photo, index) => (
+                  <li key={photo.title}>
+                    <strong className="mr-2 text-[#c5a47e]">{index + 1}.</strong>
+                    {photo.title}. {photo.detail}
+                  </li>
+                ))}
               </ol>
               <Link
                 href="/blog/smart-lock-door-compatibility-check"
@@ -410,7 +420,8 @@ export function ContactForm({
             </h3>
             <p className="mt-2 text-sm text-slate-600">
               Name, mobile, email, suburb, property type and preferred timing are required.
-              Door photos are recommended to get a faster quote.
+              Adding all four door angles helps us check compatibility before quoting. You can
+              still submit now and send photos later.
             </p>
 
             <form
@@ -557,20 +568,39 @@ export function ContactForm({
 
               <fieldset>
                 <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                  Door photos <span className="font-normal normal-case text-slate-400">recommended, up to 4</span>
+                  Door photos <span className="font-normal normal-case text-slate-400">recommended for a more accurate quote</span>
                 </legend>
+                <div className="mt-3 flex items-center justify-between gap-4 border-y border-slate-200 py-3">
+                  <p className="text-xs font-bold text-slate-700">Four-photo checklist</p>
+                  <p className="text-xs font-bold text-[#7a5a38]" aria-live="polite">
+                    {photos.length} of {MAX_PHOTOS} added
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-px bg-slate-200 p-px">
+                  {photoChecklist.map((photo, index) => (
+                    <div key={photo.title} className="min-h-24 bg-white p-3">
+                      <p className="text-[10px] font-black uppercase tracking-[0.12em] text-[#8a6b48]">
+                        {String(index + 1).padStart(2, "0")}
+                      </p>
+                      <p className="mt-2 text-xs font-bold text-slate-900">{photo.title}</p>
+                      <p className="mt-1 text-[11px] leading-4 text-slate-500">{photo.detail}</p>
+                    </div>
+                  ))}
+                </div>
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isPreparingPhotos || photos.length >= MAX_PHOTOS}
-                  className="mt-2 flex min-h-20 w-full items-center justify-center gap-3 border border-dashed border-slate-400 bg-slate-50 px-4 text-sm font-bold text-slate-700 transition-colors hover:border-[#9c7953] hover:bg-[#f8f3ec] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mt-3 flex min-h-20 w-full items-center justify-center gap-3 border border-dashed border-slate-400 bg-slate-50 px-4 text-sm font-bold text-slate-700 transition-colors hover:border-[#9c7953] hover:bg-[#f8f3ec] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <ImagePlus className="h-5 w-5 text-[#8a6b48]" aria-hidden="true" />
                   {isPreparingPhotos
                     ? "Preparing photos…"
-                    : photos.length
+                    : photos.length >= MAX_PHOTOS
+                      ? "Four photos added"
+                      : photos.length
                       ? "Add another photo"
-                      : "Add door photos"}
+                      : "Add your 4 door photos"}
                 </button>
                 <input
                   ref={fileInputRef}
@@ -581,9 +611,14 @@ export function ContactForm({
                   className="sr-only"
                 />
                 <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Best angles: outside face, inside lock side, door edge, and frame.
-                  Large images are resized before sending.
+                  Select several photos at once or add them one by one. Large images are resized
+                  before sending. Photos are recommended, not required to submit the form.
                 </p>
+                {photos.length === MAX_PHOTOS && (
+                  <p role="status" className="mt-3 border-l-4 border-emerald-600 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-900">
+                    Four photos added. This gives us a better starting point for the door check.
+                  </p>
+                )}
                 {photos.length > 0 && (
                   <ul className="mt-3 divide-y divide-slate-200 border-y border-slate-200">
                     {photos.map((photo, index) => (
