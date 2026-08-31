@@ -218,7 +218,7 @@ export function ContactForm({
                     </div>
                   </fieldset>
 
-                  <input type="hidden" name="product" value={formData.product} />
+                  <input type="hidden" name="product" defaultValue={formData.product} />
 
                   <div className="grid gap-5 sm:grid-cols-2">
                     <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">

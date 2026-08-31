@@ -20,6 +20,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/products`, siteLastModified),
     xmlUrl(`${siteUrl}/smart-lock-supply-installation-adelaide`, siteLastModified),
     xmlUrl(`${siteUrl}/smart-lock-installation-only-adelaide`, siteLastModified),
+    xmlUrl(`${siteUrl}/airbnb-smart-lock-installation-adelaide`, siteLastModified),
     xmlUrl(`${siteUrl}/blog`, siteLastModified),
     xmlUrl(`${siteUrl}/gallery`, siteLastModified),
     xmlUrl(`${siteUrl}/contact`, siteLastModified),
