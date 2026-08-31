@@ -97,10 +97,10 @@ export default function BlogListPage() {
         {/* Header Section */}
         <div className="max-w-4xl mb-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Installation <span className="text-[#c5a47e]">Stories</span>
+            Smart Lock <span className="text-[#c5a47e]">Guides &amp; Projects</span>
           </h1>
           <p className="text-zinc-400 text-lg font-light leading-relaxed max-w-2xl">
-            Real craftsmanship, real security upgrades. Explore our latest work across Adelaide.
+            Door compatibility guidance, product explanations and real project notes for Adelaide homes.
           </p>
 
           {/* Achievement Badge */}
@@ -161,7 +161,8 @@ export default function BlogListPage() {
                     {post.title}
                   </h3>
                   <div className="pt-6 border-t border-zinc-800/50 mt-4 flex items-center text-[#c5a47e] text-sm font-bold">
-                    View Project Details <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                    {post.category === "Buyer Guide" ? "Read Guide" : "View Project Details"}
+                    <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </Link>

@@ -1,9 +1,11 @@
 ---
 title: "Can Your Door Take a Smart Lock? ADE's Adelaide Door Compatibility Check"
 date: "2026-08-16"
+updated: "2026-09-01"
 description: "Check door edge clearance, door thickness and screen door clearance before booking a smart lock installation in Adelaide."
 coverImage: "/img/smart-lock-door-measurement-requirements.png"
 category: "Buyer Guide"
+contentType: "guide"
 suburb: "Adelaide Metro"
 pinned: true
 ---
@@ -11,27 +13,28 @@ pinned: true
 ![Smart Lock Door Measurement Requirements](/img/smart-lock-door-measurement-requirements.png)
 
 ## Smart Lock Door Measurement Requirements
-Before installation, please check the following measurements:
+Before installation, check the following areas. The measurements shown in the reference image are useful examples for some lock layouts, not universal pass/fail rules. The exact allowance depends on the smart lock body, handle projection, door construction and frame.
 
 ### 1. Door Edge to Glass
-If your door has a glass panel, the distance from the **edge of the door to the glass should generally be more than 105 mm**.
+If your door has a glass panel, photograph and measure the flat area between the door edge and the glass. Some wider smart lock bodies may need around **105 mm**, while narrower models may need less. Confirm the exact model before drilling or purchasing.
 
 ### 2. Door Thickness
-The door should be **more than 40 mm thick**.
+Measure the door thickness at the edge. Many residential smart locks suit doors around **35-55 mm**, but spindle, screw and mortise requirements vary by model. The **40 mm** reference in the image is a common check, not a guarantee of compatibility.
 
 ### 3. Security / Screen Door Clearance
-If there is a security door or screen door in front of the main door, please make sure the **clearance between the two doors is more than 70 mm** so the smart lock does not interfere with the screen door when closing.
+If there is a security or screen door in front of the main door, photograph the gap from the side and measure the closest clearance. Some larger camera or pull-handle locks may need around **70 mm**, but the required depth depends on the selected lock and both door handles.
 
 ## Send Us Door Photos to Confirm Suitability
 Please send us photos of your front door before booking or purchasing a lock. We can check the photos and confirm whether your door is suitable for smart lock installation, whether custom work is needed, or whether another model would be a better fit.
 
-Please send clear photos of:
+Please send these four clear photos first:
 
-- The front and back of the door
-- The edge/side of the door
-- The door thickness measurement
-- The distance from the door edge to the glass, if applicable
-- The clearance between the main door and screen/security door, if applicable
+1. The outside face of the door and existing lock
+2. The inside face of the door and existing lock
+3. The door edge showing the latch or mortise area
+4. The door frame showing the strike area
+
+If relevant, also include the door thickness measurement, edge-to-glass measurement and a side-on photo of the screen/security door clearance.
 
 These measurements and photos help us confirm whether your door is suitable for smart lock installation and ensure a smoother setup.
 
@@ -72,4 +75,4 @@ Do not choose the lock only by features. Choose it by the door first, then featu
 
 If you are unsure, send us the photos before purchasing. We can check the door and recommend a suitable model for your Adelaide home.
 
-**Call or message ADE Smart Home on 0431060390** for a door compatibility check.
+[Send your four door photos through our Adelaide quote form](/contact?service=not-sure#quote), text **0431 060 390**, or email **info@adesmarthome.com.au** for a door compatibility check.
