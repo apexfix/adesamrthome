@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Camera,
@@ -123,6 +123,9 @@ export function ContactForm({
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formStartedRef = useRef(false);
+  const completedRef = useRef(false);
+  const abandonmentTrackedRef = useRef(false);
+  const validationErrorTrackedRef = useRef(false);
   const selectedService =
     serviceOptions.find((option) => option.value === initialService)?.value ??
     initialFormData.service;
@@ -136,6 +139,52 @@ export function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
+  const latestFunnelStateRef = useRef({
+    service: selectedService,
+    product: initialProduct?.trim().slice(0, 150) ?? "",
+    photoCount: 0,
+  });
+
+  useEffect(() => {
+    latestFunnelStateRef.current = {
+      service: formData.service,
+      product: formData.product,
+      photoCount: photos.length,
+    };
+  }, [formData.service, formData.product, photos.length]);
+
+  useEffect(() => {
+    const trackAbandonment = () => {
+      if (
+        !formStartedRef.current ||
+        completedRef.current ||
+        abandonmentTrackedRef.current
+      ) {
+        return;
+      }
+
+      abandonmentTrackedRef.current = true;
+      const latest = latestFunnelStateRef.current;
+      trackEvent("form_abandon", {
+        form_name: "website_enquiry",
+        service: latest.service,
+        product: latest.product || "not-specified",
+        photo_count: latest.photoCount,
+        photo_status:
+          latest.photoCount >= 4
+            ? "complete"
+            : latest.photoCount > 0
+              ? "partial"
+              : "none",
+      });
+    };
+
+    window.addEventListener("pagehide", trackAbandonment);
+    return () => {
+      window.removeEventListener("pagehide", trackAbandonment);
+      trackAbandonment();
+    };
+  }, []);
 
   const trackFormStart = () => {
     if (formStartedRef.current) return;
@@ -191,16 +240,25 @@ export function ContactForm({
         );
       }
 
-      sessionStorage.setItem(
-        "ade_completed_lead",
-        JSON.stringify({
+      completedRef.current = true;
+      try {
+        sessionStorage.setItem(
+          "ade_completed_lead",
+          JSON.stringify({
+            service: formData.service,
+            product: formData.product,
+            photoCount: photos.length,
+            preferredTiming: formData.preferredTiming,
+            leadId: result?.leadId,
+          }),
+        );
+      } catch {
+        trackEvent("lead_storage_error", {
+          form_name: "website_enquiry",
           service: formData.service,
-          product: formData.product,
-          photoCount: photos.length,
-          preferredTiming: formData.preferredTiming,
-          leadId: result?.leadId,
-        }),
-      );
+          photo_count: photos.length,
+        });
+      }
       trackEvent("form_submit_success", {
         form_name: "website_enquiry",
         service: formData.service,
@@ -274,6 +332,23 @@ export function ContactForm({
     }
   };
 
+  const handleInvalid = (event: React.FormEvent<HTMLFormElement>) => {
+    if (validationErrorTrackedRef.current) return;
+
+    validationErrorTrackedRef.current = true;
+    const field = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    trackEvent("form_validation_error", {
+      form_name: "website_enquiry",
+      field_name: field.name || "unknown",
+      service: formData.service,
+      photo_count: photos.length,
+    });
+
+    window.setTimeout(() => {
+      validationErrorTrackedRef.current = false;
+    }, 1000);
+  };
+
   return (
     <section id="quote" className="border-y border-zinc-800 bg-zinc-950 py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -341,6 +416,7 @@ export function ContactForm({
             <form
               onSubmit={handleSubmit}
               onFocusCapture={trackFormStart}
+              onInvalidCapture={handleInvalid}
               className="mt-7 space-y-5"
             >
               <fieldset>

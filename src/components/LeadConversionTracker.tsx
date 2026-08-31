@@ -30,7 +30,12 @@ export function LeadConversionTracker() {
         "as-soon-as-possible",
         "within-one-week",
       ].includes(lead.preferredTiming || "");
-      const leadQuality = photoCount >= 3 && highIntentTiming
+      const photoStatus = photoCount >= 4
+        ? "complete"
+        : photoCount > 0
+          ? "partial"
+          : "none";
+      const leadQuality = photoCount >= 4 && highIntentTiming
         ? "high"
         : photoCount > 0 || highIntentTiming
           ? "medium"
@@ -40,14 +45,16 @@ export function LeadConversionTracker() {
         service,
         product,
         photo_count: photoCount,
+        photo_status: photoStatus,
         lead_quality: leadQuality,
         form_name: "website_enquiry",
       });
-      if (photoCount >= 3) {
+      if (photoCount >= 4) {
         trackEvent("photo_ready_lead", {
           service,
           product,
           photo_count: photoCount,
+          photo_status: photoStatus,
           lead_quality: leadQuality,
           form_name: "website_enquiry",
         });
