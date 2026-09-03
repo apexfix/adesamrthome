@@ -13,6 +13,7 @@ import {
 import { ProductGallery } from "@/components/ProductGallery";
 import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
+import Image from "next/image";
 import Link from "next/link";
 import fs from "fs";
 import path from "path";
