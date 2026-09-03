@@ -172,8 +172,8 @@ export default async function ProductsPage(props: {
       <div className="container mx-auto px-4 md:px-6">
         
         {/* 页面标题区域 */}
-        <div className="flex flex-col items-center justify-center mb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 uppercase">
+        <div className="mb-20 flex flex-col items-center justify-center text-center">
+          <h1 className="mb-5 text-4xl font-extrabold tracking-tight text-white uppercase md:text-5xl">
             {pageTitle}
           </h1>
           <div className="h-1 w-20 bg-[#c5a47e] rounded-full" />
@@ -209,7 +209,7 @@ export default async function ProductsPage(props: {
               ))}
             </div>
           )}
-          <div className="mt-8 border-y border-zinc-800 px-5 py-4 text-sm text-zinc-300">
+          <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
             Already have a smart lock?{" "}
             <Link
               href="/smart-lock-installation-only-adelaide"

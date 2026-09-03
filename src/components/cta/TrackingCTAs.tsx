@@ -42,7 +42,7 @@ const items = [
     href: "/contact?service=not-sure&cta=products_quote",
     text: "Get quote",
     classes:
-      "flex min-h-12 items-center justify-center gap-2 rounded-sm border border-zinc-700 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
+      "flex min-h-14 items-center justify-center gap-2 rounded-sm border border-zinc-700 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
     component: "link",
   },
   {
@@ -53,7 +53,7 @@ const items = [
     href: `mailto:${businessInfo.email}?subject=Smart%20lock%20quote%20with%20door%20photos&body=Hi%20ADE%20Smart%20Home%2C%20here%20are%20my%20door%20photos.`,
     text: "Send door photos",
     classes:
-      "flex min-h-12 items-center justify-center gap-2 rounded-sm border border-zinc-700 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
+      "flex min-h-14 items-center justify-center gap-2 rounded-sm border border-zinc-700 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
   },
   {
     context: "products" as const,
@@ -63,7 +63,7 @@ const items = [
     href: `sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20an%20installation%20quote.`,
     text: "Text us",
     classes:
-      "flex min-h-12 items-center justify-center gap-2 rounded-sm border border-zinc-700 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
+      "flex min-h-14 items-center justify-center gap-2 rounded-sm border border-zinc-700 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
   },
 ];
 
@@ -151,7 +151,7 @@ export function TrackingCTAs({ context, className }: CTABlock) {
   }
 
   return (
-    <div className={`mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-4 sm:p-5 ${className ?? ""}`}>
+    <div className={`mt-10 grid w-full max-w-2xl grid-cols-1 gap-3 sm:mt-12 sm:grid-cols-3 sm:gap-4 ${className ?? ""}`}>
       {items
         .filter((item) => item.context === "products")
         .map((item) => (
