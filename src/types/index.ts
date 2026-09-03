@@ -3,6 +3,8 @@ export interface ProductImage {
   src: string;
   name?: string;
   alt: string;
+  width?: number;
+  height?: number;
 }
 
 export interface ProductTaxonomyItem {
@@ -46,5 +48,6 @@ export interface Product {
   installed_price?: string;
   price_includes_installation?: boolean;
   images?: ProductImage[];
+  detail_images?: ProductImage[];
   attributes?: ProductAttribute[];
 }

@@ -124,8 +124,8 @@ const packages = [
     price: 1499,
     label: "Kaadas flagship",
     bestFor: "Face ID, integrated Wi-Fi and indoor display",
-    image: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-01.jpg",
-    imageAlt: "Kaadas K70 SE smart lock official product view",
+    image: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-01.png",
+    imageAlt: "Kaadas K70 SE exterior and interior smart lock panels",
     inclusionText: "Lock + standard installation + local product support",
     warrantyText: "Terms confirmed before booking",
     features: ["3D face recognition", "FPC fingerprint sensor", "Integrated 2.4 GHz Wi-Fi", "4.94-inch indoor display"],
@@ -428,7 +428,7 @@ export default function SupplyInstallationPage() {
                     loading="eager"
                     unoptimized
                     sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
+                    className={item.brand === "Kaadas" ? "object-contain p-5" : "object-cover"}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">

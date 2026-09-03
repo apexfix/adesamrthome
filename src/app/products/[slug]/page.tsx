@@ -212,6 +212,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
     : [{ src: "/placeholder.jpg", alt: product.name }];
+  const detailImages = product.detail_images || [];
   const installationPhotos = installationPhotosBySlug[slug] || [];
   const productUrl = `${siteUrl}/products/${product.slug}`;
   const productDescription = stripHtml(
@@ -366,7 +367,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start mb-32">
           {/* 左侧：图片展示 */}
           <div className="relative rounded-[2.5rem] overflow-hidden border border-zinc-900 bg-zinc-900/50 shadow-2xl">
-            <ProductGallery images={galleryImages} />
+            <ProductGallery images={galleryImages} square={detailImages.length > 0} />
             {isOnSale && (
               <div className="absolute top-8 right-8 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg z-20">
                 Special Offer
@@ -539,6 +540,33 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
           </div>
         </div>
+
+        {detailImages.length > 0 && (
+          <section className="mt-24 border-t border-zinc-900 pt-20">
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+                Product details
+              </p>
+              <h2 className="mt-3 text-3xl font-black md:text-5xl">
+                Explore the <span className="text-[#c5a47e]">K70 SE</span>
+              </h2>
+            </div>
+            <div className="mx-auto max-w-5xl overflow-hidden bg-black">
+              {detailImages.map((image, index) => (
+                <Image
+                  key={image.id || image.src}
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width || 1920}
+                  height={image.height || 1920}
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  className="h-auto w-full"
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         <InstallationPhotoStrip photos={installationPhotos} />
 

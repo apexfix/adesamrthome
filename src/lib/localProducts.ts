@@ -65,11 +65,49 @@ const x9Images = [
   "/img/products/lockin-x9/gallery/x9-gallery-08.png",
 ];
 
-const kaadasK70SeImages = Array.from(
-  { length: 18 },
-  (_, index) =>
-    `/img/products/kaadas-k70-se/gallery/kaadas-k70-se-${String(index + 1).padStart(2, "0")}.jpg`
-);
+const kaadasK70SeProductImages = [
+  {
+    src: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-01.png",
+    alt: "Kaadas K70 SE exterior and interior smart lock panels",
+  },
+  {
+    src: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-02.png",
+    alt: "Kaadas K70 SE interior smart lock panel",
+  },
+  {
+    src: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-03.png",
+    alt: "Kaadas K70 SE interior panel front view",
+  },
+  {
+    src: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-04.png",
+    alt: "Kaadas K70 SE exterior keypad and camera panel",
+  },
+  {
+    src: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-05.png",
+    alt: "Kaadas K70 SE exterior panel front view",
+  },
+];
+
+const kaadasK70SeDetailImages = [
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-01.jpg", alt: "Kaadas K70 SE flagship smart lock overview", width: 1920, height: 2034 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-02.jpg", alt: "Kaadas K70 SE main feature overview", width: 1920, height: 2844 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-03.jpg", alt: "Kaadas K70 SE full-screen glass panel", width: 1920, height: 2007 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-04.jpg", alt: "Kaadas K70 SE intelligent security system", width: 1920, height: 2650 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-05.jpg", alt: "Kaadas K70 SE automatic mortise system", width: 1920, height: 2970 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-06.jpg", alt: "Kaadas K70 SE 3D facial recognition", width: 1920, height: 2052 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-07.jpg", alt: "Kaadas K70 SE smart door monitoring modes", width: 1920, height: 2786 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-08.jpg", alt: "Kaadas K70 SE infrared night vision", width: 1920, height: 1568 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-09.jpg", alt: "Kaadas K70 SE 4.94-inch indoor display", width: 1920, height: 1789 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-10.jpg", alt: "Kaadas K70 SE app remote monitoring", width: 1920, height: 1792 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-11.jpg", alt: "Kaadas K70 SE three-way video intercom", width: 1920, height: 1754 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-12.jpg", alt: "Kaadas K70 SE automatic sensing handle", width: 1920, height: 1831 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-13.jpg", alt: "Kaadas K70 SE rechargeable battery and emergency power", width: 1920, height: 2223 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-14.jpg", alt: "Kaadas K70 SE unlock methods", width: 1920, height: 1912 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-15.jpg", alt: "Kaadas K70 SE duress alert feature", width: 1920, height: 1729 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-16.jpg", alt: "Kaadas K70 SE layered security protection", width: 1920, height: 3047 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-17.jpg", alt: "Kaadas K70 SE reliability testing", width: 1920, height: 2100 },
+  { src: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-18.jpg", alt: "Kaadas K70 SE technical specifications", width: 1920, height: 2867 },
+];
 
 export const localProducts = [
   {
@@ -122,10 +160,13 @@ export const localProducts = [
     },
     installed_price: "149900",
     price_includes_installation: false,
-    images: kaadasK70SeImages.map((src, index) => ({
+    images: kaadasK70SeProductImages.map((image, index) => ({
       id: 900501 + index,
-      src,
-      alt: `Kaadas K70 SE smart lock product and feature image ${index + 1}`,
+      ...image,
+    })),
+    detail_images: kaadasK70SeDetailImages.map((image, index) => ({
+      id: 900601 + index,
+      ...image,
     })),
     attributes: [
       { id: 1, name: "Brand", options: ["Kaadas"] },

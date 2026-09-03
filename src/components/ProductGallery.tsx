@@ -6,9 +6,10 @@ import { cn } from "@/lib/utils";
 
 interface ProductGalleryProps {
   images: { src: string; alt: string }[];
+  square?: boolean;
 }
 
-export function ProductGallery({ images }: ProductGalleryProps) {
+export function ProductGallery({ images, square = false }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!images || images.length === 0) return null;
@@ -16,7 +17,12 @@ export function ProductGallery({ images }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* Main Image */}
-      <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-lg border border-slate-100 aspect-[3/4] relative overflow-hidden flex items-center justify-center">
+      <div
+        className={cn(
+          "relative flex items-center justify-center overflow-hidden rounded-[2rem] border border-slate-100 bg-white p-8 shadow-lg md:p-12",
+          square ? "aspect-square" : "aspect-[3/4]"
+        )}
+      >
         <Image
           src={images[selectedIndex].src}
           alt={images[selectedIndex].alt || "Product image"}
