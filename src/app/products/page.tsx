@@ -80,7 +80,11 @@ function productMatchesBrand(product: Product, brandParam: string) {
   return searchableValues.some((value) => normalizeCategory(value).includes(requested));
 }
 
-function getPageTitle(categoryParam: string | null) {
+function getPageTitle(categoryParam: string | null, brandParam: string | null) {
+  if (brandParam) {
+    return `${brandParam} Smart Locks`;
+  }
+
   const normalized = categoryParam ? normalizeCategory(categoryParam) : "";
 
   if (normalized === "smartlock" || normalized === "smartlocks") {
@@ -116,7 +120,7 @@ export default async function ProductsPage(props: {
     ? categoryProducts.filter((product) => productMatchesBrand(product, brandParam))
     : categoryProducts;
 
-  const pageTitle = getPageTitle(categoryParam);
+  const pageTitle = getPageTitle(categoryParam, brandParam);
   const isSmartLocksPage =
     categoryParam !== null &&
     ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
