@@ -65,7 +65,82 @@ const x9Images = [
   "/img/products/lockin-x9/gallery/x9-gallery-08.png",
 ];
 
+const kaadasK70SeImages = Array.from(
+  { length: 18 },
+  (_, index) =>
+    `/img/products/kaadas-k70-se/gallery/kaadas-k70-se-${String(index + 1).padStart(2, "0")}.jpg`
+);
+
 export const localProducts = [
+  {
+    id: 900006,
+    name: "Kaadas K70 SE Smart Lock",
+    slug: "kaadas-k70-se-smart-lock",
+    sku: "K70-SE-BLK",
+    short_description:
+      "Flagship Kaadas push-pull smart lock with 3D face recognition, Sweden FPC fingerprint sensing, integrated Wi-Fi, HD camera, a 4.94-inch indoor display and multiple secure access methods.",
+    description: `
+      <h2>Flagship Kaadas Smart Lock</h2>
+      <p>The Kaadas K70 SE combines fast biometric entry, front-door video and app access in a premium black push-pull design. It is available from ADE Smart Home as a lock-only purchase or as a complete Adelaide supply and standard installation package.</p>
+      <h2>Key Features</h2>
+      <ul>
+        <li>3D face recognition and Sweden FPC fingerprint sensing.</li>
+        <li>Unlock by face, fingerprint, PIN, RFID card, Kaadas Smart app, temporary PIN, dual verification or mechanical key.</li>
+        <li>Integrated 2.4 GHz Wi-Fi with remote unlock, temporary PIN sharing and access or alert records.</li>
+        <li>HD front camera, built-in doorbell, visitor communication and a 4.94-inch colour indoor display.</li>
+        <li>Automatic locking with privacy, defence and security modes.</li>
+        <li>Rechargeable 5000 mAh battery with USB-C emergency power.</li>
+        <li>Supports up to 50 faces, 100 fingerprints and 100 RFID cards.</li>
+      </ul>
+      <h2>Choose Lock Only or Installed</h2>
+      <p>The K70 SE is A$1,149 lock only. The A$1,499 package includes the lock and standard Adelaide installation after door compatibility is confirmed. If unusual door preparation, extra parts or non-standard work is required, ADE Smart Home will explain and quote it before booking.</p>
+      <h2>Door Compatibility Check</h2>
+      <p>Suitability depends on door thickness, existing lock position, frame alignment, glass clearance and screen-door clearance. Send clear photos of the outside, inside, door edge and frame before purchase. Apartment, strata and fire-rated doors may require additional approval or compatibility confirmation.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 3, name: "Kaadas", slug: "kaadas" },
+      { id: 5, name: "Smart Locks with Camera", slug: "smart-locks-with-camera" },
+      { id: 6, name: "Face Recognition Smart Locks", slug: "face-recognition-smart-locks" },
+    ],
+    tags: [
+      { id: 11, name: "Kaadas", slug: "kaadas" },
+      { id: 12, name: "K70 SE", slug: "k70-se" },
+      { id: 13, name: "3D Face Recognition", slug: "3d-face-recognition" },
+      { id: 14, name: "Fingerprint", slug: "fingerprint" },
+      { id: 15, name: "Built-in Wi-Fi", slug: "built-in-wifi" },
+      { id: 16, name: "Camera", slug: "camera" },
+    ],
+    brands: [{ id: 3, name: "Kaadas", slug: "kaadas" }],
+    prices: {
+      price: "114900",
+      regular_price: "114900",
+      sale_price: "114900",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    installed_price: "149900",
+    price_includes_installation: false,
+    images: kaadasK70SeImages.map((src, index) => ({
+      id: 900501 + index,
+      src,
+      alt: `Kaadas K70 SE smart lock product and feature image ${index + 1}`,
+    })),
+    attributes: [
+      { id: 1, name: "Brand", options: ["Kaadas"] },
+      { id: 2, name: "Model", options: ["K70 SE"] },
+      { id: 3, name: "Colour", options: ["Black"] },
+      { id: 4, name: "Access Methods", options: ["3D face recognition", "Sweden FPC fingerprint", "PIN code", "RFID card", "Kaadas Smart app", "Temporary PIN", "Dual verification", "Mechanical key"] },
+      { id: 5, name: "User Capacity", options: ["Up to 50 faces", "Up to 100 fingerprints", "Up to 100 RFID cards", "1 master PIN", "50 user PINs", "10 temporary PINs"] },
+      { id: 6, name: "Camera and Display", options: ["HD front camera", "4.94-inch colour indoor display", "Built-in doorbell", "Visitor communication"] },
+      { id: 7, name: "Connectivity", options: ["Integrated 2.4 GHz Wi-Fi", "Kaadas Smart app"] },
+      { id: 8, name: "Power", options: ["Rechargeable 5000 mAh battery", "USB-C emergency power"] },
+      { id: 9, name: "Dimensions", options: ["Front: 420 x 77 x 62 mm", "Rear: 420 x 79 x 71 mm"] },
+      { id: 10, name: "Door Thickness", options: ["38-120 mm, subject to door assessment"] },
+      { id: 11, name: "Operating Temperature", options: ["-20 C to 60 C"] },
+    ],
+  },
   {
     id: 900005,
     name: "Lockin X9 Smart Lock",

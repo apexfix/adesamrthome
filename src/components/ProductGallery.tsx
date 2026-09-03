@@ -28,7 +28,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
       
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex gap-4 overflow-x-auto pb-2 px-1 scrollbar-hide justify-center md:justify-start">
+        <div className="flex justify-start gap-4 overflow-x-auto px-1 pb-2 scrollbar-hide">
           {images.map((img, idx) => (
             <button
               key={idx}

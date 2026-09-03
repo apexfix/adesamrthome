@@ -13,5 +13,6 @@ export async function getCategories(): Promise<ProductTaxonomyItem[]> {
   return [
     { id: 1, name: "SMART LOCK", slug: "smart-lock" },
     { id: 2, name: "Lockin", slug: "lockin" },
+    { id: 3, name: "Kaadas", slug: "kaadas" },
   ];
 }

@@ -9,12 +9,12 @@ import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 export const metadata: Metadata = {
   title: "Smart Locks with Adelaide Installation",
   description:
-    "Compare Lockin smart locks with standard Adelaide installation included. View fingerprint, finger-vein, face recognition and camera models from $650.",
+    "Compare Lockin and Kaadas smart locks for Adelaide homes. View fingerprint, finger-vein, face recognition and camera models with lock-only and installed options.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
     title: "Smart Locks with Adelaide Installation",
     description:
-      "Compare installed-price Lockin smart locks and request a free Adelaide door compatibility check.",
+      "Compare Lockin and Kaadas smart locks and request a free Adelaide door compatibility check.",
     url: `${siteUrl}/products`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
@@ -38,7 +38,7 @@ const SMART_LOCK_CHILD_CATEGORIES = new Set([
   "yale",
 ]);
 
-const SMART_LOCK_BRANDS = ["Lockin", "Philips", "EZVIZ", "Samsung", "Dessmann"];
+const SMART_LOCK_BRANDS = ["Lockin", "Kaadas", "Philips", "EZVIZ", "Samsung", "Dessmann"];
 
 function normalizeCategory(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -89,6 +89,10 @@ function getPageTitle(categoryParam: string | null) {
 
   if (normalized === "lockin") {
     return "Lockin Smart Locks";
+  }
+
+  if (normalized === "kaadas") {
+    return "Kaadas Smart Locks";
   }
 
   return categoryParam || "All Products";

@@ -43,6 +43,8 @@ export interface Product {
   tags?: ProductTaxonomyItem[];
   brands?: ProductTaxonomyItem[];
   prices?: ProductPrices;
+  installed_price?: string;
+  price_includes_installation?: boolean;
   images?: ProductImage[];
   attributes?: ProductAttribute[];
 }

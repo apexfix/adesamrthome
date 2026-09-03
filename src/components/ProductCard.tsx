@@ -19,6 +19,10 @@ export function ProductCard({ product }: { product: Product }) {
   // 判断是否正在打折
   const isOnSale = regularPrice !== currentPrice;
   const hasPrice = parseInt(product.prices?.price || "0") > 0;
+  const installedPrice = product.installed_price
+    ? (parseInt(product.installed_price, 10) / divider).toFixed(0)
+    : null;
+  const priceIncludesInstallation = product.price_includes_installation !== false;
 
   // 处理图片和分类
   const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
@@ -49,7 +53,9 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Installation Badge */}
         <div className="absolute top-4 left-4 flex items-center gap-1.5 border border-[#c5a47e]/30 bg-black/70 px-3 py-1.5 z-10">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
-          <span className="text-[9px] font-bold text-white uppercase tracking-widest">Standard Install Included</span>
+          <span className="text-[9px] font-bold text-white uppercase tracking-widest">
+            {priceIncludesInstallation ? "Standard Install Included" : "Installation Available"}
+          </span>
         </div>
       </div>
 
@@ -66,9 +72,15 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* 3. Price and Action */}
         <div className="flex items-center justify-between">
-          <div className="flex flex-col">
+          <div className="flex min-w-0 flex-col">
             <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
-              {!hasPrice ? "Installed Quote" : isOnSale ? "Special Offer" : "Installed Package"}
+              {!hasPrice
+                ? "Quote Required"
+                : isOnSale
+                  ? "Special Offer"
+                  : priceIncludesInstallation
+                    ? "Installed Package"
+                    : "Lock Only"}
             </p>
             <div className="flex items-baseline gap-2">
               {/* 现价 */}
@@ -80,8 +92,13 @@ export function ProductCard({ product }: { product: Product }) {
                 <p className="text-sm text-zinc-500 line-through decoration-zinc-600 font-medium">
                   ${regularPrice}
                 </p>
-              )}
+                )}
             </div>
+            {installedPrice && !priceIncludesInstallation && (
+              <p className="mt-1 text-xs font-medium text-zinc-400">
+                With standard install <span className="font-bold text-white">${installedPrice}</span>
+              </p>
+            )}
           </div>
           
           <div className="flex h-10 w-10 items-center justify-center border border-zinc-700 bg-zinc-800 transition-all duration-300 group-hover:border-[#c5a47e] group-hover:bg-[#c5a47e]">

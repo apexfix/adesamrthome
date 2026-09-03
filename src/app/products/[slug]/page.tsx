@@ -59,6 +59,24 @@ function getPrice(product: Product) {
   return { current, regular, isOnSale: regular !== current };
 }
 
+function getOptionalPrice(product: Product, value?: string) {
+  if (!value) {
+    return null;
+  }
+
+  const minorUnit = product.prices?.currency_minor_unit || 2;
+  return (parseInt(value, 10) / Math.pow(10, minorUnit)).toFixed(0);
+}
+
+function getProductBrand(product: Product) {
+  const brandAttribute = product.attributes?.find(
+    (attribute) => attribute.name.toLowerCase() === "brand"
+  );
+  const attributeBrand = brandAttribute ? getAttributeValues(brandAttribute)[0] : undefined;
+
+  return attributeBrand || product.brands?.[0]?.name || product.name.split(" ")[0];
+}
+
 export function generateStaticParams() {
   return localProducts.map((product) => ({ slug: product.slug }));
 }
@@ -72,18 +90,23 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const { current } = getPrice(product);
+  const priceIncludesInstallation = product.price_includes_installation !== false;
   const url = `${siteUrl}/products/${product.slug}`;
   const image = product.images?.[0]?.src
     ? new URL(product.images[0].src, siteUrl).toString()
     : `${siteUrl}/img/hero1.avif`;
-  const description = `${product.name} from $${current} with standard Adelaide installation included. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
+  const priceMessage = priceIncludesInstallation
+    ? `from $${current} with standard Adelaide installation included`
+    : `from $${current} lock only, with an Adelaide installation package available`;
+  const description = `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
+  const titleSuffix = priceIncludesInstallation ? "Installed in Adelaide" : "Adelaide Supply & Installation";
 
   return {
-    title: `${product.name} Installed in Adelaide`,
+    title: `${product.name} ${titleSuffix}`,
     description,
     alternates: { canonical: url },
     openGraph: {
-      title: `${product.name} with Adelaide Installation`,
+      title: `${product.name} ${titleSuffix}`,
       description,
       url,
       siteName: "ADE Smart Home",
@@ -93,7 +116,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} with Adelaide Installation`,
+      title: `${product.name} ${titleSuffix}`,
       description,
       images: [image],
     },
@@ -181,6 +204,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // 1. 价格计算逻辑
   const { current: currentPrice, regular: regularPrice, isOnSale } = getPrice(product);
   const currencySymbol = product.prices?.currency_symbol || "$";
+  const installedPrice = getOptionalPrice(product, product.installed_price);
+  const hasSeparateInstallationPrice =
+    product.price_includes_installation === false && installedPrice !== null;
+  const brandName = getProductBrand(product);
   
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
@@ -208,7 +235,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     name: product.name,
     description: productDescription,
     sku: product.sku,
-    brand: { "@type": "Brand", name: "Lockin" },
+    brand: { "@type": "Brand", name: brandName },
     category: "Smart Lock",
     image: productImages,
     offers: {
@@ -233,7 +260,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {
         "@type": "PropertyValue",
         name: "Standard Adelaide installation",
-        value: "Included",
+        value: hasSeparateInstallationPrice
+          ? `A$${installedPrice} total package after door compatibility confirmation`
+          : "Included",
       },
       {
         "@type": "PropertyValue",
@@ -266,10 +295,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // 2. 【新增】获取关联的安装案例
   const postsDirectory = path.join(process.cwd(), "content/posts");
   let relatedStories: Story[] = [];
+  let hasBrandSpecificStories = false;
 
   if (fs.existsSync(postsDirectory)) {
     const filenames = fs.readdirSync(postsDirectory);
-    const brand = product.name.split(" ")[0]; // 获取品牌名，如 "EZVIZ" 或 "M2"
 
     relatedStories = filenames
       .filter((fn) => fn.endsWith(".md"))
@@ -287,8 +316,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         } as Story;
       })
       // 筛选：标题中包含品牌名，或者如果没找到，就显示最近的 4 个
-      .filter((s) => s.title.toLowerCase().includes(brand.toLowerCase()))
+      .filter((s) => s.title.toLowerCase().includes(brandName.toLowerCase()))
       .slice(0, 4);
+    hasBrandSpecificStories = relatedStories.length > 0;
 
     // 如果没有特定品牌的案例，就显示最新的 4 个通用案例
     if (relatedStories.length === 0) {
@@ -354,19 +384,40 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.name}
               </h1>
               
-              <div className="flex items-baseline gap-4 mb-8">
-                <span className="text-5xl font-black text-[#c5a47e] tracking-tighter">
-                  {currencySymbol}{currentPrice}
-                </span>
-                {isOnSale && (
-                  <span className="text-xl text-zinc-600 line-through decoration-zinc-700 font-medium">
-                    {currencySymbol}{regularPrice}
+              {hasSeparateInstallationPrice ? (
+                <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div className="border-l-2 border-zinc-700 pl-5">
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                      Lock only
+                    </p>
+                    <p className="text-4xl font-black tracking-tighter text-white">
+                      {currencySymbol}{currentPrice}
+                    </p>
+                  </div>
+                  <div className="border-l-2 border-[#c5a47e] pl-5">
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+                      Lock + standard Adelaide installation
+                    </p>
+                    <p className="text-4xl font-black tracking-tighter text-[#c5a47e]">
+                      {currencySymbol}{installedPrice}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-baseline gap-4 mb-8">
+                  <span className="text-5xl font-black text-[#c5a47e] tracking-tighter">
+                    {currencySymbol}{currentPrice}
                   </span>
-                )}
-                <span className="ml-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                  Adelaide Install Included
-                </span>
-              </div>
+                  {isOnSale && (
+                    <span className="text-xl text-zinc-600 line-through decoration-zinc-700 font-medium">
+                      {currencySymbol}{regularPrice}
+                    </span>
+                  )}
+                  <span className="ml-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
+                    Adelaide Install Included
+                  </span>
+                </div>
+              )}
 
               <div className="h-px w-full bg-gradient-to-r from-zinc-800 to-transparent mb-10" />
 
@@ -382,8 +433,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <ShieldCheck className="w-6 h-6 text-[#c5a47e]" />
                 </div>
                 <div>
-                  <p className="font-bold text-sm">2-Year Warranty</p>
-                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Full replacement</p>
+                  <p className="font-bold text-sm">
+                    {hasSeparateInstallationPrice ? "Local Product Support" : "2-Year Warranty"}
+                  </p>
+                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                    {hasSeparateInstallationPrice ? "ADE Smart Home" : "Full replacement"}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
@@ -396,8 +451,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              <p className="text-sm text-zinc-400">
-                Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation.
+              <p className="text-sm text-zinc-400 sm:col-span-2">
+                {hasSeparateInstallationPrice
+                  ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
+                  : "Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation."}
               </p>
             </div>
 
@@ -494,7 +551,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   Installation <span className="text-[#c5a47e]">Gallery</span>
                 </h2>
                 <p className="text-zinc-500 font-light leading-relaxed">
-                  Real results from Adelaide homes. See how the {product.name.split(" ")[0]} looks when professionally installed by our team.
+                  {hasBrandSpecificStories
+                    ? `Real results from Adelaide homes. See how ${brandName} looks when professionally installed by our team.`
+                    : "See recent Adelaide smart-lock installation work. Exact models and door compatibility vary by property."}
                 </p>
               </div>
               <Link 

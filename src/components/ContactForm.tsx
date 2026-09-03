@@ -563,6 +563,7 @@ export function ContactForm({
                   <option value="Lockin SV40" />
                   <option value="Lockin S6 Max" />
                   <option value="Lockin V5 Max" />
+                  <option value="Kaadas K70 SE" />
                 </datalist>
               </label>
 
