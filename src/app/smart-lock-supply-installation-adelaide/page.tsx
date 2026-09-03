@@ -12,6 +12,7 @@ import {
   ScanFace,
   ShieldCheck,
   Smartphone,
+  Wifi,
 } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import {
@@ -26,20 +27,21 @@ const pageUrl = `${siteUrl}/smart-lock-supply-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Smart Locks Supplied & Installed Adelaide",
   description:
-    "Compare smart locks supplied and installed in Adelaide from $650. Installed-price Lockin X9, SV40, S6 Max and V5 Max packages with a free door compatibility check and local support.",
+    "Compare Lockin and Kaadas smart locks supplied and installed in Adelaide from $650. Clear package pricing, a free door compatibility check and local support.",
   keywords: [
     "smart lock supplied and installed Adelaide",
     "smart lock supply and installation Adelaide",
     "smart lock packages Adelaide",
     "fingerprint door lock installed Adelaide",
     "Lockin smart lock Adelaide",
+    "Kaadas smart lock Adelaide",
     "digital door lock supply and install Adelaide",
   ],
   alternates: { canonical: pageUrl },
   openGraph: {
     title: "Smart Locks Supplied & Installed in Adelaide",
     description:
-      "Compare four installed-price smart lock packages from $650, with a free door compatibility check before booking.",
+      "Compare five installed-price Lockin and Kaadas smart lock packages from $650, with a free door compatibility check before booking.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -65,39 +67,68 @@ export const metadata: Metadata = {
 const packages = [
   {
     name: "Lockin X9",
+    brand: "Lockin",
     slug: "lockin-x9-smart-lock",
     price: 650,
     label: "Everyday value",
     bestFor: "Simple, reliable keyless entry",
     image: "/img/products/lockin-x9/real-install-02.jpg",
+    imageAlt: "Lockin X9 smart lock installed on an Adelaide door",
+    inclusionText: "Lock + standard installation + 2-year local warranty",
+    warrantyText: "2 years",
     features: ["Fingerprint", "PIN and NFC", "App and Bluetooth", "Physical backup key"],
   },
   {
     name: "Lockin SV40",
+    brand: "Lockin",
     slug: "lockin-sv40-smart-lock",
     price: 799,
     label: "Popular upgrade",
     bestFor: "Fast finger-vein access",
     image: "/img/products/lockin-sv40/real-install-03.jpg",
+    imageAlt: "Lockin SV40 smart lock installed on an Adelaide door",
+    inclusionText: "Lock + standard installation + 2-year local warranty",
+    warrantyText: "2 years",
     features: ["Finger-vein recognition", "Push-pull design", "PIN, NFC and app", "Auto-lock convenience"],
   },
   {
     name: "Lockin S6 Max",
+    brand: "Lockin",
     slug: "lockin-s6-max-smart-lock",
     price: 1199,
     label: "Advanced security",
     bestFor: "Face ID and front-door video",
     image: "/img/products/lockin-s6-max/real-install-04.jpg",
+    imageAlt: "Lockin S6 Max smart lock installed on an Adelaide door",
+    inclusionText: "Lock + standard installation + 2-year local warranty",
+    warrantyText: "2 years",
     features: ["3D face recognition", "Finger-vein access", "Dual cameras", "Remote video calling"],
   },
   {
     name: "Lockin V5 Max",
+    brand: "Lockin",
     slug: "lockin-v5-max-smart-lock",
     price: 1399,
     label: "Flagship choice",
     bestFor: "Premium biometrics and HomeKit",
     image: "/img/products/lockin-v5-max/real-install-04.jpg",
+    imageAlt: "Lockin V5 Max smart lock installed on an Adelaide door",
+    inclusionText: "Lock + standard installation + 2-year local warranty",
+    warrantyText: "2 years",
     features: ["Palm-vein recognition", "3D Face ID", "2K video doorbell", "Apple HomeKit"],
+  },
+  {
+    name: "Kaadas K70 SE",
+    brand: "Kaadas",
+    slug: "kaadas-k70-se-smart-lock",
+    price: 1499,
+    label: "Kaadas flagship",
+    bestFor: "Face ID, integrated Wi-Fi and indoor display",
+    image: "/img/products/kaadas-k70-se/gallery/kaadas-k70-se-01.jpg",
+    imageAlt: "Kaadas K70 SE smart lock official product view",
+    inclusionText: "Lock + standard installation + local product support",
+    warrantyText: "Terms confirmed before booking",
+    features: ["3D face recognition", "FPC fingerprint sensor", "Integrated 2.4 GHz Wi-Fi", "4.94-inch indoor display"],
   },
 ];
 
@@ -130,13 +161,20 @@ const priorities = [
     detail:
       "Includes the Lockin V5 Max, standard installation and a 2-year local warranty. Palm vein, 3D Face ID, a 2K video doorbell and Apple HomeKit.",
   },
+  {
+    icon: Wifi,
+    title: "Integrated Wi-Fi",
+    choice: "Kaadas K70 SE · $1499 installed",
+    detail:
+      "Includes the Kaadas K70 SE and standard installation. It combines 3D face recognition, FPC fingerprint access, an HD camera and a 4.94-inch indoor display.",
+  },
 ];
 
 const faqs = [
   {
     question: "Do the listed prices include installation?",
     answer:
-      "Yes. Each all-inclusive package price includes the selected smart lock, standard installation and a 2-year local warranty after we confirm the lock is suitable for your door. Unusual door construction, extensive modification or repair work is discussed and quoted before booking.",
+      "Yes. Each all-inclusive package price includes the selected smart lock and standard installation after we confirm the lock is suitable for your door. Lockin packages include a 2-year local warranty. Warranty and support terms for other brands are confirmed before booking. Unusual door construction, extensive modification or repair work is discussed and quoted first.",
   },
   {
     question: "How do I know which smart lock fits my door?",
@@ -156,7 +194,7 @@ const faqs = [
   {
     question: "Which models include a camera or video doorbell?",
     answer:
-      "The S6 Max includes dual cameras and remote video calling. The V5 Max includes a 2K camera and built-in video doorbell, together with premium biometric access.",
+      "The S6 Max includes dual cameras and remote video calling. The V5 Max includes a 2K camera and built-in video doorbell. The Kaadas K70 SE combines an HD front camera, built-in doorbell, visitor communication and a 4.94-inch indoor display.",
   },
   {
     question: "What happens after installation?",
@@ -197,11 +235,11 @@ export default function SupplyInstallationPage() {
         "@type": "Product",
         "@id": `${productUrl}#product`,
         name: item.name,
-        description: `${item.name} all-inclusive Adelaide package with the smart lock, standard installation and a 2-year local warranty.`,
+        description: `${item.name} Adelaide package with the smart lock and standard installation. ${item.inclusionText}.`,
         image: `${siteUrl}${item.image}`,
         brand: {
           "@type": "Brand",
-          name: "Lockin",
+          name: item.brand,
         },
         category: "Smart Lock",
         offers: offer,
@@ -214,7 +252,7 @@ export default function SupplyInstallationPage() {
           {
             "@type": "PropertyValue",
             name: "Local warranty",
-            value: "2 years",
+            value: item.warrantyText,
           },
         ],
       },
@@ -312,7 +350,7 @@ export default function SupplyInstallationPage() {
             Supply-and-install packages start at $650. Already bought a compatible smart lock?
             Installation-only service is $150 for smaller locks and $350 for larger locks,
             subject to a door compatibility check. Every supply-and-install package includes the
-            lock, standard installation and a 2-year local warranty.
+            lock and standard installation, with warranty and support terms shown by model.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -349,7 +387,8 @@ export default function SupplyInstallationPage() {
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
             {[
               "Supply + install from $650",
-              "Lock + installation + 2-year warranty",
+              "Lock + standard installation",
+              "Lockin and Kaadas options",
               "Small lock installation $150",
               "Large lock installation $350",
             ].map(
@@ -372,19 +411,19 @@ export default function SupplyInstallationPage() {
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Choose the level that fits your home</h2>
             <p className="mt-5 text-base leading-7 text-slate-600">
-              Every displayed package price is all-inclusive: the selected smart lock, standard
-              Adelaide installation and a 2-year local warranty. It is not an installation-only
-              fee. Any non-standard modification is explained and quoted before booking.
+              Every displayed package price includes the selected smart lock and standard Adelaide
+              installation. It is not an installation-only fee. Warranty and support terms are
+              shown by model, and any non-standard modification is explained and quoted first.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {packages.map((item) => (
               <article key={item.name} className="flex min-w-0 flex-col bg-white">
                 <div className="relative aspect-[4/5] overflow-hidden bg-slate-100">
                   <Image
                     src={item.image}
-                    alt={`${item.name} installed on an Adelaide door`}
+                    alt={item.imageAlt}
                     fill
                     loading="eager"
                     unoptimized
@@ -405,7 +444,7 @@ export default function SupplyInstallationPage() {
                     </span>
                   </p>
                   <p className="mt-2 text-xs font-medium leading-5 text-slate-600">
-                    Lock + standard installation + 2-year local warranty
+                    {item.inclusionText}
                   </p>
                   <ul className="mt-5 space-y-2 text-sm text-slate-700">
                     {item.features.map((feature) => (
@@ -419,7 +458,7 @@ export default function SupplyInstallationPage() {
                     href={`/products/${item.slug}`}
                     className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 border border-slate-950 px-4 text-sm font-bold transition-colors hover:bg-slate-950 hover:text-white"
                   >
-                    View {item.name.replace("Lockin ", "")}
+                    View {item.name}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
@@ -438,7 +477,7 @@ export default function SupplyInstallationPage() {
             <h2 className="mt-3 text-3xl font-black md:text-5xl">A simpler way to compare</h2>
           </div>
 
-          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {priorities.map(({ icon: Icon, title, choice, detail }) => (
               <article
                 key={title}
