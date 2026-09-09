@@ -40,7 +40,9 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
       startX: event.clientX,
       scrollLeft: scroller.scrollLeft,
     };
-    scroller.setPointerCapture(event.pointerId);
+    // Keep clicks on the photo button while drag events still bubble to the scroller.
+    const photoButton = event.target instanceof Element ? event.target.closest("button") : null;
+    (photoButton || scroller).setPointerCapture(event.pointerId);
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {

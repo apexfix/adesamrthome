@@ -137,6 +137,16 @@ function getAttributeValues(attribute: ProductAttribute) {
 }
 
 const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> = {
+  "lockin-ola-slim-smart-lock": [
+    {
+      src: "/img/products/lockin-ola-slim/real-install-gate.jpg",
+      alt: "Lockin OLA Slim installed on a grey slatted entry gate, full gate view",
+    },
+    {
+      src: "/img/products/lockin-ola-slim/real-install-edge.jpg",
+      alt: "Lockin OLA Slim installation close-up showing the lock panels and gate-edge mortise",
+    },
+  ],
   "lockin-s50m-pro-smart-lock": [
     {
       src: "/img/products/lockin-s50m-pro/real-install-01.jpg",
