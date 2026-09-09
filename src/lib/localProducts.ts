@@ -111,6 +111,79 @@ const kaadasK70SeDetailImages = [
 
 export const localProducts = [
   {
+    id: 900007,
+    name: "Lockin OLA Slim Smart Lock",
+    slug: "lockin-ola-slim-smart-lock",
+    sku: "LOCKIN-OLA-SLIM",
+    short_description:
+      "Slim-profile keyless entry for compatible narrow-frame doors. The OLA Slim single-side model combines exterior fingerprint access, PIN codes, compatible NFC cards and Bluetooth app control in a black lever-handle design.",
+    description: `
+      <h2>Keyless Entry for Narrow-Frame Doors</h2>
+      <p>The Lockin OLA Slim brings everyday keyless access to doors where a wider smart lock may not fit. Its slender black panels and lever handles suit a clean, understated entrance, with several ways to let family members or visitors in.</p>
+      <h2>Single-Side Fingerprint Access</h2>
+      <p>This listing is for the OLA Slim single-side model, with fingerprint access on the exterior panel. It is not the OLA Slim Pro dual-side fingerprint model.</p>
+      <ul>
+        <li>Unlock using an exterior fingerprint sensor or PIN code.</li>
+        <li>Share temporary access codes with guests or visitors.</li>
+        <li>Use compatible NFC cards, Bluetooth app access or a Bluetooth key.</li>
+        <li>Slim lever-handle design for compatible narrow-frame doors.</li>
+      </ul>
+      <p>App functions depend on the selected setup and compatible accessories. Bluetooth access requires a nearby connection; this listing does not promise built-in Wi-Fi or remote unlocking from anywhere.</p>
+      <h2>Lock Only or Supplied and Installed</h2>
+      <p>Choose A$559 for the lock only, or A$899 for the lock plus standard Adelaide installation. The A$899 price is the complete standard installation package, not an installation-only charge. Any extra parts, unusual door preparation or non-standard work will be discussed and quoted before booking.</p>
+      <h2>Check Your Door Before Ordering</h2>
+      <p>Send photos of the outside, inside, door edge and frame so we can check available space, existing cut-outs and the required lock body. Narrow frames, hinged doors and sliding doors can need different hardware; suitability must be confirmed for your door. The door photo below illustrates the product appearance, not guaranteed compatibility with every door.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 4, name: "Fingerprint Smart Locks", slug: "fingerprint-smart-locks" },
+    ],
+    tags: [
+      { id: 17, name: "OLA Slim", slug: "ola-slim" },
+      { id: 18, name: "Narrow Frame", slug: "narrow-frame" },
+      { id: 14, name: "Fingerprint", slug: "fingerprint" },
+    ],
+    brands: [{ id: 2, name: "Lockin", slug: "lockin" }],
+    prices: {
+      price: "55900",
+      regular_price: "55900",
+      sale_price: "55900",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    installed_price: "89900",
+    price_includes_installation: false,
+    images: [
+      {
+        id: 900701,
+        src: "/img/products/lockin-ola-slim/product/ola-slim-single-side.png",
+        alt: "Lockin OLA Slim single-side smart lock exterior and interior panels in black",
+        width: 823,
+        height: 823,
+      },
+    ],
+    detail_images: [
+      {
+        id: 900801,
+        src: "/img/products/lockin-ola-slim/details/ola-slim-on-door.png",
+        alt: "Lockin OLA Slim exterior panel on a white door, product illustration",
+        width: 823,
+        height: 1235,
+      },
+    ],
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["OLA Slim (single-side fingerprint)"] },
+      { id: 3, name: "Colour", options: ["Black"] },
+      { id: 4, name: "Access Methods", options: ["Exterior fingerprint", "PIN", "Temporary code", "Compatible NFC card", "Bluetooth app", "Bluetooth key"] },
+      { id: 5, name: "Design", options: ["Slim panels", "Lever handles"] },
+      { id: 6, name: "Door Suitability", options: ["Compatible narrow-frame doors", "Lock body and door fit confirmed before purchase"] },
+      { id: 7, name: "Purchase Options", options: ["A$559 lock only", "A$899 including standard Adelaide installation"] },
+    ],
+  },
+  {
     id: 900006,
     name: "Kaadas K70 SE Smart Lock",
     slug: "kaadas-k70-se-smart-lock",

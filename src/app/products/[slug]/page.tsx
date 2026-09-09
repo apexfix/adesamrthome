@@ -549,7 +549,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 Product details
               </p>
               <h2 className="mt-3 text-3xl font-black md:text-5xl">
-                Explore the <span className="text-[#c5a47e]">K70 SE</span>
+                Explore the <span className="text-[#c5a47e]">{product.name}</span>
               </h2>
             </div>
             <div className="mx-auto max-w-5xl overflow-hidden bg-black">

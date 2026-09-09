@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Locks Supplied & Installed in Adelaide",
     description:
-      "Compare five installed-price Lockin and Kaadas smart lock packages from $650, with a free door compatibility check before booking.",
+      "Compare installed-price Lockin and Kaadas smart lock packages from $650, with a free door compatibility check before booking.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -92,6 +92,20 @@ const packages = [
     features: ["Finger-vein recognition", "Push-pull design", "PIN, NFC and app", "Auto-lock convenience"],
   },
   {
+    name: "Lockin OLA Slim",
+    brand: "Lockin",
+    slug: "lockin-ola-slim-smart-lock",
+    price: 899,
+    label: "Narrow-frame option",
+    bestFor: "Keyless entry on compatible narrow-frame doors",
+    image: "/img/products/lockin-ola-slim/product/ola-slim-single-side.png",
+    imageAlt: "Lockin OLA Slim single-side fingerprint smart lock in black",
+    imageFit: "contain",
+    inclusionText: "Lock + standard installation + local product support",
+    warrantyText: "Terms confirmed before booking",
+    features: ["Exterior fingerprint", "PIN and temporary codes", "Compatible NFC cards", "Bluetooth app access"],
+  },
+  {
     name: "Lockin S6 Max",
     brand: "Lockin",
     slug: "lockin-s6-max-smart-lock",
@@ -126,6 +140,7 @@ const packages = [
     bestFor: "Face ID, integrated Wi-Fi and indoor display",
     image: "/img/products/kaadas-k70-se/product/kaadas-k70-se-product-01.png",
     imageAlt: "Kaadas K70 SE exterior and interior smart lock panels",
+    imageFit: "contain",
     inclusionText: "Lock + standard installation + local product support",
     warrantyText: "Terms confirmed before booking",
     features: ["3D face recognition", "FPC fingerprint sensor", "Integrated 2.4 GHz Wi-Fi", "4.94-inch indoor display"],
@@ -417,7 +432,7 @@ export default function SupplyInstallationPage() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3">
             {packages.map((item) => (
               <article key={item.name} className="flex min-w-0 flex-col bg-white">
                 <div className="relative aspect-[4/5] overflow-hidden bg-slate-100">
@@ -427,8 +442,8 @@ export default function SupplyInstallationPage() {
                     fill
                     loading="eager"
                     unoptimized
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                    className={item.brand === "Kaadas" ? "object-contain p-5" : "object-cover"}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className={item.imageFit === "contain" ? "object-contain p-5" : "object-cover"}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">

@@ -560,6 +560,7 @@ export function ContactForm({
                   <option value="Aqara lock" />
                   <option value="Yale lock" />
                   <option value="Lockin X9" />
+                  <option value="Lockin OLA Slim (single-side fingerprint)" />
                   <option value="Lockin SV40" />
                   <option value="Lockin S6 Max" />
                   <option value="Lockin V5 Max" />
