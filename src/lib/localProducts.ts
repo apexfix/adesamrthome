@@ -299,9 +299,9 @@ export const localProducts = [
       { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
     ],
     prices: {
-      price: "65000",
-      regular_price: "65000",
-      sale_price: "65000",
+      price: "69900",
+      regular_price: "69900",
+      sale_price: "69900",
       currency_code: "AUD",
       currency_symbol: "$",
       currency_minor_unit: 2,

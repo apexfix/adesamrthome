@@ -7,7 +7,7 @@ const pathways = [
     label: "Supply & Install",
     title: "Smart locks supplied and installed in Adelaide",
     description:
-      "Compare installed-price packages from $650. We check your door before confirming the model and booking.",
+      "Compare installed-price packages from $699. We check your door before confirming the model and booking.",
     href: "/smart-lock-supply-installation-adelaide",
     action: "View smart locks",
   },
