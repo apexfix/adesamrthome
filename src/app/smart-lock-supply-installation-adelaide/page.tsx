@@ -363,7 +363,7 @@ export default function SupplyInstallationPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
             Supply-and-install packages start at $699. Already bought a compatible smart lock?
-            Installation-only service is $150 for smaller locks and $350 for larger locks,
+            Installation-only service is $200 for smaller locks and $350 for larger locks,
             subject to a door compatibility check. Every supply-and-install package includes the
             lock and standard installation, with warranty and support terms shown by model.
           </p>
@@ -404,7 +404,7 @@ export default function SupplyInstallationPage() {
               "Supply + install from $699",
               "Lock + standard installation",
               "Lockin and Kaadas options",
-              "Small lock installation $150",
+              "Small lock installation $200",
               "Large lock installation $350",
             ].map(
               (item) => (
@@ -525,7 +525,7 @@ export default function SupplyInstallationPage() {
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">
               Bought a Lockin, Philips, Aqara, Yale, Eufy or another smart lock elsewhere? Send
               the exact model listing and clear photos of your door. Small smart lock installation
-              is $150 and large smart lock installation is $350, subject to a compatibility check.
+              is $200 and large smart lock installation is $350, subject to a compatibility check.
               We confirm the installation scope before booking.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -562,7 +562,7 @@ export default function SupplyInstallationPage() {
               ],
               [
                 "Clear installation pricing",
-                "Small locks are $150; large locks are $350 after the compatibility review.",
+                "Small locks are $200; large locks are $350 after the compatibility review.",
               ],
             ].map(([title, detail]) => (
               <article key={title} className="bg-[#f5f1eb] p-6">
