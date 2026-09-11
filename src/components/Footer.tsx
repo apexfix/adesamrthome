@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
+import { ArrowRight, MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
 import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
 
 export function Footer() {
@@ -154,6 +154,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li><Link href="/" className="hover:text-[#c5a47e] transition-colors">Home</Link></li>
               <li><Link href="/products" className="hover:text-[#c5a47e] transition-colors">All Products</Link></li>
+              <li><Link href="/service-areas" className="hover:text-[#c5a47e] transition-colors">Adelaide Service Areas</Link></li>
               <li><Link href="/blog" className="hover:text-[#c5a47e] transition-colors">Installation Guides</Link></li>
               <li><Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
             </ul>
@@ -196,7 +197,13 @@ export function Footer() {
         </div>
 
         <nav aria-label="Adelaide service areas" className="mt-14 border-t border-zinc-900 pt-8">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-white">Areas We Serve</h4>
+          <Link
+            href="/service-areas"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#c5a47e]"
+          >
+            Areas We Serve
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-xs">
             {serviceAreas.map((area) => (
               <Link

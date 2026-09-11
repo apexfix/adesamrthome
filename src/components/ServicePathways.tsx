@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, PackageCheck, Wrench } from "lucide-react";
+import { ArrowRight, MapPin, PackageCheck, Wrench } from "lucide-react";
 
 const pathways = [
   {
@@ -71,6 +71,15 @@ export function ServicePathways() {
             );
           })}
         </div>
+
+        <Link
+          href="/service-areas"
+          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-zinc-300 transition-colors hover:text-[#c5a47e]"
+        >
+          <MapPin className="h-4 w-4 text-[#c5a47e]" aria-hidden="true" />
+          View Adelaide service areas
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );

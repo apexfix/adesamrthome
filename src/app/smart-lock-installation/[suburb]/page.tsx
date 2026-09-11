@@ -157,8 +157,8 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Adelaide Smart Lock Installation",
-        item: `${siteUrl}/smart-lock-installation-adelaide`,
+        name: "Adelaide Service Areas",
+        item: `${siteUrl}/service-areas`,
       },
       {
         "@type": "ListItem",
@@ -216,7 +216,10 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
           </div>
 
           <p className="mt-6 text-sm text-neutral-300">
-            Also servicing nearby areas: {area.nearby}.
+            Also servicing nearby areas: {area.nearby}.{" "}
+            <Link href="/service-areas" className="font-semibold text-white underline underline-offset-4">
+              View all Adelaide service areas
+            </Link>
           </p>
         </div>
       </section>
