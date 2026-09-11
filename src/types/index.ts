@@ -54,6 +54,7 @@ export interface Product {
   installed_price?: string;
   price_includes_installation?: boolean;
   kind?: "product" | "service";
+  pinned?: boolean;
   service_options?: ProductServiceOption[];
   images?: ProductImage[];
   detail_images?: ProductImage[];

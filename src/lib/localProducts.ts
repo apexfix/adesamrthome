@@ -116,6 +116,7 @@ export const localProducts = [
     slug: "smart-lock-installation-only-service",
     sku: "ADE-INSTALL-ONLY",
     kind: "service" as const,
+    pinned: true,
     short_description:
       "Already purchased a smart lock? ADE Smart Home installs compatible customer-supplied smart locks across Adelaide, with clear standard pricing for compact and full-size mortise models.",
     description: `

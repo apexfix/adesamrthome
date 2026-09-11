@@ -2,7 +2,11 @@ import { localProducts } from "./localProducts";
 import type { Product, ProductTaxonomyItem } from "@/types";
 
 export async function getProducts(page = 1, perPage = 20): Promise<Product[]> {
-  return localProducts.slice((page - 1) * perPage, page * perPage);
+  const sortedProducts = [...localProducts].sort(
+    (first, second) => Number(Boolean(second.pinned)) - Number(Boolean(first.pinned)),
+  );
+
+  return sortedProducts.slice((page - 1) * perPage, page * perPage);
 }
 
 export async function getProduct(slug: string): Promise<Product | null> {
