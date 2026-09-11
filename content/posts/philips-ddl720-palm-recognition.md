@@ -2,10 +2,12 @@
 title: "Philips DDL720: Upgrading to Premium Palm Recognition Security"
 seoTitle: "Philips DDL720 Smart Lock Adelaide"
 date: "2026-03-22"
+updated: "2026-09-11"
 description: "We upgraded a client from a standard mechanical handle to the state-of-the-art Philips DDL720-MVP Palm Recognition Smart Lock. Explore the detailed installation process."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/v1774181898/%E7%85%A7%E7%89%87_11-3-2026_19_12_44_m7pi7f.jpg"
 category: "Premium Installation"
 suburb: "Adelaide Metro"
+author: "ADE Smart Home Installation Team"
 ---
 
 ## The Upgrade: Moving from Mechanical to Biometric
@@ -45,3 +47,5 @@ The completed project (Exterior view):
 - **Installation Type**: Retrofit / Upgrade
 - **Door Material**: Timber Entry Door
 - **Service Area**: Adelaide Metro, South Australia
+
+Large biometric locks need sufficient panel, mortise and screen-door clearance. Review the [smart lock compatibility checklist](/blog/smart-lock-door-compatibility-check), then [send your door photos for an installation assessment](/contact?service=not-sure#quote).

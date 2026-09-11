@@ -7,6 +7,7 @@ description: "We replaced a failing generic keypad lock with a reliable EZVIZ DL
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/v1774181151/2673c91743adcec8c777e7c6f753b44b_my3foc.jpg"
 category: "Retrofit Installation"
 suburb: "Adelaide Metro"
+author: "ADE Smart Home Installation Team"
 ---
 
 ## The Problem: Unreliable Keypad
@@ -43,3 +44,5 @@ The customer now has a lock they can actually depend on. By switching to the EZV
 - **Service**: Retrofit / Replacement
 - **Door Type**: Timber Entry Door
 - **Location**: Adelaide, SA
+
+Replacing an existing digital lock requires checking the old holes, mortise and strike position before choosing the replacement. Read the [Adelaide door compatibility guide](/blog/smart-lock-door-compatibility-check), or [send photos for a retrofit assessment](/contact?service=installation-only#quote).

@@ -7,6 +7,7 @@ description: "See an Adelaide EZVIZ DL04PRO installation on a timber door with s
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774182730/85e06346cde30b495edee8007eef1633_fdwj41.jpg"
 category: "Installation Project"
 suburb: "Adelaide Metro"
+author: "ADE Smart Home Installation Team"
 ---
 
 ## An Adelaide EZVIZ DL04PRO Installation
@@ -45,3 +46,5 @@ The finished door gained convenient keyless access while retaining the clearance
 - **Project Price**: A$370 (lock and installation, March 2026; not a current offer)
 - **Time to Install**: Approx. 1 Hour
 - **Current Availability**: Request a current product and installation quote
+
+For a similar compact-lock installation, first check the [door and screen-door measurements that matter](/blog/smart-lock-door-compatibility-check). You can also [send door photos for a current quote](/contact?service=not-sure#quote); the March 2026 project price above is not a current offer.

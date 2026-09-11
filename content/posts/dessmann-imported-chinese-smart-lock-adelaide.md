@@ -2,10 +2,12 @@
 title: "Technical Excellence: Professional Installation of High-End Dessmann Smart Lock"
 seoTitle: "Dessmann Smart Lock Installation Adelaide"
 date: "2026-03-22"
+updated: "2026-09-11"
 description: "ADE Smart Home recently completed a specialized installation of a flagship Dessmann model, featuring 3D Face Recognition and an integrated viewing screen."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774183064/758dc062c7c3c32b461feb81d2e657a5_sgld5w.jpg"
 category: "Specialized Installation"
 suburb: "Adelaide Metro"
+author: "ADE Smart Home Installation Team"
 ---
 
 ## Technical Overview: Handling Advanced Imported Hardware
@@ -56,3 +58,7 @@ The internal monitoring screen:
 - **Primary Features**: Face ID, Video Intercom, Indoor Screen
 - **Service Type**: Specialized Technical Retrofit
 - **Door Material**: Solid Timber
+
+## Planning an Imported Smart Lock Installation
+
+Imported models can use different mortise sizes, spindle layouts and wiring arrangements. Before booking, review our [door compatibility guide](/blog/smart-lock-door-compatibility-check), then [send the exact product link and door photos](/contact?service=installation-only#quote). ADE Smart Home can install suitable customer-supplied locks, with non-standard preparation or custom work explained and quoted before the appointment.

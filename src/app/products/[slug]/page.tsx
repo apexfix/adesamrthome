@@ -384,8 +384,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   if (fs.existsSync(postsDirectory)) {
     const filenames = fs.readdirSync(postsDirectory);
-
-    relatedStories = filenames
+    const allStories = filenames
       .filter((fn) => fn.endsWith(".md"))
       .map((filename) => {
         const filePath = path.join(postsDirectory, filename);
@@ -400,31 +399,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
           date: data.date || ""
         } as Story;
       })
-      // 筛选：标题中包含品牌名，或者如果没找到，就显示最近的 4 个
-      .filter((s) => s.title.toLowerCase().includes(brandName.toLowerCase()))
-      .slice(0, 4);
-    hasBrandSpecificStories = relatedStories.length > 0;
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const brandNameLower = brandName.toLowerCase();
+    const modelName = product.name
+      .toLowerCase()
+      .replace(brandNameLower, "")
+      .replace("smart lock", "")
+      .trim();
+    const brandStories = allStories
+      .filter((story) => story.title.toLowerCase().includes(brandNameLower))
+      .sort((a, b) => {
+        const aMatchesModel = a.title.toLowerCase().includes(modelName);
+        const bMatchesModel = b.title.toLowerCase().includes(modelName);
 
-    // 如果没有特定品牌的案例，就显示最新的 4 个通用案例
-    if (relatedStories.length === 0) {
-        relatedStories = filenames
-            .filter((fn) => fn.endsWith(".md"))
-            .map((filename) => {
-                const filePath = path.join(postsDirectory, filename);
-                const fileContent = fs.readFileSync(filePath, "utf8");
-                const { data } = matter(fileContent);
-                return {
-                    slug: filename.replace(".md", ""),
-                    title: data.title || "Untitled Project",
-                    coverImage: data.coverImage || "",
-                    category: data.category || "Installation",
-                    suburb: data.suburb || "Adelaide",
-                    date: data.date || ""
-                } as Story;
-            })
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-            .slice(0, 4);
-    }
+        if (aMatchesModel !== bMatchesModel) {
+          return aMatchesModel ? -1 : 1;
+        }
+
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+
+    hasBrandSpecificStories = brandStories.length > 0;
+    relatedStories = (hasBrandSpecificStories ? brandStories : allStories).slice(0, 4);
   }
 
   return (

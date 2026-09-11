@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
-import { Calendar, MapPin, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Calendar, MapPin, ArrowLeft, ShieldCheck, UserRound } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -19,6 +19,7 @@ type PostData = {
   category?: string;
   coverImage?: string;
   contentType?: "guide" | "project";
+  author?: string;
 };
 
 function getPost(slug: string) {
@@ -110,6 +111,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     ? new URL(data.coverImage, siteUrl).toString()
     : `${siteUrl}/img/hero1.avif`;
   const isGuide = data.contentType === "guide" || data.category === "Buyer Guide";
+  const author = data.author || "ADE Smart Home Installation Team";
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -121,7 +123,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     datePublished: data.date,
     dateModified: data.updated || data.date,
     mainEntityOfPage: articleUrl,
-    author: { "@type": "Organization", name: "ADE Smart Home", url: siteUrl },
+    author: { "@type": "Organization", name: author, url: siteUrl },
     publisher: { "@id": `${siteUrl}/#business` },
     articleSection: data.category || "Smart Lock Installation",
     about: data.suburb ? `${data.suburb}, Adelaide` : "Adelaide",
@@ -153,9 +155,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Stories
         </Link>
         
-        <div className="flex items-center gap-4 text-[#c5a47e] text-xs mb-6 font-bold uppercase tracking-widest text-shadow-sm">
-          <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {data.date}</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#c5a47e] text-xs mb-6 font-bold uppercase tracking-widest text-shadow-sm">
+          <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Published {data.date}</span>
+          {data.updated && data.updated !== data.date && (
+            <span>Updated {data.updated}</span>
+          )}
           <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {data.suburb}, Adelaide</span>
+          <span className="flex items-center gap-1"><UserRound className="w-4 h-4" /> {author}</span>
         </div>
 
         <h1 className="text-4xl md:text-5xl font-bold mb-10 leading-[1.1] tracking-tight">

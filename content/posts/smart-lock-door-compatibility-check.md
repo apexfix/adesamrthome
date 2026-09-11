@@ -9,6 +9,7 @@ category: "Buyer Guide"
 contentType: "guide"
 suburb: "Adelaide Metro"
 pinned: true
+author: "ADE Smart Home Installation Team"
 ---
 
 ![Smart Lock Door Measurement Requirements](/img/smart-lock-door-measurement-requirements.png)

@@ -41,6 +41,7 @@ interface Post {
   category?: string;
   suburb?: string;
   pinned?: boolean;
+  author?: string;
 }
 
 export default function BlogListPage() {
@@ -91,6 +92,11 @@ export default function BlogListPage() {
       dateModified: post.updated || post.date,
       description: post.description,
       mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+      author: {
+        "@type": "Organization",
+        name: post.author || "ADE Smart Home Installation Team",
+        url: siteUrl,
+      },
       image: post.coverImage
         ? new URL(post.coverImage, siteUrl).toString()
         : undefined,

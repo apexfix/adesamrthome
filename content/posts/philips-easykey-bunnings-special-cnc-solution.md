@@ -2,14 +2,16 @@
 title: "Custom Engineering: Philips EasyKey Installation with CNC-Machined Strike Plate"
 seoTitle: "Philips EasyKey Installation Adelaide"
 date: "2026-03-22"
+updated: "2026-09-11"
 description: "A customer purchased the Philips EasyKey Bluetooth lock during a $248 Bunnings special. ADE provided a custom CNC-engraved strike plate to solve a narrow door frame compatibility issue."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774184123/78bf7baf2245df115b44ac0ec23d6690_jg8swb.jpg"
 category: "Custom Engineering"
 suburb: "Adelaide Metro"
+author: "ADE Smart Home Installation Team"
 ---
 
 ## The Project: High-Value Hardware Meets Custom Engineering
-A local homeowner took advantage of the recent **Bunnings special offer** ($248 AUD at the time of publication) for the [Philips Black EasyKey Bluetooth Mortise Handle Lock](https://www.bunnings.com.au/philips-black-easykey-bluetooth-mortise-handle-lock_p0516193). While this hardware offers exceptional value, standard retail kits often assume a standard door frame width, which isn't always the case in many Adelaide homes.
+A local homeowner purchased the lock during a **March 2026 Bunnings special offer** (A$248 at the time of the project) for the [Philips Black EasyKey Bluetooth Mortise Handle Lock](https://www.bunnings.com.au/philips-black-easykey-bluetooth-mortise-handle-lock_p0516193). This is a historical project price, not a current ADE offer. Standard retail kits often assume a standard door frame width, which is not always the case in Adelaide homes.
 
 The original mechanical setup before the upgrade:
 ![Philips Installation Before](https://res.cloudinary.com/dheogdojt/image/upload/v1774184123/9443321f6fde0db3b90ec9864ba0ab3b_mtlbkb.jpg)
@@ -40,9 +42,11 @@ By combining high-value retail hardware with specialized engineering, the homeow
 
 ### Project Specifications:
 - **Lock Model**: Philips Black EasyKey Bluetooth Mortise
-- **Hardware Source**: Bunnings Special ($248 AUD)
+- **Hardware Source**: Bunnings special (A$248 in March 2026; historical price)
 - **Technical Solution**: Custom CNC-Machined Strike Plate
 - **Service Type**: Specialized Retrofit & Engineering
 - **Location**: Adelaide Metro
 
 This project highlights ADE’s commitment to solving unique installation challenges through precision and custom fabrication.
+
+Already bought a lock elsewhere? See our [installation-only service and standard pricing](/smart-lock-installation-only-adelaide), then [send the model link and door photos](/contact?service=installation-only#quote) so we can check the likely fit before booking.
