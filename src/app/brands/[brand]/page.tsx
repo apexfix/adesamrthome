@@ -100,7 +100,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
         </section>
 
         <section className="mt-20 grid gap-10 border-y border-zinc-800 py-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div><h2 className="text-3xl font-black">Choosing the Right {brand.name} Lock</h2><p className="mt-5 max-w-3xl text-base leading-8 text-zinc-300">{brand.selectionGuidance}</p><Link href="/blog/smart-lock-door-compatibility-check" className="mt-5 inline-block font-bold text-[#d9b98f] hover:text-white">See the door compatibility photo guide</Link></div>
+          <div><h2 className="text-3xl font-black">Choosing the Right {brand.name} Lock</h2><p className="mt-5 max-w-3xl text-base leading-8 text-zinc-300">{brand.selectionGuidance}</p><div className="mt-5 flex flex-wrap gap-x-6 gap-y-3"><Link href="/blog/smart-lock-door-compatibility-check" className="font-bold text-[#d9b98f] hover:text-white">See the door compatibility photo guide</Link>{brand.slug === "lockin" && <Link href="/blog/lockin-x9-vs-s6-max-vs-v5-max-adelaide" className="font-bold text-[#d9b98f] hover:text-white">Compare X9, S6 Max and V5 Max</Link>}</div></div>
           <ul className="space-y-4">{brand.highlights.map((item) => <li key={item} className="flex gap-3 text-zinc-300"><Check className="mt-1 h-5 w-5 shrink-0 text-[#d9b98f]" /><span>{item}</span></li>)}</ul>
         </section>
 

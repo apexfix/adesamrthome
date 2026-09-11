@@ -32,6 +32,7 @@ export async function GET() {
   const staticPages = [
     xmlUrl(`${siteUrl}/`, siteLastModified),
     xmlUrl(`${siteUrl}/products`, siteLastModified),
+    xmlUrl(`${siteUrl}/about`, siteLastModified),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),
     xmlUrl(`${siteUrl}/brands/lockin`, siteLastModified),
     xmlUrl(`${siteUrl}/brands/kaadas`, siteLastModified),
