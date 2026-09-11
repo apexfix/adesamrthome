@@ -18,9 +18,9 @@ import { businessInfo, siteUrl } from "@/lib/seoData";
 const pageUrl = `${siteUrl}/smart-lock-installation-only-adelaide`;
 
 export const metadata: Metadata = {
-  title: "Smart Lock Installation Only Adelaide",
+  title: "Smart Lock Installation Only Adelaide from $200",
   description:
-    "Already bought a smart lock? Adelaide installation-only service is $200 for smaller compatible smart locks and $350 for larger smart locks. Send the model and door photos for assessment.",
+    "Adelaide smart lock installation-only service: $200 for compatible compact locks and $350 for full-size locks with a standard 6068 mortise. Customer supplies the lock.",
   keywords: [
     "smart lock installation only Adelaide",
     "customer supplied smart lock installation Adelaide",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Customer-Supplied Smart Lock Installation Adelaide",
     description:
-      "Installation-only service: $200 for smaller compatible smart locks and $350 for larger smart locks. Send the model and door photos before booking.",
+      "Installation only: $200 for compatible compact locks and $350 for full-size locks with a standard 6068 mortise. Send door photos before booking.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -49,12 +49,37 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Lock Installation Only Adelaide",
+    title: "Smart Lock Installation Only Adelaide from $200",
     description:
-      "$200 small-lock and $350 large-lock installation-only service for compatible customer-supplied smart locks across Adelaide.",
+      "$200 compact-lock and $350 standard 6068 mortise installation for compatible customer-supplied smart locks across Adelaide.",
     images: ["/img/products/lockin-v5-max/real-install-04.jpg"],
   },
 };
+
+const installationOptions = [
+  {
+    name: "Compact smart lock / small lock body",
+    price: 200,
+    description:
+      "Standard installation for a compatible compact keypad, fingerprint or lever-handle smart lock.",
+    points: [
+      "Customer supplies the smart lock",
+      "Standard fitting and alignment",
+      "Basic lock and app setup where supported",
+    ],
+  },
+  {
+    name: "Full-size smart lock / standard 6068 mortise",
+    price: 350,
+    description:
+      "Standard installation for a compatible full-size push-pull, camera or biometric smart lock using a 6068 mortise.",
+    points: [
+      "Customer supplies the smart lock",
+      "Standard 6068 mortise preparation and fitting",
+      "Testing, alignment and basic setup",
+    ],
+  },
+];
 
 const requirements = [
   {
@@ -111,7 +136,12 @@ const faqs = [
   {
     question: "How much does installation-only service cost?",
     answer:
-      "Small smart lock installation is $200 and large smart lock installation is $350, subject to a compatibility check. Door material, existing holes and any non-standard cutting or repair work are reviewed before booking.",
+      "A compatible compact smart lock or small lock body is $200 for standard installation. A compatible full-size smart lock using a standard 6068 mortise is $350 for standard installation. Door material, existing holes and any non-standard cutting, repair work or extra parts are reviewed before booking.",
+  },
+  {
+    question: "What is the difference between the $200 and $350 installation options?",
+    answer:
+      "The $200 option is for compatible compact smart locks with a smaller lock body and a simpler standard fitting scope. The $350 option is for compatible full-size smart locks using a standard 6068 mortise, which requires more door preparation and fitting work. We confirm the correct option from the exact lock model and door photos.",
   },
   {
     question: "Can you install imported Chinese smart locks?",
@@ -149,6 +179,24 @@ export default function InstallationOnlyPage() {
       addressRegion: "SA",
       addressCountry: "AU",
     },
+    offers: installationOptions.map((option) => ({
+      "@type": "Offer",
+      name: option.name,
+      price: option.price,
+      priceCurrency: "AUD",
+      url: `${siteUrl}/products/smart-lock-installation-only-service`,
+      areaServed: {
+        "@type": "City",
+        name: "Adelaide",
+        addressRegion: "SA",
+        addressCountry: "AU",
+      },
+      itemOffered: {
+        "@type": "Service",
+        name: option.name,
+        description: option.description,
+      },
+    })),
   };
 
   const faqSchema = {
@@ -219,9 +267,9 @@ export default function InstallationOnlyPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
             Professional installation for compatible customer-supplied smart locks across
-            Adelaide. Small smart lock installation is $200 and large smart lock installation is
-            $350. Send the exact model and door photos first so we can confirm compatibility
-            before booking.
+            Adelaide. Compact smart locks and small lock bodies are $200 for standard
+            installation. Full-size smart locks using a standard 6068 mortise are $350. Send the
+            exact model and door photos first so we can confirm compatibility before booking.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -243,8 +291,8 @@ export default function InstallationOnlyPage() {
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
             {[
-              "Small lock installation $200",
-              "Large lock installation $350",
+              "Compact lock installation $200",
+              "Standard 6068 mortise installation $350",
               "Compatibility checked first",
               "No upfront payment",
             ].map(
@@ -255,6 +303,63 @@ export default function InstallationOnlyPage() {
                 </span>
               ),
             )}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+              Clear standard pricing
+            </p>
+            <h2 className="mt-3 text-3xl font-black md:text-5xl">
+              Smart lock installation prices in Adelaide
+            </h2>
+            <p className="mt-5 text-base leading-7 text-slate-600">
+              Choose the installation type that matches your lock body. We confirm the correct
+              option from your lock model and door photos before arranging the appointment.
+            </p>
+          </div>
+
+          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2">
+            {installationOptions.map((option, index) => (
+              <article
+                key={option.name}
+                className={`py-9 md:px-10 ${
+                  index > 0 ? "border-t border-slate-200 md:border-l md:border-t-0" : ""
+                }`}
+              >
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">
+                  Installation only
+                </p>
+                <h3 className="mt-3 text-2xl font-black">{option.name}</h3>
+                <p className="mt-5 text-5xl font-black text-slate-950">A${option.price}</p>
+                <p className="mt-4 text-sm leading-6 text-slate-600">{option.description}</p>
+                <ul className="mt-6 space-y-3 text-sm text-slate-700">
+                  {option.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-4 text-sm leading-6 text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-3xl">
+              Prices cover standard installation. Extra parts, repairs, custom metalwork or
+              non-standard door preparation are explained and quoted before booking.
+            </p>
+            <Link
+              href="/products/smart-lock-installation-only-service"
+              className="inline-flex shrink-0 items-center gap-2 font-bold text-[#8a6b48] hover:text-black"
+            >
+              View installation service
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>

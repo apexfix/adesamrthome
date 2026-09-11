@@ -53,7 +53,7 @@ const faqs = [
   {
     question: "How much does smart lock installation cost in Adelaide?",
     answer:
-      "The installation cost depends on the lock type, door material, existing lock structure and whether extra cutting or modification is required. A simple installation is usually cheaper, while a full mortise smart lock or complex retrofit will cost more. Send us door photos for a more accurate quote.",
+      "For a compatible customer-supplied lock, standard installation is $200 for a compact smart lock or small lock body and $350 for a full-size smart lock using a standard 6068 mortise. Extra parts, repairs, unusual door preparation or non-standard work are quoted before booking. Supplied-and-installed lock packages start from $699.",
   },
   {
     question: "What happens if the smart lock battery dies?",

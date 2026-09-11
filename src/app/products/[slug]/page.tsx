@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? "Smart lock installation-only service across Adelaide. A$200 for compact locks and A$350 for standard 6068 mortise locks. Customer supplies the lock."
     : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
   const seoTitle = isService
-    ? "Smart Lock Installation Only Adelaide"
+    ? "Smart Lock Installation Prices Adelaide"
     : `${product.name} Adelaide`;
 
   return {

@@ -16,7 +16,7 @@ const pathways = [
     label: "Installation Only",
     title: "Smart lock installation only in Adelaide",
     description:
-      "Send the lock model and door photos. We will check compatibility and quote the installation scope first.",
+      "Customer-supplied compact lock installation is $200; full-size standard 6068 mortise installation is $350 after compatibility confirmation.",
     href: "/smart-lock-installation-only-adelaide",
     action: "Request installation quote",
   },

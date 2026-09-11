@@ -132,6 +132,7 @@ export const localProducts = [
       <p>Send the exact lock model or product link together with clear photos of the outside of the door, inside of the door, door edge, existing lock and frame. We check the likely lock-body fit, door material, available clearance and installation scope before confirming the appointment.</p>
       <h2>Adelaide-Wide Service</h2>
       <p>Installation-only service is available across the Adelaide metropolitan area and surrounding service suburbs, subject to appointment availability and confirmation that the lock is suitable for the door.</p>
+      <p><a href="/smart-lock-installation-only-adelaide">View the complete Adelaide installation-only service guide</a> for compatibility requirements, standard pricing and the booking process.</p>
     `,
     categories: [
       { id: 1, name: "SMART LOCK", slug: "smart-lock" },
