@@ -4,6 +4,7 @@ import { Mail, MessageSquareText } from "lucide-react";
 import {
   businessInfo,
   deliveryAndReturnsUrl,
+  merchantReturnPolicy,
   siteUrl,
 } from "@/lib/seoData";
 
@@ -79,6 +80,9 @@ const policySchema = {
       isPartOf: { "@id": `${siteUrl}/#website` },
       about: { "@id": `${siteUrl}/#business` },
       inLanguage: "en-AU",
+    },
+    {
+      ...merchantReturnPolicy,
     },
     {
       "@type": "BreadcrumbList",

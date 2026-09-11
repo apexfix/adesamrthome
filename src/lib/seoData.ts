@@ -2,6 +2,24 @@ export const siteUrl = "https://www.adesmarthome.com.au";
 
 export const deliveryAndReturnsUrl = `${siteUrl}/delivery-and-returns`;
 
+export const merchantReturnPolicy = {
+  "@type": "MerchantReturnPolicy",
+  "@id": `${deliveryAndReturnsUrl}#merchant-return-policy`,
+  applicableCountry: "AU",
+  returnPolicyCountry: "AU",
+  merchantReturnLink: deliveryAndReturnsUrl,
+};
+
+export const localAppointmentDelivery = {
+  "@type": "OfferShippingDetails",
+  doesNotShip: true,
+  shippingDestination: {
+    "@type": "DefinedRegion",
+    addressCountry: "AU",
+    addressRegion: "SA",
+  },
+};
+
 export const businessInfo = {
   name: "ADE Smart Home",
   phone: "0431060390",

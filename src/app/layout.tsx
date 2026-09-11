@@ -9,6 +9,7 @@ import { SiteAnalytics } from "@/components/SiteAnalytics";
 import {
   businessInfo,
   coreServices,
+  merchantReturnPolicy,
   serviceAreas,
   siteUrl,
   smartLockBrands,
@@ -168,6 +169,7 @@ const localBusinessSchema = {
     availableLanguage: ["English", "Chinese"],
   },
   currenciesAccepted: "AUD",
+  hasMerchantReturnPolicy: merchantReturnPolicy,
   additionalProperty: [
     {
       "@type": "PropertyValue",

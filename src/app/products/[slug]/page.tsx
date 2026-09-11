@@ -22,6 +22,8 @@ import type { Metadata } from "next";
 import { localProducts } from "@/lib/localProducts";
 import {
   businessInfo,
+  localAppointmentDelivery,
+  merchantReturnPolicy,
   siteUrl,
 } from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
@@ -286,6 +288,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
+      shippingDetails: localAppointmentDelivery,
+      hasMerchantReturnPolicy: { "@id": merchantReturnPolicy["@id"] },
       areaServed: {
         "@type": "City",
         name: businessInfo.addressLocality,
@@ -610,6 +614,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </Link>
                 )}
               </div>
+              {!isService && (
+                <p className="text-xs leading-6 text-zinc-500">
+                  Supplied installation packages are brought to the confirmed Adelaide appointment;
+                  we do not offer separate postal shipping. See our{" "}
+                  <Link
+                    href="/delivery-and-returns"
+                    className="font-semibold text-zinc-300 underline underline-offset-4 hover:text-[#c5a47e]"
+                  >
+                    delivery and returns information
+                  </Link>
+                  .
+                </p>
+              )}
             </div>
           </div>
         </div>

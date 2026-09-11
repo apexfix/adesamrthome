@@ -17,6 +17,8 @@ import {
 import { ContactForm } from "@/components/ContactForm";
 import {
   businessInfo,
+  localAppointmentDelivery,
+  merchantReturnPolicy,
   siteUrl,
 } from "@/lib/seoData";
 
@@ -229,6 +231,8 @@ export default function SupplyInstallationPage() {
       seller: {
         "@id": `${siteUrl}/#business`,
       },
+      shippingDetails: localAppointmentDelivery,
+      hasMerchantReturnPolicy: { "@id": merchantReturnPolicy["@id"] },
       areaServed: {
         "@type": "City",
         name: "Adelaide",
