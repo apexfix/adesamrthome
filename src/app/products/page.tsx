@@ -35,7 +35,27 @@ export async function generateMetadata(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
   const params = props.searchParams ? await props.searchParams : {};
-  const hasFilters = params.category !== undefined || params.brand !== undefined;
+  const categoryParam = typeof params.category === "string" ? params.category : null;
+  const brandParam = typeof params.brand === "string" ? params.brand : null;
+  const hasFilters = categoryParam !== null || brandParam !== null;
+
+  if (hasFilters) {
+    const allProducts = await getProducts(1, 50);
+    const matchingCategory = categoryParam
+      ? allProducts.filter((product) => productMatchesCategory(product, categoryParam))
+      : allProducts;
+    const matchingProducts = brandParam
+      ? matchingCategory.filter((product) => productMatchesBrand(product, brandParam))
+      : matchingCategory;
+
+    if (matchingProducts.length === 0) {
+      return {
+        title: "Product Filter Not Found",
+        description: "The requested smart lock product filter is not available.",
+        robots: { index: false, follow: false },
+      };
+    }
+  }
 
   return {
     ...baseMetadata,
