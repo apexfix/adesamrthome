@@ -34,6 +34,12 @@ export interface ProductPrices {
   currency_minor_unit?: number;
 }
 
+export interface ProductServiceOption {
+  name: string;
+  price: string;
+  description: string;
+}
+
 export interface Product {
   id: number | string;
   name: string;
@@ -47,6 +53,8 @@ export interface Product {
   prices?: ProductPrices;
   installed_price?: string;
   price_includes_installation?: boolean;
+  kind?: "product" | "service";
+  service_options?: ProductServiceOption[];
   images?: ProductImage[];
   detail_images?: ProductImage[];
   attributes?: ProductAttribute[];

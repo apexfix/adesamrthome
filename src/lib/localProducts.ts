@@ -111,6 +111,86 @@ const kaadasK70SeDetailImages = [
 
 export const localProducts = [
   {
+    id: 900008,
+    name: "Smart Lock Installation Only - Adelaide",
+    slug: "smart-lock-installation-only-service",
+    sku: "ADE-INSTALL-ONLY",
+    kind: "service" as const,
+    short_description:
+      "Already purchased a smart lock? ADE Smart Home installs compatible customer-supplied smart locks across Adelaide, with clear standard pricing for compact and full-size mortise models.",
+    description: `
+      <h2>Already Have a Smart Lock?</h2>
+      <p>You can purchase a compatible smart lock from another retailer and ask ADE Smart Home to install it. We work with many fingerprint, keypad, lever-handle, push-pull, camera and imported smart lock models across Adelaide.</p>
+      <h2>Standard Installation Prices</h2>
+      <ul>
+        <li><strong>Compact smart lock or small lock body: A$200 installation.</strong></li>
+        <li><strong>Full-size smart lock with a standard 6068 mortise: A$350 installation.</strong></li>
+      </ul>
+      <p>These prices cover standard installation only. The smart lock is supplied by the customer and is not included. Extra parts, repairs, unusual door preparation, non-standard lock bodies or custom metalwork will be explained and quoted before booking.</p>
+      <h2>Free Compatibility Check Before Booking</h2>
+      <p>Send the exact lock model or product link together with clear photos of the outside of the door, inside of the door, door edge, existing lock and frame. We check the likely lock-body fit, door material, available clearance and installation scope before confirming the appointment.</p>
+      <h2>Adelaide-Wide Service</h2>
+      <p>Installation-only service is available across the Adelaide metropolitan area and surrounding service suburbs, subject to appointment availability and confirmation that the lock is suitable for the door.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 7, name: "INSTALLATION SERVICE", slug: "installation-service" },
+    ],
+    tags: [
+      { id: 19, name: "Installation Only", slug: "installation-only" },
+      { id: 20, name: "Adelaide", slug: "adelaide" },
+      { id: 21, name: "Customer Supplied Lock", slug: "customer-supplied-lock" },
+      { id: 22, name: "6068 Mortise", slug: "6068-mortise" },
+    ],
+    brands: [{ id: 4, name: "ADE Smart Home", slug: "ade-smart-home" }],
+    prices: {
+      price: "20000",
+      regular_price: "20000",
+      sale_price: "20000",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    price_includes_installation: true,
+    service_options: [
+      {
+        name: "Compact smart lock / small lock body",
+        price: "20000",
+        description: "Standard installation for a compatible compact smart lock or small lock body.",
+      },
+      {
+        name: "Full-size smart lock / standard 6068 mortise",
+        price: "35000",
+        description: "Standard installation for a compatible full-size smart lock using a 6068 mortise.",
+      },
+    ],
+    images: [
+      {
+        id: 900901,
+        src: "/img/products/lockin-v5-max/real-install-04.jpg",
+        alt: "Full-size smart lock professionally installed on a timber entry door in Adelaide",
+        width: 1536,
+        height: 2048,
+      },
+      {
+        id: 900902,
+        src: "/img/products/lockin-ola-slim/real-install-gate.jpg",
+        alt: "Compact smart lock professionally installed on a narrow-frame Adelaide entry gate",
+        width: 1290,
+        height: 1697,
+      },
+    ],
+    attributes: [
+      { id: 1, name: "Service", options: ["Installation only - customer supplies the smart lock"] },
+      { id: 2, name: "Service Area", options: ["Adelaide metropolitan area and surrounding service suburbs"] },
+      { id: 3, name: "Compact Lock Installation", options: ["A$200 standard installation"] },
+      { id: 4, name: "Full-Size Lock Installation", options: ["A$350 standard installation with standard 6068 mortise"] },
+      { id: 5, name: "Before Booking", options: ["Exact lock model or product link", "Outside and inside door photos", "Door edge, existing lock and frame photos"] },
+      { id: 6, name: "Compatibility", options: ["Confirmed before the appointment"] },
+      { id: 7, name: "Not Included", options: ["Smart lock", "Extra parts", "Repairs", "Custom or non-standard work"] },
+    ],
+  },
+  {
     id: 900007,
     name: "Lockin OLA Slim Smart Lock",
     slug: "lockin-ola-slim-smart-lock",

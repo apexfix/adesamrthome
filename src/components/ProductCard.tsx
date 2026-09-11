@@ -22,11 +22,18 @@ export function ProductCard({ product }: { product: Product }) {
   const installedPrice = product.installed_price
     ? (parseInt(product.installed_price, 10) / divider).toFixed(0)
     : null;
+  const isService = product.kind === "service";
+  const serviceOptions = product.service_options || [];
+  const standardMortisePrice = serviceOptions[1]
+    ? (parseInt(serviceOptions[1].price, 10) / divider).toFixed(0)
+    : null;
   const priceIncludesInstallation = product.price_includes_installation !== false;
 
   // 处理图片和分类
   const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
-  const displayCategory = product.categories?.[0]?.name || "Smart Lock";
+  const displayCategory = isService
+    ? "Installation Service"
+    : product.categories?.[0]?.name || "Smart Lock";
 
   return (
     <Link 
@@ -54,7 +61,11 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="absolute top-4 left-4 flex items-center gap-1.5 border border-[#c5a47e]/30 bg-black/70 px-3 py-1.5 z-10">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
           <span className="text-[9px] font-bold text-white uppercase tracking-widest">
-            {priceIncludesInstallation ? "Standard Install Included" : "Installation Available"}
+            {isService
+              ? "Installation Only"
+              : priceIncludesInstallation
+                ? "Standard Install Included"
+                : "Installation Available"}
           </span>
         </div>
       </div>
@@ -76,6 +87,8 @@ export function ProductCard({ product }: { product: Product }) {
             <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-tighter">
               {!hasPrice
                 ? "Quote Required"
+                : isService
+                  ? "Installation from"
                 : isOnSale
                   ? "Special Offer"
                   : priceIncludesInstallation
@@ -97,6 +110,12 @@ export function ProductCard({ product }: { product: Product }) {
             {installedPrice && !priceIncludesInstallation && (
               <p className="mt-1 text-xs font-medium text-zinc-400">
                 With standard install <span className="font-bold text-white">${installedPrice}</span>
+              </p>
+            )}
+            {isService && standardMortisePrice && (
+              <p className="mt-1 text-xs font-medium text-zinc-400">
+                Standard 6068 mortise{" "}
+                <span className="font-bold text-white">${standardMortisePrice}</span>
               </p>
             )}
           </div>

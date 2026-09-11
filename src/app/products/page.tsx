@@ -9,12 +9,12 @@ import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 export const metadata: Metadata = {
   title: "Smart Locks with Adelaide Installation",
   description:
-    "Compare Lockin and Kaadas smart locks for Adelaide homes. View fingerprint, finger-vein, face recognition and camera models with lock-only and installed options.",
+    "Compare smart locks and book installation-only service across Adelaide. Customer-supplied compact lock installation is A$200; standard 6068 mortise installation is A$350.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
     title: "Smart Locks with Adelaide Installation",
     description:
-      "Compare Lockin and Kaadas smart locks and request a free Adelaide door compatibility check.",
+      "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
     url: `${siteUrl}/products`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Locks with Adelaide Installation",
     description:
-      "Compare Lockin and Kaadas smart locks and request a free Adelaide door compatibility check.",
+      "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
     images: ["/img/hero1.avif"],
   },
 };
@@ -139,7 +139,7 @@ export default async function ProductsPage(props: {
     url: `${siteUrl}/products`,
     name: "Smart Locks with Adelaide Installation",
     description:
-      "Smart locks supplied with standard Adelaide installation and a free door compatibility check.",
+      "Smart locks, supplied installation packages and installation-only service for compatible customer-supplied locks across Adelaide.",
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: allProducts.length,

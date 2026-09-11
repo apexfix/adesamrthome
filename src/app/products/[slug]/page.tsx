@@ -89,16 +89,23 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const { current } = getPrice(product);
+  const isService = product.kind === "service";
   const priceIncludesInstallation = product.price_includes_installation !== false;
   const url = `${siteUrl}/products/${product.slug}`;
   const image = product.images?.[0]?.src
     ? new URL(product.images[0].src, siteUrl).toString()
     : `${siteUrl}/img/hero1.avif`;
-  const priceMessage = priceIncludesInstallation
-    ? `from $${current} with standard Adelaide installation included`
-    : `from $${current} lock only, with an Adelaide installation package available`;
-  const description = `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
-  const seoTitle = `${product.name} Adelaide`;
+  const priceMessage = isService
+    ? `from A$${current} for compatible customer-supplied smart locks across Adelaide`
+    : priceIncludesInstallation
+      ? `from $${current} with standard Adelaide installation included`
+      : `from $${current} lock only, with an Adelaide installation package available`;
+  const description = isService
+    ? "Smart lock installation-only service across Adelaide. A$200 for compact locks and A$350 for standard 6068 mortise locks. Customer supplies the lock."
+    : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
+  const seoTitle = isService
+    ? "Smart Lock Installation Only Adelaide"
+    : `${product.name} Adelaide`;
 
   return {
     title: seoTitle,
@@ -195,6 +202,24 @@ const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> =
     src: `/img/products/lockin-x9/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
     alt: `Lockin X9 smart lock Adelaide installation view ${index + 1}`,
   })),
+  "smart-lock-installation-only-service": [
+    {
+      src: "/img/products/lockin-x9/real-install-03.jpg",
+      alt: "Smart lock installation completed on an Adelaide home entry door",
+    },
+    {
+      src: "/img/products/lockin-s50m-pro/real-install-01.jpg",
+      alt: "Full-size smart lock professionally fitted to an Adelaide entry door",
+    },
+    {
+      src: "/img/products/lockin-ola-slim/real-install-edge.jpg",
+      alt: "Compact smart lock and small mortise installed on a narrow-frame gate",
+    },
+    {
+      src: "/img/products/lockin-s6-max/real-install-02.jpg",
+      alt: "Customer smart lock professionally installed in Adelaide",
+    },
+  ],
 };
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -214,6 +239,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { current: currentPrice, regular: regularPrice, isOnSale } = getPrice(product);
   const currencySymbol = product.prices?.currency_symbol || "$";
   const installedPrice = getOptionalPrice(product, product.installed_price);
+  const isService = product.kind === "service";
+  const serviceOptions = product.service_options || [];
   const hasSeparateInstallationPrice =
     product.price_includes_installation === false && installedPrice !== null;
   const brandName = getProductBrand(product);
@@ -280,6 +307,39 @@ export default async function ProductPage({ params }: ProductPageProps) {
     ],
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${productUrl}#service`,
+    name: product.name,
+    description: productDescription,
+    url: productUrl,
+    image: productImages,
+    serviceType: "Customer-supplied smart lock installation",
+    provider: { "@id": `${siteUrl}/#business` },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Adelaide metropolitan area",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Smart lock installation options",
+      itemListElement: serviceOptions.map((option) => ({
+        "@type": "Offer",
+        priceCurrency: product.prices?.currency_code || "AUD",
+        price: getOptionalPrice(product, option.price),
+        url: productUrl,
+        itemOffered: {
+          "@type": "Service",
+          name: option.name,
+          description: option.description,
+        },
+      })),
+    },
+  };
+
+  const structuredData = isService ? serviceSchema : productSchema;
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -288,7 +348,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Smart Locks",
+        name: isService ? "Installation Services" : "Smart Locks",
         item: `${siteUrl}/products`,
       },
       {
@@ -354,7 +414,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <main className="bg-zinc-950 min-h-screen text-white pt-32 pb-20">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <script
         type="application/ld+json"
@@ -366,7 +426,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <nav className="flex items-center gap-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-12">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
-          <Link href="/products" className="hover:text-white transition-colors">Collection</Link>
+          <Link href="/products" className="hover:text-white transition-colors">
+            {isService ? "Services" : "Collection"}
+          </Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-[#c5a47e]">{product.name}</span>
         </nav>
@@ -392,7 +454,30 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.name}
               </h1>
               
-              {hasSeparateInstallationPrice ? (
+              {isService ? (
+                <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {serviceOptions.map((option, index) => (
+                    <div
+                      key={option.name}
+                      className={`border p-5 ${
+                        index === 0
+                          ? "border-zinc-700 bg-zinc-900/50"
+                          : "border-[#c5a47e]/60 bg-[#c5a47e]/5"
+                      }`}
+                    >
+                      <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                        {option.name}
+                      </p>
+                      <p className="text-4xl font-black tracking-tighter text-[#c5a47e]">
+                        {currencySymbol}{getOptionalPrice(product, option.price)}
+                      </p>
+                      <p className="mt-3 text-sm leading-6 text-zinc-400">
+                        {option.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : hasSeparateInstallationPrice ? (
                 <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div className="border-l-2 border-zinc-700 pl-5">
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
@@ -422,7 +507,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </span>
                   )}
                   <span className="ml-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                    Adelaide Install Included
+                    Standard Adelaide Install Included
                   </span>
                 </div>
               )}
@@ -442,10 +527,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
                 <div>
                   <p className="font-bold text-sm">
-                    {hasSeparateInstallationPrice ? "Local Product Support" : "2-Year Warranty"}
+                    {isService
+                      ? "Free Compatibility Check"
+                      : hasSeparateInstallationPrice
+                        ? "Local Product Support"
+                        : "2-Year Warranty"}
                   </p>
                   <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
-                    {hasSeparateInstallationPrice ? "ADE Smart Home" : "Full replacement"}
+                    {isService
+                      ? "Before Booking"
+                      : hasSeparateInstallationPrice
+                        ? "ADE Smart Home"
+                        : "Full replacement"}
                   </p>
                 </div>
               </div>
@@ -454,31 +547,37 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <Zap className="w-6 h-6 text-[#c5a47e]" />
                 </div>
                 <div>
-                  <p className="font-bold text-sm">Expert Install</p>
-                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Adelaide Local Team</p>
+                  <p className="font-bold text-sm">
+                    {isService ? "Adelaide-Wide Service" : "Expert Install"}
+                  </p>
+                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                    Adelaide Local Team
+                  </p>
                 </div>
               </div>
 
               <p className="text-sm text-zinc-400 sm:col-span-2">
-                {hasSeparateInstallationPrice
-                  ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
-                  : "Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation."}
+                {isService
+                  ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
+                  : hasSeparateInstallationPrice
+                    ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
+                    : "Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation."}
               </p>
             </div>
 
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 text-emerald-500 text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
                 <div className="h-2 w-2 bg-emerald-500" />
-                Ask for current availability
+                {isService ? "Send photos before booking" : "Ask for current availability"}
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
-                  href={`/contact?service=supply-install&product=${encodedProductName}`}
+                  href={`/contact?service=${isService ? "installation-only" : "supply-install"}&product=${encodedProductName}`}
                   className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Calendar className="w-5 h-5" />
-                  Check Price &amp; Availability
+                  {isService ? "Request Installation Quote" : "Check Price & Availability"}
                 </Link>
                 <Link 
                   href="/blog/smart-lock-door-compatibility-check"
@@ -501,13 +600,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <Camera className="w-5 h-5" />
                   Send Door Photos
                 </a>
-                <Link
-                  href={`/contact?service=installation-only&product=${encodedProductName}`}
-                  className="h-16 bg-transparent text-[#d9b98f] border border-zinc-700 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all col-span-1 sm:col-span-2"
-                >
-                  <Tag className="w-5 h-5" />
-                  Installation-only for my lock
-                </Link>
+                {!isService && (
+                  <Link
+                    href={`/contact?service=installation-only&product=${encodedProductName}`}
+                    className="h-16 bg-transparent text-[#d9b98f] border border-zinc-700 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all col-span-1 sm:col-span-2"
+                  >
+                    <Tag className="w-5 h-5" />
+                    Installation-only for my lock
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -517,7 +618,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 pt-24 border-t border-zinc-900">
           <div className="lg:col-span-1">
             <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-              Technical <span className="text-[#c5a47e]">Specs</span>
+              {isService ? "Service" : "Technical"}{" "}
+              <span className="text-[#c5a47e]">{isService ? "Details" : "Specs"}</span>
             </h2>
             {product.attributes && (
               <dl className="space-y-6">
@@ -540,7 +642,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold mb-8">Product <span className="text-[#c5a47e]">Story</span></h2>
+            <h2 className="text-2xl font-bold mb-8">
+              {isService ? "How It" : "Product"}{" "}
+              <span className="text-[#c5a47e]">{isService ? "Works" : "Story"}</span>
+            </h2>
             <div 
               className="prose prose-invert prose-zinc max-w-none text-zinc-400 font-light leading-relaxed prose-headings:text-white prose-img:rounded-[2rem] prose-img:border prose-img:border-zinc-800 shadow-xl"
               dangerouslySetInnerHTML={{ __html: product.description || "" }} 
