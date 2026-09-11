@@ -20,7 +20,7 @@ export const socialProfiles = [
   "https://www.xiaohongshu.com/user/profile/5dc514ea0000000001005c66",
 ];
 
-export const siteLastModified = "2026-09-11";
+export const siteLastModified = "2026-09-12";
 
 export const serviceAreas = [
   {

@@ -264,8 +264,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const productDescription = stripHtml(
     product.short_description || product.description || ""
   );
-  const productImages = galleryImages.map((image: ProductImage) =>
-    new URL(image.src, siteUrl).toString()
+  const productImages = Array.from(
+    new Set(
+      [...galleryImages, ...installationPhotos, ...detailImages].map((image: ProductImage) =>
+        new URL(image.src, siteUrl).toString(),
+      ),
+    ),
   );
   const encodedProductName = encodeURIComponent(product.name);
   const quotePrefill = encodeURIComponent(
