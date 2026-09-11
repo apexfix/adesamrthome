@@ -40,12 +40,12 @@ export function ProductCard({ product }: { product: Product }) {
           alt={product.name || "Smart Lock"}
           fill
           className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
         />
         
         {/* Sale Badge - 如果打折则显示 */}
         {isOnSale && (
-          <div className="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest z-10">
+          <div className="absolute top-4 right-4 bg-red-700 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest z-10">
             Sale
           </div>
         )}
@@ -73,7 +73,7 @@ export function ProductCard({ product }: { product: Product }) {
         {/* 3. Price and Action */}
         <div className="flex items-center justify-between">
           <div className="flex min-w-0 flex-col">
-            <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
+            <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-tighter">
               {!hasPrice
                 ? "Quote Required"
                 : isOnSale
@@ -89,7 +89,7 @@ export function ProductCard({ product }: { product: Product }) {
               </p>
               {/* 原价（仅在打折时显示） */}
               {hasPrice && isOnSale && (
-                <p className="text-sm text-zinc-500 line-through decoration-zinc-600 font-medium">
+                <p className="text-sm text-zinc-400 line-through decoration-zinc-500 font-medium">
                   ${regularPrice}
                 </p>
                 )}

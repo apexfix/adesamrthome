@@ -42,7 +42,7 @@ export function GoogleReviews() {
                 <Star key={s} className="w-3 h-3 fill-[#c5a47e] text-[#c5a47e]" />
               ))}
             </div>
-            <span className="text-xs text-zinc-500 ml-1">on Google</span>
+            <span className="text-xs text-zinc-400 ml-1">on Google</span>
           </div>
           
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
@@ -75,7 +75,7 @@ export function GoogleReviews() {
                 </div>
                 <div>
                   <div className="font-bold text-white group-hover:text-[#c5a47e] transition-colors">{review.author}</div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-widest mt-0.5">{review.date}</div>
+                  <div className="text-xs text-zinc-400 uppercase tracking-widest mt-0.5">{review.date}</div>
                 </div>
               </div>
 

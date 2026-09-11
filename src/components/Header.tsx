@@ -42,7 +42,7 @@ export function Header() {
                 src="/img/logo.png" 
                 alt="ADE Smart Home Logo" 
                 fill 
-                priority
+                sizes="48px"
                 className="object-contain object-left group-hover:opacity-80 transition-opacity"
               />
             </div>
@@ -93,6 +93,9 @@ export function Header() {
           </div>
           
           <button 
+            type="button"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
             className="md:hidden p-2 text-white/80 hover:text-[#c5a47e] transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -113,10 +116,10 @@ export function Header() {
               ))}
             </nav>
             <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
-              <a href={socialProfiles[0]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
-              <a href={socialProfiles[1]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
-              <a href={socialProfiles[2]} target="_blank" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
-              <a href={socialProfiles[3]} target="_blank" className="text-sm font-bold text-[#c5a47e]">小红书</a>
+              <a href={socialProfiles[0]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
+              <a href={socialProfiles[1]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
+              <a href={socialProfiles[2]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
+              <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-[#c5a47e]">小红书</a>
             </div>
             <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`} className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
               <MessageSquareText className="h-5 w-5" /> Text {businessInfo.phone}

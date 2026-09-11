@@ -17,8 +17,6 @@ import {
 import { ContactForm } from "@/components/ContactForm";
 import {
   businessInfo,
-  installationDeliveryServiceId,
-  merchantReturnPolicyId,
   siteUrl,
 } from "@/lib/seoData";
 
@@ -231,11 +229,6 @@ export default function SupplyInstallationPage() {
       seller: {
         "@id": `${siteUrl}/#business`,
       },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        hasShippingService: { "@id": installationDeliveryServiceId },
-      },
-      hasMerchantReturnPolicy: { "@id": merchantReturnPolicyId },
       areaServed: {
         "@type": "City",
         name: "Adelaide",
@@ -440,7 +433,6 @@ export default function SupplyInstallationPage() {
                     src={item.image}
                     alt={item.imageAlt}
                     fill
-                    loading="eager"
                     unoptimized
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className={item.imageFit === "contain" ? "object-contain p-5" : "object-cover"}

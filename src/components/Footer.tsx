@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
-import { businessInfo, socialProfiles } from "@/lib/seoData";
+import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -20,6 +20,7 @@ export function Footer() {
                 src="/img/logo.png" 
                 alt="ADE Smart Home Logo" 
                 fill 
+                sizes="160px"
                 className="object-contain object-left opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
@@ -33,6 +34,7 @@ export function Footer() {
                 href={socialProfiles[0]}
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="ADE Smart Home on Facebook"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 group"
               >
                 <Facebook className="w-4 h-4" />
@@ -41,6 +43,7 @@ export function Footer() {
                 href={socialProfiles[1]}
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="ADE Smart Home on Instagram"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
               >
                 <Instagram className="w-4 h-4" />
@@ -49,6 +52,7 @@ export function Footer() {
                 href={socialProfiles[2]}
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="ADE Smart Home on TikTok"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
@@ -57,6 +61,7 @@ export function Footer() {
                 href={socialProfiles[3]}
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="ADE Smart Home on Xiaohongshu"
                 className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 relative group"
               >
                 <Link2 className="w-4 h-4" />
@@ -190,8 +195,23 @@ export function Footer() {
 
         </div>
 
-        <div className="mt-16 pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
-          <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
+        <nav aria-label="Adelaide service areas" className="mt-14 border-t border-zinc-900 pt-8">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-white">Areas We Serve</h4>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-xs">
+            {serviceAreas.map((area) => (
+              <Link
+                key={area.slug}
+                href={`/smart-lock-installation/${area.slug}`}
+                className="hover:text-[#c5a47e]"
+              >
+                {area.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        <div className="mt-10 pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+          <p>© {currentYear} ADE Smart Home · {businessInfo.legalName} · ABN {businessInfo.abn}</p>
           <div className="flex gap-4">
             <Link href="/privacy-policy" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
             <Link href="/delivery-and-returns" className="hover:text-zinc-400 transition-colors">Delivery & Returns</Link>

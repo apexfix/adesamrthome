@@ -30,6 +30,8 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
               src={story.coverImage} 
               alt={story.title}
               fill
+              quality={65}
+              sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 450px"
               className="object-cover transition-transform duration-700 group-hover/card:scale-105"
             />
             

@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/seoData";
 const pageUrl = `${siteUrl}/smart-lock-installation-adelaide`;
 
 export const metadata: Metadata = {
-  title: "Smart Lock Installation Adelaide",
+  title: "Professional Smart Lock Installation Adelaide",
   description:
     "Professional smart lock installation in Adelaide. Local compatibility checks, supply-and-install packages and installation-only service for compatible customer-supplied locks.",
   keywords: [

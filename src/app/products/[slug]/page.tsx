@@ -22,8 +22,6 @@ import type { Metadata } from "next";
 import { localProducts } from "@/lib/localProducts";
 import {
   businessInfo,
-  installationDeliveryServiceId,
-  merchantReturnPolicyId,
   siteUrl,
 } from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
@@ -100,14 +98,14 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? `from $${current} with standard Adelaide installation included`
     : `from $${current} lock only, with an Adelaide installation package available`;
   const description = `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
-  const titleSuffix = priceIncludesInstallation ? "Installed in Adelaide" : "Adelaide Supply & Installation";
+  const seoTitle = `${product.name} Adelaide`;
 
   return {
-    title: `${product.name} ${titleSuffix}`,
+    title: seoTitle,
     description,
     alternates: { canonical: url },
     openGraph: {
-      title: `${product.name} ${titleSuffix}`,
+      title: seoTitle,
       description,
       url,
       siteName: "ADE Smart Home",
@@ -117,7 +115,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} ${titleSuffix}`,
+      title: seoTitle,
       description,
       images: [image],
     },
@@ -183,19 +181,19 @@ const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> =
   ],
   "lockin-v5-max-smart-lock": Array.from({ length: 6 }, (_, index) => ({
     src: `/img/products/lockin-v5-max/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
-    alt: "Lockin V5 Max smart lock installed on an Adelaide front door",
+    alt: `Lockin V5 Max smart lock Adelaide installation view ${index + 1}`,
   })),
   "lockin-sv40-smart-lock": Array.from({ length: 6 }, (_, index) => ({
     src: `/img/products/lockin-sv40/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
-    alt: "Lockin SV40 smart lock installed on an Adelaide front door",
+    alt: `Lockin SV40 smart lock Adelaide installation view ${index + 1}`,
   })),
   "lockin-s6-max-smart-lock": Array.from({ length: 4 }, (_, index) => ({
     src: `/img/products/lockin-s6-max/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
-    alt: "Lockin S6 Max smart lock installed on an Adelaide front door",
+    alt: `Lockin S6 Max smart lock Adelaide installation view ${index + 1}`,
   })),
   "lockin-x9-smart-lock": Array.from({ length: 6 }, (_, index) => ({
     src: `/img/products/lockin-x9/real-install-${String(index + 1).padStart(2, "0")}.jpg`,
-    alt: "Lockin X9 smart lock installed on an Adelaide front door",
+    alt: `Lockin X9 smart lock Adelaide installation view ${index + 1}`,
   })),
 };
 
@@ -247,6 +245,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     name: product.name,
     description: productDescription,
     sku: product.sku,
+    model: product.sku || product.name,
+    mpn: product.sku || undefined,
     brand: { "@type": "Brand", name: brandName },
     category: "Smart Lock",
     image: productImages,
@@ -258,11 +258,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        hasShippingService: { "@id": installationDeliveryServiceId },
-      },
-      hasMerchantReturnPolicy: { "@id": merchantReturnPolicyId },
       areaServed: {
         "@type": "City",
         name: businessInfo.addressLocality,

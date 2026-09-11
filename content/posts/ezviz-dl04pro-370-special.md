@@ -1,5 +1,6 @@
 ---
 title: "$370 Fully Installed: EZVIZ DL04PRO – The Best Value Smart Lock in Adelaide"
+seoTitle: "EZVIZ DL04PRO Smart Lock Adelaide"
 date: "2026-03-22"
 description: "Looking for an affordable keyless upgrade? Get the EZVIZ DL04PRO fully installed for just $370 AUD. Perfect for screen doors and older timber doors."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774182730/85e06346cde30b495edee8007eef1633_fdwj41.jpg"

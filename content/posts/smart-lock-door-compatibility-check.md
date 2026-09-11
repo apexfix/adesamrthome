@@ -1,5 +1,6 @@
 ---
 title: "Can Your Door Take a Smart Lock? ADE's Adelaide Door Compatibility Check"
+seoTitle: "Smart Lock Door Compatibility Adelaide"
 date: "2026-08-16"
 updated: "2026-09-01"
 description: "Check door edge clearance, door thickness and screen door clearance before booking a smart lock installation in Adelaide."

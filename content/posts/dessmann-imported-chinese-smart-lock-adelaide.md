@@ -1,5 +1,6 @@
 ---
 title: "Technical Excellence: Professional Installation of High-End Dessmann Smart Lock"
+seoTitle: "Dessmann Smart Lock Installation Adelaide"
 date: "2026-03-22"
 description: "ADE Smart Home recently completed a specialized installation of a flagship Dessmann model, featuring 3D Face Recognition and an integrated viewing screen."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774183064/758dc062c7c3c32b461feb81d2e657a5_sgld5w.jpg"

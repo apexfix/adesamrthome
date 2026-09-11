@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   serverExternalPackages: ['nodemailer'],
   images: {
+    qualities: [65, 75],
     remotePatterns: [
       {
         protocol: 'https',

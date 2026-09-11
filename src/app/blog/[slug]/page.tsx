@@ -11,6 +11,7 @@ import { siteUrl } from "@/lib/seoData";
 
 type PostData = {
   title?: string;
+  seoTitle?: string;
   description?: string;
   date?: string;
   updated?: string;
@@ -73,7 +74,7 @@ export async function generateMetadata({
     : `${siteUrl}/img/hero1.avif`;
 
   return {
-    title: post.data.title || "Smart Lock Installation Guide",
+    title: post.data.seoTitle || post.data.title || "Smart Lock Installation Guide",
     description,
     alternates: { canonical: url },
     openGraph: {

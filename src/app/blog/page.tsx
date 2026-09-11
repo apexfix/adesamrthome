@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "Adelaide Smart Lock Installation Guides & Projects",
+  title: "Smart Lock Guides & Adelaide Projects",
   description:
     "Read Adelaide smart lock installation projects, door compatibility advice, product guidance and real local case studies from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/blog` },

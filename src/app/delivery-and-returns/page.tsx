@@ -4,8 +4,6 @@ import { Mail, MessageSquareText } from "lucide-react";
 import {
   businessInfo,
   deliveryAndReturnsUrl,
-  installationDeliveryServiceId,
-  merchantReturnPolicyId,
   siteUrl,
 } from "@/lib/seoData";
 
@@ -57,38 +55,32 @@ const policySchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": `${siteUrl}/#business`,
-      name: businessInfo.name,
-      url: siteUrl,
-      hasShippingService: { "@id": installationDeliveryServiceId },
-      hasMerchantReturnPolicy: { "@id": merchantReturnPolicyId },
-    },
-    {
-      "@type": "ShippingService",
-      "@id": installationDeliveryServiceId,
-      name: "Adelaide installation appointment delivery",
+      "@type": "WebPage",
+      "@id": `${deliveryAndReturnsUrl}#webpage`,
+      url: deliveryAndReturnsUrl,
+      name: "Delivery, Cancellations and Returns",
       description:
-        "Supplied smart locks are brought to the confirmed Adelaide installation address with no separate shipping charge for standard all-inclusive packages.",
-      fulfillmentType: "https://schema.org/FulfillmentTypeDelivery",
-      shippingConditions: {
-        "@type": "ShippingConditions",
-        shippingDestination: {
-          "@type": "DefinedRegion",
-          addressCountry: "AU",
-          addressRegion: "SA",
-        },
-        shippingRate: {
-          "@type": "MonetaryAmount",
-          value: 0,
-          currency: "AUD",
-        },
-      },
+        "Delivery, cancellation, return and warranty information for ADE Smart Home smart lock supply and installation packages in Adelaide.",
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      about: { "@id": `${siteUrl}/#business` },
+      inLanguage: "en-AU",
     },
     {
-      "@type": "MerchantReturnPolicy",
-      "@id": merchantReturnPolicyId,
-      merchantReturnLink: deliveryAndReturnsUrl,
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: siteUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Delivery, Cancellations and Returns",
+          item: deliveryAndReturnsUrl,
+        },
+      ],
     },
   ],
 };
@@ -112,7 +104,7 @@ export default function DeliveryAndReturnsPage() {
             How supplied smart locks reach your Adelaide installation appointment, and what to do
             when a booking, product or completed installation needs attention.
           </p>
-          <p className="mt-4 text-sm text-zinc-500">Last updated: 31 August 2026</p>
+          <p className="mt-4 text-sm text-zinc-400">Last updated: 11 September 2026</p>
         </div>
       </header>
 

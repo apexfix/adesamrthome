@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  const title = `Smart Lock Installation ${area.name} | Digital Door Lock Installer`;
+  const title = `Smart Lock Installation ${area.name}, Adelaide`;
   const description = `Smart lock installation in ${area.name}, Adelaide. Lockin fingerprint, camera and face-recognition locks with standard installation and free door checks.`;
 
   return {
@@ -152,7 +152,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 2,
         name: "Adelaide Smart Lock Installation",
-        item: siteUrl,
+        item: `${siteUrl}/smart-lock-installation-adelaide`,
       },
       {
         "@type": "ListItem",

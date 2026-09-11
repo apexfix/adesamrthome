@@ -1,5 +1,6 @@
 ---
 title: "Custom Engineering: Philips EasyKey Installation with CNC-Machined Strike Plate"
+seoTitle: "Philips EasyKey Installation Adelaide"
 date: "2026-03-22"
 description: "A customer purchased the Philips EasyKey Bluetooth lock during a $248 Bunnings special. ADE provided a custom CNC-engraved strike plate to solve a narrow door frame compatibility issue."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/c_pad,h_800,w_1200,b_gen_fill/v1774184123/78bf7baf2245df115b44ac0ec23d6690_jg8swb.jpg"

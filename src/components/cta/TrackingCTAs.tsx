@@ -98,7 +98,6 @@ const heroLinks = [
 
 function renderAction(item: typeof items[number]): JSX.Element {
   const Icon = item.icon;
-  const label = item.context === "hero" ? item.label : item.text.toLowerCase();
 
   const track = () =>
     trackEvent(item.event, {

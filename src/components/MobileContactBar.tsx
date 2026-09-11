@@ -29,7 +29,7 @@ export function MobileContactBar() {
         <a
           href={smsHref}
           onClick={onSmsClick}
-          aria-label="Text us for a smart lock quote"
+          aria-label="Text for Quote"
           className="flex h-12 items-center justify-center gap-2 border-r border-zinc-700 text-sm font-bold text-white"
         >
           <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
@@ -38,7 +38,7 @@ export function MobileContactBar() {
         <Link
           href="/contact?service=not-sure"
           onClick={onQuoteFormClick}
-          aria-label="Go to quote form"
+          aria-label="Send Door Photos"
           className="flex h-12 items-center justify-center gap-2 bg-[#c5a47e] text-sm font-bold text-black"
         >
           <Camera className="h-4 w-4" />

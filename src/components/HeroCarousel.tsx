@@ -27,6 +27,8 @@ export function HeroCarousel() {
         alt="Smart lock installation completed by ADE Smart Home in Adelaide"
         fill
         priority
+        fetchPriority="high"
+        quality={65}
         sizes="100vw"
         className="object-cover object-center"
       />

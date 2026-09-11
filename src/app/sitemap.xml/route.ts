@@ -6,11 +6,25 @@ import { serviceAreas, siteLastModified, siteUrl } from "@/lib/seoData";
 
 export const revalidate = 86400;
 
+function escapeXml(value: string) {
+  return value.replace(/[<>&'\"]/g, (character) => {
+    const entities: Record<string, string> = {
+      "<": "&lt;",
+      ">": "&gt;",
+      "&": "&amp;",
+      "'": "&apos;",
+      '"': "&quot;",
+    };
+
+    return entities[character];
+  });
+}
+
 function xmlUrl(loc: string, lastmod: string) {
   return `
   <url>
-    <loc>${loc}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <loc>${escapeXml(loc)}</loc>
+    <lastmod>${escapeXml(lastmod)}</lastmod>
   </url>`;
 }
 

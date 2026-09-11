@@ -1,5 +1,6 @@
 ---
 title: "AUSLOCK Smart Lock Installation in Adelaide: Upgrading New and Existing Doors"
+seoTitle: "AUSLOCK Smart Lock Installation Adelaide"
 date: "2026-08-30"
 description: "ADE Smart Home installs AUSLOCK and other Australian and overseas smart lock brands across Adelaide, with careful setup for both new and existing doors."
 coverImage: "/img/installations/auslock-old-door-adelaide/auslock-smart-lock-side-view.jpg"

@@ -542,7 +542,7 @@ export function ContactForm({
               </div>
 
               <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                Preferred model <span className="font-normal normal-case text-slate-400">optional</span>
+                Preferred model <span className="font-normal normal-case text-slate-600">optional</span>
                 <input
                   name="product"
                   list="smart-lock-models"
@@ -570,7 +570,7 @@ export function ContactForm({
 
               <fieldset>
                 <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                  Door photos <span className="font-normal normal-case text-slate-400">recommended for a more accurate quote</span>
+                  Door photos <span className="font-normal normal-case text-slate-600">recommended for a more accurate quote</span>
                 </legend>
                 <div className="mt-3 flex items-center justify-between gap-4 border-y border-slate-200 py-3">
                   <p className="text-xs font-bold text-slate-700">Four-photo checklist</p>
@@ -609,6 +609,7 @@ export function ContactForm({
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
                   multiple
+                  aria-label="Upload door photos"
                   onChange={handlePhotoSelection}
                   className="sr-only"
                 />
@@ -642,7 +643,7 @@ export function ContactForm({
               </fieldset>
 
               <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                Anything else? <span className="font-normal normal-case text-slate-400">optional</span>
+                Anything else? <span className="font-normal normal-case text-slate-600">optional</span>
                 <textarea
                   name="message"
                   rows={4}

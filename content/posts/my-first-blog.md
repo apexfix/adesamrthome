@@ -1,7 +1,8 @@
 ---
 title: "EZVIZ DL05 Retrofit: Replacing a Faulty Developer-Installed Lock"
+seoTitle: "EZVIZ DL05 Smart Lock Retrofit Adelaide"
 date: "2026-03-22"
-description: "We replaced a failing generic keypad lock with a reliable EZVIZ DL05. A essential upgrade for an Adelaide home seeking better security and mobile management."
+description: "We replaced a failing generic keypad lock with a reliable EZVIZ DL05. An essential upgrade for an Adelaide home seeking better security and mobile management."
 coverImage: "https://res.cloudinary.com/dheogdojt/image/upload/v1774181151/2673c91743adcec8c777e7c6f753b44b_my3foc.jpg"
 category: "Retrofit Installation"
 suburb: "Adelaide Metro"

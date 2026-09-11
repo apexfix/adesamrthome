@@ -101,7 +101,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col bg-black">
+    <main className="flex flex-col bg-black">
       <section className="relative h-[82svh] min-h-[680px] max-h-[900px] overflow-hidden border-b border-zinc-900/50">
         <HeroCarousel />
       </section>
@@ -137,6 +137,6 @@ export default async function Home() {
       <GoogleReviews />
       <FAQSection />
       <ContactForm />
-    </div>
+    </main>
   );
 }

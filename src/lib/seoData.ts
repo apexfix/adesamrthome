@@ -1,11 +1,11 @@
 export const siteUrl = "https://www.adesmarthome.com.au";
 
 export const deliveryAndReturnsUrl = `${siteUrl}/delivery-and-returns`;
-export const installationDeliveryServiceId = `${deliveryAndReturnsUrl}#installation-delivery`;
-export const merchantReturnPolicyId = `${deliveryAndReturnsUrl}#return-policy`;
 
 export const businessInfo = {
   name: "ADE Smart Home",
+  legalName: "ZHONGLIN SUN",
+  abn: "26 671 401 021",
   phone: "0431060390",
   phoneInternational: "+61431060390",
   email: "info@adesmarthome.com.au",
@@ -24,7 +24,7 @@ export const socialProfiles = [
   "https://xhslink.com/m/6Bv1zW0ClyZ",
 ];
 
-export const siteLastModified = "2026-09-03";
+export const siteLastModified = "2026-09-11";
 
 export const serviceAreas = [
   {
