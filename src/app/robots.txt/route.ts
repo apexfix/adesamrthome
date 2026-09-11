@@ -3,6 +3,7 @@ import { siteUrl } from "@/lib/seoData";
 export async function GET() {
   const robots = `User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: ${siteUrl}/sitemap.xml
 `;

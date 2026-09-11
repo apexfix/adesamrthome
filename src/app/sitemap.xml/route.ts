@@ -32,6 +32,9 @@ export async function GET() {
   const staticPages = [
     xmlUrl(`${siteUrl}/`, siteLastModified),
     xmlUrl(`${siteUrl}/products`, siteLastModified),
+    xmlUrl(`${siteUrl}/brands`, siteLastModified),
+    xmlUrl(`${siteUrl}/brands/lockin`, siteLastModified),
+    xmlUrl(`${siteUrl}/brands/kaadas`, siteLastModified),
     xmlUrl(`${siteUrl}/service-areas`, siteLastModified),
     xmlUrl(`${siteUrl}/smart-lock-supply-installation-adelaide`, siteLastModified),
     xmlUrl(`${siteUrl}/smart-lock-installation-only-adelaide`, siteLastModified),

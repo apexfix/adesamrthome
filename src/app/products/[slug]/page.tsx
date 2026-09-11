@@ -27,6 +27,7 @@ import {
   siteUrl,
 } from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
+import { getSmartLockBrandUrl } from "@/lib/brandData";
 
 interface ProductPageProps {
   params: Promise<{
@@ -246,6 +247,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const hasSeparateInstallationPrice =
     product.price_includes_installation === false && installedPrice !== null;
   const brandName = getProductBrand(product);
+  const brandPath = isService ? null : getSmartLockBrandUrl(brandName);
+  const brandUrl = brandPath ? `${siteUrl}${brandPath}` : undefined;
   
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
@@ -276,7 +279,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     sku: product.sku,
     model: product.sku || product.name,
     mpn: product.sku || undefined,
-    brand: { "@type": "Brand", name: brandName },
+    brand: { "@type": "Brand", name: brandName, url: brandUrl },
     category: "Smart Lock",
     image: productImages,
     mainEntityOfPage: productUrl,
@@ -355,9 +358,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
         name: isService ? "Installation Services" : "Smart Locks",
         item: `${siteUrl}/products`,
       },
+      ...(!isService && brandUrl
+        ? [{
+            "@type": "ListItem",
+            position: 3,
+            name: `${brandName} Smart Locks`,
+            item: brandUrl,
+          }]
+        : []),
       {
         "@type": "ListItem",
-        position: 3,
+        position: !isService && brandUrl ? 4 : 3,
         name: product.name,
         item: productUrl,
       },
@@ -434,6 +445,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {isService ? "Services" : "Collection"}
           </Link>
           <ChevronRight className="w-3 h-3" />
+          {!isService && brandPath && (
+            <>
+              <Link href={brandPath} className="hover:text-white transition-colors">
+                {brandName}
+              </Link>
+              <ChevronRight className="w-3 h-3" />
+            </>
+          )}
           <span className="text-[#c5a47e]">{product.name}</span>
         </nav>
 

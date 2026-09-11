@@ -5,9 +5,9 @@ import { siteUrl } from "@/lib/seoData";
 const pageUrl = `${siteUrl}/property-manager-smart-lock-installation-adelaide`;
 
 export const metadata: Metadata = {
-  title: "Property Manager Smart Lock Installation Adelaide",
+  title: "Smart Locks for Property Managers Adelaide",
   description:
-    "Smart lock assessment, supply and installation for Adelaide property managers. Start with one property, use a repeatable door-photo check and plan compatible multi-property work.",
+    "Smart lock assessment, supply and installation for Adelaide property managers. Start with one property and use a repeatable door-photo checking process.",
   keywords: [
     "property manager smart lock Adelaide",
     "rental property smart lock installation Adelaide",

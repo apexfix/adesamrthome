@@ -29,15 +29,13 @@ export const businessInfo = {
   addressRegion: "SA",
   postalCode: "5000",
   country: "AU",
-  latitude: -34.9285,
-  longitude: 138.6007,
 };
 
 export const socialProfiles = [
   "https://www.facebook.com/profile.php?id=61571291020457",
   "https://www.instagram.com/adesmarthome/",
   "https://www.tiktok.com/@adesmarthome",
-  "https://xhslink.com/m/6Bv1zW0ClyZ",
+  "https://www.xiaohongshu.com/user/profile/5dc514ea0000000001005c66",
 ];
 
 export const siteLastModified = "2026-09-11";

@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/zh`,
     languages: {
+      "x-default": siteUrl,
       "en-AU": siteUrl,
       "zh-CN": `${siteUrl}/zh`,
     },
@@ -80,7 +81,7 @@ export default function ChineseLandingPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main lang="zh-CN" className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(chineseServiceSchema) }}

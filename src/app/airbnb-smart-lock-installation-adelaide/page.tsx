@@ -22,7 +22,7 @@ const pageUrl = `${siteUrl}/airbnb-smart-lock-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Airbnb Smart Lock Installation Adelaide",
   description:
-    "Smart lock supply, installation and setup for Adelaide Airbnb hosts, short-stay operators and property managers. Start with one property or request portfolio pricing.",
+    "Smart lock supply, installation and setup for Adelaide Airbnb hosts and short-stay operators. Start with one property or request portfolio pricing.",
   keywords: [
     "Airbnb smart lock installation Adelaide",
     "short stay smart lock Adelaide",

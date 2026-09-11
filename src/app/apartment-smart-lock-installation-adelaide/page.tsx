@@ -7,7 +7,7 @@ const pageUrl = `${siteUrl}/apartment-smart-lock-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Apartment Smart Lock Installation Adelaide",
   description:
-    "Smart lock assessment and installation for Adelaide apartments and units. Check the door, existing hardware, building requirements and screen-door clearance before booking.",
+    "Smart lock assessment and installation for Adelaide apartments and units. Check the door, building requirements and screen-door clearance before booking.",
   keywords: [
     "apartment smart lock installation Adelaide",
     "unit door smart lock Adelaide",

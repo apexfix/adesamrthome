@@ -3,6 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['nodemailer'],
+  async redirects() {
+    return [
+      {
+        source: "/blog/my-first-blog",
+        destination: "/blog/ezviz-dl05-retrofit-adelaide",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     qualities: [65, 75],
     remotePatterns: [

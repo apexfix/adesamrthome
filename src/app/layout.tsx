@@ -155,11 +155,6 @@ const localBusinessSchema = {
       },
     ],
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: businessInfo.latitude,
-    longitude: businessInfo.longitude,
-  },
   contactPoint: {
     "@type": "ContactPoint",
     telephone: businessInfo.phone,
@@ -180,22 +175,6 @@ const localBusinessSchema = {
       "@type": "PropertyValue",
       name: "Warranty",
       value: "Local support with warranty terms confirmed for each product and installation package",
-    },
-  ],
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "08:00",
-      closes: "20:00",
     },
   ],
   sameAs: socialProfiles,

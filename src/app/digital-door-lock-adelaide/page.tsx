@@ -7,7 +7,7 @@ const pageUrl = `${siteUrl}/digital-door-lock-adelaide`;
 export const metadata: Metadata = {
   title: "Digital Door Lock Installation Adelaide",
   description:
-    "Adelaide digital door lock installation service for homes and properties. Door compatibility checks first, with supply-and-install packages and installation-only options.",
+    "Digital door lock installation across Adelaide, with door compatibility checks, supplied packages and installation-only options for compatible locks.",
   keywords: [
     "digital door lock Adelaide",
     "digital door lock installation Adelaide",

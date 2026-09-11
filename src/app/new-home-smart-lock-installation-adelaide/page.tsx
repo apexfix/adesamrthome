@@ -7,7 +7,7 @@ const pageUrl = `${siteUrl}/new-home-smart-lock-installation-adelaide`;
 export const metadata: Metadata = {
   title: "New Home Smart Lock Installation Adelaide",
   description:
-    "Plan a smart lock for an Adelaide new home or renovation before the entry door and hardware are finalised. Compare supplied packages or compatible installation-only service.",
+    "Plan a smart lock for an Adelaide new home or renovation before the entry door is finalised. Compare supplied packages or installation-only service.",
   keywords: [
     "new home smart lock Adelaide",
     "builder smart lock installation Adelaide",

@@ -154,9 +154,14 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li><Link href="/" className="hover:text-[#c5a47e] transition-colors">Home</Link></li>
               <li><Link href="/products" className="hover:text-[#c5a47e] transition-colors">All Products</Link></li>
+              <li><Link href="/gallery" className="hover:text-[#c5a47e] transition-colors">Installation Gallery</Link></li>
+              <li><Link href="/brands" className="hover:text-[#c5a47e] transition-colors">Smart Lock Brands</Link></li>
+              <li><Link href="/brands/lockin" className="hover:text-[#c5a47e] transition-colors">Lockin Smart Locks</Link></li>
+              <li><Link href="/brands/kaadas" className="hover:text-[#c5a47e] transition-colors">Kaadas Smart Locks</Link></li>
               <li><Link href="/service-areas" className="hover:text-[#c5a47e] transition-colors">Adelaide Service Areas</Link></li>
               <li><Link href="/blog" className="hover:text-[#c5a47e] transition-colors">Installation Guides</Link></li>
               <li><Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
+              <li><Link href="/zh" lang="zh-CN" className="hover:text-[#c5a47e] transition-colors">中文服务</Link></li>
             </ul>
           </div>
 

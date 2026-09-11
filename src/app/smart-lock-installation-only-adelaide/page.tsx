@@ -20,7 +20,7 @@ const pageUrl = `${siteUrl}/smart-lock-installation-only-adelaide`;
 export const metadata: Metadata = {
   title: "Smart Lock Installation Only Adelaide from $200",
   description:
-    "Adelaide smart lock installation-only service: $200 for compatible compact locks and $350 for full-size locks with a standard 6068 mortise. Customer supplies the lock.",
+    "Adelaide smart lock installation only: $200 for compatible compact locks or $350 for full-size locks with a standard 6068 mortise. Lock not included.",
   keywords: [
     "smart lock installation only Adelaide",
     "customer supplied smart lock installation Adelaide",

@@ -18,10 +18,11 @@ import type { Product } from "@/types";
 export const metadata: Metadata = {
   title: { absolute: "Smart Lock Installation Adelaide | ADE Smart Home" },
   description:
-    "Smart lock supply and installation plus installation-only service for compatible customer-supplied locks across Adelaide. Free door compatibility checks and local support.",
+    "Smart lock supply, installation and installation-only service across Adelaide. Compare products, check door compatibility and request a local quote.",
   alternates: {
     canonical: siteUrl,
     languages: {
+      "x-default": siteUrl,
       "en-AU": siteUrl,
       "zh-CN": `${siteUrl}/zh`,
     },

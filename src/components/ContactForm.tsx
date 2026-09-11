@@ -381,7 +381,7 @@ export function ContactForm({
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5" aria-hidden="true" />
-                Text 0431 060 390
+                Text 0431060390
               </a>
               <a
                 href={`mailto:${businessInfo.email}?subject=Door%20photos%20for%20installation%20check`}
@@ -656,7 +656,7 @@ export function ContactForm({
 
               {errorMessage && (
                 <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
-                  {errorMessage} Text 0431 060 390 or email us if the problem continues.
+                  {errorMessage} Text 0431060390 or email us if the problem continues.
                 </p>
               )}
 

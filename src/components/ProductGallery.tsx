@@ -38,7 +38,10 @@ export function ProductGallery({ images, square = false }: ProductGalleryProps) 
           {images.map((img, idx) => (
             <button
               key={idx}
+              type="button"
               onClick={() => setSelectedIndex(idx)}
+              aria-label={`Show image ${idx + 1} of ${images.length}: ${img.alt || "product view"}`}
+              aria-pressed={selectedIndex === idx}
               className={cn(
                 "relative w-20 h-24 rounded-2xl bg-white border-2 overflow-hidden shrink-0 transition-all cursor-pointer shadow-sm",
                 selectedIndex === idx 

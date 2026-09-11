@@ -6,10 +6,10 @@ import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
 import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Smart Locks with Adelaide Installation",
   description:
-    "Compare smart locks and book installation-only service across Adelaide. Customer-supplied compact lock installation is A$200; standard 6068 mortise installation is A$350.",
+    "Compare smart locks with Adelaide installation. Customer-supplied compact lock installation is A$200; standard 6068 mortise installation is A$350.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
     title: "Smart Locks with Adelaide Installation",
@@ -30,6 +30,18 @@ export const metadata: Metadata = {
   },
 };
 
+export async function generateMetadata(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+  const params = props.searchParams ? await props.searchParams : {};
+  const hasFilters = Object.values(params).some((value) => value !== undefined);
+
+  return {
+    ...baseMetadata,
+    robots: hasFilters ? { index: false, follow: true } : undefined,
+  };
+}
+
 const SMART_LOCK_CHILD_CATEGORIES = new Set([
   "smartlock",
   "smartlocks",
@@ -45,7 +57,10 @@ const SMART_LOCK_CHILD_CATEGORIES = new Set([
   "yale",
 ]);
 
-const SMART_LOCK_BRANDS = ["Lockin", "Kaadas", "Philips", "EZVIZ", "Samsung", "Dessmann"];
+const SMART_LOCK_BRANDS = [
+  { name: "Lockin", href: "/brands/lockin" },
+  { name: "Kaadas", href: "/brands/kaadas" },
+];
 
 function normalizeCategory(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -129,7 +144,7 @@ export default async function ProductsPage(props: {
 
   const pageTitle = getPageTitle(categoryParam, brandParam);
   const isSmartLocksPage =
-    categoryParam !== null &&
+    categoryParam === null ||
     ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
 
   const collectionSchema = {
@@ -192,7 +207,7 @@ export default async function ProductsPage(props: {
           {isSmartLocksPage && (
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
-                href="/products?category=SMART+LOCK"
+                href="/products"
                 className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
                   !brandParam
                     ? "border-[#c5a47e] bg-[#c5a47e] text-black"
@@ -203,15 +218,11 @@ export default async function ProductsPage(props: {
               </Link>
               {SMART_LOCK_BRANDS.map((brand) => (
                 <Link
-                  key={brand}
-                  href={`/products?category=SMART+LOCK&brand=${encodeURIComponent(brand)}`}
-                  className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
-                    brandParam && normalizeCategory(brandParam) === normalizeCategory(brand)
-                      ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                      : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
-                  }`}
+                  key={brand.name}
+                  href={brand.href}
+                  className="rounded-full border border-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
                 >
-                  {brand}
+                  {brand.name}
                 </Link>
               ))}
             </div>

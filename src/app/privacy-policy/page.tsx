@@ -138,7 +138,7 @@ export default function PrivacyPolicyPage() {
               className="flex min-h-12 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
             >
               <MessageSquareText className="h-4 w-4" aria-hidden="true" />
-              Text 0431 060 390
+              Text 0431060390
             </a>
           </div>
           <p className="mt-6 text-xs leading-5 text-zinc-600">

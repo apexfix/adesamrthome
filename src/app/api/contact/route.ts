@@ -302,7 +302,7 @@ To speed this up, please send these 4 angles:
 - Door edge
 - Door frame
 
-You can add more door photos by replying to this email, or text 0431 060 390.
+You can add more door photos by replying to this email, or text 0431060390.
 
 ADE Smart Home
 Adelaide smart lock supply and installation
@@ -320,7 +320,7 @@ https://www.adesmarthome.com.au/
               <li>If all information is complete, we normally send a quote within 48 hours.</li>
             </ol>
             <p>You can add more door photos by replying to this email. Best angles: outside, inside lock side, edge, and frame.</p>
-            <p>If you need urgent confirmation, text <strong>0431 060 390</strong>.</p>
+            <p>If you need urgent confirmation, text <strong>0431060390</strong>.</p>
             <p>ADE Smart Home<br>Adelaide smart lock supply and installation<br><a href="https://www.adesmarthome.com.au/">adesmarthome.com.au</a></p>
           `,
         });

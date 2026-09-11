@@ -99,7 +99,7 @@ export default async function ContactPage({
             <MessageSquareText className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Message-Friendly Support</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              Text 0431 060 390 or email us about smart lock packages or installation-only jobs.
+              Text 0431060390 or email us about smart lock packages or installation-only jobs.
             </p>
           </div>
         </div>

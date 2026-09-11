@@ -7,7 +7,7 @@ const pageUrl = `${siteUrl}/smart-lock-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Professional Smart Lock Installation Adelaide",
   description:
-    "Professional smart lock installation in Adelaide. Local compatibility checks, supply-and-install packages and installation-only service for compatible customer-supplied locks.",
+    "Professional smart lock installation in Adelaide with door checks, supplied packages and installation-only service for compatible customer-supplied locks.",
   keywords: [
     "smart lock installation Adelaide",
     "smart lock installer Adelaide",
