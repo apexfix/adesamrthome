@@ -9,6 +9,21 @@ export const metadata: Metadata = {
     "How ADE Smart Home collects, uses, stores and protects personal information provided through smart lock enquiries and our website.",
   alternates: { canonical: `${siteUrl}/privacy-policy` },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Privacy Policy | ADE Smart Home",
+    description:
+      "How ADE Smart Home handles information provided through smart lock enquiries and our website.",
+    url: `${siteUrl}/privacy-policy`,
+    siteName: "ADE Smart Home",
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | ADE Smart Home",
+    description:
+      "How ADE Smart Home handles information provided through smart lock enquiries and our website.",
+  },
 };
 
 const sections = [

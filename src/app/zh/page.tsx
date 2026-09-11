@@ -42,6 +42,13 @@ export const metadata: Metadata = {
     locale: "zh_CN",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "阿德莱德智能锁安装 | ADE Smart Home",
+    description:
+      "阿德莱德智能锁销售安装及客户自购智能锁仅安装，提供免费门型评估和本地售后。",
+    images: ["/img/hero1.avif"],
+  },
 };
 
 export default function ChineseLandingPage() {

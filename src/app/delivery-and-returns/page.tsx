@@ -13,6 +13,21 @@ export const metadata: Metadata = {
     "Delivery, cancellation, return and warranty information for ADE Smart Home smart lock supply and installation packages in Adelaide.",
   alternates: { canonical: deliveryAndReturnsUrl },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Delivery, Cancellations and Returns | ADE Smart Home",
+    description:
+      "Delivery, cancellation, return and warranty information for ADE Smart Home installation packages.",
+    url: deliveryAndReturnsUrl,
+    siteName: "ADE Smart Home",
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Delivery, Cancellations and Returns",
+    description:
+      "Delivery, cancellation, return and warranty information for ADE Smart Home installation packages.",
+  },
 };
 
 const sections = [

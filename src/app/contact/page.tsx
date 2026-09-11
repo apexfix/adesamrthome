@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     locale: "en_AU",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Get a Smart Lock Quote in Adelaide",
+    description:
+      "Request smart lock supply and installation or installation-only service in Adelaide.",
+    images: ["/img/hero1.avif"],
+  },
 };
 
 export default async function ContactPage({

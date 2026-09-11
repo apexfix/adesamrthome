@@ -18,9 +18,16 @@ export const metadata: Metadata = {
       "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
     url: `${siteUrl}/blog`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
+    images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "ADE Smart Home Adelaide installation guides and projects" }],
     locale: "en_AU",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Lock Guides & Adelaide Projects",
+    description:
+      "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
+    images: ["/img/hero1.avif"],
   },
 };
 
@@ -28,6 +35,7 @@ interface Post {
   slug: string;
   title?: string;
   date?: string;
+  updated?: string;
   description?: string;
   coverImage?: string;
   category?: string;
@@ -80,17 +88,33 @@ export default function BlogListPage() {
       headline: post.title,
       url: `${siteUrl}/blog/${post.slug}`,
       datePublished: post.date,
+      dateModified: post.updated || post.date,
+      description: post.description,
+      mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
       image: post.coverImage
         ? new URL(post.coverImage, siteUrl).toString()
         : undefined,
     })),
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${siteUrl}/blog` },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-zinc-950 pt-32 pb-20">
+    <main className="min-h-screen bg-zinc-950 pt-32 pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="container mx-auto px-4 md:px-6 text-white">
         
@@ -174,6 +198,6 @@ export default function BlogListPage() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

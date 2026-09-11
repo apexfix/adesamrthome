@@ -138,15 +138,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <article className="min-h-screen bg-zinc-950 pt-32 pb-20 text-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+    <main className="min-h-screen bg-zinc-950 pt-32 pb-20 text-white">
+      <article>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
       <div className="container mx-auto px-4 max-w-3xl">
         <Link href="/blog" className="inline-flex items-center text-zinc-500 hover:text-[#c5a47e] mb-12 transition-colors text-xs font-bold uppercase tracking-widest">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Stories
@@ -225,6 +226,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </Link>
         </div>
       </div>
-    </article>
+      </article>
+    </main>
   );
 }

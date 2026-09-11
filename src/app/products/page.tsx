@@ -17,9 +17,16 @@ export const metadata: Metadata = {
       "Compare Lockin and Kaadas smart locks and request a free Adelaide door compatibility check.",
     url: `${siteUrl}/products`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
+    images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
     locale: "en_AU",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Locks with Adelaide Installation",
+    description:
+      "Compare Lockin and Kaadas smart locks and request a free Adelaide door compatibility check.",
+    images: ["/img/hero1.avif"],
   },
 };
 
@@ -160,7 +167,7 @@ export default async function ProductsPage(props: {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-24">
+    <main className="min-h-screen bg-black pt-32 pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
@@ -238,6 +245,6 @@ export default async function ProductsPage(props: {
         )}
         
       </div>
-    </div>
+    </main>
   );
 }

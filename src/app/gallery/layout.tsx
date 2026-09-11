@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     locale: "en_AU",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Adelaide Smart Lock Installation Gallery",
+    description: "Real smart lock installation results from Adelaide homes.",
+    images: ["/img/hero1.avif"],
+  },
 };
 
 export default function GalleryLayout({ children }: { children: ReactNode }) {

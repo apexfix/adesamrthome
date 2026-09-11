@@ -250,6 +250,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     brand: { "@type": "Brand", name: brandName },
     category: "Smart Lock",
     image: productImages,
+    mainEntityOfPage: productUrl,
     offers: {
       "@type": "Offer",
       url: productUrl,
@@ -350,7 +351,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="bg-zinc-950 min-h-screen text-white pt-32 pb-20">
+    <main className="bg-zinc-950 min-h-screen text-white pt-32 pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
@@ -603,6 +604,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         )}
 
       </div>
-    </div>
+    </main>
   );
 }
