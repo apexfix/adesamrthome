@@ -63,12 +63,7 @@ export default function ChineseLandingPage() {
     alternateName: "Smart Lock Installation Adelaide",
     serviceType: "Smart Lock Installation",
     provider: {
-      "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteUrl}/#business`,
-      name: businessInfo.name,
-      telephone: businessInfo.phone,
-      email: businessInfo.email,
-      url: siteUrl,
     },
     areaServed: {
       "@type": "City",

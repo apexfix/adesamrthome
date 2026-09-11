@@ -22,8 +22,6 @@ import type { Metadata } from "next";
 import { localProducts } from "@/lib/localProducts";
 import {
   businessInfo,
-  localAppointmentDelivery,
-  merchantReturnPolicy,
   siteUrl,
 } from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
@@ -225,6 +223,12 @@ const installationPhotosBySlug: Record<string, { src: string; alt: string }[]> =
   ],
 };
 
+const replacementWarrantySlugs = new Set([
+  "lockin-x9-smart-lock",
+  "lockin-s6-max-smart-lock",
+  "lockin-v5-max-smart-lock",
+]);
+
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   let product = null;
@@ -246,6 +250,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const serviceOptions = product.service_options || [];
   const hasSeparateInstallationPrice =
     product.price_includes_installation === false && installedPrice !== null;
+  const hasReplacementWarranty = replacementWarrantySlugs.has(product.slug);
   const brandName = getProductBrand(product);
   const brandPath = isService ? null : getSmartLockBrandUrl(brandName);
   const brandUrl = brandPath ? `${siteUrl}${brandPath}` : undefined;
@@ -277,8 +282,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     name: product.name,
     description: productDescription,
     sku: product.sku,
-    model: product.sku || product.name,
-    mpn: product.sku || undefined,
+    model: product.name,
     brand: { "@type": "Brand", name: brandName, url: brandUrl },
     category: "Smart Lock",
     image: productImages,
@@ -288,11 +292,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       url: productUrl,
       priceCurrency: product.prices?.currency_code || "AUD",
       price: currentPrice,
-      availability: "https://schema.org/InStock",
+      availability: "https://schema.org/LimitedAvailability",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
-      shippingDetails: localAppointmentDelivery,
-      hasMerchantReturnPolicy: { "@id": merchantReturnPolicy["@id"] },
       areaServed: {
         "@type": "City",
         name: businessInfo.addressLocality,
@@ -552,16 +554,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="font-bold text-sm">
                     {isService
                       ? "Free Compatibility Check"
-                      : hasSeparateInstallationPrice
-                        ? "Local Product Support"
-                        : "2-Year Warranty"}
+                      : hasReplacementWarranty
+                        ? "2-Year Warranty"
+                        : "Local Product Support"}
                   </p>
                   <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
                     {isService
                       ? "Before Booking"
-                      : hasSeparateInstallationPrice
-                        ? "ADE Smart Home"
-                        : "Full replacement"}
+                      : hasReplacementWarranty
+                        ? "Covered lock faults replaced"
+                        : "Terms confirmed before booking"}
                   </p>
                 </div>
               </div>
@@ -584,7 +586,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
                   : hasSeparateInstallationPrice
                     ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
-                    : "Listed prices are all-inclusive: lock + standard Adelaide installation + 2-year local warranty, after compatibility confirmation."}
+                    : hasReplacementWarranty
+                      ? "Listed price includes the lock, standard Adelaide installation and a 2-year local warranty. Covered lock faults are replaced under the stated warranty terms after assessment."
+                      : "Listed price includes the lock and standard Adelaide installation. Product support and warranty terms are confirmed before booking."}
               </p>
             </div>
 

@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
 import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
+import { notFound } from "next/navigation";
 
 const baseMetadata: Metadata = {
   title: "Smart Locks with Adelaide Installation",
@@ -34,7 +35,7 @@ export async function generateMetadata(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
   const params = props.searchParams ? await props.searchParams : {};
-  const hasFilters = Object.values(params).some((value) => value !== undefined);
+  const hasFilters = params.category !== undefined || params.brand !== undefined;
 
   return {
     ...baseMetadata,
@@ -142,6 +143,10 @@ export default async function ProductsPage(props: {
     ? categoryProducts.filter((product) => productMatchesBrand(product, brandParam))
     : categoryProducts;
 
+  if ((categoryParam || brandParam) && displayedProducts.length === 0) {
+    notFound();
+  }
+
   const pageTitle = getPageTitle(categoryParam, brandParam);
   const isSmartLocksPage =
     categoryParam === null ||
@@ -183,10 +188,12 @@ export default async function ProductsPage(props: {
 
   return (
     <main className="min-h-screen bg-black pt-32 pb-24">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
-      />
+      {!categoryParam && !brandParam && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

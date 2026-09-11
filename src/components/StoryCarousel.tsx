@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, ChevronRight } from "lucide-react";
@@ -18,7 +16,7 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
   return (
     <div className="relative group">
       {/* Horizontal Scroll Container */}
-      <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar">
+      <div className="no-scrollbar flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory">
         {stories.map((story) => (
           <Link 
             key={story.slug}
@@ -54,17 +52,6 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
           </Link>
         ))}
       </div>
-
-      {/* CSS to hide scrollbar while keeping functionality */}
-      <style jsx global>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }

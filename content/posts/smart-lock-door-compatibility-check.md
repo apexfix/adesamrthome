@@ -76,4 +76,4 @@ Do not choose the lock only by features. Choose it by the door first, then featu
 
 If you are unsure, send us the photos before purchasing. We can check the door and recommend a suitable model for your Adelaide home.
 
-[Send your four door photos through our Adelaide quote form](/contact?service=not-sure#quote), text **0431 060 390**, or email **info@adesmarthome.com.au** for a door compatibility check.
+[Send your four door photos through our Adelaide quote form](/contact?service=not-sure#quote), text **0431060390**, or email **info@adesmarthome.com.au** for a door compatibility check.

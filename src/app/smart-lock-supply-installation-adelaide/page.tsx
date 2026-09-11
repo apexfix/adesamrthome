@@ -17,8 +17,6 @@ import {
 import { ContactForm } from "@/components/ContactForm";
 import {
   businessInfo,
-  localAppointmentDelivery,
-  merchantReturnPolicy,
   siteUrl,
 } from "@/lib/seoData";
 
@@ -87,8 +85,8 @@ const packages = [
     bestFor: "Fast finger-vein access",
     image: "/img/products/lockin-sv40/real-install-03.jpg",
     imageAlt: "Lockin SV40 smart lock installed on an Adelaide door",
-    inclusionText: "Lock + standard installation + 2-year local warranty",
-    warrantyText: "2 years",
+    inclusionText: "Lock + standard installation + local product support",
+    warrantyText: "Terms confirmed before booking",
     features: ["Finger-vein recognition", "Push-pull design", "PIN, NFC and app", "Auto-lock convenience"],
   },
   {
@@ -122,7 +120,7 @@ const packages = [
     name: "Lockin V5 Max",
     brand: "Lockin",
     slug: "lockin-v5-max-smart-lock",
-    price: 1399,
+    price: 1350,
     label: "Flagship choice",
     bestFor: "Premium biometrics and HomeKit",
     image: "/img/products/lockin-v5-max/real-install-04.jpg",
@@ -160,7 +158,7 @@ const priorities = [
     title: "Fast family access",
     choice: "Lockin SV40 · $799 all-inclusive",
     detail:
-      "Includes the Lockin SV40, standard installation and a 2-year local warranty. Finger-vein recognition and a push-pull body make entry quick and simple.",
+      "Includes the Lockin SV40 and standard installation. Finger-vein recognition and a push-pull body make entry quick and simple; support and warranty terms are confirmed before booking.",
   },
   {
     icon: ScanFace,
@@ -172,7 +170,7 @@ const priorities = [
   {
     icon: Camera,
     title: "Premium connected entry",
-    choice: "Lockin V5 Max · $1399 all-inclusive",
+    choice: "Lockin V5 Max · $1350 all-inclusive",
     detail:
       "Includes the Lockin V5 Max, standard installation and a 2-year local warranty. Palm vein, 3D Face ID, a 2K video doorbell and Apple HomeKit.",
   },
@@ -189,7 +187,7 @@ const faqs = [
   {
     question: "Do the listed prices include installation?",
     answer:
-      "Yes. Each all-inclusive package price includes the selected smart lock and standard installation after we confirm the lock is suitable for your door. Lockin packages include a 2-year local warranty. Warranty and support terms for other brands are confirmed before booking. Unusual door construction, extensive modification or repair work is discussed and quoted first.",
+      "Yes. Each all-inclusive package price includes the selected smart lock and standard installation after we confirm the lock is suitable for your door. The X9, S6 Max and V5 Max packages include the stated 2-year local warranty. Warranty and support terms for other models are confirmed before booking. Unusual door construction, extensive modification or repair work is discussed and quoted first.",
   },
   {
     question: "How do I know which smart lock fits my door?",
@@ -225,14 +223,12 @@ export default function SupplyInstallationPage() {
       "@type": "Offer",
       price: item.price,
       priceCurrency: "AUD",
-      availability: "https://schema.org/InStock",
+      availability: "https://schema.org/LimitedAvailability",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
       seller: {
         "@id": `${siteUrl}/#business`,
       },
-      shippingDetails: localAppointmentDelivery,
-      hasMerchantReturnPolicy: { "@id": merchantReturnPolicy["@id"] },
       areaServed: {
         "@type": "City",
         name: "Adelaide",
