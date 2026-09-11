@@ -39,7 +39,7 @@ export default async function ContactPage({
     name: "Contact ADE Smart Home",
     mainEntity: {
       "@id": `${siteUrl}/#business`,
-      telephone: businessInfo.phoneInternational,
+      telephone: businessInfo.phone,
       email: businessInfo.email,
     },
   };

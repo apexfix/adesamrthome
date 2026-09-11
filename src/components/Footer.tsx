@@ -211,7 +211,7 @@ export function Footer() {
         </nav>
 
         <div className="mt-10 pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>© {currentYear} ADE Smart Home · {businessInfo.legalName} · ABN {businessInfo.abn}</p>
+          <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy-policy" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
             <Link href="/delivery-and-returns" className="hover:text-zinc-400 transition-colors">Delivery & Returns</Link>

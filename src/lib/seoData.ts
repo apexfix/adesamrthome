@@ -4,8 +4,6 @@ export const deliveryAndReturnsUrl = `${siteUrl}/delivery-and-returns`;
 
 export const businessInfo = {
   name: "ADE Smart Home",
-  legalName: "ZHONGLIN SUN",
-  abn: "26 671 401 021",
   phone: "0431060390",
   phoneInternational: "+61431060390",
   email: "info@adesmarthome.com.au",

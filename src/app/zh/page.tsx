@@ -58,7 +58,7 @@ export default function ChineseLandingPage() {
       "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteUrl}/#business`,
       name: businessInfo.name,
-      telephone: businessInfo.phoneInternational,
+      telephone: businessInfo.phone,
       email: businessInfo.email,
       url: siteUrl,
     },
@@ -105,7 +105,7 @@ export default function ChineseLandingPage() {
               href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20need%20a%20smart%20lock%20estimate.`}
               className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
             >
-              短信咨询 {businessInfo.phoneInternational}
+              短信咨询 {businessInfo.phone}
             </a>
           </div>
         </div>

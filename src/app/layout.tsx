@@ -96,12 +96,10 @@ const localBusinessSchema = {
   "@type": ["LocalBusiness", "ProfessionalService"],
   "@id": `${siteUrl}/#business`,
   name: businessInfo.name,
-  legalName: businessInfo.legalName,
-  taxID: `ABN ${businessInfo.abn}`,
   url: siteUrl,
   image: `${siteUrl}/img/logo.png`,
   logo: `${siteUrl}/img/logo.png`,
-  telephone: businessInfo.phoneInternational,
+  telephone: businessInfo.phone,
   email: businessInfo.email,
   priceRange: "$$",
   description:
@@ -163,7 +161,7 @@ const localBusinessSchema = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: businessInfo.phoneInternational,
+    telephone: businessInfo.phone,
     email: businessInfo.email,
     contactType: "sales and customer support",
     areaServed: "AU",

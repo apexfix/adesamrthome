@@ -86,7 +86,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteUrl}/#business`,
       name: businessInfo.name,
-      telephone: businessInfo.phoneInternational,
+      telephone: businessInfo.phone,
       email: businessInfo.email,
       url: siteUrl,
     },
@@ -205,7 +205,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
               href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote.`}
               className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
             >
-              Text {businessInfo.phoneInternational}
+              Text {businessInfo.phone}
             </a>
           </div>
 
