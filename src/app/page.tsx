@@ -105,23 +105,11 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col bg-black">
-      <section className="relative h-[82svh] min-h-[680px] max-h-[900px] overflow-hidden border-b border-zinc-900/50">
+      <section className="home-hero relative overflow-hidden border-b border-zinc-900/50">
         <HeroCarousel />
       </section>
 
       <ServicePathways />
-      <AudiencePathways />
-      
-      {latestStories.length > 0 && (
-        <section className="py-24 bg-black border-y border-zinc-900/50">
-          <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
-              Recent <span className="text-[#c5a47e]">Works</span>
-            </h2>
-            <StoryCarousel stories={latestStories} />
-          </div>
-        </section>
-      )}
 
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
         <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
@@ -147,7 +135,7 @@ export default async function Home() {
                 <Link
                   key={href}
                   href={href}
-                  className="group flex min-h-14 items-center justify-between border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+                  className="glass-control group flex min-h-14 items-center justify-between gap-3 rounded-md border px-4 text-sm font-bold text-white hover:text-[#d9b98f]"
                 >
                   <span className="flex items-center gap-2">
                     <Icon className="h-4 w-4" aria-hidden="true" />
@@ -166,7 +154,7 @@ export default async function Home() {
           <div className="mt-10 flex justify-center">
             <Link
               href="/products"
-              className="inline-flex min-h-12 items-center gap-2 border border-zinc-700 px-6 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+              className="glass-control inline-flex min-h-12 items-center gap-2 rounded-md border px-6 text-sm font-bold text-white hover:text-[#d9b98f]"
             >
               View all products
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -175,6 +163,21 @@ export default async function Home() {
         </div>
       </section>
 
+      {latestStories.length > 0 && (
+        <section className="border-b border-zinc-900 bg-black py-16 md:py-24">
+          <div className="mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <p className="text-sm font-semibold text-[#c5a47e]">Installed across Adelaide</p>
+                <h2 className="mt-3 text-3xl font-bold text-white md:text-5xl">Recent works</h2>
+              </div>
+              <Link href="/gallery" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">View all installations <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <StoryCarousel stories={latestStories} />
+          </div>
+        </section>
+      )}
+      <AudiencePathways />
       <ServiceFeatures />
       <GoogleReviews />
       <FAQSection />

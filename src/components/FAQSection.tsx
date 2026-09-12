@@ -122,6 +122,8 @@ export function FAQSection() {
               >
                 <button
                   type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
                   onClick={() => setActiveIndex(isOpen ? null : index)}
                   className="flex w-full items-center justify-between gap-6 py-6 text-left"
                 >
@@ -129,7 +131,7 @@ export function FAQSection() {
                     {faq.question}
                   </span>
 
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-zinc-700 text-[#c5a47e]">
+                  <span className="glass-control flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-[#d9b98f]" aria-hidden="true">
                     {isOpen ? (
                       <Minus className="h-4 w-4" />
                     ) : (
@@ -138,11 +140,9 @@ export function FAQSection() {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="max-w-4xl pb-6 pr-12">
+                  <div id={`faq-answer-${index}`} hidden={!isOpen} className="max-w-4xl pb-6 pr-12">
                     <p className="leading-7 text-zinc-400">{faq.answer}</p>
                   </div>
-                )}
               </div>
             );
           })}

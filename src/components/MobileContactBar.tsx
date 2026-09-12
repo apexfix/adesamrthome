@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Camera, Cctv, MessageSquareText, Tag } from "lucide-react";
+import { Camera, Cctv, Mail, MessageSquareText, Tag } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { businessInfo } from "@/lib/seoData";
 import { trackEvent } from "@/lib/analytics";
@@ -42,22 +42,22 @@ export function MobileContactBar() {
 
   return (
     <>
-      <div className="h-28 md:hidden" aria-hidden="true" />
-      <div className="fixed inset-x-0 bottom-0 z-[70] grid grid-cols-2 border-t border-zinc-700 bg-black p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] md:hidden">
+      <div className="h-24 md:hidden" aria-hidden="true" />
+      <nav aria-label="Quick contact" className="liquid-glass mobile-contact-dock fixed inset-x-3 z-[70] grid grid-cols-[1fr_1.3fr_44px] items-center gap-1 rounded-lg border p-2 md:hidden">
         <a
           href={smsHref}
           onClick={onSmsClick}
           aria-label="Text for Quote"
-          className="flex h-12 items-center justify-center gap-2 border-r border-zinc-700 text-sm font-bold text-white"
+          className="flex min-h-12 items-center justify-center gap-2 rounded-md text-sm font-bold text-white"
         >
           <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-          Text for Quote
+          Text us
         </a>
         <Link
           href={isCameraPage ? "/contact?service=security-camera-kit#quote" : "/contact#quote"}
           onClick={onQuoteFormClick}
           aria-label={isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
-          className="flex h-12 items-center justify-center gap-2 bg-[#c5a47e] text-sm font-bold text-black"
+          className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-2 text-sm font-bold text-black"
         >
           {isCameraPage ? (
             <Cctv className="h-4 w-4" />
@@ -71,16 +71,13 @@ export function MobileContactBar() {
         <a
           href={mailHref}
           onClick={onMailClick}
-          className="col-span-2 mt-2 flex h-10 items-center justify-center gap-2 border-t border-zinc-700 text-xs font-semibold text-white/80"
+          title="Email your enquiry"
+          aria-label="Email your enquiry"
+          className="glass-control flex h-11 w-11 items-center justify-center rounded-md border text-white"
         >
-          <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-          {isCameraPage
-            ? "Email camera enquiry"
-            : isMixedProductsPage
-              ? "Email product enquiry"
-              : "Email your details"}
+          <Mail className="h-5 w-5" aria-hidden="true" />
         </a>
-      </div>
+      </nav>
     </>
   );
 }

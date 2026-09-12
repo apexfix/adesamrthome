@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown, Menu, MessageSquareText, X, Instagram, Facebook } from "lucide-react";
-import { businessInfo, socialProfiles } from "@/lib/seoData";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight, ChevronDown, Menu, MessageSquareText, X } from "lucide-react";
+import { businessInfo } from "@/lib/seoData";
 
 const navLinks = [
   { name: "Gallery", href: "/gallery" },
@@ -12,7 +13,6 @@ const navLinks = [
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
-
 const productLinks = [
   { name: "All Products", href: "/products" },
   { name: "Smart Locks", href: "/products?category=smart-lock" },
@@ -21,162 +21,99 @@ const productLinks = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const productsButton = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const closeMenus = () => { setIsMenuOpen(false); setProductsOpen(false); };
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      if (isMenuOpen) menuButton.current?.focus();
+      else if (productsOpen) productsButton.current?.focus();
+      setIsMenuOpen(false);
+      setProductsOpen(false);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+        setProductsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isMenuOpen, productsOpen]);
+
+  const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart security quote.")}`;
+
   return (
-    <header 
-      className={`fixed top-0 z-50 w-full transition-all duration-500 border-b ${
-        scrolled 
-          ? "bg-black/90 backdrop-blur-md border-white/10 py-2 shadow-lg" 
-          : "bg-black/40 backdrop-blur-sm border-transparent py-4 shadow-[inset_0_-1px_0_rgba(255,255,255,0.06)]"
-      } text-white`}
-    >
-      <div className="container mx-auto flex max-w-[1500px] items-center justify-between px-5 md:px-8 xl:px-10">
-        
-        <div className="flex items-center gap-10">
-          <Link href="/" className="group relative flex items-center gap-3">
-            <div className={`relative shrink-0 transition-all duration-500 ${scrolled ? "h-10 w-10" : "h-12 w-12"}`}>
-              <Image 
-                src="/img/logo.png" 
-                alt="ADE Smart Home Logo" 
-                fill 
-                sizes="48px"
-                className="object-contain object-left group-hover:opacity-80 transition-opacity"
-              />
-            </div>
-            <div className="hidden flex-col xl:flex">
-              <span className="text-base font-bold uppercase text-white">ADE Smart Home</span>
-              <span className="text-xs text-white/60">Smart Security Adelaide</span>
-            </div>
-          </Link>
-          
-          <nav className="hidden items-center gap-9 text-base font-semibold md:flex">
-            <Link
-              href="/"
-              className="group relative py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
-            >
-              Home
-              <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-[#c5a47e] transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-            <div className="group relative">
-              <Link
-                href="/products"
-                className="flex items-center gap-1.5 py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
-              >
-                Products
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" aria-hidden="true" />
-              </Link>
-              <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <div className="liquid-glass rounded-md border p-2">
-                  {productLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block border-b border-white/5 px-4 py-3 text-sm text-white/75 transition-colors last:border-b-0 hover:bg-zinc-900 hover:text-[#c5a47e]"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
+    <header ref={headerRef} className="site-header text-white" data-scrolled={scrolled}>
+      <a href="#site-content" className="skip-link">Skip to content</a>
+      <div className="header-surface">
+        <Link href="/" onClick={closeMenus} className="flex min-w-0 shrink-0 items-center gap-3" aria-label="ADE Smart Home home">
+          <Image src="/img/logo.png" alt="" width={44} height={44} className="h-11 w-11 object-contain" />
+          <span className="flex flex-col">
+            <span className="text-sm font-bold sm:text-base">ADE SMART HOME</span>
+            <span className="text-xs text-white/70">Adelaide smart security</span>
+          </span>
+        </Link>
+        <nav aria-label="Main navigation" className="desktop-navigation items-center gap-1">
+          <Link href="/" className="header-link" aria-current={pathname === "/" ? "page" : undefined}>Home</Link>
+          <div className="relative" onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setProductsOpen(false);
+          }}>
+            <button ref={productsButton} type="button" className="header-link flex items-center gap-2" aria-expanded={productsOpen} aria-controls="product-navigation" onClick={() => setProductsOpen(!productsOpen)}>
+              Products <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+            </button>
+            {productsOpen && (
+              <div id="product-navigation" className="liquid-glass absolute left-0 top-[calc(100%+16px)] w-64 rounded-lg border p-2">
+                {productLinks.map((link) => (
+                  <Link key={link.href} href={link.href} onClick={closeMenus} className="flex min-h-12 items-center justify-between gap-3 rounded-md px-3 text-sm text-white/90 hover:bg-white/10">
+                    {link.name}<ArrowUpRight className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
+                  </Link>
+                ))}
               </div>
-            </div>
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="group relative py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#c5a47e] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+            )}
+          </div>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="header-link" aria-current={pathname.startsWith(link.href) ? "page" : undefined}>{link.name}</Link>
+          ))}
+        </nav>
+        <a href={smsHref} className="header-text-button glass-control hidden min-h-11 items-center gap-2 rounded-md border px-4 text-sm font-semibold sm:inline-flex">
+          <MessageSquareText className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span>Text us</span>
+        </a>
+        <button ref={menuButton} type="button" aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation" className="mobile-menu-button glass-control h-11 w-11 shrink-0 items-center justify-center rounded-md border" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+      {isMenuOpen && (
+        <nav id="mobile-navigation" aria-label="Mobile navigation" className="liquid-glass mobile-navigation mt-2 overflow-y-auto rounded-lg border p-4">
+          <Link href="/" onClick={closeMenus} className="block rounded-md px-3 py-3 font-semibold">Home</Link>
+          <div className="my-2 border-y border-white/15 py-2">
+            {productLinks.map((link) => (
+              <Link key={link.href} href={link.href} onClick={closeMenus} className="flex items-center justify-between rounded-md px-3 py-3 text-white/90 hover:bg-white/10">
+                {link.name}<ArrowUpRight className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
               </Link>
             ))}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-6 md:gap-8">
-          {/* 桌面端社交媒体与联系方式 */}
-          <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-5 border-r border-white/10 pr-6 mr-2">
-              <a href={socialProfiles[0]} target="_blank" rel="noopener noreferrer" aria-label="ADE Smart Home on Facebook" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Facebook">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href={socialProfiles[1]} target="_blank" rel="noopener noreferrer" aria-label="ADE Smart Home on Instagram" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Instagram">
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a href={socialProfiles[2]} target="_blank" rel="noopener noreferrer" aria-label="ADE Smart Home on TikTok" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="TikTok">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-              </a>
-              <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" aria-label="ADE Smart Home on Xiaohongshu" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
-                <span className="text-[11px] font-bold">小红书</span>
-              </a>
-            </div>
-
-            <div className="hidden items-center gap-6 text-base text-white/90 lg:flex">
-                 <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart security quote.")}`} className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
-                 <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-                 <span className="font-medium tracking-wide">Text {businessInfo.phone}</span>
-               </a>
-            </div>
           </div>
-          
-          <button 
-            type="button"
-            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={isMenuOpen}
-            className="md:hidden p-2 text-white/80 hover:text-[#c5a47e] transition-colors"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* 移动端菜单 */}
-      {isMenuOpen && (
-        <div className="liquid-glass absolute left-0 top-full w-full overflow-hidden border-t border-white/10 animate-in fade-in slide-in-from-top-2 md:hidden">
-          <div className="container mx-auto p-6 flex flex-col gap-8">
-            <nav className="flex flex-col gap-4 text-lg font-medium">
-              <Link href="/" className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                Home
-              </Link>
-              <div className="border-b border-white/10 pb-4">
-                <Link href="/products" className="font-bold hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                  Products
-                </Link>
-                <div className="mt-3 grid gap-2 pl-4 text-sm text-white/65">
-                  {productLinks.slice(1).map((link) => (
-                    <Link key={link.href} href={link.href} className="py-1 hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex flex-wrap gap-6 py-4 border-y border-white/5">
-              <a href={socialProfiles[0]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">Facebook</a>
-              <a href={socialProfiles[1]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">Instagram</a>
-              <a href={socialProfiles[2]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
-              <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-[#c5a47e]">小红书</a>
-            </div>
-            <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart security quote.")}`} className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
-              <MessageSquareText className="h-5 w-5" /> Text {businessInfo.phone}
-            </a>
-          </div>
-        </div>
+          {navLinks.map((link) => <Link key={link.href} href={link.href} onClick={closeMenus} className="block rounded-md px-3 py-3 hover:bg-white/10">{link.name}</Link>)}
+          <a href={smsHref} className="mt-2 flex items-center gap-2 border-t border-white/15 px-3 pt-4 font-semibold text-[#d9b98f]"><MessageSquareText className="h-4 w-4" />Text {businessInfo.phone}</a>
+        </nav>
       )}
     </header>
   );

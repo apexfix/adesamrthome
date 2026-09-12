@@ -21,7 +21,7 @@ const services = [
 
 export function HeroCarousel() {
   return (
-    <div className="absolute inset-0 overflow-hidden bg-black">
+    <div className="relative h-full overflow-hidden bg-black">
       <Image
         src="/img/hero1-optimized.avif"
         alt="Smart lock installation completed by ADE Smart Home in Adelaide"
@@ -32,28 +32,27 @@ export function HeroCarousel() {
         sizes="100vw"
         className="object-cover object-center"
       />
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/50" />
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] items-start px-5 pb-6 pt-24 sm:items-center sm:px-8 sm:py-10 lg:px-12 xl:px-16">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 pb-10 pt-28 sm:px-8 sm:pb-12 sm:pt-32 xl:px-10">
         <div className="w-full max-w-6xl">
           <p className="mb-2 text-sm font-semibold uppercase text-[#d9b98f] sm:mb-4 sm:text-base">
             Supply &amp; install or installation only
           </p>
 
-          <h1 className="max-w-5xl text-4xl font-bold leading-[1.08] text-white sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-5xl text-3xl font-bold leading-[1.08] text-white min-[375px]:text-4xl sm:text-6xl lg:text-7xl">
             Smart Lock Installation
             <span className="block text-[#d9b98f]">Across Adelaide</span>
           </h1>
 
-          <p className="mt-3 max-w-4xl text-lg leading-8 text-zinc-100 sm:mt-6 sm:text-xl sm:leading-8 lg:text-[1.35rem]">
-            Choose a supplied-and-installed smart lock, or book professional
-            installation for a compatible lock you already own. We check your
-            door and confirm the scope before booking.
+          <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-100 sm:mt-6 sm:text-xl sm:leading-8">
+            Your new smart lock, supplied and fitted. Already have one? We install
+            compatible locks too. Send your door photos for a local quote.
           </p>
 
           <TrackingCTAs context="hero" />
 
-          <div className="mt-4 grid max-w-6xl gap-2 border-t border-white/25 pt-3 sm:mt-9 sm:grid-cols-2 sm:gap-8 sm:pt-6">
+          <div className="mt-9 hidden max-w-6xl grid-cols-2 gap-8 border-t border-white/25 pt-6 sm:grid">
             {services.map(({ icon: Icon, title, detail }) => (
               <div key={title} className="flex min-w-0 items-start gap-3">
                 <Icon

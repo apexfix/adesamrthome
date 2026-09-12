@@ -202,7 +202,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <Header />
-        {children}
+        <div id="site-content" tabIndex={-1}>{children}</div>
         <Footer />
         <MobileContactBar />
         <SiteAnalytics />

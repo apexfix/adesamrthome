@@ -72,23 +72,23 @@ export default async function ContactPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
 
-      <header className="container mx-auto max-w-[1500px] px-5 pb-12 md:px-8 md:pb-14 xl:px-10">
+      <header className="container mx-auto max-w-[1500px] px-5 pb-8 md:px-8 md:pb-10 xl:px-10">
         <div className="max-w-4xl">
           <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
             Adelaide smart home products
           </p>
-          <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-            Get the Right Advice Before You Book
+          <h1 className="text-4xl font-bold md:text-6xl">
+            Get a local quote
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
-            Tell us whether you need a new smart lock, installation for a lock
-            you already own, or a security camera kit. We will confirm the
-            product, scope and price before any booking.
+            Smart locks, installation only or camera kits. Tell us what you need;
+            we will reply by SMS or email and confirm the price before booking.
           </p>
         </div>
       </header>
 
       <ContactForm
+        compact
         initialService={initialService}
         initialProduct={initialProduct}
       />

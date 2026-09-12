@@ -73,9 +73,9 @@ const heroLinks = [
     event: "hero_cta_click",
     icon: ArrowRight,
     href: "/blog/smart-lock-door-compatibility-check",
-    text: "Check Your Door",
+    text: "Door Check",
     classes:
-      "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-[#d9b98f] px-6 text-sm font-bold text-black transition-colors hover:bg-white sm:min-h-14 sm:px-8 sm:text-base",
+      "inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-4 text-sm font-bold text-black transition-colors hover:bg-white sm:min-h-14 sm:px-8 sm:text-base",
     asLink: true,
     component: "link",
     context: "hero" as const,
@@ -88,7 +88,7 @@ const heroLinks = [
     href: "/contact#quote",
     text: "Get a Quote",
     classes:
-      "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-white/50 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white hover:text-black sm:min-h-14 sm:px-8 sm:text-base",
+      "liquid-glass inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-4 text-sm font-bold text-white transition-colors hover:border-white hover:text-[#d9b98f] sm:min-h-14 sm:px-8 sm:text-base",
     asLink: true,
     component: "link",
     context: "hero" as const,
@@ -143,7 +143,7 @@ export function TrackingCTAs({ context, className }: CTABlock) {
         {items
           .filter((item) => item.context === "hero")
           .map((item) => (
-            <span key={item.label}>{renderAction(item)}</span>
+            <span key={item.label} className="hidden sm:inline-flex">{renderAction(item)}</span>
           ))}
       </div>
     );

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck, Plus } from "lucide-react";
+import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import type { Product } from "@/types";
 import { isSecurityCameraKit } from "@/lib/productType";
 
@@ -54,7 +54,7 @@ export function ProductCard({
           fill
           loading={priority ? "eager" : "lazy"}
           className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1279px) 33vw, (max-width: 1500px) 25vw, 350px"
         />
         
         {/* Sale Badge - 如果打折则显示 */}
@@ -65,9 +65,9 @@ export function ProductCard({
         )}
 
         {/* Installation Badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 border border-[#c5a47e]/30 bg-black/70 px-3 py-1.5 z-10">
+        <div className="liquid-glass absolute left-3 top-3 z-10 flex max-w-[calc(100%-24px)] items-center gap-1.5 rounded-md border px-3 py-2">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white">
+          <span className="text-xs font-semibold text-white">
             {isService
               ? "Installation Only"
               : isCameraKit
@@ -131,8 +131,8 @@ export function ProductCard({
             )}
           </div>
           
-          <div className="flex h-10 w-10 items-center justify-center border border-zinc-700 bg-zinc-800 transition-all duration-300 group-hover:border-[#c5a47e] group-hover:bg-[#c5a47e]">
-            <Plus className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+          <div className="glass-control ml-3 flex h-11 w-11 shrink-0 items-center justify-center rounded-md border" aria-hidden="true">
+            <ArrowUpRight className="h-5 w-5 text-white transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>
         </div>
       </div>

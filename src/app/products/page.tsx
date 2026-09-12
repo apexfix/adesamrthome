@@ -241,10 +241,11 @@ export default async function ProductsPage(props: {
           <div className="mt-8 flex flex-wrap items-center gap-2">
             <Link
               href="/products"
-              className={`inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
+              aria-current={!categoryParam && !brandParam ? "page" : undefined}
+              className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
                 !categoryParam && !brandParam
                   ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                  : "liquid-glass-soft border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                  : "glass-control text-zinc-200 hover:text-white"
               }`}
             >
               All Products
@@ -258,10 +259,11 @@ export default async function ProductsPage(props: {
                 <Link
                   key={category.name}
                   href={category.href}
-                  className={`inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
+                  aria-current={isActive ? "page" : undefined}
+                  className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
                     isActive
                       ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                      : "liquid-glass-soft border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                      : "glass-control text-zinc-200 hover:text-white"
                   }`}
                 >
                   {category.name}
@@ -286,7 +288,7 @@ export default async function ProductsPage(props: {
                 <Link
                   key={brand.name}
                   href={brand.href}
-                  className="liquid-glass-soft inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
+                  className="glass-control inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold text-zinc-200 hover:text-white"
                 >
                   {brand.name}
                 </Link>

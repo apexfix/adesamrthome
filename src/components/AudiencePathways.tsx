@@ -48,9 +48,7 @@ export function AudiencePathways() {
             <Link
               key={href}
               href={href}
-              className={`group py-8 md:px-7 ${
-                index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
-              }`}
+              className={`group border-zinc-800 py-8 transition-colors hover:bg-white/[0.035] md:px-7 ${index > 0 ? "border-t" : ""} ${index % 2 === 1 ? "md:border-l" : ""} ${index < 2 ? "md:border-t-0" : ""} ${index > 0 ? "lg:border-l lg:border-t-0" : ""}`}
             >
               <Icon className="h-7 w-7 text-[#c5a47e]" strokeWidth={1.6} aria-hidden="true" />
               <h3 className="mt-5 text-lg font-bold">{title}</h3>

@@ -67,6 +67,7 @@ const MAX_PHOTO_DIMENSION = 1600;
 const acceptedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 type ContactFormProps = {
+  compact?: boolean;
   initialService?: string;
   initialProduct?: string;
 };
@@ -125,6 +126,7 @@ async function compressPhoto(file: File, index: number): Promise<File> {
 }
 
 export function ContactForm({
+  compact = false,
   initialService,
   initialProduct,
 }: ContactFormProps = {}) {
@@ -359,9 +361,9 @@ export function ContactForm({
   };
 
   return (
-    <section id="quote" className="border-y border-zinc-800 bg-zinc-950 py-16 md:py-24">
+    <section id="quote" className={`quote-section border-y border-zinc-800 bg-zinc-950 ${compact ? "py-8 md:py-12" : "py-16 md:py-24"}`}>
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-        <div className="mb-10 max-w-3xl">
+        {!compact && <div className="mb-10 max-w-3xl">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
             Fast Adelaide quote
           </p>
@@ -373,10 +375,10 @@ export function ContactForm({
               ? "Add your suburb, property type and preferred timing. This kit is currently in stock, and we will reply by SMS or email with the next step."
               : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>
-        </div>
+        </div>}
 
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
-          <aside className="liquid-glass-soft rounded-md border p-6 md:p-8">
+          <aside className="order-2 self-start border-t border-white/15 py-6 lg:order-1 lg:border-t-0 lg:py-8">
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
@@ -428,7 +430,7 @@ export function ContactForm({
             </div>}
           </aside>
 
-          <div className="liquid-glass-light relative rounded-md border p-6 md:p-9">
+          <div className="liquid-glass-light relative order-1 rounded-lg border p-5 md:p-9 lg:order-2">
             <h3 className="text-2xl font-black tracking-tight text-slate-950">
               {formData.product
                 ? `Ask about ${formData.product}`
@@ -682,7 +684,7 @@ export function ContactForm({
               <button
                 type="submit"
                 disabled={isSubmitting || isPreparingPhotos}
-                className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
+                className="flex min-h-14 w-full items-center justify-center gap-3 rounded-md bg-black px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
               >
                 {isSubmitting
                   ? "Sending…"
