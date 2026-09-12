@@ -5,7 +5,7 @@ import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const textSmsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`;
+  const textSmsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a product quote.")}`;
   const emailHref = `mailto:${businessInfo.email}`;
 
   return (
@@ -25,7 +25,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm leading-relaxed">
-              Adelaide&apos;s smart lock installation specialists. We combine reliable security technology with neat, carefully finished installations and local support.
+              Adelaide smart security products, smart lock installation and practical local support for homes and small businesses.
             </p>
             
             {/* 社交媒体链接 */}
@@ -78,6 +78,12 @@ export function Footer() {
               Our Services
             </h4>
             <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/products/security-camera-kits" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
+                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
+                  Security Camera Kits
+                </Link>
+              </li>
               <li>
                 <Link href="/smart-lock-supply-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
                   <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />

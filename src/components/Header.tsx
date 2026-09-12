@@ -50,7 +50,7 @@ export function Header() {
             </div>
             <div className="hidden flex-col xl:flex">
               <span className="text-base font-bold uppercase text-white">ADE Smart Home</span>
-              <span className="text-xs text-white/60">Smart Lock Adelaide</span>
+              <span className="text-xs text-white/60">Smart Security Adelaide</span>
             </div>
           </Link>
           

@@ -20,6 +20,7 @@ const serviceOptions = [
     value: "installation-only",
     label: "Installation only (other compatible brands supported)",
   },
+  { value: "security-camera-kit", label: "Security camera kit" },
   { value: "portfolio-project", label: "Property / project" },
   { value: "not-sure", label: "Not sure" },
 ] as const;
@@ -146,6 +147,7 @@ export function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
+  const isCameraKitEnquiry = formData.service === "security-camera-kit";
   const latestFunnelStateRef = useRef({
     service: selectedService,
     product: initialProduct?.trim().slice(0, 150) ?? "",
@@ -364,11 +366,12 @@ export function ContactForm({
             Fast Adelaide quote
           </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            Tell Us About Your Door
+            {isCameraKitEnquiry ? "Tell Us About Your Security Needs" : "Tell Us About Your Door"}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Add your suburb, preferred timing and door photos for a faster compatibility check.
-            We will review the details and reply by SMS or email with the next step.
+            {isCameraKitEnquiry
+              ? "Add your suburb, property type and preferred timing. We will confirm current kit availability and reply by SMS or email."
+              : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>
         </div>
 
@@ -377,22 +380,33 @@ export function ContactForm({
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
-                href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20a%20smart%20lock%20quote.`}
+                href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? "Hi ADE Smart Home, I am interested in the Dahua 5MP two-camera security kit." : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5" aria-hidden="true" />
                 Text 0431060390
               </a>
               <a
-                href={`mailto:${businessInfo.email}?subject=Door%20photos%20for%20installation%20check`}
+                href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <Camera className="h-5 w-5" aria-hidden="true" />
-                Email door photos
+                {isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}
               </a>
             </div>
 
-            <div className="mt-8 border-t border-zinc-800 pt-7">
+            {isCameraKitEnquiry ? (
+              <div className="mt-8 border-t border-zinc-800 pt-7">
+                <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
+                  Package contents
+                </h3>
+                <ul className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
+                  <li><strong className="text-[#c5a47e]">2 x</strong> Dahua 5MP WizSense turret cameras</li>
+                  <li><strong className="text-[#c5a47e]">1 x</strong> Dahua four-channel PoE network video recorder</li>
+                  <li><strong className="text-[#c5a47e]">A$443</strong> equipment package</li>
+                </ul>
+              </div>
+            ) : <div className="mt-8 border-t border-zinc-800 pt-7">
               <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
                 Four helpful photo angles
               </h3>
@@ -411,17 +425,21 @@ export function ContactForm({
                 View door measurement guide
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-            </div>
+            </div>}
           </aside>
 
           <div className="relative border border-slate-200 bg-white p-6 shadow-2xl md:p-9">
             <h3 className="text-2xl font-black tracking-tight text-slate-950">
-              {formData.product ? `Ask about ${formData.product}` : "Request an installation quote"}
+              {formData.product
+                ? `Ask about ${formData.product}`
+                : isCameraKitEnquiry
+                  ? "Request a security camera quote"
+                  : "Request an installation quote"}
             </h3>
             <p className="mt-2 text-sm text-slate-600">
-              Name, mobile, email, suburb, property type and preferred timing are required.
-              Adding all four door angles helps us check compatibility before quoting. You can
-              still submit now and send photos later.
+              {isCameraKitEnquiry
+                ? "Name, mobile, email, suburb, property type and preferred timing are required. Add any coverage requirements in the message box."
+                : "Name, mobile, email, suburb, property type and preferred timing are required. Adding all four door angles helps us check compatibility before quoting. You can still submit now and send photos later."}
             </p>
 
             <form
@@ -542,14 +560,14 @@ export function ContactForm({
               </div>
 
               <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-                Preferred model <span className="font-normal normal-case text-slate-600">optional</span>
+                {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="font-normal normal-case text-slate-600">optional</span>
                 <input
                   name="product"
                   list="smart-lock-models"
                   value={formData.product}
                   onChange={handleChange}
                   className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                  placeholder="e.g. Lockin X9, customer-supplied lock, or not sure"
+                  placeholder={isCameraKitEnquiry ? "e.g. Dahua 5MP two-camera kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
                 />
                 <datalist id="smart-lock-models">
                   <option value="Not sure – please recommend" />
@@ -565,10 +583,11 @@ export function ContactForm({
                   <option value="Lockin S6 Max" />
                   <option value="Lockin V5 Max" />
                   <option value="Kaadas K70 SE" />
+                  <option value="Dahua 5MP 2-Camera PoE Security Kit" />
                 </datalist>
               </label>
 
-              <fieldset>
+              {!isCameraKitEnquiry && <fieldset>
                 <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                   Door photos <span className="font-normal normal-case text-slate-600">recommended for a more accurate quote</span>
                 </legend>
@@ -640,7 +659,7 @@ export function ContactForm({
                   </ul>
                 )}
                 {photoError && <p className="mt-2 text-sm text-red-700">{photoError}</p>}
-              </fieldset>
+              </fieldset>}
 
               <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                 Anything else? <span className="font-normal normal-case text-slate-600">optional</span>
@@ -650,7 +669,7 @@ export function ContactForm({
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                  placeholder="Tell us about the existing lock, security screen, building access or any special requirements."
+                  placeholder={isCameraKitEnquiry ? "Tell us which areas you would like to monitor and any special requirements." : "Tell us about the existing lock, security screen, building access or any special requirements."}
                 />
               </label>
 
@@ -665,7 +684,11 @@ export function ContactForm({
                 disabled={isSubmitting || isPreparingPhotos}
                 className="flex h-14 w-full items-center justify-center gap-3 bg-black px-5 text-[11px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
               >
-                {isSubmitting ? "Sending…" : "Request an installation quote"}
+                {isSubmitting
+                  ? "Sending…"
+                  : isCameraKitEnquiry
+                    ? "Request product enquiry"
+                    : "Request an installation quote"}
                 {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
               </button>
               <p className="text-center text-xs text-slate-500">

@@ -8,14 +8,14 @@ import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 import { notFound } from "next/navigation";
 
 const baseMetadata: Metadata = {
-  title: "Smart Locks with Adelaide Installation",
+  title: "Smart Locks & Security Camera Kits Adelaide",
   description:
-    "Compare smart locks with Adelaide installation. Customer-supplied compact lock installation is A$200; standard 6068 mortise installation is A$350.",
+    "Shop smart locks with Adelaide installation and Dahua security camera kits from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
-    title: "Smart Locks with Adelaide Installation",
+    title: "Smart Locks & Security Camera Kits Adelaide",
     description:
-      "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
+      "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
     url: `${siteUrl}/products`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
@@ -24,9 +24,9 @@ const baseMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Locks with Adelaide Installation",
+    title: "Smart Locks & Security Camera Kits Adelaide",
     description:
-      "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
+      "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -81,6 +81,11 @@ const SMART_LOCK_CHILD_CATEGORIES = new Set([
 const SMART_LOCK_BRANDS = [
   { name: "Lockin", href: "/brands/lockin" },
   { name: "Kaadas", href: "/brands/kaadas" },
+];
+
+const PRODUCT_CATEGORIES = [
+  { name: "Smart Locks", href: "/products?category=smart-lock" },
+  { name: "Security Camera Kits", href: "/products/security-camera-kits" },
 ];
 
 function normalizeCategory(value: string) {
@@ -142,6 +147,10 @@ function getPageTitle(categoryParam: string | null, brandParam: string | null) {
     return "Kaadas Smart Locks";
   }
 
+  if (normalized === "securitycamerakits") {
+    return "Security Camera Kits";
+  }
+
   return categoryParam || "All Products";
 }
 
@@ -171,15 +180,17 @@ export default async function ProductsPage(props: {
   const isSmartLocksPage =
     categoryParam === null ||
     ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
+  const isCameraKitsPage =
+    categoryParam !== null && normalizeCategory(categoryParam) === "securitycamerakits";
 
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "@id": `${siteUrl}/products#collection`,
     url: `${siteUrl}/products`,
-    name: "Smart Locks with Adelaide Installation",
+    name: "Smart Locks and Security Camera Kits Adelaide",
     description:
-      "Smart locks, supplied installation packages and installation-only service for compatible customer-supplied locks across Adelaide.",
+      "Smart locks, installation-only service and security camera equipment packages from ADE Smart Home in Adelaide.",
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: allProducts.length,
@@ -200,7 +211,7 @@ export default async function ProductsPage(props: {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Smart Locks",
+        name: "Products",
         item: `${siteUrl}/products`,
       },
     ],
@@ -226,23 +237,34 @@ export default async function ProductsPage(props: {
             {pageTitle}
           </h1>
           <div className="h-1 w-20 bg-[#c5a47e] rounded-full" />
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/products"
+              className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
+                !categoryParam && !brandParam
+                  ? "border-[#c5a47e] bg-[#c5a47e] text-black"
+                  : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+              }`}
+            >
+              All Products
+            </Link>
+            {PRODUCT_CATEGORIES.map((category) => (
+              <Link
+                key={category.name}
+                href={category.href}
+                className="rounded-full border border-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
           {categoryParam && (
              <p className="mt-6 text-zinc-400 max-w-2xl mx-auto">
                Showing all available products in the {pageTitle} category.
              </p>
           )}
           {isSmartLocksPage && (
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/products"
-                className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
-                  !brandParam
-                    ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                    : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
-                }`}
-              >
-                All Brands
-              </Link>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               {SMART_LOCK_BRANDS.map((brand) => (
                 <Link
                   key={brand.name}
@@ -254,7 +276,7 @@ export default async function ProductsPage(props: {
               ))}
             </div>
           )}
-          <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
+          {!isCameraKitsPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
             Already have a smart lock?{" "}
             <Link
               href="/smart-lock-installation-only-adelaide"
@@ -263,9 +285,9 @@ export default async function ProductsPage(props: {
               Request an installation-only quote
             </Link>
             .
-          </div>
+          </div>}
 
-          <TrackingCTAs context="products" />
+          {!isCameraKitsPage && <TrackingCTAs context="products" />}
         </div>
 
         {/* 产品网格展示 */}

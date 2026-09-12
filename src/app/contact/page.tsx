@@ -4,14 +4,14 @@ import { ContactForm } from "@/components/ContactForm";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 const baseMetadata: Metadata = {
-  title: "Get a Smart Lock Quote in Adelaide",
+  title: "Get a Smart Home Product Quote in Adelaide",
   description:
-    "Request a smart lock supply and installation quote or installation-only service for a compatible customer-supplied lock in Adelaide. We reply by SMS or email.",
+    "Request a smart lock, installation-only or security camera kit quote from ADE Smart Home in Adelaide. We reply by SMS or email.",
   alternates: { canonical: `${siteUrl}/contact` },
   openGraph: {
     title: "Get a Quote | ADE Smart Home Adelaide",
     description:
-      "Request smart lock supply and installation or installation-only service for a compatible customer-supplied lock in Adelaide.",
+      "Request smart lock supply, installation-only service or a security camera equipment package in Adelaide.",
     url: `${siteUrl}/contact`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
@@ -20,7 +20,7 @@ const baseMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Get a Smart Lock Quote in Adelaide",
+    title: "Get a Smart Home Product Quote in Adelaide",
     description:
       "Request smart lock supply and installation or installation-only service in Adelaide.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
@@ -75,15 +75,15 @@ export default async function ContactPage({
       <header className="container mx-auto px-4 pb-10 md:px-6 md:pb-14">
         <div className="max-w-4xl">
           <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c5a47e]">
-            Adelaide smart lock installation
+            Adelaide smart home products
           </p>
           <h1 className="text-4xl font-black tracking-tight md:text-6xl">
             Get the Right Advice Before You Book
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
             Tell us whether you need a new smart lock, installation for a lock
-            you already own, or help choosing the right model. We will confirm
-            the scope and price before any booking.
+            you already own, or a security camera kit. We will confirm the
+            product, scope and price before any booking.
           </p>
         </div>
       </header>
@@ -97,23 +97,23 @@ export default async function ContactPage({
         <div className="container mx-auto grid gap-10 px-4 md:grid-cols-3 md:px-6">
           <div>
             <ShieldCheck className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
-            <h2 className="mt-4 text-lg font-bold">Careful Installation</h2>
+            <h2 className="mt-4 text-lg font-bold">Careful Product Advice</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              Door suitability is checked before work begins, with clean preparation and finishing.
+              We confirm the selected product, package contents and next steps before an order or booking.
             </p>
           </div>
           <div>
             <Clock className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Clear Next Steps</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              We explain what photos or measurements are needed and confirm availability before booking.
+              We explain what details are needed and confirm availability before booking or purchase.
             </p>
           </div>
           <div>
             <MessageSquareText className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Message-Friendly Support</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              Text 0431060390 or email us about smart lock packages or installation-only jobs.
+              Text 0431060390 or email us about smart locks, installation-only jobs or security camera kits.
             </p>
           </div>
         </div>

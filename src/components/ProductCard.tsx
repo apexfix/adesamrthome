@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, Plus } from "lucide-react";
 import type { Product } from "@/types";
+import { isSecurityCameraKit } from "@/lib/productType";
 
 export function ProductCard({ product }: { product: Product }) {
   // 1. 处理价格逻辑
@@ -21,6 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
     ? (parseInt(product.installed_price, 10) / divider).toFixed(0)
     : null;
   const isService = product.kind === "service";
+  const isCameraKit = isSecurityCameraKit(product);
   const serviceOptions = product.service_options || [];
   const standardMortisePrice = serviceOptions[1]
     ? (parseInt(serviceOptions[1].price, 10) / divider).toFixed(0)
@@ -61,6 +63,8 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="text-[9px] font-bold text-white uppercase tracking-widest">
             {isService
               ? "Installation Only"
+              : isCameraKit
+                ? "2-Camera PoE Kit"
               : priceIncludesInstallation
                 ? "Standard Install Included"
                 : "Installation Available"}
@@ -87,6 +91,8 @@ export function ProductCard({ product }: { product: Product }) {
                 ? "Quote Required"
                 : isService
                   ? "Installation from"
+                : isCameraKit
+                  ? "Equipment Package"
                 : isOnSale
                   ? "Special Offer"
                   : priceIncludesInstallation

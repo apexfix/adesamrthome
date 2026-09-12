@@ -26,6 +26,7 @@ import {
 } from "@/lib/seoData";
 import type { Product, ProductAttribute, ProductImage } from "@/types";
 import { getSmartLockBrandUrl } from "@/lib/brandData";
+import { isSecurityCameraKit } from "@/lib/productType";
 
 interface ProductPageProps {
   params: Promise<{
@@ -91,6 +92,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const { current } = getPrice(product);
   const isService = product.kind === "service";
+  const isCameraKit = isSecurityCameraKit(product);
   const priceIncludesInstallation = product.price_includes_installation !== false;
   const url = `${siteUrl}/products/${product.slug}`;
   const image = product.images?.[0]?.src
@@ -98,14 +100,20 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const priceMessage = isService
     ? `from A$${current} for compatible customer-supplied smart locks across Adelaide`
+    : isCameraKit
+      ? `A$${current} equipment package with two 5MP cameras and a four-channel PoE recorder`
     : priceIncludesInstallation
       ? `from $${current} with standard Adelaide installation included`
       : `from $${current} lock only, with an Adelaide installation package available`;
   const description = isService
     ? "Smart lock installation-only service across Adelaide. A$200 for compact locks and A$350 for standard 6068 mortise locks. Customer supplies the lock."
+    : isCameraKit
+      ? `${product.name} for A$${current}. Two Dahua 5MP cameras and one four-channel PoE NVR for Adelaide homes and small businesses.`
     : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
   const seoTitle = isService
     ? "Smart Lock Installation Prices Adelaide"
+    : isCameraKit
+      ? "Dahua 5MP 2-Camera Security Kit Adelaide"
     : `${product.name} Adelaide`;
 
   return {
@@ -247,12 +255,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const currencySymbol = product.prices?.currency_symbol || "$";
   const installedPrice = getOptionalPrice(product, product.installed_price);
   const isService = product.kind === "service";
+  const isCameraKit = isSecurityCameraKit(product);
   const serviceOptions = product.service_options || [];
   const hasSeparateInstallationPrice =
     product.price_includes_installation === false && installedPrice !== null;
   const hasReplacementWarranty = replacementWarrantySlugs.has(product.slug);
   const brandName = getProductBrand(product);
-  const brandPath = isService ? null : getSmartLockBrandUrl(brandName);
+  const brandPath = isService || isCameraKit ? null : getSmartLockBrandUrl(brandName);
   const brandUrl = brandPath ? `${siteUrl}${brandPath}` : undefined;
   
   const galleryImages = product.images && product.images.length > 0 
@@ -276,7 +285,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
     `Hi ADE Smart Home, I would like a quote for ${product.name} in Adelaide.`
   );
   const emailPrefill = encodeURIComponent(
-    `Hi ADE Smart Home,\nI need help with smart lock installation and would like a quote.\nProduct: ${product.name}\nSuburb:\nPhotos: attached`
+    isCameraKit
+      ? `Hi ADE Smart Home,\nI am interested in the ${product.name}.\nSuburb:\nPlease contact me with availability.`
+      : `Hi ADE Smart Home,\nI need help with smart lock installation and would like a quote.\nProduct: ${product.name}\nSuburb:\nPhotos: attached`
   );
 
   const productSchema = {
@@ -288,7 +299,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     sku: product.sku,
     model: product.name,
     brand: { "@type": "Brand", name: brandName, url: brandUrl },
-    category: "Smart Lock",
+    category: isCameraKit ? "Video Surveillance System" : "Smart Lock",
     image: productImages,
     mainEntityOfPage: productUrl,
     offers: {
@@ -304,20 +315,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
         name: businessInfo.addressLocality,
       },
     },
-    additionalProperty: [
-      {
-        "@type": "PropertyValue",
-        name: "Standard Adelaide installation",
-        value: hasSeparateInstallationPrice
-          ? `A$${installedPrice} total package after door compatibility confirmation`
-          : "Included",
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Door compatibility check",
-        value: "Free before booking",
-      },
-    ],
+    additionalProperty: isCameraKit
+      ? [
+          { "@type": "PropertyValue", name: "Camera quantity", value: "2" },
+          { "@type": "PropertyValue", name: "Camera resolution", value: "5MP" },
+          { "@type": "PropertyValue", name: "Recorder channels", value: "4" },
+        ]
+      : [
+          {
+            "@type": "PropertyValue",
+            name: "Standard Adelaide installation",
+            value: hasSeparateInstallationPrice
+              ? `A$${installedPrice} total package after door compatibility confirmation`
+              : "Included",
+          },
+          {
+            "@type": "PropertyValue",
+            name: "Door compatibility check",
+            value: "Free before booking",
+          },
+        ],
   };
 
   const serviceSchema = {
@@ -361,7 +378,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: isService ? "Installation Services" : "Smart Locks",
+        name: isService
+          ? "Installation Services"
+          : isCameraKit
+            ? "Security Camera Kits"
+            : "Smart Locks",
         item: `${siteUrl}/products`,
       },
       ...(!isService && brandUrl
@@ -423,8 +444,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
 
-    hasBrandSpecificStories = brandStories.length > 0;
-    relatedStories = (hasBrandSpecificStories ? brandStories : allStories).slice(0, 4);
+    if (!isCameraKit) {
+      hasBrandSpecificStories = brandStories.length > 0;
+      relatedStories = (hasBrandSpecificStories ? brandStories : allStories).slice(0, 4);
+    }
   }
 
   return (
@@ -502,6 +525,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </div>
                   ))}
                 </div>
+              ) : isCameraKit ? (
+                <div className="mb-8 border-l-2 border-[#c5a47e] pl-5">
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+                    Two-camera equipment package
+                  </p>
+                  <p className="text-5xl font-black tracking-tighter text-[#c5a47e]">
+                    {currencySymbol}{currentPrice}
+                  </p>
+                </div>
               ) : hasSeparateInstallationPrice ? (
                 <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div className="border-l-2 border-zinc-700 pl-5">
@@ -554,6 +586,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="font-bold text-sm">
                     {isService
                       ? "Free Compatibility Check"
+                      : isCameraKit
+                        ? "Two 5MP Cameras"
                       : hasReplacementWarranty
                         ? "2-Year Warranty"
                         : "Local Product Support"}
@@ -561,6 +595,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
                     {isService
                       ? "Before Booking"
+                      : isCameraKit
+                        ? "Clear day and night monitoring"
                       : hasReplacementWarranty
                         ? "Covered lock faults replaced"
                         : "Terms confirmed before booking"}
@@ -573,10 +609,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
                 <div>
                   <p className="font-bold text-sm">
-                    {isService ? "Adelaide-Wide Service" : "Expert Install"}
+                    {isService
+                      ? "Adelaide-Wide Service"
+                      : isCameraKit
+                        ? "4-Channel PoE NVR"
+                        : "Expert Install"}
                   </p>
                   <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
-                    Adelaide Local Team
+                    {isCameraKit ? "Room for two more cameras" : "Adelaide Local Team"}
                   </p>
                 </div>
               </div>
@@ -584,6 +624,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <p className="text-sm text-zinc-400 sm:col-span-2">
                 {isService
                   ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
+                  : isCameraKit
+                    ? "The A$443 package contains two DH-IPC-HDW2541EMP-AS-ANZ 5MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder. Stock is confirmed before purchase."
                   : hasSeparateInstallationPrice
                     ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
                     : hasReplacementWarranty
@@ -595,24 +637,32 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 text-emerald-500 text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
                 <div className="h-2 w-2 bg-emerald-500" />
-                {isService ? "Send photos before booking" : "Ask for current availability"}
+                {isService
+                  ? "Send photos before booking"
+                  : isCameraKit
+                    ? "Ask for current kit availability"
+                    : "Ask for current availability"}
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
-                  href={`/contact?service=${isService ? "installation-only" : "supply-install"}&product=${encodedProductName}`}
+                  href={`/contact?service=${isService ? "installation-only" : isCameraKit ? "security-camera-kit" : "supply-install"}&product=${encodedProductName}`}
                   className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Calendar className="w-5 h-5" />
-                  {isService ? "Request Installation Quote" : "Check Price & Availability"}
+                  {isService
+                    ? "Request Installation Quote"
+                    : isCameraKit
+                      ? "Enquire About This Kit"
+                      : "Check Price & Availability"}
                 </Link>
-                <Link 
+                {!isCameraKit && <Link
                   href="/blog/smart-lock-door-compatibility-check"
                   className="h-16 bg-transparent text-white border-2 border-zinc-800 hover:border-[#c5a47e] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
                 >
                   <Ruler className="w-5 h-5" />
                   Check Door Fit
-                </Link>
+                </Link>}
                 <a
                   href={`sms:${businessInfo.phoneInternational}?body=${quotePrefill}`}
                   className="h-16 bg-[#111827] text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
@@ -621,13 +671,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   Text Quote
                 </a>
                 <a
-                  href={`mailto:${businessInfo.email}?subject=Door%20Photos%20for%20Install&body=${emailPrefill}`}
+                  href={`mailto:${businessInfo.email}?subject=${isCameraKit ? "Dahua%20Camera%20Kit%20Enquiry" : "Door%20Photos%20for%20Install"}&body=${emailPrefill}`}
                   className="h-16 bg-transparent text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
                 >
                   <Camera className="w-5 h-5" />
-                  Send Door Photos
+                  {isCameraKit ? "Email Enquiry" : "Send Door Photos"}
                 </a>
-                {!isService && (
+                {!isService && !isCameraKit && (
                   <Link
                     href={`/contact?service=installation-only&product=${encodedProductName}`}
                     className="h-16 bg-transparent text-[#d9b98f] border border-zinc-700 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all col-span-1 sm:col-span-2"
@@ -637,7 +687,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </Link>
                 )}
               </div>
-              {!isService && (
+              {!isService && !isCameraKit && (
                 <p className="text-xs leading-6 text-zinc-500">
                   Supplied installation packages are brought to the confirmed Adelaide appointment;
                   we do not offer separate postal shipping. See our{" "}

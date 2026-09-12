@@ -112,6 +112,7 @@ export async function GET() {
       homeLanguages,
     ),
     xmlUrl(`${siteUrl}/products`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
+    xmlUrl(`${siteUrl}/products/security-camera-kits`, siteLastModified, ["/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-product.jpg", "/img/products/dahua-2-camera-kit/dahua-nvr4104hs-p-4ks2-l.webp"]),
     xmlUrl(`${siteUrl}/about`, siteLastModified, [installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),
     xmlUrl(`${siteUrl}/brands/lockin`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),

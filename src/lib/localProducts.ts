@@ -193,6 +193,96 @@ export const localProducts = [
     ],
   },
   {
+    id: 900009,
+    name: "Dahua 5MP 2-Camera PoE Security Kit",
+    slug: "dahua-5mp-2-camera-poe-security-kit",
+    sku: "DAHUA-2CAM-2541-4104",
+    short_description:
+      "A compact Dahua security package with two 5MP WizSense turret cameras and one four-channel PoE network video recorder for homes and small businesses.",
+    description: `
+      <h2>Dahua 5MP Two-Camera Security Package</h2>
+      <p>This A$443 package combines two Dahua 5MP turret cameras with a compact four-channel PoE network video recorder. It is a practical foundation for monitoring key areas around a home, shop, office or small commercial property.</p>
+      <h2>Package Contents</h2>
+      <ul>
+        <li><strong>2 x DH-IPC-HDW2541EMP-AS-ANZ</strong> 5MP IR fixed-focal eyeball network cameras.</li>
+        <li><strong>1 x DHI-NVR4104HS-P-4KS2/L</strong> four-channel compact PoE network video recorder.</li>
+      </ul>
+      <h2>Clear 5MP Monitoring</h2>
+      <p>Each camera captures up to 5MP video and includes infrared illumination up to 30 metres. Smart H.265+ compression helps reduce bandwidth and storage use, while built-in intelligent monitoring can distinguish people and vehicles for supported tripwire and intrusion events.</p>
+      <h2>Simple PoE Recorder</h2>
+      <p>The compact recorder provides four PoE camera ports, supports Smart H.265+ and Smart H.264+ compression, and offers simultaneous HDMI and VGA output with up to 4K HDMI display output. The four-channel design leaves room to expand the system with up to two additional compatible cameras.</p>
+      <h2>Suitable For</h2>
+      <ul>
+        <li>Front entrance and driveway coverage for Adelaide homes.</li>
+        <li>Small shops, offices, workshops and storage areas.</li>
+        <li>Owners who want a reliable wired PoE security camera system.</li>
+      </ul>
+      <p>Stock and exact model availability are confirmed before an order is finalised.</p>
+    `,
+    categories: [
+      { id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" },
+    ],
+    tags: [
+      { id: 30, name: "Dahua", slug: "dahua" },
+      { id: 31, name: "5MP Camera", slug: "5mp-camera" },
+      { id: 32, name: "PoE NVR", slug: "poe-nvr" },
+      { id: 33, name: "Two Camera Kit", slug: "two-camera-kit" },
+    ],
+    brands: [{ id: 5, name: "Dahua", slug: "dahua" }],
+    prices: {
+      price: "44300",
+      regular_price: "44300",
+      sale_price: "44300",
+      currency_code: "AUD",
+      currency_symbol: "$",
+      currency_minor_unit: 2,
+    },
+    price_includes_installation: false,
+    images: [
+      {
+        id: 901001,
+        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-product.jpg",
+        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ 5MP WizSense turret camera",
+        width: 500,
+        height: 500,
+      },
+      {
+        id: 901002,
+        src: "/img/products/dahua-2-camera-kit/dahua-nvr4104hs-p-4ks2-l.webp",
+        alt: "Dahua DHI-NVR4104HS-P-4KS2/L four-channel PoE network video recorder",
+        width: 1200,
+        height: 1200,
+      },
+    ],
+    detail_images: [
+      {
+        id: 901003,
+        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-5mp-camera.jpg",
+        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ camera features and specifications",
+        width: 927,
+        height: 1200,
+      },
+      {
+        id: 901004,
+        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-detail.jpg",
+        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ detailed camera specifications",
+        width: 927,
+        height: 1200,
+      },
+    ],
+    attributes: [
+      { id: 1, name: "Brand", options: ["Dahua"] },
+      { id: 2, name: "Package", options: ["2 cameras", "1 four-channel PoE NVR"] },
+      { id: 3, name: "Camera Model", options: ["DH-IPC-HDW2541EMP-AS-ANZ"] },
+      { id: 4, name: "Camera Resolution", options: ["5MP (2960 x 1668)"] },
+      { id: 5, name: "Night Vision", options: ["Infrared illumination up to 30 m"] },
+      { id: 6, name: "Camera Features", options: ["Built-in microphone", "SMD Plus", "IP67", "PoE"] },
+      { id: 7, name: "Recorder Model", options: ["DHI-NVR4104HS-P-4KS2/L"] },
+      { id: 8, name: "Recorder", options: ["4 channels", "4 PoE ports", "1 HDD bay", "4K HDMI output"] },
+      { id: 9, name: "Video Compression", options: ["Smart H.265+", "Smart H.264+"] },
+    ],
+  },
+  {
     id: 900007,
     name: "Lockin OLA Slim Smart Lock",
     slug: "lockin-ola-slim-smart-lock",
