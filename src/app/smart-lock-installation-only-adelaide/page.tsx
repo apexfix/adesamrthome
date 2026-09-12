@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   ClipboardCheck,
   DoorOpen,
   PackageCheck,
@@ -262,17 +263,15 @@ export default function InstallationOnlyPage() {
             Adelaide installation-only service
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
-            Already Bought a Smart Lock?
-            <span className="block text-[#d9b98f]">We Can Check and Install It.</span>
+            Smart Lock Installation Only
+            <span className="block text-[#d9b98f]">Adelaide</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
-            Professional installation for compatible customer-supplied smart locks across
-            Adelaide. Compact smart locks and small lock bodies are $200 for standard
-            installation. Full-size smart locks using a standard 6068 mortise are $350. Send the
-            exact model and door photos first so we can confirm compatibility before booking.
+            Already bought your lock? We install compatible customer-supplied models across
+            Adelaide. Send the model and door photos for a compatibility check and a confirmed installation quote.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col flex-wrap gap-3 sm:flex-row">
             <Link
               href="#quote"
               className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#d9b98f] px-6 text-sm font-bold text-black transition-colors hover:bg-white"
@@ -280,6 +279,9 @@ export default function InstallationOnlyPage() {
               Request Installation Quote
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
+            <a href="#installation-prices" className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/60 bg-black/30 px-6 text-sm font-bold text-white hover:bg-black/50">
+              Compare installation prices <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            </a>
             <a
               href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20an%20installation-only%20quote.`}
               className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/60 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black"
@@ -307,7 +309,7 @@ export default function InstallationOnlyPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section id="installation-prices" className="scroll-mt-28 border-b border-slate-200 py-14 md:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
@@ -399,7 +401,7 @@ export default function InstallationOnlyPage() {
 
       <section className="bg-slate-50 py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
-          <div className="relative aspect-[4/5] min-h-[440px] overflow-hidden bg-slate-200">
+          <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden bg-slate-200">
             <Image
               src="/img/smart-lock-door-measurement-requirements.png"
               alt="Door photos and measurements required before smart lock installation"
@@ -497,11 +499,9 @@ export default function InstallationOnlyPage() {
               <details key={faq.question} className="group border-b border-slate-200 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">
-                    +
-                  </span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-[#8a6b48] transition-transform group-open:rotate-180" aria-hidden="true" />
                 </summary>
-                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-5 text-base leading-7 text-slate-600">{faq.answer}</p>
               </details>
             ))}
           </div>

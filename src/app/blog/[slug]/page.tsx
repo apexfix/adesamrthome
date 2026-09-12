@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
-import { Calendar, MapPin, ArrowLeft, ShieldCheck, UserRound } from "lucide-react";
+import { Calendar, MapPin, ChevronRight, BookOpen, ShieldCheck, UserRound } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -127,12 +127,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const isGuide = data.contentType === "guide" || data.category === "Buyer Guide";
   const isCameraGuide = data.category === "CCTV Guide";
+  const isDoorGuide = slug === "smart-lock-door-compatibility-check";
+  const location = data.suburb && !data.suburb.toLowerCase().includes("adelaide")
+    ? `${data.suburb}, Adelaide` : data.suburb || "Adelaide";
   const author = data.author || "ADE Smart Home Installation Team";
   const allPosts = getAllPosts();
-  const currentIndex = allPosts.findIndex((item) => item.slug === slug);
-  const relatedPosts = Array.from({ length: Math.min(3, allPosts.length - 1) }, (_, offset) =>
-    allPosts[(currentIndex + offset + 1) % allPosts.length],
-  ).filter((item): item is PostSummary => Boolean(item && item.slug !== slug));
+  const relatedPosts = allPosts.filter(item => item.slug !== slug).sort((a, b) =>
+    Number(b.category === data.category) - Number(a.category === data.category),
+  ).slice(0, 3);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -147,7 +149,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     author: { "@type": "Organization", name: author, url: siteUrl },
     publisher: { "@id": `${siteUrl}/#business` },
     articleSection: data.category || "Smart Lock Installation",
-    about: data.suburb ? `${data.suburb}, Adelaide` : "Adelaide",
+    about: isCameraGuide ? "Security camera equipment in Adelaide" : "Smart locks and installation in Adelaide",
+    inLanguage: "en-AU",
+    spatialCoverage: { "@type": "Place", name: location },
   };
 
   const breadcrumbSchema = {
@@ -171,42 +175,48 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
-      <div className="container mx-auto px-4 max-w-3xl">
-        <Link href="/blog" className="inline-flex items-center text-zinc-500 hover:text-[#c5a47e] mb-12 transition-colors text-xs font-bold uppercase tracking-widest">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Stories
-        </Link>
+      <div className="container mx-auto max-w-3xl px-5 md:px-8">
+        <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-zinc-400">
+          <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">Home</Link>
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          <Link href="/blog" className="inline-flex min-h-11 items-center hover:text-white">Guides &amp; projects</Link>
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          <span aria-current="page" className="text-[#d9b98f]">{data.category || "Installation"}</span>
+        </nav>
         
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#c5a47e] text-xs mb-6 font-bold uppercase tracking-widest text-shadow-sm">
-          <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Published {data.date}</span>
+          {data.date && <span className="flex items-center gap-1"><Calendar className="w-4 h-4" aria-hidden="true" /> Published <time dateTime={data.date}>{data.date}</time></span>}
           {data.updated && data.updated !== data.date && (
-            <span>Updated {data.updated}</span>
+            <span>Updated <time dateTime={data.updated}>{data.updated}</time></span>
           )}
-          <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {data.suburb}, Adelaide</span>
+          <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {location}</span>
           <span className="flex items-center gap-1"><UserRound className="w-4 h-4" /> {author}</span>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-10 leading-[1.1] tracking-tight">
+        <h1 className="text-3xl md:text-5xl font-bold mb-8 leading-[1.15]">
           {data.title}
         </h1>
 
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-8 mb-12 flex items-start gap-4 shadow-2xl">
-          <ShieldCheck className="w-6 h-6 text-[#c5a47e] mt-1 flex-shrink-0" />
+        <div className="mb-10 flex items-start gap-4 border-y border-zinc-800 py-6">
+          {isGuide ? <BookOpen className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" /> : <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" />}
           <div>
             <p className="text-white font-bold text-sm mb-1 uppercase tracking-widest">
-              {isCameraGuide ? "CCTV Equipment Guide" : isGuide ? "Door Compatibility Guide" : "Verified ADE Installation"}
+              {isCameraGuide ? "CCTV Equipment Guide" : isDoorGuide ? "Door Compatibility Guide" : isGuide ? "Smart Lock Buying Guide" : "ADE Installation Project"}
             </p>
-            <p className="text-zinc-500 text-sm font-light leading-relaxed">
+            <p className="text-zinc-400 text-base leading-7">
               {isCameraGuide
                 ? "Plan your camera views, cabling and recording needs. Final equipment suitability depends on the property layout and the complete system configuration."
-                : isGuide
+                : isDoorGuide
                 ? "Use this guide to prepare useful photos and measurements. Final suitability depends on the exact lock model, door, frame and site conditions."
+                : isGuide
+                ? "Compare access features, installed prices and door requirements before choosing your smart lock."
                 : "This project was completed by the ADE team. All images represent actual field work in South Australia."}
             </p>
           </div>
         </div>
 
         {/* 【核心修改】使用 ReactMarkdown 渲染内容 */}
-        <div className="prose prose-invert prose-gold max-w-none">
+        <div className="article-content">
           <ReactMarkdown 
             components={{
               // 让 Markdown 里的图片自动适配样式
@@ -219,20 +229,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     alt={props.alt || "ADE Smart Home installation in Adelaide"}
                     width={1400}
                     height={900}
-                    sizes="(max-width: 1024px) 100vw, 900px"
+                    sizes="(max-width: 767px) calc(100vw - 40px), 704px"
                     className="my-10 h-auto w-full rounded-md border border-zinc-800"
                   />
                 );
-              },
-              // 让标题更好看
-              h2: ({node, ...props}) => {
-                void node;
-                return <h2 {...props} className="text-[#c5a47e] text-2xl font-bold mt-16 mb-6 uppercase tracking-tight" />;
-              },
-              // 让段落更有呼吸感
-              p: ({node, ...props}) => {
-                void node;
-                return <p {...props} className="text-zinc-300 text-lg leading-relaxed font-light mb-8" />;
               }
             }}
           >
@@ -283,12 +283,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </section>
         )}
 
-        <div className="mt-20 p-10 rounded-3xl bg-zinc-900 border border-zinc-800 text-center relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-full h-1 bg-[#c5a47e]" />
+        <div className="mt-14 border-t border-zinc-700 py-10 text-center">
           <h3 className="text-2xl font-bold mb-4">
             {isCameraGuide ? "Planning your camera setup?" : isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
           </h3>
-          <p className="text-zinc-500 mb-8 max-w-md mx-auto text-sm font-light">
+          <p className="text-zinc-400 mb-7 max-w-lg mx-auto text-base leading-7">
             {isCameraGuide
               ? "Send your suburb, property layout and the areas you want to monitor. We will reply by SMS or email with the next step."
               : isGuide

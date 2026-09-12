@@ -22,7 +22,7 @@ const baseMetadata: Metadata = {
     card: "summary_large_image",
     title: "Get a Smart Home Product Quote in Adelaide",
     description:
-      "Request smart lock supply and installation or installation-only service in Adelaide.",
+      "Request smart lock, installation-only or security camera kit quotes in Adelaide. We reply by SMS or email.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };

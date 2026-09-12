@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, MapPin, ChevronRight, TrendingUp, ShieldCheck } from "lucide-react";
+import { Calendar, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 
@@ -42,6 +42,7 @@ interface Post {
   suburb?: string;
   pinned?: boolean;
   author?: string;
+  contentType?: "guide" | "project";
 }
 
 export default function BlogListPage() {
@@ -134,28 +135,10 @@ export default function BlogListPage() {
             Door compatibility advice, security camera kit buying guides and real project notes for Adelaide homes and businesses.
           </p>
 
-          {/* Achievement Badge */}
-          <div className="mt-8 flex flex-col items-start gap-5 border-l-2 border-[#c5a47e] pl-6 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-[#c5a47e]">
-                <ShieldCheck className="w-6 h-6 text-black" />
-              </div>
-              <div>
-                <p className="text-2xl font-black text-[#c5a47e]">400+</p>
-                <p className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Successful installs</p>
-              </div>
-            </div>
-
-            <div className="h-px sm:h-10 w-full sm:w-px bg-zinc-800" />
-
-            <div className="flex-1">
-              <p className="text-sm leading-relaxed text-zinc-300">
-                <span className="text-white font-bold">Experience Matters:</span> We have completed more than <span className="text-[#c5a47e] font-bold">400</span> smart lock installations in Adelaide, with the number growing daily. This portfolio is being updated with our extensive project history.
-              </p>
-              <div className="mt-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e]">
-                <TrendingUp className="h-3.5 w-3.5" /> Growing daily in Adelaide
-              </div>
-            </div>
+          <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#d9b98f]">
+            <Link href="/blog/smart-lock-door-compatibility-check" className="inline-flex min-h-11 items-center">Door compatibility</Link>
+            <Link href="/blog/lockin-x9-vs-s6-max-vs-v5-max-adelaide" className="inline-flex min-h-11 items-center gap-2">Compare smart locks <ChevronRight className="h-4 w-4" aria-hidden="true" /></Link>
+            <Link href="/blog/security-camera-kits-adelaide-buying-guide" className="inline-flex min-h-11 items-center gap-2">Camera kit guide <ChevronRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
         </div>
 
@@ -171,7 +154,7 @@ export default function BlogListPage() {
                 {/* 封面图容器：恢复为 object-cover 模式 */}
                 <div className="aspect-[16/9] relative overflow-hidden bg-zinc-900">
                   <Image 
-                    src={post.coverImage || "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800"} 
+                    src={post.coverImage || "/img/og/ade-smart-home-adelaide.jpg"}
                     alt={post.title || "Case Study"} 
                     fill 
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -182,16 +165,17 @@ export default function BlogListPage() {
                   </div>
                 </div>
                 
-                <div className="p-8 flex-1">
+                <div className="flex flex-1 flex-col p-5 md:p-7">
                   <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
                     <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
                     <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {post.suburb}</span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 group-hover:text-[#c5a47e] transition-colors line-clamp-2">
+                  <h2 className="text-xl font-bold mb-4 group-hover:text-[#c5a47e] transition-colors md:text-2xl">
                     {post.title}
-                  </h3>
-                  <div className="pt-6 border-t border-zinc-800/50 mt-4 flex items-center text-[#c5a47e] text-sm font-bold">
-                    {post.category === "Buyer Guide" ? "Read Guide" : "View Project Details"}
+                  </h2>
+                  {post.description && <p className="mb-6 line-clamp-3 text-base leading-7 text-zinc-400">{post.description}</p>}
+                  <div className="pt-5 border-t border-zinc-800/50 mt-auto flex items-center text-[#c5a47e] text-sm font-bold">
+                    {post.contentType === "guide" || post.category === "Buyer Guide" || post.category === "CCTV Guide" ? "Read Guide" : "View Project Details"}
                     <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
