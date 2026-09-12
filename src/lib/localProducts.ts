@@ -217,7 +217,7 @@ export const localProducts = [
         <li>Small shops, offices, workshops and storage areas.</li>
         <li>Owners who want a reliable wired PoE security camera system.</li>
       </ul>
-      <p>Stock and exact model availability are confirmed before an order is finalised.</p>
+      <p>This exact Dahua package is currently in stock and available while supplies last.</p>
     `,
     categories: [
       { id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" },

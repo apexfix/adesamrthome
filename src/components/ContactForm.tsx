@@ -370,7 +370,7 @@ export function ContactForm({
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
             {isCameraKitEnquiry
-              ? "Add your suburb, property type and preferred timing. We will confirm current kit availability and reply by SMS or email."
+              ? "Add your suburb, property type and preferred timing. This kit is currently in stock, and we will reply by SMS or email with the next step."
               : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>
         </div>

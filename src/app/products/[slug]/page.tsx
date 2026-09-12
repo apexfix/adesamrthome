@@ -307,7 +307,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       url: productUrl,
       priceCurrency: product.prices?.currency_code || "AUD",
       price: currentPrice,
-      availability: "https://schema.org/LimitedAvailability",
+      availability: isCameraKit
+        ? "https://schema.org/InStock"
+        : "https://schema.org/LimitedAvailability",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
       areaServed: {
@@ -625,7 +627,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {isService
                   ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
                   : isCameraKit
-                    ? "The A$443 package contains two DH-IPC-HDW2541EMP-AS-ANZ 5MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder. Stock is confirmed before purchase."
+                    ? "The A$443 package contains two DH-IPC-HDW2541EMP-AS-ANZ 5MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder. This exact package is currently in stock."
                   : hasSeparateInstallationPrice
                     ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
                     : hasReplacementWarranty
@@ -640,7 +642,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {isService
                   ? "Send photos before booking"
                   : isCameraKit
-                    ? "Ask for current kit availability"
+                    ? "In stock now"
                     : "Ask for current availability"}
               </div>
               
