@@ -218,6 +218,7 @@ export const localProducts = [
         <li>Owners who want a reliable wired PoE security camera system.</li>
       </ul>
       <p>This exact Dahua package is currently in stock and available while supplies last.</p>
+      <p>Explore our <a href="/products/security-camera-kits">security camera kits in Adelaide</a> or read the <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera kit buying guide</a> for help planning views, cabling and future expansion.</p>
     `,
     categories: [
       { id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" },

@@ -8,14 +8,14 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "Smart Lock Guides & Adelaide Projects",
+  title: "Smart Lock & CCTV Guides | Adelaide Projects",
   description:
-    "Read Adelaide smart lock installation projects, door compatibility advice, product guidance and real local case studies from ADE Smart Home.",
+    "Explore Adelaide smart lock projects, door compatibility advice and CCTV camera kit buying guides from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/blog` },
   openGraph: {
-    title: "Adelaide Smart Lock Installation Guides & Projects",
+    title: "Adelaide Smart Lock & CCTV Guides",
     description:
-      "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
+      "Real Adelaide installations, smart lock advice and practical PoE camera kit guidance from ADE Smart Home.",
     url: `${siteUrl}/blog`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "ADE Smart Home Adelaide installation guides and projects" }],
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Lock Guides & Adelaide Projects",
+    title: "Smart Lock & CCTV Guides | Adelaide Projects",
     description:
-      "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
+      "Real Adelaide installations, smart lock advice and practical PoE camera kit guidance from ADE Smart Home.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -128,10 +128,10 @@ export default function BlogListPage() {
         <div className="mb-14 max-w-4xl border-b border-zinc-800 pb-12">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Advice and real work</p>
           <h1 className="mb-6 mt-3 text-4xl font-bold md:text-6xl">
-            Smart Lock <span className="text-[#c5a47e]">Guides &amp; Projects</span>
+            Smart Lock &amp; CCTV <span className="text-[#c5a47e]">Guides</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-zinc-400">
-            Door compatibility guidance, product explanations and real project notes for Adelaide homes.
+            Door compatibility advice, security camera kit buying guides and real project notes for Adelaide homes and businesses.
           </p>
 
           {/* Achievement Badge */}

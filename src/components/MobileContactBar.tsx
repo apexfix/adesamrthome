@@ -10,7 +10,7 @@ export function MobileContactBar() {
   const pathname = usePathname();
   const isCameraPage =
     pathname.includes("security-camera") || pathname.includes("dahua-5mp-2-camera");
-  const isMixedProductsPage = pathname === "/products";
+  const isMixedProductsPage = pathname === "/products" || pathname === "/";
   const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(
     isCameraPage
       ? "Hi ADE Smart Home, I would like a security camera kit quote."

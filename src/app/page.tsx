@@ -7,6 +7,8 @@ import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
 import { ServicePathways } from "@/components/ServicePathways";
 import { AudiencePathways } from "@/components/AudiencePathways";
+import { HomeCameraFeature } from "@/components/HomeCameraFeature";
+import { isSecurityCameraKit } from "@/lib/productType";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import path from "path";
 import fs from "fs";
@@ -18,9 +20,9 @@ import Link from "next/link";
 import { ArrowRight, Cctv, LockKeyhole, Wrench } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: { absolute: "Smart Lock Installation Adelaide | ADE Smart Home" },
+  title: { absolute: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home" },
   description:
-    "Smart lock supply and installation across Adelaide, plus Dahua security camera kits for homes and small businesses. Compare products and request a local quote.",
+    "Adelaide smart lock installation and Dahua CCTV camera kits. Installed locks from $699, installation-only from $200 and a 2-camera PoE kit for $443.",
   alternates: {
     canonical: siteUrl,
     languages: {
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    title: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home",
     description:
       "Adelaide smart lock installers offering installed-price products, installation-only service and practical Dahua security camera kits.",
     url: siteUrl,
@@ -48,9 +50,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Lock Installation Adelaide | ADE Smart Home",
+    title: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home",
     description:
-      "Smart lock supply and installation plus installation-only service for compatible customer-supplied locks across Adelaide.",
+      "Smart lock supply and installation, installation-only services and Dahua CCTV camera kits for Adelaide homes and small businesses.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -74,6 +76,9 @@ export default async function Home() {
     console.error("Product fetch error:", e);
   }
 
+  const cameraKit = products.find(isSecurityCameraKit);
+  const featuredSlugs = ["smart-lock-installation-only-service", "lockin-x9-smart-lock", "lockin-s6-max-smart-lock", "lockin-v5-max-smart-lock"];
+  const featuredLocks = featuredSlugs.flatMap(slug => products.filter(product => product.slug === slug));
   const postsDirectory = path.join(process.cwd(), "content/posts");
   let latestStories: LocalStory[] = [];
 
@@ -92,9 +97,11 @@ export default async function Home() {
           date: String(data.date || ""),
           coverImage: String(data.coverImage || ""),
           category: String(data.category || "Installation"),
-          suburb: String(data.suburb || "Adelaide")
+          suburb: String(data.suburb || "Adelaide"),
+          contentType: data.contentType,
         };
       })
+      .filter(story => story.contentType !== "guide")
       .sort((a, b) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
@@ -111,19 +118,22 @@ export default async function Home() {
 
       <ServicePathways />
 
+      {cameraKit && <HomeCameraFeature product={cameraKit} />}
+
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
+        <span id="smart-locks" className="block scroll-mt-28" />
         <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
           <div className="mb-10 flex flex-col gap-7 border-b border-zinc-800 pb-10 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-3xl">
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-                Products &amp; Services
+                Keyless entry, locally installed
               </p>
               <h2 className="mt-3 text-3xl font-bold text-white md:text-5xl">
-                Choose the right security upgrade
+                Smart lock installation in Adelaide
               </h2>
               <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
-                Compare installed smart locks, book installation for a compatible lock you
-                already own, or explore security camera equipment packages.
+                Choose a supplied-and-installed Lockin smart lock, or book us to fit
+                a compatible lock you already own. We check your door before booking.
               </p>
             </div>
             <div className="grid gap-2 sm:grid-cols-3 xl:w-[620px]">
@@ -146,8 +156,8 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {featuredLocks.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -180,8 +190,8 @@ export default async function Home() {
       <AudiencePathways />
       <ServiceFeatures />
       <GoogleReviews />
-      <FAQSection />
-      <ContactForm />
+      <FAQSection includeCameras />
+      <ContactForm mixedServices />
     </main>
   );
 }

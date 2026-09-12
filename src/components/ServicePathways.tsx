@@ -34,8 +34,8 @@ const pathways = [
 export function ServicePathways() {
   return (
     <section id="services" className="scroll-mt-20 border-b border-zinc-800 bg-zinc-950 text-white">
-      <div className="container mx-auto max-w-[1500px] px-5 py-16 md:px-8 md:py-24 xl:px-10">
-        <div className="mb-12 max-w-4xl">
+      <div className="container mx-auto max-w-[1500px] px-5 py-8 md:px-8 md:py-10 xl:px-10">
+        <div className="sr-only">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
             How We Can Help
           </p>
@@ -55,23 +55,23 @@ export function ServicePathways() {
             return (
               <article
                 key={pathway.label}
-                className={`py-10 md:py-12 lg:px-10 ${
+                className={`py-6 lg:px-7 ${
                   index > 0
                     ? "border-t border-zinc-800 lg:border-l lg:border-t-0"
                     : ""
                 }`}
               >
-                <Icon className="h-8 w-8 text-[#c5a47e]" strokeWidth={1.6} />
-                <p className="mt-7 text-sm font-bold uppercase tracking-[0.15em] text-[#c5a47e]">
+                <Icon className="h-6 w-6 text-[#c5a47e]" strokeWidth={1.6} />
+                <p className="mt-4 text-sm font-bold text-[#c5a47e]">
                   {pathway.label}
                 </p>
-                <h3 className="mt-3 text-2xl font-bold md:text-[1.7rem]">{pathway.title}</h3>
-                <p className="mt-4 max-w-xl text-base leading-7 text-zinc-300 md:text-lg md:leading-8 lg:min-h-32">
+                <h3 className="mt-2 text-xl font-bold">{pathway.title}</h3>
+                <p className="mt-3 max-w-xl text-base leading-7 text-zinc-300 lg:min-h-28">
                   {pathway.description}
                 </p>
                 <Link
                   href={pathway.href}
-                  className="mt-7 inline-flex items-center gap-2 text-base font-semibold text-white transition-colors hover:text-[#c5a47e]"
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-[#c5a47e]"
                 >
                   {pathway.action}
                   <ArrowRight className="h-4 w-4" />

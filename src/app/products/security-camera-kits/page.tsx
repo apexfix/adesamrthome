@@ -5,37 +5,21 @@ import { ProductCard } from "@/components/ProductCard";
 import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
 import { businessInfo, siteUrl } from "@/lib/seoData";
+import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const pageUrl = `${siteUrl}/products/security-camera-kits`;
 
-const cameraKitFaqs = [
-  {
-    question: "What comes with the A$443 Dahua camera kit?",
-    answer:
-      "The package includes two Dahua 5MP WizSense turret cameras and one four-channel Dahua PoE network video recorder.",
-  },
-  {
-    question: "Is the Dahua two-camera kit in stock in Adelaide?",
-    answer:
-      "Yes. The current two-camera package is in stock with ADE Smart Home in Adelaide while listed as available on this page.",
-  },
-  {
-    question: "Can I add more cameras later?",
-    answer:
-      "The included four-channel recorder can support up to four compatible IP cameras, so the two-camera package leaves room for future expansion.",
-  },
-  {
-    question: "Can I request an installation quote?",
-    answer:
-      "Yes. Send us your suburb, property type and the areas you want covered, and we can discuss a suitable installation scope and quote.",
-  },
-] as const;
-
 export const metadata: Metadata = {
-  title: "Security Camera Kits Adelaide",
+  title: "CCTV & Security Camera Kits Adelaide | Dahua PoE",
   description:
-    "Shop in-stock Dahua 5MP PoE security camera and NVR equipment packages for Adelaide homes and small businesses from ADE Smart Home.",
+    "Explore Dahua CCTV camera kits in Adelaide. A$443 for two 5MP cameras and a 4-channel PoE NVR. Compare package contents and request local product advice.",
   alternates: { canonical: pageUrl },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dahua CCTV & Security Camera Kits Adelaide",
+    description: "Two 5MP cameras and a four-channel PoE recorder. A$443 equipment package from ADE Smart Home.",
+    images: ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
+  },
   openGraph: {
     title: "Security Camera Kits Adelaide | ADE Smart Home",
     description:
@@ -88,12 +72,22 @@ export default function SecurityCameraKitsPage() {
       },
     })),
   };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Products", item: `${siteUrl}/products` },
+      { "@type": "ListItem", position: 3, name: "Security Camera Kits Adelaide", item: pageUrl },
+    ],
+  };
   const smsBody = encodeURIComponent(
     "Hi ADE Smart Home, I am interested in a security camera kit.",
   );
 
   return (
     <main className="min-h-screen bg-black pb-24 pt-28 text-white md:pt-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
@@ -116,7 +110,7 @@ export default function SecurityCameraKitsPage() {
             Adelaide smart security
           </p>
           <h1 className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
-            Security Camera Kits
+            CCTV &amp; Security Camera Kits Adelaide
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
             In-stock Dahua 5MP PoE camera and recorder packages for key areas around homes,
@@ -131,7 +125,7 @@ export default function SecurityCameraKitsPage() {
             </Link>
             <a
               href={`sms:${businessInfo.phoneInternational}?body=${smsBody}`}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-zinc-700 px-6 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+              className="glass-control inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-6 text-sm font-bold text-white hover:text-[#d9b98f]"
             >
               <MessageSquareText className="h-4 w-4" aria-hidden="true" />
               Text {businessInfo.phone}
@@ -147,6 +141,28 @@ export default function SecurityCameraKitsPage() {
             {cameraKits.map((product, index) => (
               <ProductCard key={product.id} product={product} priority={index === 0} />
             ))}
+          </div>
+        </section>
+
+        <section className="mt-16 grid gap-10 border-t border-zinc-800 pt-12 lg:grid-cols-2" aria-labelledby="camera-planning">
+          <div>
+            <h2 id="camera-planning" className="text-3xl font-bold">Plan the views you actually need</h2>
+            <p className="mt-5 text-base leading-7 text-zinc-300">A two-camera CCTV kit can be a useful starting point when you have two priority areas. Think about the activity you want to see before choosing camera positions.</p>
+            <dl className="mt-6 divide-y divide-zinc-800">
+              {[
+                ["Home entrance & driveway", "Check visitors at the front door and movement around vehicle access. Consider door recesses, trees and parked cars when choosing the view."],
+                ["Shop entrance & stock area", "Choose views around customer access and stock movement. Tell us about the room layout and the distance to the recorder."],
+                ["Side access & rear entry", "Compare sightlines and lighting along each route. A corner or a fence may create a blind spot that needs a different camera position."],
+              ].map(([label, detail]) => <div key={label} className="py-5"><dt className="font-bold text-[#d9b98f]">{label}</dt><dd className="mt-2 leading-7 text-zinc-400">{detail}</dd></div>)}
+            </dl>
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold">Local product advice in Adelaide</h2>
+            <p className="mt-5 leading-7 text-zinc-300">Ask ADE Smart Home about camera packages for a house, shop, office or workshop. We discuss the equipment, the areas you want covered and your preferred timing before you order.</p>
+            <p className="mt-4 leading-7 text-zinc-400">Send your suburb with your enquiry, whether you are in Adelaide CBD, Glenelg, Norwood, Mawson Lakes, Modbury, Marion or another Adelaide suburb.</p>
+            <p className="mt-4 leading-7 text-zinc-400">Useful details include the two main areas to monitor, a simple property layout, existing network cabling and where you would like to keep the recorder.</p>
+            <Link href="/blog/security-camera-kits-adelaide-buying-guide" className="glass-control mt-7 inline-flex min-h-12 items-center rounded-md border px-5 text-sm font-bold">Read our Adelaide camera kit buying guide</Link>
+            <p className="mt-6 leading-7 text-zinc-400">Upgrading your entry too? Compare our <Link href="/products?category=smart-lock" className="text-[#d9b98f] underline underline-offset-4">smart locks</Link> and <Link href="/smart-lock-installation-only-adelaide" className="text-[#d9b98f] underline underline-offset-4">installation-only service</Link>.</p>
           </div>
         </section>
 

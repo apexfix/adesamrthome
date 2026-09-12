@@ -126,6 +126,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     ? new URL(data.coverImage, siteUrl).toString()
     : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const isGuide = data.contentType === "guide" || data.category === "Buyer Guide";
+  const isCameraGuide = data.category === "CCTV Guide";
   const author = data.author || "ADE Smart Home Installation Team";
   const allPosts = getAllPosts();
   const currentIndex = allPosts.findIndex((item) => item.slug === slug);
@@ -192,10 +193,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <ShieldCheck className="w-6 h-6 text-[#c5a47e] mt-1 flex-shrink-0" />
           <div>
             <p className="text-white font-bold text-sm mb-1 uppercase tracking-widest">
-              {isGuide ? "Door Compatibility Guide" : "Verified ADE Installation"}
+              {isCameraGuide ? "CCTV Equipment Guide" : isGuide ? "Door Compatibility Guide" : "Verified ADE Installation"}
             </p>
             <p className="text-zinc-500 text-sm font-light leading-relaxed">
-              {isGuide
+              {isCameraGuide
+                ? "Plan your camera views, cabling and recording needs. Final equipment suitability depends on the property layout and the complete system configuration."
+                : isGuide
                 ? "Use this guide to prepare useful photos and measurements. Final suitability depends on the exact lock model, door, frame and site conditions."
                 : "This project was completed by the ADE team. All images represent actual field work in South Australia."}
             </p>
@@ -283,15 +286,17 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <div className="mt-20 p-10 rounded-3xl bg-zinc-900 border border-zinc-800 text-center relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#c5a47e]" />
           <h3 className="text-2xl font-bold mb-4">
-            {isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
+            {isCameraGuide ? "Planning your camera setup?" : isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
           </h3>
           <p className="text-zinc-500 mb-8 max-w-md mx-auto text-sm font-light">
-            {isGuide
+            {isCameraGuide
+              ? "Send your suburb, property layout and the areas you want to monitor. We will reply by SMS or email with the next step."
+              : isGuide
               ? "Send your suburb, preferred timing and four clear door photos. We will reply by SMS or email with the next step."
               : "Contact Adelaide's smart lock specialists for a clean, reliable retrofit."}
           </p>
-          <Link href="/contact#quote" className="inline-flex h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-10 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
-            {isGuide ? "Send Door Photos" : "Get a Free Quote"}
+          <Link href={isCameraGuide ? "/contact?service=security-camera-kit#quote" : "/contact#quote"} className="inline-flex min-h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
+            {isCameraGuide ? "Enquire About Camera Kits" : isGuide ? "Send Door Photos" : "Get a Free Quote"}
           </Link>
         </div>
       </div>

@@ -68,6 +68,7 @@ const acceptedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 type ContactFormProps = {
   compact?: boolean;
+  mixedServices?: boolean;
   initialService?: string;
   initialProduct?: string;
 };
@@ -127,6 +128,7 @@ async function compressPhoto(file: File, index: number): Promise<File> {
 
 export function ContactForm({
   compact = false,
+  mixedServices = false,
   initialService,
   initialProduct,
 }: ContactFormProps = {}) {
@@ -368,10 +370,12 @@ export function ContactForm({
             Fast Adelaide quote
           </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            {isCameraKitEnquiry ? "Tell Us About Your Security Needs" : "Tell Us About Your Door"}
+            {isCameraKitEnquiry || mixedServices ? "Tell Us About Your Security Needs" : "Tell Us About Your Door"}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
-            {isCameraKitEnquiry
+            {mixedServices
+              ? "Smart locks, installation-only service or CCTV camera kits. Choose your service below and we will reply by SMS or email."
+              : isCameraKitEnquiry
               ? "Add your suburb, property type and preferred timing. This kit is currently in stock, and we will reply by SMS or email with the next step."
               : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>

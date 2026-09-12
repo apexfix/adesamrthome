@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { HelpCircle, Minus, Plus } from "lucide-react";
+import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const faqs = [
   {
@@ -72,13 +73,14 @@ const faqs = [
   },
 ];
 
-export function FAQSection() {
+export function FAQSection({ includeCameras = false }: { includeCameras?: boolean }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const displayedFaqs = includeCameras ? [faqs[0], faqs[8], faqs[9], ...cameraKitFaqs.slice(0, 4)] : faqs;
 
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: displayedFaqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
@@ -102,17 +104,16 @@ export function FAQSection() {
             Before you book
           </p>
           <h2 className="mt-3 text-3xl font-bold md:text-5xl">
-            Smart Lock Installation FAQ
+            {includeCameras ? "Smart locks & CCTV: your questions" : "Smart Lock Installation FAQ"}
           </h2>
 
           <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
-            Common questions about smart lock installation, door compatibility,
-            imported smart locks, security screen doors and local Adelaide support.
+            {includeCameras ? "Answers about installed smart locks, customer-supplied locks and PoE camera packages for Adelaide properties." : "Common questions about smart lock installation, door compatibility, imported smart locks, security screen doors and local Adelaide support."}
           </p>
         </div>
 
         <div className="mt-10 divide-y divide-zinc-800 border-y border-zinc-800">
-          {faqs.map((faq, index) => {
+          {displayedFaqs.map((faq, index) => {
             const isOpen = activeIndex === index;
 
             return (
@@ -150,10 +151,9 @@ export function FAQSection() {
 
         <div className="mt-12 grid gap-7 border-l-2 border-[#c5a47e] pl-6 md:grid-cols-[1fr_auto] md:items-center md:pl-8">
           <div>
-            <h3 className="text-2xl font-bold">Not sure if your door can fit a smart lock?</h3>
+            <h3 className="text-2xl font-bold">{includeCameras ? "Find the right setup for your property" : "Not sure if your door can fit a smart lock?"}</h3>
             <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
-              Send photos of your door, current lock and frame. We will check the door type
-              and recommend a suitable installation option.
+              {includeCameras ? "Tell us about your door or the areas you want to monitor. We will help you choose a suitable product and confirm pricing." : "Send photos of your door, current lock and frame. We will check the door type and recommend a suitable installation option."}
             </p>
           </div>
           <div>
@@ -161,7 +161,7 @@ export function FAQSection() {
               href="/contact#quote"
               className="inline-flex min-h-12 items-center bg-[#c5a47e] px-6 font-bold text-black transition-colors hover:bg-white"
             >
-              Send Door Photos for Free Check
+              {includeCameras ? "Discuss your project" : "Send Door Photos for Free Check"}
             </Link>
           </div>
         </div>
