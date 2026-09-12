@@ -59,14 +59,14 @@ export function MobileContactBar() {
           aria-label={isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
           className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-2 text-sm font-bold text-black"
         >
-          {isCameraPage ? (
+          <span className="flex shrink-0" aria-hidden="true">{isCameraPage ? (
             <Cctv className="h-4 w-4" />
           ) : isMixedProductsPage ? (
             <Tag className="h-4 w-4" />
           ) : (
             <Camera className="h-4 w-4" />
-          )}
-          {isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
+          )}</span>
+          <span>{isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}</span>
         </Link>
         <a
           href={mailHref}
