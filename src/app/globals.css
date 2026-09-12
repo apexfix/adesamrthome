@@ -27,6 +27,35 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+.product-description {
+  color: #b8b8c0;
+  font-size: 1rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.product-description :where(h2, h3, h4) {
+  margin: 1.75rem 0 0.75rem;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.product-description h2 { font-size: 1.5rem; }
+.product-description h3 { font-size: 1.25rem; }
+.product-description h4 { font-size: 1.125rem; }
+.product-description > :first-child { margin-top: 0; }
+.product-description :where(p, ul, ol, table) { margin-bottom: 1.25rem; }
+.product-description :where(ul, ol) { padding-left: 1.4rem; }
+.product-description ul { list-style: disc; }
+.product-description ol { list-style: decimal; }
+.product-description li + li { margin-top: 0.5rem; }
+.product-description li::marker { color: #c5a47e; }
+.product-description strong { color: #eee; font-weight: 700; }
+.product-description a { color: #d9b98f; text-decoration: underline; text-underline-offset: 4px; }
+.product-description a:hover { color: #fff; }
+.product-description img { max-width: 100%; height: auto; border-radius: 6px; }
+.product-description table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.product-description :where(th, td) { padding: 0.75rem; border-bottom: 1px solid #27272a; text-align: left; }
+
 html { scroll-padding-top: 112px; }
 :where(h1, h2, h3) { text-wrap: balance; }
 :where(a, button, input, select, textarea):focus-visible {

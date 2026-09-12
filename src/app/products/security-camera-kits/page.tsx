@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, ChevronRight, MessageSquareText } from "lucide-react";
+import { ChevronDown, ChevronRight, MessageSquareText } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
@@ -8,22 +8,21 @@ import { businessInfo, siteUrl } from "@/lib/seoData";
 import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const pageUrl = `${siteUrl}/products/security-camera-kits`;
+const pageDescription = "Dahua CCTV kits in Adelaide: 5MP for A$443 or 6MP Smart Dual Light for A$590. Each includes two cameras and a four-channel PoE recorder. Compare packages.";
 
 export const metadata: Metadata = {
   title: "CCTV & Security Camera Kits Adelaide | Dahua PoE",
-  description:
-    "Dahua CCTV kits in Adelaide: 5MP for A$443 or 6MP Smart Dual Light for A$590. Each includes two cameras and a four-channel PoE recorder. Compare packages.",
+  description: pageDescription,
   alternates: { canonical: pageUrl },
   twitter: {
     card: "summary_large_image",
     title: "Dahua CCTV & Security Camera Kits Adelaide",
-    description: "Two 5MP cameras and a four-channel PoE recorder. A$443 equipment package from ADE Smart Home.",
+    description: pageDescription,
     images: ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
   },
   openGraph: {
     title: "Security Camera Kits Adelaide | ADE Smart Home",
-    description:
-      "Dahua PoE camera and recorder packages for Adelaide homes and small businesses.",
+    description: pageDescription,
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -110,7 +109,7 @@ export default function SecurityCameraKitsPage() {
             Adelaide smart security
           </p>
           <h1 className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
-            CCTV &amp; Security Camera Kits Adelaide
+            Security Camera Kits Adelaide
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
             Dahua 5MP and 6MP Smart Dual Light camera and recorder packages for key areas around homes,
@@ -137,11 +136,39 @@ export default function SecurityCameraKitsPage() {
           <h2 id="available-kits" className="mb-8 text-2xl font-bold">
             Available <span className="text-[#c5a47e]">Packages</span>
           </h2>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2">
             {cameraKits.map((product, index) => (
-              <ProductCard key={product.id} product={product} priority={index === 0} />
+              <ProductCard key={product.id} product={product} priority={index === 0} imageSizes="(max-width: 639px) 100vw, (max-width: 1100px) 50vw, 500px" />
             ))}
           </div>
+        </section>
+
+        <section className="mt-14 max-w-5xl" aria-labelledby="compare-kits">
+          <h2 id="compare-kits" className="text-2xl font-bold md:text-3xl">Compare the camera packages</h2>
+          <p className="mt-4 max-w-3xl leading-7 text-zinc-400">Both packages pair two cameras with the same four-channel PoE recorder. Compare resolution and night lighting to choose the equipment for your property.</p>
+          <table className="mt-7 w-full table-fixed border-collapse text-left text-sm md:text-base">
+            <caption className="sr-only">Dahua camera kit specifications and equipment prices in Australian dollars</caption>
+            <thead>
+              <tr className="border-b border-zinc-700">
+                <th scope="col" className="w-[28%] py-4 pr-3 font-semibold">Package</th>
+                {cameraKits.map(product => <th key={product.id} scope="col" className="break-words px-2 py-4 font-bold text-[#d9b98f]">
+                  {product.attributes?.find(attribute => attribute.name === "Camera Resolution")?.options?.[0]?.split(" ")[0]} kit
+                  <span className="mt-1 block text-lg text-white">A${Number(product.prices.price) / 10 ** product.prices.currency_minor_unit}</span>
+                </th>)}
+              </tr>
+            </thead>
+            <tbody className="text-zinc-300">
+              {["Camera Resolution", "Night Vision"].map(label => <tr key={label} className="border-b border-zinc-800">
+                <th scope="row" className="py-4 pr-3 font-medium">{label === "Camera Resolution" ? "Resolution" : "Night lighting"}</th>
+                {cameraKits.map(product => <td key={product.id} className="break-words px-2 py-4 align-top leading-6">{product.attributes?.find(attribute => attribute.name === label)?.options?.join("; ")}</td>)}
+              </tr>)}
+              <tr className="border-b border-zinc-800">
+                <th scope="row" className="py-4 pr-3 font-medium">Details</th>
+                {cameraKits.map(product => <td key={product.id} className="px-2 py-3"><Link href={`/products/${product.slug}`} className="inline-flex min-h-11 items-center text-[#d9b98f] underline underline-offset-4" aria-label={`View ${product.name}`}>View kit</Link></td>)}
+              </tr>
+            </tbody>
+          </table>
+          <p className="mt-4 text-sm leading-6 text-zinc-400">Night-time detail depends on lighting, placement and lens choice. Extra cameras must be compatible with the recorder and remain within its bandwidth and PoE power limits.</p>
         </section>
 
         <section className="mt-16 grid gap-10 border-t border-zinc-800 pt-12 lg:grid-cols-2" aria-labelledby="camera-planning">
@@ -166,28 +193,6 @@ export default function SecurityCameraKitsPage() {
           </div>
         </section>
 
-        <section className="mt-20 border-y border-zinc-800 py-14" aria-labelledby="camera-kit-benefits">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-            A practical starting point
-          </p>
-          <h2 id="camera-kit-benefits" className="mt-3 text-3xl font-bold md:text-4xl">
-            Clear coverage now, room to expand later
-          </h2>
-          <div className="mt-9 grid gap-8 md:grid-cols-3">
-            {[
-              ["5MP image detail", "See useful detail around entrances, driveways and other key areas."],
-              ["Simple PoE connection", "Power and video data run through the network connection for a practical wired setup."],
-              ["Four-channel recorder", "Begin with two cameras and retain capacity for up to two more compatible cameras."],
-            ].map(([title, detail]) => (
-              <div key={title} className="border-t border-zinc-800 pt-6">
-                <CheckCircle2 className="h-6 w-6 text-[#c5a47e]" strokeWidth={1.6} aria-hidden="true" />
-                <h3 className="mt-4 text-xl font-bold">{title}</h3>
-                <p className="mt-3 text-base leading-7 text-zinc-400">{detail}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="pt-16" aria-labelledby="camera-kit-faq">
           <h2 id="camera-kit-faq" className="text-3xl font-bold md:text-4xl">
             Security Camera Kit FAQ
@@ -195,8 +200,9 @@ export default function SecurityCameraKitsPage() {
           <div className="mt-8 divide-y divide-zinc-800 border-y border-zinc-800">
             {cameraKitFaqs.map((item) => (
               <details key={item.question} className="group py-6">
-                <summary className="cursor-pointer list-none pr-8 text-lg font-bold text-white marker:content-none">
-                  {item.question}
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold text-white marker:content-none">
+                  <span>{item.question}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-[#c5a47e] transition-transform group-open:rotate-180" aria-hidden="true" />
                 </summary>
                 <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-400">{item.answer}</p>
               </details>

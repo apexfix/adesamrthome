@@ -7,9 +7,11 @@ import { isSecurityCameraKit } from "@/lib/productType";
 export function ProductCard({
   product,
   priority = false,
+  imageSizes = "(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1279px) 33vw, (max-width: 1500px) 25vw, 350px",
 }: {
   product: Product;
   priority?: boolean;
+  imageSizes?: string;
 }) {
   // 1. 处理价格逻辑
   const minorUnit = product.prices?.currency_minor_unit || 2;
@@ -54,7 +56,7 @@ export function ProductCard({
           fill
           loading={priority ? "eager" : "lazy"}
           className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1279px) 33vw, (max-width: 1500px) 25vw, 350px"
+          sizes={imageSizes}
         />
         
         {/* Sale Badge - 如果打折则显示 */}

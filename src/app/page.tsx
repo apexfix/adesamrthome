@@ -1,7 +1,6 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { ServiceFeatures } from "@/components/ServiceFeatures";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
@@ -17,7 +16,7 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
 import Link from "next/link";
-import { ArrowRight, Cctv, LockKeyhole, Wrench } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: { absolute: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home" },
@@ -71,7 +70,7 @@ interface LocalStory {
 export default async function Home() {
   let products: Product[] = [];
   try {
-    products = await getProducts(1, 10);
+    products = await getProducts(1, 100);
   } catch (e) {
     console.error("Product fetch error:", e);
   }
@@ -136,25 +135,9 @@ export default async function Home() {
                 a compatible lock you already own. We check your door before booking.
               </p>
             </div>
-            <div className="grid gap-2 sm:grid-cols-3 xl:w-[620px]">
-              {[
-                { label: "Smart Locks", href: "/products?category=smart-lock", icon: LockKeyhole },
-                { label: "Installation Only", href: "/smart-lock-installation-only-adelaide", icon: Wrench },
-                { label: "Camera Kits", href: "/products/security-camera-kits", icon: Cctv },
-              ].map(({ label, href, icon: Icon }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="glass-control group flex min-h-14 items-center justify-between gap-3 rounded-md border px-4 text-sm font-bold text-white hover:text-[#d9b98f]"
-                >
-                  <span className="flex items-center gap-2">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                    {label}
-                  </span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
+            <Link href="/products?category=smart-lock" className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-bold text-[#d9b98f]">
+              Browse smart locks <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {featuredLocks.map((product) => (
@@ -188,7 +171,6 @@ export default async function Home() {
         </section>
       )}
       <AudiencePathways />
-      <ServiceFeatures />
       <GoogleReviews />
       <FAQSection includeCameras />
       <ContactForm mixedServices />

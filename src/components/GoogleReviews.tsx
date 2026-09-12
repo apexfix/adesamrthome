@@ -7,21 +7,18 @@ const reviews = [
     author: "Celia",
     rating: 5,
     text: "I contacted Smartlock to install a smart lock for my new house. John was extremely patient in explaining the different models... the installation was done brilliantly. Unlike many tradies who leave a mess behind, John made sure everything was properly cleaned up.",
-    date: "1 week ago",
   },
   {
     id: 2,
     author: "longxiang",
     rating: 5,
     text: "John is incredibly professional and skilled. He installed a smart lock on our front door smoothly and without any issues... Even though additional cutting was required, John worked very carefully and cleanly. Just get John to do it properly.",
-    date: "1 week ago",
   },
   {
     id: 3,
     author: "Jingbo Zhou",
     rating: 5,
     text: "Professional, punctual, and paid great attention to detail. John was also very friendly and took the time to clearly explain how the lock works. The whole process was smooth and stress-free. Highly recommend his service.",
-    date: "1 week ago",
   }
 ];
 
@@ -58,7 +55,7 @@ export function GoogleReviews() {
           {reviews.map((review, index) => (
             <article
               key={review.id}
-              className={`relative flex h-full flex-col py-8 md:px-7 lg:px-9 ${
+              className={`relative flex h-full flex-col px-5 py-8 md:px-7 lg:px-9 ${
                 index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
               }`}
             >
@@ -74,7 +71,6 @@ export function GoogleReviews() {
                 </div>
                 <div>
                   <p className="font-bold text-white">{review.author}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.1em] text-zinc-500">{review.date}</p>
                 </div>
               </div>
 

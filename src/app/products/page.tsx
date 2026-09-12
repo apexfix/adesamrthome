@@ -6,6 +6,7 @@ import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
 import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 import { notFound } from "next/navigation";
+import { isSecurityCameraKit } from "@/lib/productType";
 
 const baseMetadata: Metadata = {
   title: "Smart Locks & Security Camera Kits Adelaide",
@@ -51,10 +52,15 @@ export async function generateMetadata(props: {
     if (matchingProducts.length === 0) {
       return {
         title: "Product Filter Not Found",
-        description: "The requested smart lock product filter is not available.",
+        description: "The requested product filter is not available.",
         robots: { index: false, follow: false },
       };
     }
+    return {
+      ...baseMetadata,
+      title: `${getPageTitle(categoryParam, brandParam, matchingProducts)} Adelaide`,
+      robots: { index: false, follow: true },
+    };
   }
 
   return {
@@ -128,9 +134,13 @@ function productMatchesBrand(product: Product, brandParam: string) {
   return searchableValues.some((value) => normalizeCategory(value).includes(requested));
 }
 
-function getPageTitle(categoryParam: string | null, brandParam: string | null) {
+function getPageTitle(categoryParam: string | null, brandParam: string | null, products: Product[]) {
   if (brandParam) {
-    return `${brandParam} Smart Locks`;
+    const brand = products.flatMap(product => product.brands || []).find(
+      item => normalizeCategory(item.name) === normalizeCategory(brandParam),
+    )?.name || brandParam;
+    const productType = products.every(isSecurityCameraKit) ? "Security Camera Kits" : "Smart Locks";
+    return `${brand} ${productType}`;
   }
 
   const normalized = categoryParam ? normalizeCategory(categoryParam) : "";
@@ -176,13 +186,13 @@ export default async function ProductsPage(props: {
     notFound();
   }
 
-  const pageTitle = getPageTitle(categoryParam, brandParam);
+  const pageTitle = getPageTitle(categoryParam, brandParam, displayedProducts);
   const isAllProductsPage = categoryParam === null && brandParam === null;
   const normalizedCategory = categoryParam ? normalizeCategory(categoryParam) : "";
-  const isSmartLocksPage =
-    brandParam !== null || SMART_LOCK_CHILD_CATEGORIES.has(normalizedCategory);
   const isCameraKitsPage =
-    categoryParam !== null && normalizeCategory(categoryParam) === "securitycamerakits";
+    !isAllProductsPage && displayedProducts.length > 0 && displayedProducts.every(isSecurityCameraKit);
+  const isSmartLocksPage =
+    !isCameraKitsPage && (brandParam !== null || SMART_LOCK_CHILD_CATEGORIES.has(normalizedCategory));
 
   const collectionSchema = {
     "@context": "https://schema.org",
@@ -271,7 +281,7 @@ export default async function ProductsPage(props: {
               );
             })}
           </div>
-          {categoryParam && (
+          {(categoryParam || brandParam) && (
                <p className="mt-6 max-w-2xl text-zinc-400">
                Showing all available products in the {pageTitle} category.
              </p>
@@ -311,7 +321,7 @@ export default async function ProductsPage(props: {
 
         {/* 产品网格展示 */}
         {displayedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className={isCameraKitsPage ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

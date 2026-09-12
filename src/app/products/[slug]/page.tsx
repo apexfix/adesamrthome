@@ -713,8 +713,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         {/* 详细描述区 */}
-        <div className="grid grid-cols-1 gap-14 border-t border-zinc-800 pt-20 lg:grid-cols-3 lg:gap-20">
-          <div className="lg:col-span-1">
+        <nav aria-label="Product details" className="mb-10 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-800 py-3 text-sm font-semibold text-[#d9b98f]">
+          <a href="#product-overview" className="inline-flex min-h-11 items-center">Overview</a>
+          <a href="#product-specifications" className="inline-flex min-h-11 items-center">{isService ? "Service details" : "Specifications"}</a>
+        </nav>
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
+          <div id="product-specifications" className="order-2 min-w-0 scroll-mt-32 lg:order-1 lg:col-span-1">
             <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
               {isService ? "Service" : "Technical"}{" "}
               <span className="text-[#c5a47e]">{isService ? "Details" : "Specs"}</span>
@@ -731,7 +735,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   return (
                     <div key={`${attr.name}-${attr.id || index}`} className="border-b border-zinc-900 pb-4">
                       <dt className="mb-1 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">{attr.name}</dt>
-                      <dd className="text-white font-medium">{values.join(", ")}</dd>
+                      <dd className="break-words text-base leading-7 text-white font-medium">{values.join(", ")}</dd>
                     </div>
                   );
                 })}
@@ -739,13 +743,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
             )}
           </div>
 
-          <div className="lg:col-span-2">
+          <div id="product-overview" className="order-1 min-w-0 scroll-mt-32 lg:order-2 lg:col-span-2">
             <h2 className="text-2xl font-bold mb-8">
               {isService ? "How It" : "Product"}{" "}
-              <span className="text-[#c5a47e]">{isService ? "Works" : "Story"}</span>
+              <span className="text-[#c5a47e]">{isService ? "Works" : "Overview"}</span>
             </h2>
             <div 
-              className="prose prose-invert prose-zinc max-w-none text-base leading-8 text-zinc-400 prose-headings:text-white prose-img:rounded-md prose-img:border prose-img:border-zinc-800"
+              className="product-description"
               dangerouslySetInnerHTML={{ __html: product.description || "" }} 
             />
           </div>
