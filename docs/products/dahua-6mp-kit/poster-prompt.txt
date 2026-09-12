@@ -1,0 +1,15 @@
+Create a high-resolution 2048x2048 square ecommerce advertising poster for ADE SMART HOME.
+Reference image 1 is STYLE/BRAND/COMPOSITION reference only: match this existing black-and-gold Dahua kit poster series with warm metallic gold typography, charcoal stone display plinths, clean black showroom backdrop and tasteful gold architectural edges. Do not copy the old 5MP camera models, price, or IN STOCK claim.
+Reference image 2 is EXACT CAMERA PRODUCT reference downloaded from the manufacturer's page for DH-IPC-HDW3667EM-S-IL-ANZ: use exactly TWO identical white turret cameras matching this reference's housing, screws, black rounded-rectangular lens window and separate lower dual-light emitter window. Preserve all physical details; no invented screens, extra lenses, antennas, mounts or cameras. Render clean photographic product cutouts with natural studio lighting, not a redesigned product.
+Reference image 3 is EXACT RECORDER reference DHI-NVR4104HS-P-4KS2/L. Use exactly ONE black recorder, preserve its shape/ports/front panel. Do not include the red-and-white reference framing or feature icons. Arrange the two cameras left and right behind the recorder in foreground, all three products fully visible.
+Brand and layout follow reference 1. Clear strong typography professionally typeset, generous margins, no overlap. Text must read exactly:
+"ADE"
+"SMART HOME"
+"DAHUA 6MP"
+"SMART DUAL LIGHT"
+"2-CAMERA PoE KIT"
+"A$590"
+"2 x 6MP CAMERAS  |  1 x 4CH PoE NVR"
+"EQUIPMENT PACKAGE"
+"adesmarthome.com.au/products"
+The price A$590 must be very prominent. No other prices. Do not say 4K cameras, wireless, installation included, storage included, AcuPick NVR, always full colour, or add warranty/in-stock promises. This is a realistic retail bundle poster, not surveillance footage. The product models must remain accurate to reference images. Use actual products as the visual focus; crisp legible lettering and high definition commercial quality.

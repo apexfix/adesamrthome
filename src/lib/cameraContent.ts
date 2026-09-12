@@ -4,6 +4,10 @@ export const cameraKitFaqs = [
     answer: "The equipment package contains two DH-IPC-HDW2541EMP-AS-ANZ 5MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE network video recorder. Ask ADE Smart Home about the setup that suits your Adelaide property.",
   },
   {
+    question: "What is the A$590 Dahua Smart Dual Light kit?",
+    answer: "This equipment package contains two DH-IPC-HDW3667EM-S-IL-ANZ 6MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder. The cameras offer infrared and target-triggered warm-light monitoring. Confirm the lens option and setup requirements before ordering.",
+  },
+  {
     question: "What is a PoE security camera system?",
     answer: "PoE means Power over Ethernet. A compatible network cable carries power and video between each camera and the PoE recorder, so the cameras use a wired connection rather than relying on Wi-Fi.",
   },

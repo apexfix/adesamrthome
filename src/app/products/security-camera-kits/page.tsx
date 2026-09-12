@@ -12,7 +12,7 @@ const pageUrl = `${siteUrl}/products/security-camera-kits`;
 export const metadata: Metadata = {
   title: "CCTV & Security Camera Kits Adelaide | Dahua PoE",
   description:
-    "Explore Dahua CCTV camera kits in Adelaide. A$443 for two 5MP cameras and a 4-channel PoE NVR. Compare package contents and request local product advice.",
+    "Dahua CCTV kits in Adelaide: 5MP for A$443 or 6MP Smart Dual Light for A$590. Each includes two cameras and a four-channel PoE recorder. Compare packages.",
   alternates: { canonical: pageUrl },
   twitter: {
     card: "summary_large_image",
@@ -113,7 +113,7 @@ export default function SecurityCameraKitsPage() {
             CCTV &amp; Security Camera Kits Adelaide
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
-            In-stock Dahua 5MP PoE camera and recorder packages for key areas around homes,
+            Dahua 5MP and 6MP Smart Dual Light camera and recorder packages for key areas around homes,
             shops, offices and small commercial properties, with local advice in Adelaide.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

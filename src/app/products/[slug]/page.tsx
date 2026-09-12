@@ -78,6 +78,11 @@ function getProductBrand(product: Product) {
   return attributeBrand || product.brands?.[0]?.name || product.name.split(" ")[0];
 }
 
+function getCameraAttribute(product: Product, name: string) {
+  const attribute = product.attributes?.find((item) => item.name === name);
+  return attribute ? getAttributeValues(attribute)[0] || "" : "";
+}
+
 export function generateStaticParams() {
   return localProducts.map((product) => ({ slug: product.slug }));
 }
@@ -93,6 +98,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { current } = getPrice(product);
   const isService = product.kind === "service";
   const isCameraKit = isSecurityCameraKit(product);
+  const cameraResolution = getCameraAttribute(product, "Camera Resolution").split(" ")[0];
   const priceIncludesInstallation = product.price_includes_installation !== false;
   const url = `${siteUrl}/products/${product.slug}`;
   const image = product.images?.[0]?.src
@@ -101,19 +107,19 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const priceMessage = isService
     ? `from A$${current} for compatible customer-supplied smart locks across Adelaide`
     : isCameraKit
-      ? `A$${current} equipment package with two 5MP cameras and a four-channel PoE recorder`
+      ? `A$${current} equipment package with two ${cameraResolution} cameras and a four-channel PoE recorder`
     : priceIncludesInstallation
       ? `from $${current} with standard Adelaide installation included`
       : `from $${current} lock only, with an Adelaide installation package available`;
   const description = isService
     ? "Smart lock installation-only service across Adelaide. A$200 for compact locks and A$350 for standard 6068 mortise locks. Customer supplies the lock."
     : isCameraKit
-      ? `${product.name} for A$${current}. Two Dahua 5MP cameras and one four-channel PoE NVR for Adelaide homes and small businesses.`
+      ? `Two Dahua ${cameraResolution} cameras and a four-channel PoE recorder for A$${current}. ${cameraResolution === "6MP" ? "Smart Dual Light monitoring. " : ""}Camera kit advice in Adelaide.`
     : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
   const seoTitle = isService
     ? "Smart Lock Installation Prices Adelaide"
     : isCameraKit
-      ? "Dahua 5MP 2-Camera Security Kit Adelaide"
+      ? `Dahua ${cameraResolution} ${cameraResolution === "6MP" ? "Dual Light " : ""}2-Camera Kit Adelaide`
     : `${product.name} Adelaide`;
 
   return {
@@ -308,7 +314,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       priceCurrency: product.prices?.currency_code || "AUD",
       price: currentPrice,
       availability: isCameraKit
-        ? "https://schema.org/InStock"
+        ? (product.in_stock ? "https://schema.org/InStock" : undefined)
         : "https://schema.org/LimitedAvailability",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
@@ -320,7 +326,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     additionalProperty: isCameraKit
       ? [
           { "@type": "PropertyValue", name: "Camera quantity", value: "2" },
-          { "@type": "PropertyValue", name: "Camera resolution", value: "5MP" },
+          { "@type": "PropertyValue", name: "Camera resolution", value: getCameraAttribute(product, "Camera Resolution") },
           { "@type": "PropertyValue", name: "Recorder channels", value: "4" },
         ]
       : [
@@ -485,8 +491,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <div className="mb-24 grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
           {/* 左侧：图片展示 */}
-          <div className="relative order-2 lg:order-1">
-            <ProductGallery images={galleryImages} square={detailImages.length > 0} />
+          <div className={`relative ${isCameraKit ? "order-1" : "order-2 lg:order-1"}`}>
+            <ProductGallery images={galleryImages} square={isCameraKit || detailImages.length > 0} />
             {isOnSale && (
               <div className="absolute right-5 top-5 z-20 bg-red-700 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-white">
                 Special Offer
@@ -495,7 +501,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* 右侧：产品信息 */}
-          <div className="order-1 flex flex-col lg:order-2">
+          <div className={`flex flex-col ${isCameraKit ? "order-2" : "order-1 lg:order-2"}`}>
             <div className="mb-10">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
                 {product.categories?.[0]?.name || "Premium Smart Security"}
@@ -589,7 +595,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     {isService
                       ? "Free Compatibility Check"
                       : isCameraKit
-                        ? "Two 5MP Cameras"
+                        ? `Two ${getCameraAttribute(product, "Camera Resolution").split(" ")[0]} Cameras`
                       : hasReplacementWarranty
                         ? "2-Year Warranty"
                         : "Local Product Support"}
@@ -627,7 +633,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {isService
                   ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
                   : isCameraKit
-                    ? "The A$443 package contains two DH-IPC-HDW2541EMP-AS-ANZ 5MP cameras and one DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder. This exact package is currently in stock."
+                    ? `The A$${currentPrice} equipment package contains two ${getCameraAttribute(product, "Camera Model")} cameras and one ${getCameraAttribute(product, "Recorder Model")} four-channel PoE recorder.`
                   : hasSeparateInstallationPrice
                     ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
                     : hasReplacementWarranty
@@ -642,7 +648,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {isService
                   ? "Send photos before booking"
                   : isCameraKit
-                    ? "In stock now"
+                    ? (product.in_stock ? "In stock now" : "Enquire about availability")
                     : "Ask for current availability"}
               </div>
               

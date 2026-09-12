@@ -386,7 +386,7 @@ export function ContactForm({
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
-                href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? "Hi ADE Smart Home, I am interested in the Dahua 5MP two-camera security kit." : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
+                href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? `Hi ADE Smart Home, I am interested in ${formData.product || "a Dahua security camera kit"}.` : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5" aria-hidden="true" />
@@ -404,12 +404,12 @@ export function ContactForm({
             {isCameraKitEnquiry ? (
               <div className="mt-8 border-t border-zinc-800 pt-7">
                 <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
-                  Package contents
+                  Camera package options
                 </h3>
                 <ul className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
-                  <li><strong className="text-[#c5a47e]">2 x</strong> Dahua 5MP WizSense turret cameras</li>
-                  <li><strong className="text-[#c5a47e]">1 x</strong> Dahua four-channel PoE network video recorder</li>
-                  <li><strong className="text-[#c5a47e]">A$443</strong> equipment package</li>
+                  <li><strong className="text-[#c5a47e]">A$443</strong> Dahua 5MP two-camera kit</li>
+                  <li><strong className="text-[#c5a47e]">A$590</strong> Dahua 6MP Smart Dual Light two-camera kit</li>
+                  <li>Each equipment package has two cameras and one four-channel PoE recorder. Tell us your preferred kit below.</li>
                 </ul>
               </div>
             ) : <div className="mt-8 border-t border-zinc-800 pt-7">
@@ -573,7 +573,7 @@ export function ContactForm({
                   value={formData.product}
                   onChange={handleChange}
                   className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                  placeholder={isCameraKitEnquiry ? "e.g. Dahua 5MP two-camera kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
+                  placeholder={isCameraKitEnquiry ? "e.g. Dahua 6MP Smart Dual Light kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
                 />
                 <datalist id="smart-lock-models">
                   <option value="Not sure – please recommend" />
@@ -590,6 +590,7 @@ export function ContactForm({
                   <option value="Lockin V5 Max" />
                   <option value="Kaadas K70 SE" />
                   <option value="Dahua 5MP 2-Camera PoE Security Kit" />
+                  <option value="Dahua 6MP Smart Dual Light 2-Camera PoE Kit" />
                 </datalist>
               </label>
 

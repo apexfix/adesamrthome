@@ -2,6 +2,7 @@
 title: "Security Camera Kits in Adelaide: A Practical PoE Buying Guide"
 seoTitle: "Security Camera Kits Adelaide: Dahua PoE Buying Guide"
 date: "2026-09-12"
+updated: "2026-09-13"
 description: "Choosing a CCTV camera kit for an Adelaide home or small business? Compare coverage, PoE connections, recorder capacity and the Dahua two-camera package."
 coverImage: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"
 category: "CCTV Guide"
@@ -28,6 +29,8 @@ Our [Dahua 5MP two-camera PoE security kit](/products/dahua-5mp-2-camera-poe-sec
 ![Dahua equipment package with two turret cameras and a PoE recorder](/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png)
 
 The camera model provides 5MP imaging and infrared illumination rated up to 30 metres. This infrared rating is not a promise that faces or number plates will be identifiable at that distance. Position, lighting and the subject's movement affect the result. See the [official Dahua camera datasheet](https://materialfile.dahuasecurity.com/uploads/soft/20241112/DH-IPC-HDW2541EMP-AS-ANZ_datasheet.pdf) for the model specifications.
+
+For another option, compare the [A$590 Dahua 6MP Smart Dual Light kit](/products/dahua-6mp-smart-dual-light-2-camera-poe-kit). It pairs two DH-IPC-HDW3667EM-S-IL-ANZ cameras with the same four-channel recorder. Read its product page for the dual-light behaviour, exact contents and camera-versus-recorder capabilities.
 
 ## How does PoE work?
 
