@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     locale: "en_AU",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Lock Brands Adelaide",
+    description: "Compare Lockin and Kaadas smart locks, lock-only options and Adelaide installation packages from ADE Smart Home.",
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
+  },
 };
 
 export default async function BrandsPage() {
@@ -38,6 +44,7 @@ export default async function BrandsPage() {
     name: "Smart Lock Brands Adelaide",
     mainEntity: {
       "@type": "ItemList",
+      numberOfItems: brands.length,
       itemListElement: brands.map((brand, index) => ({
         "@type": "ListItem",
         position: index + 1,
@@ -63,7 +70,7 @@ export default async function BrandsPage() {
         <nav aria-label="Breadcrumb" className="text-xs font-bold uppercase text-zinc-500">
           <Link href="/" className="hover:text-white">Home</Link> / Brands
         </nav>
-        <header className="max-w-4xl py-14 md:py-20">
+        <header className="max-w-4xl py-10 md:py-14">
           <p className="text-xs font-bold uppercase text-[#d9b98f]">ADE Smart Home</p>
           <h1 className="mt-4 text-4xl font-black md:text-6xl">Smart Lock Brands in Adelaide</h1>
           <p className="mt-6 text-lg leading-8 text-zinc-300">
@@ -75,17 +82,17 @@ export default async function BrandsPage() {
           {brands.map((brand) => {
             const image = brand.products[0]?.images?.[0];
             return (
-              <article key={brand.slug} className="overflow-hidden rounded-md border border-zinc-800 bg-black">
+              <article key={brand.slug} className="liquid-glass-soft flex flex-col overflow-hidden rounded-md border">
                 {image && (
                   <div className="relative aspect-[16/10] bg-white">
                     <Image src={image.src} alt={image.alt} fill className="object-contain p-5" sizes="(max-width: 768px) 100vw, 50vw" />
                   </div>
                 )}
-                <div className="p-7 md:p-9">
+                <div className="flex flex-1 flex-col p-5 md:p-7">
                   <p className="text-xs font-bold uppercase text-[#d9b98f]">{brand.products.length} current {brand.products.length === 1 ? "model" : "models"}</p>
-                  <h2 className="mt-3 text-3xl font-black">{brand.name} Smart Locks</h2>
-                  <p className="mt-4 leading-7 text-zinc-400">{brand.introduction}</p>
-                  <Link href={`/brands/${brand.slug}`} className="mt-7 inline-flex items-center gap-2 font-bold text-[#d9b98f] hover:text-white">
+                  <h2 className="mt-3 text-2xl font-bold md:text-3xl">{brand.name} Smart Locks</h2>
+                  <p className="mt-4 mb-6 leading-7 text-zinc-400">{brand.introduction}</p>
+                  <Link href={`/brands/${brand.slug}`} className="mt-auto inline-flex min-h-11 items-center gap-2 font-bold text-[#d9b98f] hover:text-white">
                     Compare {brand.name} models <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>

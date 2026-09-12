@@ -16,6 +16,7 @@ const navLinks = [
 const productLinks = [
   { name: "All Products", href: "/products" },
   { name: "Smart Locks", href: "/products?category=smart-lock" },
+  { name: "Browse Lock Brands", href: "/brands" },
   { name: "Security Camera Kits", href: "/products/security-camera-kits" },
   { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
 ];

@@ -7,6 +7,7 @@ import type { Product } from "@/types";
 import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 import { notFound } from "next/navigation";
 import { isSecurityCameraKit } from "@/lib/productType";
+import { ChevronRight } from "lucide-react";
 
 const baseMetadata: Metadata = {
   title: "Smart Locks & Security Camera Kits Adelaide",
@@ -241,6 +242,11 @@ export default async function ProductsPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+        <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm text-zinc-400">
+          <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">Home</Link>
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          {isAllProductsPage ? <span aria-current="page">Products</span> : <><Link href="/products" className="inline-flex min-h-11 items-center hover:text-white">Products</Link><ChevronRight className="h-4 w-4" aria-hidden="true" /><span aria-current="page" className="text-[#d9b98f]">{pageTitle}</span></>}
+        </nav>
         
         {/* 页面标题区域 */}
         <div className="mb-14 border-b border-zinc-800 pb-12">
@@ -305,6 +311,7 @@ export default async function ProductsPage(props: {
               ))}
             </div>
           )}
+          {isAllProductsPage && <p className="mt-4 text-base leading-7 text-zinc-400">Shopping by brand? <Link href="/brands" className="text-[#d9b98f] underline underline-offset-4">Explore our Lockin and Kaadas ranges</Link>.</p>}
           {isSmartLocksPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 py-5 text-base leading-7 text-zinc-300">
             Already have a smart lock?{" "}
             <Link

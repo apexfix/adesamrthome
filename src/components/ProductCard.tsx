@@ -14,7 +14,7 @@ export function ProductCard({
   imageSizes?: string;
 }) {
   // 1. 处理价格逻辑
-  const minorUnit = product.prices?.currency_minor_unit || 2;
+  const minorUnit = product.prices?.currency_minor_unit ?? 2;
   const divider = Math.pow(10, minorUnit);
 
   // 现价（折扣后的价格）
@@ -24,7 +24,7 @@ export function ProductCard({
   const regularPrice = (parseInt(product.prices?.regular_price || "0") / divider).toFixed(0);
 
   // 判断是否正在打折
-  const isOnSale = regularPrice !== currentPrice;
+  const isOnSale = Number(regularPrice) > Number(currentPrice) && Number(currentPrice) > 0;
   const hasPrice = parseInt(product.prices?.price || "0") > 0;
   const installedPrice = product.installed_price
     ? (parseInt(product.installed_price, 10) / divider).toFixed(0)
@@ -87,7 +87,7 @@ export function ProductCard({
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e] opacity-90">
             {displayCategory}
           </p>
-          <h3 className="text-xl font-bold text-white group-hover:text-[#c5a47e] transition-colors line-clamp-2 leading-tight">
+          <h3 className="break-words text-lg font-bold leading-7 text-white transition-colors group-hover:text-[#c5a47e] md:text-xl">
             {product.name}
           </h3>
         </div>
@@ -102,13 +102,11 @@ export function ProductCard({
                   ? "Installation from"
                 : isCameraKit
                   ? "Equipment Package"
-                : isOnSale
-                  ? "Special Offer"
-                  : priceIncludesInstallation
+                : priceIncludesInstallation
                     ? "Installed Package"
                     : "Lock Only"}
             </p>
-            <div className="flex items-baseline gap-2">
+            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
               {/* 现价 */}
               <p className="text-2xl font-black text-[#c5a47e]">
                 {hasPrice ? `$${currentPrice}` : "Quote Required"}
@@ -121,12 +119,12 @@ export function ProductCard({
                 )}
             </div>
             {installedPrice && !priceIncludesInstallation && (
-              <p className="mt-1 text-xs font-medium text-zinc-400">
+              <p className="mt-2 text-sm leading-5 text-zinc-300">
                 With standard install <span className="font-bold text-white">${installedPrice}</span>
               </p>
             )}
             {isService && standardMortisePrice && (
-              <p className="mt-1 text-xs font-medium text-zinc-400">
+              <p className="mt-2 text-sm leading-5 text-zinc-300">
                 Standard 6068 mortise{" "}
                 <span className="font-bold text-white">${standardMortisePrice}</span>
               </p>
