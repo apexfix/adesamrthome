@@ -156,7 +156,7 @@ export function FAQSection() {
 
           <div className="mt-6">
             <Link
-              href="/contact?service=not-sure"
+              href="/contact#quote"
               className="inline-flex bg-white px-6 py-3 font-semibold text-neutral-950 transition hover:bg-neutral-200"
             >
               Send Door Photos for Free Check

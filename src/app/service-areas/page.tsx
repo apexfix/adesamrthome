@@ -179,7 +179,7 @@ export default function ServiceAreasPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/contact?service=not-sure"
+              href="/contact#quote"
               className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#d9b98f] px-6 text-sm font-bold text-black transition-colors hover:bg-white"
             >
               Check My Suburb

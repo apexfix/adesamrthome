@@ -139,7 +139,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
+                <Link href="/contact#quote" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
                   Request a Quote
                 </Link>
               </li>
@@ -161,7 +161,7 @@ export function Footer() {
               <li><Link href="/service-areas" className="hover:text-[#c5a47e] transition-colors">Adelaide Service Areas</Link></li>
               <li><Link href="/blog" className="hover:text-[#c5a47e] transition-colors">Installation Guides</Link></li>
               <li><Link href="/about" className="hover:text-[#c5a47e] transition-colors">About ADE Smart Home</Link></li>
-              <li><Link href="/contact?service=not-sure" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
+              <li><Link href="/contact#quote" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
               <li><Link href="/zh" lang="zh-CN" className="hover:text-[#c5a47e] transition-colors">中文服务</Link></li>
             </ul>
           </div>

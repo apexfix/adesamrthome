@@ -36,7 +36,7 @@ export function MobileContactBar() {
           Text for Quote
         </a>
         <Link
-          href="/contact?service=not-sure"
+          href="/contact#quote"
           onClick={onQuoteFormClick}
           aria-label="Send Door Photos"
           className="flex h-12 items-center justify-center gap-2 bg-[#c5a47e] text-sm font-bold text-black"

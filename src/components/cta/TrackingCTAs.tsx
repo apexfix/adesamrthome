@@ -39,7 +39,7 @@ const items = [
     label: "Get quote",
     event: "products_cta_click",
     icon: Tag,
-    href: "/contact?service=not-sure&cta=products_quote",
+    href: "/contact#quote",
     text: "Get quote",
     classes:
       "flex min-h-14 items-center justify-center gap-2 rounded-sm border border-zinc-700 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]",
@@ -85,7 +85,7 @@ const heroLinks = [
     label: "Get a quote",
     event: "hero_cta_click",
     icon: ArrowRight,
-    href: "/contact?service=not-sure&cta=hero_quote",
+    href: "/contact#quote",
     text: "Get a Quote",
     classes:
       "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-white/50 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white hover:text-black sm:min-h-14 sm:px-8 sm:text-base",

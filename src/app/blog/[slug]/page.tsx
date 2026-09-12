@@ -290,7 +290,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               ? "Send your suburb, preferred timing and four clear door photos. We will reply by SMS or email with the next step."
               : "Contact Adelaide's smart lock specialists for a clean, reliable retrofit."}
           </p>
-          <Link href="/contact?service=not-sure#quote" className="inline-flex h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-10 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
+          <Link href="/contact#quote" className="inline-flex h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-10 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
             {isGuide ? "Send Door Photos" : "Get a Free Quote"}
           </Link>
         </div>

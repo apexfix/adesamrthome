@@ -126,7 +126,7 @@ export default function GalleryPage() {
               </p>
             </div>
             <div className="flex flex-col justify-center gap-4">
-              <Link href="/contact?service=not-sure" className="inline-flex min-h-14 items-center justify-center gap-3 bg-[#c5a47e] px-5 font-bold text-black hover:bg-white">
+              <Link href="/contact#quote" className="inline-flex min-h-14 items-center justify-center gap-3 bg-[#c5a47e] px-5 font-bold text-black hover:bg-white">
                 <Camera className="h-5 w-5" aria-hidden="true" /> Send Door Photos
               </Link>
               <Link href="/blog/smart-lock-door-compatibility-check" className="inline-flex min-h-14 items-center justify-center gap-3 border border-zinc-700 px-5 font-bold text-white hover:border-[#c5a47e] hover:text-[#c5a47e]">

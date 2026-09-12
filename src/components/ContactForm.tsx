@@ -396,7 +396,7 @@ export function ContactForm({
               <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
                 Four helpful photo angles
               </h3>
-              <ol className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
+              <ol className="mt-5 list-none space-y-4 text-sm leading-relaxed text-zinc-400">
                 {photoChecklist.map((photo, index) => (
                   <li key={photo.title}>
                     <strong className="mr-2 text-[#c5a47e]">{index + 1}.</strong>

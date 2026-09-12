@@ -3,7 +3,7 @@ import { Clock, MessageSquareText, ShieldCheck } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Get a Smart Lock Quote in Adelaide",
   description:
     "Request a smart lock supply and installation quote or installation-only service for a compatible customer-supplied lock in Adelaide. We reply by SMS or email.",
@@ -26,6 +26,20 @@ export const metadata: Metadata = {
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const params = searchParams ? await searchParams : {};
+  const hasPrefillParameters = Object.values(params).some((value) => value !== undefined);
+
+  return {
+    ...baseMetadata,
+    robots: hasPrefillParameters ? { index: false, follow: true } : undefined,
+  };
+}
 
 export default async function ContactPage({
   searchParams,

@@ -109,7 +109,7 @@ export default function AboutPage() {
               ADE Smart Home supplies and installs smart locks across Adelaide and also installs compatible locks purchased by customers. Our work starts with the door, not a sales script: we check compatibility, explain the scope and confirm the price before booking.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/contact?service=not-sure#quote" className="inline-flex min-h-12 items-center gap-2 bg-[#d9b98f] px-5 font-bold text-black hover:bg-white">
+              <Link href="/contact#quote" className="inline-flex min-h-12 items-center gap-2 bg-[#d9b98f] px-5 font-bold text-black hover:bg-white">
                 <Camera className="h-4 w-4" /> Send Door Photos
               </Link>
               <a href={smsHref} className="inline-flex min-h-12 items-center gap-2 border border-zinc-700 px-5 font-bold hover:border-[#d9b98f] hover:text-[#d9b98f]">

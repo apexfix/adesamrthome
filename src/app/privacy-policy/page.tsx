@@ -147,7 +147,7 @@ export default function PrivacyPolicyPage() {
             ADE Smart Home provides mobile smart lock services across Adelaide, South Australia.
           </p>
           <Link
-            href="/contact?service=not-sure"
+            href="/contact#quote"
             className="mt-6 inline-flex text-sm font-bold text-[#c5a47e] hover:text-white"
           >
             Return to the enquiry page
