@@ -6,8 +6,6 @@ import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
 import { ServicePathways } from "@/components/ServicePathways";
 import { AudiencePathways } from "@/components/AudiencePathways";
-import { HomeCameraFeature } from "@/components/HomeCameraFeature";
-import { isSecurityCameraKit } from "@/lib/productType";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import path from "path";
 import fs from "fs";
@@ -75,7 +73,6 @@ export default async function Home() {
     console.error("Product fetch error:", e);
   }
 
-  const cameraKit = products.find(isSecurityCameraKit);
   const featuredSlugs = ["smart-lock-installation-only-service", "lockin-x9-smart-lock", "lockin-s6-max-smart-lock", "lockin-v5-max-smart-lock"];
   const featuredLocks = featuredSlugs.flatMap(slug => products.filter(product => product.slug === slug));
   const postsDirectory = path.join(process.cwd(), "content/posts");
@@ -116,8 +113,6 @@ export default async function Home() {
       </section>
 
       <ServicePathways />
-
-      {cameraKit && <HomeCameraFeature product={cameraKit} />}
 
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
         <span id="smart-locks" className="block scroll-mt-28" />
