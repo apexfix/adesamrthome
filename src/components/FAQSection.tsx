@@ -89,44 +89,47 @@ export function FAQSection() {
   };
 
   return (
-    <section className="bg-neutral-50 px-6 py-20">
+    <section id="faq" className="scroll-mt-20 border-y border-zinc-900 bg-black py-20 text-white md:py-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950 text-white">
-            <HelpCircle className="h-6 w-6" />
-          </div>
-
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+        <div className="max-w-3xl">
+          <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
+            <HelpCircle className="h-5 w-5" aria-hidden="true" />
+            Before you book
+          </p>
+          <h2 className="mt-3 text-3xl font-bold md:text-5xl">
             Smart Lock Installation FAQ
           </h2>
 
-          <p className="mt-4 leading-7 text-neutral-600">
+          <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
             Common questions about smart lock installation, door compatibility,
             imported smart locks, security screen doors and local Adelaide support.
           </p>
         </div>
 
-        <div className="mt-10 divide-y divide-neutral-200 rounded-md bg-white shadow-sm ring-1 ring-neutral-200">
+        <div className="mt-10 divide-y divide-zinc-800 border-y border-zinc-800">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
 
             return (
-              <div key={faq.question}>
+              <div
+                key={faq.question}
+                className={isOpen ? "bg-white/[0.035]" : "transition-colors hover:bg-white/[0.02]"}
+              >
                 <button
                   type="button"
                   onClick={() => setActiveIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
+                  className="flex w-full items-center justify-between gap-6 py-6 text-left"
                 >
-                  <span className="text-base font-semibold text-neutral-950 md:text-lg">
+                  <span className="text-base font-semibold text-white md:text-lg">
                     {faq.question}
                   </span>
 
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-950">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-zinc-700 text-[#c5a47e]">
                     {isOpen ? (
                       <Minus className="h-4 w-4" />
                     ) : (
@@ -136,8 +139,8 @@ export function FAQSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6">
-                    <p className="leading-7 text-neutral-700">{faq.answer}</p>
+                  <div className="max-w-4xl pb-6 pr-12">
+                    <p className="leading-7 text-zinc-400">{faq.answer}</p>
                   </div>
                 )}
               </div>
@@ -145,19 +148,18 @@ export function FAQSection() {
           })}
         </div>
 
-        <div className="mt-10 rounded-md bg-neutral-950 p-8 text-center text-white">
-          <h3 className="text-2xl font-bold">
-            Not sure if your door can fit a smart lock?
-          </h3>
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-neutral-200">
-            Send us photos of your door, current lock and door frame. We will
-            check the door type and recommend a suitable installation option.
-          </p>
-
-          <div className="mt-6">
+        <div className="mt-12 grid gap-7 border-l-2 border-[#c5a47e] pl-6 md:grid-cols-[1fr_auto] md:items-center md:pl-8">
+          <div>
+            <h3 className="text-2xl font-bold">Not sure if your door can fit a smart lock?</h3>
+            <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
+              Send photos of your door, current lock and frame. We will check the door type
+              and recommend a suitable installation option.
+            </p>
+          </div>
+          <div>
             <Link
               href="/contact#quote"
-              className="inline-flex bg-white px-6 py-3 font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              className="inline-flex min-h-12 items-center bg-[#c5a47e] px-6 font-bold text-black transition-colors hover:bg-white"
             >
               Send Door Photos for Free Check
             </Link>

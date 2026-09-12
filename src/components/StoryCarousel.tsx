@@ -21,7 +21,7 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
           <Link 
             key={story.slug}
             href={`/blog/${story.slug}`}
-            className="min-w-[300px] md:min-w-[450px] aspect-[16/10] relative rounded-3xl overflow-hidden snap-start group/card border border-zinc-800/50"
+            className="liquid-glass-soft group/card relative aspect-[16/10] min-w-[300px] snap-start overflow-hidden rounded-md border md:min-w-[450px]"
           >
             {/* Image Layer */}
             <Image 
@@ -38,14 +38,14 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
 
             {/* Content Layer */}
             <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-              <div className="flex items-center gap-3 text-[#c5a47e] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
+              <div className="mb-3 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e]">
                 <span className="bg-[#c5a47e] text-black px-2 py-0.5 rounded-sm">{story.category}</span>
                 <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {story.suburb}</span>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-1 group-hover/card:text-[#c5a47e] transition-colors">
                 {story.title}
               </h3>
-              <div className="flex items-center text-white/50 text-[10px] font-bold uppercase tracking-widest group-hover/card:text-white transition-colors">
+              <div className="flex items-center text-xs font-bold uppercase tracking-[0.1em] text-white/60 transition-colors group-hover/card:text-white">
                 View Details <ChevronRight className="w-4 h-4 ml-1" />
               </div>
             </div>

@@ -125,7 +125,7 @@ export default async function Home() {
 
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
         <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-          <div className="mb-10 flex flex-col gap-7 border-b border-zinc-800 pb-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="mb-10 flex flex-col gap-7 border-b border-zinc-800 pb-10 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-3xl">
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
                 Products &amp; Services
@@ -138,7 +138,7 @@ export default async function Home() {
                 already own, or explore security camera equipment packages.
               </p>
             </div>
-            <div className="grid gap-2 sm:grid-cols-3 lg:w-[620px]">
+            <div className="grid gap-2 sm:grid-cols-3 xl:w-[620px]">
               {[
                 { label: "Smart Locks", href: "/products?category=smart-lock", icon: LockKeyhole },
                 { label: "Installation Only", href: "/smart-lock-installation-only-adelaide", icon: Wrench },

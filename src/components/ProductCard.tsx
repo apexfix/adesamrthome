@@ -44,7 +44,7 @@ export function ProductCard({
   return (
     <Link 
       href={`/products/${product.slug || product.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-md border border-zinc-800/50 bg-zinc-900/40 transition-all duration-300 hover:border-[#c5a47e]/60"
+      className="liquid-glass-soft group relative flex flex-col overflow-hidden rounded-md border transition-colors duration-300 hover:border-[#c5a47e]/60"
     >
       {/* 1. Image Section */}
       <div className="aspect-square relative overflow-hidden bg-zinc-950">
@@ -67,7 +67,7 @@ export function ProductCard({
         {/* Installation Badge */}
         <div className="absolute top-4 left-4 flex items-center gap-1.5 border border-[#c5a47e]/30 bg-black/70 px-3 py-1.5 z-10">
           <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
-          <span className="text-[9px] font-bold text-white uppercase tracking-widest">
+          <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-white">
             {isService
               ? "Installation Only"
               : isCameraKit
@@ -82,7 +82,7 @@ export function ProductCard({
       {/* 2. Content Section */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex-1 mb-6">
-          <p className="text-[#c5a47e] text-[10px] font-bold uppercase tracking-widest mb-2 opacity-80">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e] opacity-90">
             {displayCategory}
           </p>
           <h3 className="text-xl font-bold text-white group-hover:text-[#c5a47e] transition-colors line-clamp-2 leading-tight">
@@ -93,7 +93,7 @@ export function ProductCard({
         {/* 3. Price and Action */}
         <div className="flex items-center justify-between">
           <div className="flex min-w-0 flex-col">
-            <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-tighter">
+            <p className="text-xs font-bold uppercase text-zinc-400">
               {!hasPrice
                 ? "Quote Required"
                 : isService
@@ -108,7 +108,7 @@ export function ProductCard({
             </p>
             <div className="flex items-baseline gap-2">
               {/* 现价 */}
-              <p className="text-2xl font-black text-[#c5a47e] tracking-tighter">
+              <p className="text-2xl font-black text-[#c5a47e]">
                 {hasPrice ? `$${currentPrice}` : "Quote Required"}
               </p>
               {/* 原价（仅在打折时显示） */}

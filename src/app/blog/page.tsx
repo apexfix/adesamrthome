@@ -113,7 +113,7 @@ export default function BlogListPage() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950 pt-32 pb-20">
+    <main className="min-h-screen bg-zinc-950 pb-24 pt-28 md:pt-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
@@ -122,39 +122,38 @@ export default function BlogListPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="container mx-auto px-4 md:px-6 text-white">
+      <div className="container mx-auto max-w-[1500px] px-5 text-white md:px-8 xl:px-10">
         
         {/* Header Section */}
-        <div className="max-w-4xl mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <div className="mb-14 max-w-4xl border-b border-zinc-800 pb-12">
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Advice and real work</p>
+          <h1 className="mb-6 mt-3 text-4xl font-bold md:text-6xl">
             Smart Lock <span className="text-[#c5a47e]">Guides &amp; Projects</span>
           </h1>
-          <p className="text-zinc-400 text-lg font-light leading-relaxed max-w-2xl">
+          <p className="max-w-2xl text-lg leading-relaxed text-zinc-400">
             Door compatibility guidance, product explanations and real project notes for Adelaide homes.
           </p>
 
           {/* Achievement Badge */}
-          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 rounded-3xl bg-zinc-900/50 border border-[#c5a47e]/20 backdrop-blur-sm relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#c5a47e]/5 blur-3xl rounded-full" />
-            
+          <div className="mt-8 flex flex-col items-start gap-5 border-l-2 border-[#c5a47e] pl-6 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#c5a47e] flex items-center justify-center shadow-[0_0_20px_rgba(197,164,126,0.3)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-[#c5a47e]">
                 <ShieldCheck className="w-6 h-6 text-black" />
               </div>
               <div>
-                <p className="text-2xl font-black text-[#c5a47e] tracking-tighter">400+</p>
-                <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Successful Installs</p>
+                <p className="text-2xl font-black text-[#c5a47e]">400+</p>
+                <p className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Successful installs</p>
               </div>
             </div>
 
             <div className="h-px sm:h-10 w-full sm:w-px bg-zinc-800" />
 
             <div className="flex-1">
-              <p className="text-zinc-300 text-sm font-light leading-relaxed">
+              <p className="text-sm leading-relaxed text-zinc-300">
                 <span className="text-white font-bold">Experience Matters:</span> We have completed more than <span className="text-[#c5a47e] font-bold">400</span> smart lock installations in Adelaide, with the number growing daily. This portfolio is being updated with our extensive project history.
               </p>
-              <div className="flex items-center gap-2 mt-2 text-[#c5a47e] text-[10px] font-bold uppercase tracking-widest">
-                <TrendingUp className="w-3 h-3 animate-pulse" /> Growing Daily in Adelaide
+              <div className="mt-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e]">
+                <TrendingUp className="h-3.5 w-3.5" /> Growing daily in Adelaide
               </div>
             </div>
           </div>
@@ -167,7 +166,7 @@ export default function BlogListPage() {
               <Link 
                 key={post.slug} 
                 href={`/blog/${post.slug}`} 
-                className="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/50 hover:border-[#c5a47e]/30 transition-all duration-500 flex flex-col"
+                className="liquid-glass-soft group relative flex flex-col overflow-hidden rounded-md border transition-colors hover:border-[#c5a47e]/50"
               >
                 {/* 封面图容器：恢复为 object-cover 模式 */}
                 <div className="aspect-[16/9] relative overflow-hidden bg-zinc-900">
@@ -175,15 +174,16 @@ export default function BlogListPage() {
                     src={post.coverImage || "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800"} 
                     alt={post.title || "Case Study"} 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105" 
                   />
-                  <div className="absolute top-4 left-4 bg-[#c5a47e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest z-10">
+                  <div className="absolute left-4 top-4 z-10 bg-[#c5a47e] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-black">
                     {post.category || "Installation"}
                   </div>
                 </div>
                 
                 <div className="p-8 flex-1">
-                  <div className="flex items-center gap-4 text-zinc-500 text-[10px] mb-4 font-bold uppercase tracking-widest">
+                  <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
                     <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
                     <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {post.suburb}</span>
                   </div>
@@ -199,7 +199,7 @@ export default function BlogListPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-24 border border-dashed border-zinc-800 rounded-3xl">
+          <div className="rounded-md border border-dashed border-zinc-800 py-24 text-center">
             <p className="text-zinc-500">Our latest project stories are being prepared...</p>
           </div>
         )}

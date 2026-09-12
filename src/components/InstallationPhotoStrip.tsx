@@ -100,10 +100,10 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
 
   return (
     <>
-      <section className="mt-24 pt-20 border-t border-zinc-900">
+      <section className="mt-24 border-t border-zinc-800 pt-20">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
           <div>
-            <p className="text-[#c5a47e] text-[10px] font-bold uppercase tracking-[0.3em] mb-3">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
               Real Installations
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -148,7 +148,7 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
                 key={photo.src}
                 type="button"
                 onClick={() => handlePhotoClick(photo)}
-                className="group relative aspect-[4/5] w-[220px] md:w-[260px] shrink-0 overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
+                className="liquid-glass-soft group relative aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-md border text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e] md:w-[260px]"
                 aria-label={`Open photo: ${photo.alt}`}
               >
                 <Image
@@ -158,7 +158,7 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="260px"
                 />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-3 pt-10 text-[10px] font-bold uppercase tracking-widest text-white/80 opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-3 pt-10 text-xs font-bold uppercase tracking-[0.1em] text-white/80 opacity-0 transition-opacity group-hover:opacity-100">
                   View Photo
                 </span>
               </button>

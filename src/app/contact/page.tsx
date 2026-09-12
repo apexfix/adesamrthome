@@ -72,9 +72,9 @@ export default async function ContactPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
 
-      <header className="container mx-auto px-4 pb-10 md:px-6 md:pb-14">
+      <header className="container mx-auto max-w-[1500px] px-5 pb-12 md:px-8 md:pb-14 xl:px-10">
         <div className="max-w-4xl">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c5a47e]">
+          <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
             Adelaide smart home products
           </p>
           <h1 className="text-4xl font-black tracking-tight md:text-6xl">
@@ -94,7 +94,7 @@ export default async function ContactPage({
       />
 
       <section className="border-t border-zinc-900 bg-black py-16">
-        <div className="container mx-auto grid gap-10 px-4 md:grid-cols-3 md:px-6">
+        <div className="container mx-auto grid max-w-[1500px] gap-10 px-5 md:grid-cols-3 md:px-8 xl:px-10">
           <div>
             <ShieldCheck className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Careful Product Advice</h2>

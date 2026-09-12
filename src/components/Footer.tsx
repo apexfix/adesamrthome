@@ -10,7 +10,7 @@ export function Footer() {
 
   return (
     <footer className="bg-zinc-950 border-t border-zinc-900 text-zinc-400">
-      <div className="container mx-auto px-4 md:px-6 py-16 md:py-20">
+      <div className="container mx-auto max-w-[1500px] px-5 py-16 md:px-8 md:py-20 xl:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           
           {/* 品牌与介绍区 */}

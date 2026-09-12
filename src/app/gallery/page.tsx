@@ -85,15 +85,16 @@ export default function GalleryPage() {
       <main className="flex-1 pt-32 pb-20">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-3xl mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Our <span className="text-[#c5a47e]">Gallery</span></h1>
+        <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+          <div className="mb-12 max-w-3xl border-b border-zinc-800 pb-12">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Real Adelaide work</p>
+            <h1 className="mb-6 mt-3 text-4xl font-bold text-white md:text-6xl">Our <span className="text-[#c5a47e]">Gallery</span></h1>
             <p className="text-zinc-400 text-lg font-light leading-relaxed">Real smart lock installations completed across Adelaide.</p>
           </div>
           
-          <div className="flex flex-wrap gap-4 mb-12">
+          <div className="mb-12 flex flex-wrap gap-2">
             {categories.map((cat) => (
-              <button type="button" key={cat} onClick={() => setFilter(cat)} aria-pressed={filter === cat} className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === cat ? "bg-[#c5a47e] text-black shadow-lg" : "bg-zinc-900 text-zinc-500 hover:text-white"}`}>
+              <button type="button" key={cat} onClick={() => setFilter(cat)} aria-pressed={filter === cat} className={`min-h-11 border px-5 text-sm font-bold transition-colors ${filter === cat ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "liquid-glass-soft border-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-white"}`}>
                 {cat}
               </button>
             ))}
@@ -101,7 +102,7 @@ export default function GalleryPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
-              <article key={project.id} className="group overflow-hidden rounded-md border border-zinc-800/50 bg-zinc-900/40 transition-all hover:border-[#c5a47e]/30">
+              <article key={project.id} className="liquid-glass-soft group overflow-hidden rounded-md border transition-colors hover:border-[#c5a47e]/40">
                 <div className="aspect-[4/3] relative">
                   <Image src={project.image} alt={project.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>

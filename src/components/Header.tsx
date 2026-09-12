@@ -37,7 +37,7 @@ export function Header() {
       className={`fixed top-0 z-50 w-full transition-all duration-500 border-b ${
         scrolled 
           ? "bg-black/90 backdrop-blur-md border-white/10 py-2 shadow-lg" 
-          : "bg-black/40 backdrop-blur-sm border-transparent py-4"
+          : "bg-black/40 backdrop-blur-sm border-transparent py-4 shadow-[inset_0_-1px_0_rgba(255,255,255,0.06)]"
       } text-white`}
     >
       <div className="container mx-auto flex max-w-[1500px] items-center justify-between px-5 md:px-8 xl:px-10">
@@ -76,7 +76,7 @@ export function Header() {
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" aria-hidden="true" />
               </Link>
               <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <div className="border border-white/10 bg-black/95 p-2 shadow-2xl backdrop-blur-xl">
+                <div className="liquid-glass rounded-md border p-2">
                   {productLinks.map((link) => (
                     <Link
                       key={link.href}
@@ -116,7 +116,7 @@ export function Header() {
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
               <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" aria-label="ADE Smart Home on Xiaohongshu" className="text-white/60 hover:text-[#c5a47e] transition-colors" title="Xiaohongshu">
-                <span className="text-[11px] font-bold tracking-tighter">小红书</span>
+                <span className="text-[11px] font-bold">小红书</span>
               </a>
             </div>
 
@@ -142,7 +142,7 @@ export function Header() {
 
       {/* 移动端菜单 */}
       {isMenuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-xl absolute w-full left-0 top-full border-t border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2">
+        <div className="liquid-glass absolute left-0 top-full w-full overflow-hidden border-t border-white/10 animate-in fade-in slide-in-from-top-2 md:hidden">
           <div className="container mx-auto p-6 flex flex-col gap-8">
             <nav className="flex flex-col gap-4 text-lg font-medium">
               <Link href="/" className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>

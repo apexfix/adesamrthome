@@ -360,9 +360,9 @@ export function ContactForm({
 
   return (
     <section id="quote" className="border-y border-zinc-800 bg-zinc-950 py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-[#c5a47e]">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
             Fast Adelaide quote
           </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
@@ -376,7 +376,7 @@ export function ContactForm({
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
-          <aside className="border border-zinc-800 bg-black p-6 md:p-8">
+          <aside className="liquid-glass-soft rounded-md border p-6 md:p-8">
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
@@ -428,7 +428,7 @@ export function ContactForm({
             </div>}
           </aside>
 
-          <div className="relative border border-slate-200 bg-white p-6 shadow-2xl md:p-9">
+          <div className="liquid-glass-light relative rounded-md border p-6 md:p-9">
             <h3 className="text-2xl font-black tracking-tight text-slate-950">
               {formData.product
                 ? `Ask about ${formData.product}`
@@ -449,7 +449,7 @@ export function ContactForm({
               className="mt-7 space-y-5"
             >
               <fieldset>
-                <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <legend className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Service needed
                 </legend>
                 <div className="grid grid-cols-2 gap-px bg-slate-300 p-px sm:grid-cols-4">
@@ -472,7 +472,7 @@ export function ContactForm({
               </fieldset>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Name
                   <input
                     name="name"
@@ -484,7 +484,7 @@ export function ContactForm({
                     placeholder="Your name"
                   />
                 </label>
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Mobile
                   <input
                     name="phone"
@@ -501,7 +501,7 @@ export function ContactForm({
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Suburb / postcode
                   <input
                     name="suburb"
@@ -513,7 +513,7 @@ export function ContactForm({
                     placeholder="e.g. Norwood 5067"
                   />
                 </label>
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Email
                   <input
                     name="email"
@@ -529,7 +529,7 @@ export function ContactForm({
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Property type
                   <select
                     name="propertyType"
@@ -543,7 +543,7 @@ export function ContactForm({
                     ))}
                   </select>
                 </label>
-                <label className="space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Preferred timing
                   <select
                     name="preferredTiming"
@@ -559,7 +559,7 @@ export function ContactForm({
                 </label>
               </div>
 
-              <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+              <label className="block space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                 {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="font-normal normal-case text-slate-600">optional</span>
                 <input
                   name="product"
@@ -588,7 +588,7 @@ export function ContactForm({
               </label>
 
               {!isCameraKitEnquiry && <fieldset>
-                <legend className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                <legend className="text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Door photos <span className="font-normal normal-case text-slate-600">recommended for a more accurate quote</span>
                 </legend>
                 <div className="mt-3 flex items-center justify-between gap-4 border-y border-slate-200 py-3">
@@ -600,7 +600,7 @@ export function ContactForm({
                 <div className="grid grid-cols-2 gap-px bg-slate-200 p-px">
                   {photoChecklist.map((photo, index) => (
                     <div key={photo.title} className="min-h-24 bg-white p-3">
-                      <p className="text-[10px] font-black uppercase tracking-[0.12em] text-[#8a6b48]">
+                      <p className="text-xs font-black uppercase tracking-[0.1em] text-[#8a6b48]">
                         {String(index + 1).padStart(2, "0")}
                       </p>
                       <p className="mt-2 text-xs font-bold text-slate-900">{photo.title}</p>
@@ -661,7 +661,7 @@ export function ContactForm({
                 {photoError && <p className="mt-2 text-sm text-red-700">{photoError}</p>}
               </fieldset>}
 
-              <label className="block space-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
+              <label className="block space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                 Anything else? <span className="font-normal normal-case text-slate-600">optional</span>
                 <textarea
                   name="message"

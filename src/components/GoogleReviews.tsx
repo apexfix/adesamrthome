@@ -27,45 +27,44 @@ const reviews = [
 
 export function GoogleReviews() {
   return (
-    <section className="py-24 bg-zinc-950 relative overflow-hidden">
-      {/* 背景点缀：微弱的品牌色光晕 */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#c5a47e]/5 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        
-        {/* 头部：打造“官方认证”的权威感 */}
-        <div className="flex flex-col items-center justify-center text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 mb-6">
-            <span className="text-sm font-bold text-[#c5a47e]">Excellent</span>
-            <div className="flex gap-0.5">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star key={s} className="w-3 h-3 fill-[#c5a47e] text-[#c5a47e]" />
-              ))}
-            </div>
-            <span className="text-xs text-zinc-400 ml-1">on Google</span>
+    <section id="reviews" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 text-white md:py-24">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
+              Customer feedback
+            </p>
+            <h2 className="mt-3 text-3xl font-bold md:text-5xl">
+              Trusted by Adelaide homeowners
+            </h2>
+            <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
+              Feedback from local customers who chose ADE Smart Home for careful installation,
+              clear setup help and a clean finish.
+            </p>
           </div>
-          
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Trusted by Adelaide Homeowners
-          </h2>
-          <p className="text-zinc-400 max-w-2xl text-lg font-light leading-relaxed">
-            Don&apos;t just take our word for it. Explore feedback from Adelaide customers who upgraded their home security with ADE Smart Home.
-          </p>
+          <div className="flex items-center gap-3 border-l-2 border-[#c5a47e] pl-5">
+            <div>
+              <p className="text-sm font-bold text-white">Excellent on Google</p>
+              <div className="mt-2 flex gap-1">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star key={s} className="h-4 w-4 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* 评论网格：现代暗色卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-          {reviews.map((review) => (
-            <div 
-              key={review.id} 
-              className="group relative bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800/50 backdrop-blur-sm transition-all duration-500 hover:border-[#c5a47e]/30 hover:bg-zinc-900/60 flex flex-col h-full"
+        <div className="liquid-glass-soft mt-12 grid overflow-hidden rounded-md border md:grid-cols-3">
+          {reviews.map((review, index) => (
+            <article
+              key={review.id}
+              className={`relative flex h-full flex-col py-8 md:px-7 lg:px-9 ${
+                index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
+              }`}
             >
-              {/* 装饰性的引用图标 */}
-              <Quote className="absolute top-6 right-8 w-8 h-8 text-zinc-800 group-hover:text-[#c5a47e]/10 transition-colors duration-500" />
-              
-              <div className="flex items-center gap-4 mb-8">
-                {/* 核心优化：统一使用 Google 品牌头像占位符，增强信任感 */}
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center p-2.5 shadow-lg group-hover:scale-110 transition-transform duration-500">
+              <Quote className="absolute right-6 top-8 h-7 w-7 text-zinc-800" aria-hidden="true" />
+              <div className="mb-7 flex items-center gap-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-white p-2.5">
                   <svg viewBox="0 0 24 24" className="w-full h-full">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -74,33 +73,33 @@ export function GoogleReviews() {
                   </svg>
                 </div>
                 <div>
-                  <div className="font-bold text-white group-hover:text-[#c5a47e] transition-colors">{review.author}</div>
-                  <div className="text-xs text-zinc-400 uppercase tracking-widest mt-0.5">{review.date}</div>
+                  <p className="font-bold text-white">{review.author}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.1em] text-zinc-500">{review.date}</p>
                 </div>
               </div>
 
-              <p className="text-zinc-300 text-sm md:text-base leading-relaxed flex-grow font-light">
+              <p className="flex-grow text-base leading-7 text-zinc-300">
                 &ldquo;{review.text}&rdquo;
               </p>
 
-              <div className="mt-8 flex gap-1">
+              <div className="mt-7 flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} className="w-3.5 h-3.5 fill-[#c5a47e] text-[#c5a47e]" />
+                  <Star key={star} className="h-3.5 w-3.5 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
                 ))}
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* 底部按钮：药丸形发光设计 */}
-        <div className="text-center">
-          <Link 
-            href="https://g.page/r/Cak2vtUI0QLfEBM/review" 
+        <div className="mt-10">
+          <Link
+            href="https://g.page/r/Cak2vtUI0QLfEBM/review"
             target="_blank"
-            className="group inline-flex items-center justify-center px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wide transition-all duration-300 hover:bg-[#c5a47e] hover:shadow-[0_0_30px_rgba(197,164,126,0.4)]"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 items-center justify-center border border-zinc-700 px-6 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
           >
-            VERIFIED REVIEWS ON 
-            <span className="flex items-center ml-2 border-l border-black/10 pl-2">
+            Verified reviews on
+            <span className="ml-2 flex border-l border-zinc-700 pl-2">
               <span className="text-[#4285F4]">G</span>
               <span className="text-[#EA4335]">o</span>
               <span className="text-[#FBBC05]">o</span>
@@ -110,7 +109,6 @@ export function GoogleReviews() {
             </span>
           </Link>
         </div>
-
       </div>
     </section>
   );

@@ -3,7 +3,7 @@ import { CircleCheck, Headphones, Wrench } from "lucide-react";
 export function ServiceFeatures() {
   return (
     <section className="border-y border-zinc-900 bg-black py-20 text-white">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           <div className="flex flex-col items-center border-zinc-800 p-6 text-center md:border-r md:px-10">
             <div className="mb-6 flex h-14 w-14 items-center justify-center border border-zinc-800 bg-zinc-950">

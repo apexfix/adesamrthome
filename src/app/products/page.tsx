@@ -230,37 +230,47 @@ export default async function ProductsPage(props: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         
         {/* 页面标题区域 */}
-        <div className="mb-20 flex flex-col items-center justify-center text-center">
-          <h1 className="mb-5 text-4xl font-extrabold tracking-tight text-white uppercase md:text-5xl">
+        <div className="mb-14 border-b border-zinc-800 pb-12">
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Adelaide smart security</p>
+          <h1 className="mb-5 mt-3 text-4xl font-extrabold text-white md:text-6xl">
             {pageTitle}
           </h1>
-          <div className="h-1 w-20 bg-[#c5a47e] rounded-full" />
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-2">
             <Link
               href="/products"
-              className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
+              className={`inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
                 !categoryParam && !brandParam
                   ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                  : "border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                  : "liquid-glass-soft border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
               }`}
             >
               All Products
             </Link>
-            {PRODUCT_CATEGORIES.map((category) => (
-              <Link
-                key={category.name}
-                href={category.href}
-                className="rounded-full border border-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
-              >
-                {category.name}
-              </Link>
-            ))}
+            {PRODUCT_CATEGORIES.map((category) => {
+              const isActive =
+                category.name === "Smart Locks" &&
+                ["smartlock", "smartlocks"].includes(normalizedCategory);
+
+              return (
+                <Link
+                  key={category.name}
+                  href={category.href}
+                  className={`inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
+                    isActive
+                      ? "border-[#c5a47e] bg-[#c5a47e] text-black"
+                      : "liquid-glass-soft border-zinc-800 text-zinc-400 hover:border-[#c5a47e] hover:text-white"
+                  }`}
+                >
+                  {category.name}
+                </Link>
+              );
+            })}
           </div>
           {categoryParam && (
-             <p className="mt-6 text-zinc-400 max-w-2xl mx-auto">
+               <p className="mt-6 max-w-2xl text-zinc-400">
                Showing all available products in the {pageTitle} category.
              </p>
           )}
@@ -271,19 +281,19 @@ export default async function ProductsPage(props: {
             </p>
           )}
           {isSmartLocksPage && (
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               {SMART_LOCK_BRANDS.map((brand) => (
                 <Link
                   key={brand.name}
                   href={brand.href}
-                  className="rounded-full border border-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
+                  className="liquid-glass-soft inline-flex min-h-11 items-center border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-zinc-400 transition-colors hover:border-[#c5a47e] hover:text-white"
                 >
                   {brand.name}
                 </Link>
               ))}
             </div>
           )}
-          {isSmartLocksPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
+          {isSmartLocksPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 py-5 text-base leading-7 text-zinc-300">
             Already have a smart lock?{" "}
             <Link
               href="/smart-lock-installation-only-adelaide"

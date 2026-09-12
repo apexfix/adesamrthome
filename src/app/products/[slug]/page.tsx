@@ -453,7 +453,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <main className="bg-zinc-950 min-h-screen text-white pt-32 pb-20">
+    <main className="min-h-screen bg-zinc-950 pb-24 pt-28 text-white md:pt-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -462,10 +462,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         
         {/* 面包屑导航 */}
-        <nav className="flex items-center gap-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-12">
+        <nav className="mb-10 flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
           <Link href="/products" className="hover:text-white transition-colors">
@@ -483,24 +483,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <span className="text-[#c5a47e]">{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start mb-32">
+        <div className="mb-24 grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
           {/* 左侧：图片展示 */}
-          <div className="relative rounded-[2.5rem] overflow-hidden border border-zinc-900 bg-zinc-900/50 shadow-2xl">
+          <div className="relative order-2 lg:order-1">
             <ProductGallery images={galleryImages} square={detailImages.length > 0} />
             {isOnSale && (
-              <div className="absolute top-8 right-8 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg z-20">
+              <div className="absolute right-5 top-5 z-20 bg-red-700 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-white">
                 Special Offer
               </div>
             )}
           </div>
 
           {/* 右侧：产品信息 */}
-          <div className="flex flex-col">
+          <div className="order-1 flex flex-col lg:order-2">
             <div className="mb-10">
-              <p className="text-[#c5a47e] font-bold uppercase tracking-[0.4em] text-[10px] mb-4">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
                 {product.categories?.[0]?.name || "Premium Smart Security"}
               </p>
-              <h1 className="text-4xl md:text-6xl font-black mb-8 leading-tight tracking-tight">
+              <h1 className="mb-8 text-4xl font-black leading-tight md:text-5xl">
                 {product.name}
               </h1>
               
@@ -515,10 +515,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                           : "border-[#c5a47e]/60 bg-[#c5a47e]/5"
                       }`}
                     >
-                      <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-zinc-400">
                         {option.name}
                       </p>
-                      <p className="text-4xl font-black tracking-tighter text-[#c5a47e]">
+                      <p className="text-4xl font-black text-[#c5a47e]">
                         {currencySymbol}{getOptionalPrice(product, option.price)}
                       </p>
                       <p className="mt-3 text-sm leading-6 text-zinc-400">
@@ -529,35 +529,35 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               ) : isCameraKit ? (
                 <div className="mb-8 border-l-2 border-[#c5a47e] pl-5">
-                  <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
                     Two-camera equipment package
                   </p>
-                  <p className="text-5xl font-black tracking-tighter text-[#c5a47e]">
+                  <p className="text-5xl font-black text-[#c5a47e]">
                     {currencySymbol}{currentPrice}
                   </p>
                 </div>
               ) : hasSeparateInstallationPrice ? (
                 <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div className="border-l-2 border-zinc-700 pl-5">
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
                       Lock only
                     </p>
-                    <p className="text-4xl font-black tracking-tighter text-white">
+                    <p className="text-4xl font-black text-white">
                       {currencySymbol}{currentPrice}
                     </p>
                   </div>
                   <div className="border-l-2 border-[#c5a47e] pl-5">
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
                       Lock + standard Adelaide installation
                     </p>
-                    <p className="text-4xl font-black tracking-tighter text-[#c5a47e]">
+                    <p className="text-4xl font-black text-[#c5a47e]">
                       {currencySymbol}{installedPrice}
                     </p>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-baseline gap-4 mb-8">
-                  <span className="text-5xl font-black text-[#c5a47e] tracking-tighter">
+                  <span className="text-5xl font-black text-[#c5a47e]">
                     {currencySymbol}{currentPrice}
                   </span>
                   {isOnSale && (
@@ -565,13 +565,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       {currencySymbol}{regularPrice}
                     </span>
                   )}
-                  <span className="ml-2 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
+                  <span className="ml-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
                     Standard Adelaide Install Included
                   </span>
                 </div>
               )}
 
-              <div className="h-px w-full bg-gradient-to-r from-zinc-800 to-transparent mb-10" />
+              <div className="mb-10 h-px w-full bg-zinc-800" />
 
               <div 
                 className="prose prose-invert prose-zinc max-w-none text-zinc-400 font-light leading-relaxed text-lg"
@@ -580,8 +580,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-              <div className="flex items-center gap-4 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
-                <div className="w-12 h-12 rounded-2xl bg-[#c5a47e]/10 flex items-center justify-center">
+              <div className="liquid-glass-soft flex items-center gap-4 rounded-md border p-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[#c5a47e]/10">
                   <ShieldCheck className="w-6 h-6 text-[#c5a47e]" />
                 </div>
                 <div>
@@ -594,7 +594,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         ? "2-Year Warranty"
                         : "Local Product Support"}
                   </p>
-                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
                     {isService
                       ? "Before Booking"
                       : isCameraKit
@@ -605,8 +605,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
-                <div className="w-12 h-12 rounded-2xl bg-[#c5a47e]/10 flex items-center justify-center">
+              <div className="liquid-glass-soft flex items-center gap-4 rounded-md border p-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[#c5a47e]/10">
                   <Zap className="w-6 h-6 text-[#c5a47e]" />
                 </div>
                 <div>
@@ -617,7 +617,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         ? "4-Channel PoE NVR"
                         : "Expert Install"}
                   </p>
-                  <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
                     {isCameraKit ? "Room for two more cameras" : "Adelaide Local Team"}
                   </p>
                 </div>
@@ -637,7 +637,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-2 text-emerald-500 text-[10px] font-bold uppercase tracking-widest mb-2 px-1">
+              <div className="mb-2 flex items-center gap-2 px-1 text-xs font-bold uppercase tracking-[0.12em] text-emerald-500">
                 <div className="h-2 w-2 bg-emerald-500" />
                 {isService
                   ? "Send photos before booking"
@@ -667,7 +667,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </Link>}
                 <a
                   href={`sms:${businessInfo.phoneInternational}?body=${quotePrefill}`}
-                  className="h-16 bg-[#111827] text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
+                  className="liquid-glass-soft flex h-16 items-center justify-center gap-3 rounded-sm border border-zinc-800 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-[#c5a47e]"
                 >
                   <MessageSquareText className="w-5 h-5" />
                   Text Quote
@@ -707,7 +707,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         {/* 详细描述区 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 pt-24 border-t border-zinc-900">
+        <div className="grid grid-cols-1 gap-14 border-t border-zinc-800 pt-20 lg:grid-cols-3 lg:gap-20">
           <div className="lg:col-span-1">
             <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
               {isService ? "Service" : "Technical"}{" "}
@@ -724,7 +724,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                   return (
                     <div key={`${attr.name}-${attr.id || index}`} className="border-b border-zinc-900 pb-4">
-                      <dt className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-1">{attr.name}</dt>
+                      <dt className="mb-1 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">{attr.name}</dt>
                       <dd className="text-white font-medium">{values.join(", ")}</dd>
                     </div>
                   );
@@ -739,7 +739,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <span className="text-[#c5a47e]">{isService ? "Works" : "Story"}</span>
             </h2>
             <div 
-              className="prose prose-invert prose-zinc max-w-none text-zinc-400 font-light leading-relaxed prose-headings:text-white prose-img:rounded-[2rem] prose-img:border prose-img:border-zinc-800 shadow-xl"
+              className="prose prose-invert prose-zinc max-w-none text-base leading-8 text-zinc-400 prose-headings:text-white prose-img:rounded-md prose-img:border prose-img:border-zinc-800"
               dangerouslySetInnerHTML={{ __html: product.description || "" }} 
             />
           </div>
@@ -748,7 +748,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {detailImages.length > 0 && (
           <section className="mt-24 border-t border-zinc-900 pt-20">
             <div className="mx-auto mb-12 max-w-3xl text-center">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#c5a47e]">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
                 Product details
               </p>
               <h2 className="mt-3 text-3xl font-black md:text-5xl">
@@ -776,7 +776,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* 【新增】：关联安装案例区域 */}
         {relatedStories.length > 0 && (
-          <div className="mt-40 pt-20 border-t border-zinc-900">
+          <div className="mt-24 border-t border-zinc-800 pt-20">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
               <div className="max-w-xl">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
