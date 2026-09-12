@@ -1,18 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { Camera, MessageSquareText } from "lucide-react";
+import { Camera, Cctv, MessageSquareText, Tag } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { businessInfo } from "@/lib/seoData";
 import { trackEvent } from "@/lib/analytics";
 
-const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`;
-const mailHref = `mailto:${businessInfo.email}?subject=${encodeURIComponent(
-  "Smart lock quote with door photos",
-)}&body=${encodeURIComponent(
-  "Hi ADE Smart Home, I have a smart lock enquiry and door photos to share.",
-)}`;
-
 export function MobileContactBar() {
+  const pathname = usePathname();
+  const isCameraPage =
+    pathname.includes("security-camera") || pathname.includes("dahua-5mp-2-camera");
+  const isMixedProductsPage = pathname === "/products";
+  const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(
+    isCameraPage
+      ? "Hi ADE Smart Home, I would like a security camera kit quote."
+      : isMixedProductsPage
+        ? "Hi ADE Smart Home, I would like a product quote."
+      : "Hi ADE Smart Home, I would like a smart lock quote.",
+  )}`;
+  const mailHref = `mailto:${businessInfo.email}?subject=${encodeURIComponent(
+    isCameraPage
+      ? "Security camera kit enquiry"
+      : isMixedProductsPage
+        ? "ADE Smart Home product enquiry"
+        : "Smart lock quote with door photos",
+  )}&body=${encodeURIComponent(
+    isCameraPage
+      ? "Hi ADE Smart Home, I would like more information about a security camera kit."
+      : isMixedProductsPage
+        ? "Hi ADE Smart Home, I would like more information about one of your products."
+      : "Hi ADE Smart Home, I have a smart lock enquiry and door photos to share.",
+  )}`;
   const onSmsClick = () =>
     trackEvent("mobile_sms_cta_click", { location: "fixed_mobile_bar" });
 
@@ -36,13 +54,19 @@ export function MobileContactBar() {
           Text for Quote
         </a>
         <Link
-          href="/contact#quote"
+          href={isCameraPage ? "/contact?service=security-camera-kit#quote" : "/contact#quote"}
           onClick={onQuoteFormClick}
-          aria-label="Send Door Photos"
+          aria-label={isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
           className="flex h-12 items-center justify-center gap-2 bg-[#c5a47e] text-sm font-bold text-black"
         >
-          <Camera className="h-4 w-4" />
-          Send Door Photos
+          {isCameraPage ? (
+            <Cctv className="h-4 w-4" />
+          ) : isMixedProductsPage ? (
+            <Tag className="h-4 w-4" />
+          ) : (
+            <Camera className="h-4 w-4" />
+          )}
+          {isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
         </Link>
         <a
           href={mailHref}
@@ -50,7 +74,11 @@ export function MobileContactBar() {
           className="col-span-2 mt-2 flex h-10 items-center justify-center gap-2 border-t border-zinc-700 text-xs font-semibold text-white/80"
         >
           <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-          Or email your details to {businessInfo.email}
+          {isCameraPage
+            ? "Email camera enquiry"
+            : isMixedProductsPage
+              ? "Email product enquiry"
+              : "Email your details"}
         </a>
       </div>
     </>

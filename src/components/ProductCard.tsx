@@ -4,7 +4,13 @@ import { ShieldCheck, Plus } from "lucide-react";
 import type { Product } from "@/types";
 import { isSecurityCameraKit } from "@/lib/productType";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: Product;
+  priority?: boolean;
+}) {
   // 1. 处理价格逻辑
   const minorUnit = product.prices?.currency_minor_unit || 2;
   const divider = Math.pow(10, minorUnit);
@@ -46,6 +52,7 @@ export function ProductCard({ product }: { product: Product }) {
           src={displayImage} 
           alt={product.name || "Smart Lock"}
           fill
+          loading={priority ? "eager" : "lazy"}
           className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
         />

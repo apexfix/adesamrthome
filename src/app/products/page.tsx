@@ -177,9 +177,10 @@ export default async function ProductsPage(props: {
   }
 
   const pageTitle = getPageTitle(categoryParam, brandParam);
+  const isAllProductsPage = categoryParam === null && brandParam === null;
+  const normalizedCategory = categoryParam ? normalizeCategory(categoryParam) : "";
   const isSmartLocksPage =
-    categoryParam === null ||
-    ["smartlock", "smartlocks"].includes(normalizeCategory(categoryParam));
+    brandParam !== null || SMART_LOCK_CHILD_CATEGORIES.has(normalizedCategory);
   const isCameraKitsPage =
     categoryParam !== null && normalizeCategory(categoryParam) === "securitycamerakits";
 
@@ -263,6 +264,12 @@ export default async function ProductsPage(props: {
                Showing all available products in the {pageTitle} category.
              </p>
           )}
+          {isAllProductsPage && (
+            <p className="mt-7 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
+              Browse smart locks, installation-only service and security camera
+              equipment packages available from ADE Smart Home in Adelaide.
+            </p>
+          )}
           {isSmartLocksPage && (
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               {SMART_LOCK_BRANDS.map((brand) => (
@@ -276,7 +283,7 @@ export default async function ProductsPage(props: {
               ))}
             </div>
           )}
-          {!isCameraKitsPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
+          {isSmartLocksPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 px-5 py-5 text-base leading-7 text-zinc-300">
             Already have a smart lock?{" "}
             <Link
               href="/smart-lock-installation-only-adelaide"
@@ -287,12 +294,12 @@ export default async function ProductsPage(props: {
             .
           </div>}
 
-          {!isCameraKitsPage && <TrackingCTAs context="products" />}
+          {isSmartLocksPage && !isCameraKitsPage && <TrackingCTAs context="products" />}
         </div>
 
         {/* 产品网格展示 */}
         {displayedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

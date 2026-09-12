@@ -3,16 +3,21 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, MessageSquareText, X, Instagram, Facebook } from "lucide-react";
+import { ChevronDown, Menu, MessageSquareText, X, Instagram, Facebook } from "lucide-react";
 import { businessInfo, socialProfiles } from "@/lib/seoData";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Products", href: "/products" },
   { name: "Gallery", href: "/gallery" },
   { name: "Stories", href: "/blog" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
+];
+
+const productLinks = [
+  { name: "All Products", href: "/products" },
+  { name: "Smart Locks", href: "/products?category=smart-lock" },
+  { name: "Security Camera Kits", href: "/products/security-camera-kits" },
+  { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
 ];
 
 export function Header() {
@@ -55,6 +60,35 @@ export function Header() {
           </Link>
           
           <nav className="hidden items-center gap-9 text-base font-semibold md:flex">
+            <Link
+              href="/"
+              className="group relative py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
+            >
+              Home
+              <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-[#c5a47e] transition-transform duration-300 group-hover:scale-x-100" />
+            </Link>
+            <div className="group relative">
+              <Link
+                href="/products"
+                className="flex items-center gap-1.5 py-2 text-white/85 transition-colors hover:text-[#c5a47e]"
+              >
+                Products
+                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" aria-hidden="true" />
+              </Link>
+              <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div className="border border-white/10 bg-black/95 p-2 shadow-2xl backdrop-blur-xl">
+                  {productLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block border-b border-white/5 px-4 py-3 text-sm text-white/75 transition-colors last:border-b-0 hover:bg-zinc-900 hover:text-[#c5a47e]"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -87,7 +121,7 @@ export function Header() {
             </div>
 
             <div className="hidden items-center gap-6 text-base text-white/90 lg:flex">
-                 <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`} className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
+                 <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart security quote.")}`} className="flex items-center gap-2 hover:text-[#c5a47e] transition-colors group">
                  <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
                  <span className="font-medium tracking-wide">Text {businessInfo.phone}</span>
                </a>
@@ -111,6 +145,21 @@ export function Header() {
         <div className="md:hidden bg-black/95 backdrop-blur-xl absolute w-full left-0 top-full border-t border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2">
           <div className="container mx-auto p-6 flex flex-col gap-8">
             <nav className="flex flex-col gap-4 text-lg font-medium">
+              <Link href="/" className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                Home
+              </Link>
+              <div className="border-b border-white/10 pb-4">
+                <Link href="/products" className="font-bold hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                  Products
+                </Link>
+                <div className="mt-3 grid gap-2 pl-4 text-sm text-white/65">
+                  {productLinks.slice(1).map((link) => (
+                    <Link key={link.href} href={link.href} className="py-1 hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
               {navLinks.map((link) => (
                 <Link key={link.name} href={link.href} className="hover:text-[#c5a47e]" onClick={() => setIsMenuOpen(false)}>
                   {link.name}
@@ -123,7 +172,7 @@ export function Header() {
               <a href={socialProfiles[2]} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#c5a47e]">TikTok</a>
               <a href={socialProfiles[3]} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-[#c5a47e]">小红书</a>
             </div>
-            <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`} className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
+            <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart security quote.")}`} className="flex items-center gap-3 text-[#c5a47e] font-bold text-lg">
               <MessageSquareText className="h-5 w-5" /> Text {businessInfo.phone}
             </a>
           </div>

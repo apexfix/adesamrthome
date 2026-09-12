@@ -14,11 +14,13 @@ import matter from "gray-matter";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 import type { Product } from "@/types";
+import Link from "next/link";
+import { ArrowRight, Cctv, LockKeyhole, Wrench } from "lucide-react";
 
 export const metadata: Metadata = {
   title: { absolute: "Smart Lock Installation Adelaide | ADE Smart Home" },
   description:
-    "Smart lock supply, installation and installation-only service across Adelaide. Compare products, check door compatibility and request a local quote.",
+    "Smart lock supply and installation across Adelaide, plus Dahua security camera kits for homes and small businesses. Compare products and request a local quote.",
   alternates: {
     canonical: siteUrl,
     languages: {
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
-      "Adelaide smart lock installers offering installed-price products, installation-only service and free door compatibility checks.",
+      "Adelaide smart lock installers offering installed-price products, installation-only service and practical Dahua security camera kits.",
     url: siteUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -121,15 +123,54 @@ export default async function Home() {
         </section>
       )}
 
-      <section className="py-24 bg-zinc-950">
-        <div className="container mx-auto max-w-[1500px] px-5 text-center md:px-8 xl:px-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
-            Featured Collection
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
+        <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
+          <div className="mb-10 flex flex-col gap-7 border-b border-zinc-800 pb-10 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
+                Products &amp; Services
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-white md:text-5xl">
+                Choose the right security upgrade
+              </h2>
+              <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
+                Compare installed smart locks, book installation for a compatible lock you
+                already own, or explore security camera equipment packages.
+              </p>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3 lg:w-[620px]">
+              {[
+                { label: "Smart Locks", href: "/products?category=smart-lock", icon: LockKeyhole },
+                { label: "Installation Only", href: "/smart-lock-installation-only-adelaide", icon: Wrench },
+                { label: "Camera Kits", href: "/products/security-camera-kits", icon: Cctv },
+              ].map(({ label, href, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="group flex min-h-14 items-center justify-between border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+                >
+                  <span className="flex items-center gap-2">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                    {label}
+                  </span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/products"
+              className="inline-flex min-h-12 items-center gap-2 border border-zinc-700 px-6 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+            >
+              View all products
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>

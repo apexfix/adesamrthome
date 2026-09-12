@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | ADE Smart Home",
   },
   description:
-    "Professional smart lock installation in Adelaide for timber, aluminium and selected security screen doors. Philips, EZVIZ, Samsung, Aqara and imported smart locks. 400+ local installations, free door compatibility check and local after-sales support.",
+    "Professional smart lock supply and installation in Adelaide, customer-supplied lock installation and Dahua security camera kits for homes and small businesses.",
   keywords: [
     "Smart Lock Installation Adelaide",
     "Digital Door Lock Installation Adelaide",
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     "Samsung Digital Lock Adelaide",
     "Aqara Smart Lock Adelaide",
     "Imported Smart Lock Installer Adelaide",
+    "Security Camera Kits Adelaide",
+    "Dahua Security Cameras Adelaide",
+    "PoE Camera Kit Adelaide",
     "阿德莱德智能锁安装",
     "阿德莱德电子锁安装",
     "阿德莱德指纹锁安装",
@@ -91,7 +94,7 @@ const localBusinessSchema = {
   telephone: businessInfo.phoneInternational,
   email: businessInfo.email,
   description:
-    "ADE Smart Home provides professional smart lock supply and installation plus installation-only service for compatible customer-supplied locks across Adelaide. The team has completed 400+ local installations with a focus on neat flush-finish workmanship and local after-sales support.",
+    "ADE Smart Home provides professional smart lock supply and installation, installation-only service for compatible customer-supplied locks, and Dahua security camera kits across Adelaide.",
   areaServed: serviceAreas.map((area) => ({
     "@type": "City",
     name: area.name,
@@ -102,7 +105,7 @@ const localBusinessSchema = {
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Smart Lock Installation Services",
+    name: "Smart Security Products and Services",
     itemListElement: [
       {
         "@type": "Offer",
@@ -112,6 +115,16 @@ const localBusinessSchema = {
           url: `${siteUrl}/smart-lock-supply-installation-adelaide`,
           description:
             "Professional installation of fingerprint, keypad, video and app-controlled smart locks across Adelaide.",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: "Dahua Security Camera Kits Adelaide",
+          url: `${siteUrl}/products/security-camera-kits`,
+          description:
+            "PoE security camera and network video recorder packages for Adelaide homes and small businesses.",
         },
       },
       {
@@ -165,7 +178,7 @@ const websiteSchema = {
   url: siteUrl,
   name: "ADE Smart Home",
   description:
-    "Smart lock supply and installation, customer-supplied smart lock installation and door compatibility checks in Adelaide.",
+    "Smart lock supply and installation, installation-only service and security camera equipment packages in Adelaide.",
   inLanguage: ["en-AU", "zh-CN"],
   publisher: {
     "@id": `${siteUrl}/#business`,

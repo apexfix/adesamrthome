@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, MapPin, PackageCheck, Wrench } from "lucide-react";
+import { ArrowRight, Cctv, MapPin, PackageCheck, Wrench } from "lucide-react";
 
 const pathways = [
   {
@@ -20,11 +20,20 @@ const pathways = [
     href: "/smart-lock-installation-only-adelaide",
     action: "Request installation quote",
   },
+  {
+    icon: Cctv,
+    label: "Security Cameras",
+    title: "Dahua camera kits for homes and small businesses",
+    description:
+      "Start with a practical 5MP PoE camera and recorder package from $443, with local advice and installation quotes available.",
+    href: "/products/security-camera-kits",
+    action: "View camera kits",
+  },
 ];
 
 export function ServicePathways() {
   return (
-    <section className="border-b border-zinc-800 bg-zinc-950 text-white">
+    <section id="services" className="scroll-mt-20 border-b border-zinc-800 bg-zinc-950 text-white">
       <div className="container mx-auto max-w-[1500px] px-5 py-16 md:px-8 md:py-24 xl:px-10">
         <div className="mb-12 max-w-4xl">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
@@ -39,16 +48,16 @@ export function ServicePathways() {
           </p>
         </div>
 
-        <div className="grid border-y border-zinc-800 md:grid-cols-2">
+        <div className="grid border-y border-zinc-800 lg:grid-cols-3">
           {pathways.map((pathway, index) => {
             const Icon = pathway.icon;
 
             return (
               <article
                 key={pathway.label}
-                className={`py-10 md:px-10 md:py-12 ${
+                className={`py-10 md:py-12 lg:px-10 ${
                   index > 0
-                    ? "border-t border-zinc-800 md:border-l md:border-t-0"
+                    ? "border-t border-zinc-800 lg:border-l lg:border-t-0"
                     : ""
                 }`}
               >
@@ -57,7 +66,7 @@ export function ServicePathways() {
                   {pathway.label}
                 </p>
                 <h3 className="mt-3 text-2xl font-bold md:text-[1.7rem]">{pathway.title}</h3>
-                <p className="mt-4 min-h-20 max-w-xl text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
+                <p className="mt-4 max-w-xl text-base leading-7 text-zinc-300 md:text-lg md:leading-8 lg:min-h-32">
                   {pathway.description}
                 </p>
                 <Link

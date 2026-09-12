@@ -131,4 +131,6 @@ export const coreServices = [
   "Video smart lock installation",
   "Keypad lock installation",
   "Door compatibility check",
+  "Security camera equipment packages",
+  "Dahua PoE security camera kits",
 ];
