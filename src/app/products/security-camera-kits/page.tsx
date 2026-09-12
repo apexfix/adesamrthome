@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-product.jpg",
-        width: 500,
-        height: 500,
+        url: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png",
+        width: 1254,
+        height: 1254,
         alt: "Dahua 5MP security camera kit",
       },
     ],

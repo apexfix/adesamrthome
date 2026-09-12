@@ -241,13 +241,20 @@ export const localProducts = [
     images: [
       {
         id: 901001,
+        src: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png",
+        alt: "Dahua 5MP two-camera PoE security kit with two cameras and one four-channel NVR",
+        width: 1254,
+        height: 1254,
+      },
+      {
+        id: 901002,
         src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-product.jpg",
         alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ 5MP WizSense turret camera",
         width: 500,
         height: 500,
       },
       {
-        id: 901002,
+        id: 901003,
         src: "/img/products/dahua-2-camera-kit/dahua-nvr4104hs-p-4ks2-l.webp",
         alt: "Dahua DHI-NVR4104HS-P-4KS2/L four-channel PoE network video recorder",
         width: 1200,
@@ -256,14 +263,14 @@ export const localProducts = [
     ],
     detail_images: [
       {
-        id: 901003,
+        id: 901004,
         src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-5mp-camera.jpg",
         alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ camera features and specifications",
         width: 927,
         height: 1200,
       },
       {
-        id: 901004,
+        id: 901005,
         src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-detail.jpg",
         alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ detailed camera specifications",
         width: 927,
