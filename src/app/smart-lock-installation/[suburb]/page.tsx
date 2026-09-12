@@ -149,6 +149,148 @@ const localPageDetails: Record<string, LocalPageDetail> = {
   },
 };
 
+type LocalPageEnhancement = {
+  imageAlt: string;
+  planningPoints: readonly string[];
+  localQuestion: string;
+  localAnswer: string;
+};
+
+const localPageEnhancements: Record<string, LocalPageEnhancement> = {
+  "adelaide-cbd": {
+    imageAlt: "Smart lock installed on a managed apartment-style entry near Adelaide CBD",
+    planningPoints: [
+      "Check with the strata manager, landlord or building manager before changing shared-building entry hardware.",
+      "Photograph any fire-door label, door closer and existing intercom so these requirements can be reviewed before a model is suggested.",
+      "Confirm lift, loading-zone or contractor access arrangements when the building controls service appointments.",
+    ],
+    localQuestion: "Can you install a smart lock on an Adelaide CBD apartment door?",
+    localAnswer:
+      "Often yes, but apartment entry doors may be fire-rated or controlled by strata or building rules. We first check clear photos of the door, labels, closer, frame and existing hardware. Written approval may be required before any modification is booked.",
+  },
+  glenelg: {
+    imageAlt: "Black smart lock fitted to a coastal home entry near Glenelg",
+    planningPoints: [
+      "Show whether the front door is sheltered from salt air and rain, as exposure affects model selection and maintenance advice.",
+      "Measure the gap between the main door and any security screen so the smart lock handle will not clash when both doors close.",
+      "For apartments or short-stay properties, confirm any strata or owner approval before changing the existing lock.",
+    ],
+    localQuestion: "What should Glenelg homeowners check for a coastal smart lock installation?",
+    localAnswer:
+      "Send photos that show the whole entry, door material, weather exposure and any security screen. We assess clearance and compatibility first, then explain suitable models and practical care for an exposed coastal entry before you book.",
+  },
+  norwood: {
+    imageAlt: "Full-size smart lock installed on a renovated timber entry near Norwood",
+    planningPoints: [
+      "Photograph decorative plates, old keyholes and previous cut-outs so the finished hardware coverage can be assessed.",
+      "Include a side view of mouldings or glass panels near the handle because they can limit the width available for a full-size lock.",
+      "For a renovated door, provide the door thickness and backset rather than relying only on its external appearance.",
+    ],
+    localQuestion: "Can a smart lock be fitted to an older or character-style door in Norwood?",
+    localAnswer:
+      "Possibly. Older doors often have non-standard holes, mortises or decorative hardware, so the cleanest result depends on what is already there. We review both faces, the door edge and measurements before recommending a compact or full-size option.",
+  },
+  prospect: {
+    imageAlt: "Video smart lock installed on a family home entry near Prospect",
+    planningPoints: [
+      "Show all existing holes and plates when an older handle is being replaced, especially after a front-door renovation.",
+      "For rental access, decide whether you need temporary PINs, app access or simple fingerprint entry before choosing the model.",
+      "Check the screen-door gap and frame alignment, as either can affect handle clearance and reliable latching.",
+    ],
+    localQuestion: "Which smart lock setup works for a Prospect rental property?",
+    localAnswer:
+      "The best choice depends on who manages access and whether temporary codes or remote control are required. We can assess a supplied package or a compatible lock you already own, then confirm the door fit and setup scope before installation.",
+  },
+  "mawson-lakes": {
+    imageAlt: "Smart lock installed on a modern townhouse entry near Mawson Lakes",
+    planningPoints: [
+      "Measure the space between the entry door and a nearby security screen before selecting a projecting handle or video lock.",
+      "For an investment property, choose how tenants, owners and managers will receive or revoke access before app setup.",
+      "Photograph the latch edge and frame even on a newer door because alignment still determines reliable automatic locking.",
+    ],
+    localQuestion: "Can you install a customer-supplied smart lock in Mawson Lakes?",
+    localAnswer:
+      "Yes, when the model is complete, functional and compatible with the door. Send the model name plus photos of both door faces, the edge, frame and security-screen gap so we can confirm the likely installation route and price.",
+  },
+  unley: {
+    imageAlt: "Slim smart lock fitted to a detailed residential entry near Unley",
+    planningPoints: [
+      "Show timber mouldings, glass sidelights and decorative trim near the handle so available mounting space is clear.",
+      "Photograph old lock holes and cover plates to check whether the new smart lock can leave a neat visible finish.",
+      "If the door is part of a renovation, confirm its final thickness and frame position after painting or joinery work.",
+    ],
+    localQuestion: "Will a smart lock damage the look of a detailed Unley front door?",
+    localAnswer:
+      "A clean result depends on the existing cut-outs, trim and space around the handle. We assess photos and measurements before recommending a shape and size, and explain any visible coverage or additional work before booking.",
+  },
+  modbury: {
+    imageAlt: "Keypad smart lock installed on a suburban home entry near Modbury",
+    planningPoints: [
+      "Include the security screen in your door photos to confirm the new handle will clear it when both doors are shut.",
+      "Show the existing latch or mortise and frame strike because worn alignment may need attention before automatic locking is reliable.",
+      "If you already bought a lock, send the exact model and all supplied parts so compatibility can be checked before travel is booked.",
+    ],
+    localQuestion: "How do I choose between a compact and full-size smart lock in Modbury?",
+    localAnswer:
+      "The existing lock cut-out, door thickness, frame and screen-door clearance usually decide the practical option. A compact lock may suit a simpler replacement, while a full-size mortise model needs more door space and installation work.",
+  },
+  burnside: {
+    imageAlt: "Premium face-recognition smart lock installed on a timber entry near Burnside",
+    planningPoints: [
+      "Provide close photos of timber grain, decorative hardware and existing holes where the final visible finish is a priority.",
+      "Show pull handles, glass panels and nearby trim because premium doors can have limited flat mounting space.",
+      "Confirm whether face recognition, video doorbell or simple fingerprint access is the main priority before choosing a larger model.",
+    ],
+    localQuestion: "How do you protect the finish of a premium timber door in Burnside?",
+    localAnswer:
+      "We assess the existing hardware coverage, flat mounting area and required cutting before recommending a lock. Photos help us explain the expected visible result and identify when extra door work may be needed before an appointment is accepted.",
+  },
+  marion: {
+    imageAlt: "Fingerprint smart lock installed on a home entry near Marion",
+    planningPoints: [
+      "For a unit or rental, confirm owner, landlord or strata permission before changing entry hardware.",
+      "Photograph the door edge and strike plate to show whether the current latch and frame are aligned.",
+      "Include any screen door and its handle in the photo so the required clearance can be measured before model selection.",
+    ],
+    localQuestion: "Do you install smart locks on units and rental properties around Marion?",
+    localAnswer:
+      "Yes, subject to door compatibility and any required owner or strata approval. We can provide a supplied package or install a compatible customer-owned lock after reviewing the model, door photos and access requirements.",
+  },
+  "henley-beach": {
+    imageAlt: "Video smart lock fitted to a coastal home entry near Henley Beach",
+    planningPoints: [
+      "Show whether the lock face is protected by a porch or exposed to coastal weather before selecting a model.",
+      "Measure the main-door and security-screen gap to prevent a handle or camera housing from clashing.",
+      "Plan occasional cleaning and inspection for an exposed entry, following the selected manufacturer's care guidance.",
+    ],
+    localQuestion: "Does coastal exposure matter for a Henley Beach smart lock?",
+    localAnswer:
+      "Yes. Shelter, direct rain, salt air and door material can affect suitability and care. Send a wide photo showing the entry exposure as well as close photos of the door and frame, and we will explain the practical options before booking.",
+  },
+  "west-lakes": {
+    imageAlt: "Full-size smart lock installed on a western Adelaide home near West Lakes",
+    planningPoints: [
+      "Photograph the full entry to show weather exposure and whether a porch or screen protects the smart lock.",
+      "Check the distance to any security screen, pull handle or decorative panel before choosing a full-size model.",
+      "For managed or rental properties, decide how access will be issued and removed before the lock is configured.",
+    ],
+    localQuestion: "What photos do you need for a West Lakes smart lock quote?",
+    localAnswer:
+      "Send both faces of the door, its edge, the frame, current lock and a wider photo showing weather exposure and any screen door. Include the lock model if you already own one. These details let us assess fit before confirming the scope.",
+  },
+  paradise: {
+    imageAlt: "Smart lock installed on a residential entry near Paradise Adelaide",
+    planningPoints: [
+      "Show whether the door is timber or aluminium and include the edge profile, as each construction needs a different fit check.",
+      "Photograph the frame strike and closed-door alignment if the current lock is difficult to latch or needs pressure to close.",
+      "Include a security screen in the measurements so both handles can operate without contact.",
+    ],
+    localQuestion: "Can you replace an existing digital lock on a Paradise home?",
+    localAnswer:
+      "Often yes, but the replacement must cover the existing holes and work with the door and frame. Send the current lock model and clear photos of both sides and the door edge so we can check whether a direct replacement or additional work is required.",
+  },
+};
+
 const steps = [
   ["01", "Send your suburb and door photos", "Include both door faces, the door edge, current lock and frame clearance."],
   ["02", "Choose the service route", "We confirm whether you need a supplied package or installation for a lock you own."],
@@ -166,6 +308,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!area) return {};
 
   const detail = localPageDetails[area.slug];
+  const enhancement = localPageEnhancements[area.slug];
   const title = `Smart Lock Installation ${area.name} from $200`;
   const description = `Smart lock installation in ${area.name} and nearby suburbs. Installation-only from $200, supplied packages from $699 and free door photo checks.`;
   const image = detail?.image ?? "/img/products/lockin-x9/real-install-02.jpg";
@@ -191,7 +334,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: image,
         width: 1200,
         height: 1600,
-        alt: "Completed ADE Smart Home smart lock installation on an Adelaide home entry",
+        alt: enhancement.imageAlt,
       }],
       locale: "en_AU",
       type: "website",
@@ -207,6 +350,8 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
 
   const detail = localPageDetails[area.slug];
   if (!detail) notFound();
+  const enhancement = localPageEnhancements[area.slug];
+  if (!enhancement) notFound();
 
   const pageUrl = `${siteUrl}/smart-lock-installation/${area.slug}`;
   const relatedAreas = detail.relatedSlugs
@@ -214,6 +359,10 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
     .filter((item): item is (typeof serviceAreas)[number] => Boolean(item));
 
   const faqs = [
+    {
+      question: enhancement.localQuestion,
+      answer: enhancement.localAnswer,
+    },
     {
       question: `Do you install smart locks in ${area.name}?`,
       answer: `Yes. ADE Smart Home services ${area.name} and nearby areas including ${area.nearby}. Send your postcode so we can confirm appointment availability and any location-dependent cost before booking.`,
@@ -308,7 +457,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       <section className="relative flex min-h-[680px] items-end overflow-hidden bg-black pt-28 text-white md:min-h-[740px] md:items-center">
         <Image
           src={detail.image}
-          alt="Completed smart lock installation on an Adelaide home entry"
+          alt={enhancement.imageAlt}
           fill
           priority
           sizes="100vw"
@@ -393,7 +542,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       <section className="bg-[#f5f1eb] py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
           <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden bg-zinc-200">
-            <Image src={detail.image} alt="Smart lock professionally fitted to an Adelaide entry door" fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover" />
+            <Image src={detail.image} alt={enhancement.imageAlt} fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover" />
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Local door assessment</p>
@@ -413,6 +562,29 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 bg-white py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="grid gap-10 md:grid-cols-[0.72fr_1.28fr] md:gap-16">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Before you book</p>
+              <h2 className="mt-3 text-3xl font-black md:text-5xl">Planning an installation in {area.name}</h2>
+              <p className="mt-5 text-base leading-7 text-slate-600">
+                A few local property and door details can change the most suitable installation route.
+                Include these points with your photos so the first quote is more accurate.
+              </p>
+            </div>
+            <ol className="border-y border-slate-200">
+              {enhancement.planningPoints.map((point, index) => (
+                <li key={point} className="grid grid-cols-[44px_1fr] gap-4 border-b border-slate-200 py-6 last:border-b-0">
+                  <span className="text-sm font-black text-[#9c7953]">0{index + 1}</span>
+                  <p className="text-base leading-7 text-slate-700">{point}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       "Compare the Lockin and Kaadas ranges available with professional smart lock installation across Adelaide.",
     url: `${siteUrl}/brands`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "Smart lock brands installed in Adelaide" }],
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "Smart lock brands installed in Adelaide" }],
     locale: "en_AU",
     type: "website",
   },

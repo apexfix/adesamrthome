@@ -15,14 +15,16 @@ export const metadata: Metadata = {
       "How ADE Smart Home handles information provided through smart lock enquiries and our website.",
     url: `${siteUrl}/privacy-policy`,
     siteName: "ADE Smart Home",
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
     locale: "en_AU",
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Privacy Policy | ADE Smart Home",
     description:
       "How ADE Smart Home handles information provided through smart lock enquiries and our website.",
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

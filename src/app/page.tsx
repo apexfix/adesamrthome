@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/img/hero1.avif",
+        url: "/img/og/ade-smart-home-adelaide.jpg",
         width: 1200,
         height: 630,
         alt: "ADE Smart Home smart lock installation in Adelaide",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
       "Smart lock supply and installation plus installation-only service for compatible customer-supplied locks across Adelaide.",
-    images: ["/img/hero1.avif"],
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

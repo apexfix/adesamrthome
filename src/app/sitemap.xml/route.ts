@@ -108,7 +108,7 @@ export async function GET() {
     xmlUrl(
       `${siteUrl}/`,
       siteLastModified,
-      ["/img/hero1.avif", installationImages.x9, installationImages.s6Max, installationImages.v5Max],
+      ["/img/hero1-optimized.avif", installationImages.x9, installationImages.s6Max, installationImages.v5Max],
       homeLanguages,
     ),
     xmlUrl(`${siteUrl}/products`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
@@ -131,7 +131,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/contact`, siteLastModified),
     xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
     xmlUrl(`${siteUrl}/delivery-and-returns`, siteLastModified),
-    xmlUrl(`${siteUrl}/zh`, siteLastModified, ["/img/hero1.avif", installationImages.x9], homeLanguages),
+    xmlUrl(`${siteUrl}/zh`, siteLastModified, ["/img/hero1-optimized.avif", installationImages.x9], homeLanguages),
   ].join("");
 
   const suburbPages = serviceAreas

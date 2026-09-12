@@ -18,7 +18,7 @@ export const metadata: Metadata = {
       "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
     url: `${siteUrl}/blog`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "ADE Smart Home Adelaide installation guides and projects" }],
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "ADE Smart Home Adelaide installation guides and projects" }],
     locale: "en_AU",
     type: "website",
   },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Smart Lock Guides & Adelaide Projects",
     description:
       "Real Adelaide installations, smart lock advice and door compatibility guidance from ADE Smart Home.",
-    images: ["/img/hero1.avif"],
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

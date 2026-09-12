@@ -22,6 +22,10 @@ type PostData = {
   author?: string;
 };
 
+type PostSummary = PostData & {
+  slug: string;
+};
+
 function getPost(slug: string) {
   const filePath = path.join(process.cwd(), "content/posts", `${slug}.md`);
 
@@ -35,6 +39,24 @@ function getPost(slug: string) {
   return { data: parsed.data as PostData, content: parsed.content };
 }
 
+function getAllPosts(): PostSummary[] {
+  const postsDirectory = path.join(process.cwd(), "content/posts");
+  if (!fs.existsSync(postsDirectory)) return [];
+
+  return fs
+    .readdirSync(postsDirectory)
+    .filter((fileName) => fileName.endsWith(".md"))
+    .map((fileName) => {
+      const fileContent = fs.readFileSync(path.join(postsDirectory, fileName), "utf8");
+      const { data } = matter(fileContent);
+      return {
+        slug: fileName.replace(/\.md$/, ""),
+        ...(data as PostData),
+      };
+    })
+    .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
+}
+
 function plainText(value: string) {
   return value
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
@@ -44,14 +66,7 @@ function plainText(value: string) {
 }
 
 export function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), "content/posts");
-
-  if (!fs.existsSync(postsDirectory)) return [];
-
-  return fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => ({ slug: fileName.replace(/\.md$/, "") }));
+  return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -72,7 +87,7 @@ export async function generateMetadata({
   ).slice(0, 160);
   const image = post.data.coverImage
     ? new URL(post.data.coverImage, siteUrl).toString()
-    : `${siteUrl}/img/hero1.avif`;
+    : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
 
   return {
     title: post.data.seoTitle || post.data.title || "Smart Lock Installation Guide",
@@ -109,9 +124,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const description = data.description || plainText(content).slice(0, 155);
   const coverImage = data.coverImage
     ? new URL(data.coverImage, siteUrl).toString()
-    : `${siteUrl}/img/hero1.avif`;
+    : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const isGuide = data.contentType === "guide" || data.category === "Buyer Guide";
   const author = data.author || "ADE Smart Home Installation Team";
+  const allPosts = getAllPosts();
+  const currentIndex = allPosts.findIndex((item) => item.slug === slug);
+  const relatedPosts = Array.from({ length: Math.min(3, allPosts.length - 1) }, (_, offset) =>
+    allPosts[(currentIndex + offset + 1) % allPosts.length],
+  ).filter((item): item is PostSummary => Boolean(item && item.slug !== slug));
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -216,6 +236,49 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {content}
           </ReactMarkdown>
         </div>
+
+        {relatedPosts.length > 0 && (
+          <section className="mt-20 border-t border-zinc-800 pt-14" aria-labelledby="continue-reading">
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#c5a47e]">More from ADE</p>
+                <h2 id="continue-reading" className="mt-3 text-2xl font-bold text-white md:text-3xl">
+                  Continue reading
+                </h2>
+              </div>
+              <Link href="/blog" className="hidden text-sm font-bold text-zinc-400 hover:text-[#c5a47e] sm:inline-flex">
+                View all stories
+              </Link>
+            </div>
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {relatedPosts.map((relatedPost) => (
+                <Link
+                  key={relatedPost.slug}
+                  href={`/blog/${relatedPost.slug}`}
+                  className="group overflow-hidden rounded-md border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-[#c5a47e]/60"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
+                    <Image
+                      src={relatedPost.coverImage || "/img/og/ade-smart-home-adelaide.jpg"}
+                      alt={relatedPost.title || "ADE Smart Home Adelaide installation story"}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 260px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
+                      {relatedPost.category || "Smart Lock Guide"}
+                    </p>
+                    <h3 className="mt-2 line-clamp-3 text-base font-bold leading-6 text-white group-hover:text-[#c5a47e]">
+                      {relatedPost.title}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className="mt-20 p-10 rounded-3xl bg-zinc-900 border border-zinc-800 text-center relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#c5a47e]" />

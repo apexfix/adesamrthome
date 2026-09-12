@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "ADE Smart Home",
     images: [
       {
-        url: "/img/hero1.avif",
+        url: "/img/og/ade-smart-home-adelaide.jpg",
         width: 1200,
         height: 630,
         alt: "阿德莱德智能锁安装 ADE Smart Home",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: "阿德莱德智能锁安装 | ADE Smart Home",
     description:
       "阿德莱德智能锁销售安装及客户自购智能锁仅安装，提供免费门型评估和本地售后。",
-    images: ["/img/hero1.avif"],
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

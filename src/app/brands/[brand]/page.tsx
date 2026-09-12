@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: BrandPageProps): Promise<Meta
       description: brand.description,
       url,
       siteName: "ADE Smart Home",
-      images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: `${brand.name} smart locks installed in Adelaide` }],
+      images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: `${brand.name} smart locks installed in Adelaide` }],
       locale: "en_AU",
       type: "website",
     },

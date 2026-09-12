@@ -23,7 +23,7 @@ export function HeroCarousel() {
   return (
     <div className="absolute inset-0 overflow-hidden bg-black">
       <Image
-        src="/img/hero1.avif"
+        src="/img/hero1-optimized.avif"
         alt="Smart lock installation completed by ADE Smart Home in Adelaide"
         fill
         priority

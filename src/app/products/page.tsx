@@ -18,7 +18,7 @@ const baseMetadata: Metadata = {
       "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
     url: `${siteUrl}/products`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
     locale: "en_AU",
     type: "website",
   },
@@ -27,7 +27,7 @@ const baseMetadata: Metadata = {
     title: "Smart Locks with Adelaide Installation",
     description:
       "Compare smart locks or book installation-only service for a compatible customer-supplied lock across Adelaide.",
-    images: ["/img/hero1.avif"],
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

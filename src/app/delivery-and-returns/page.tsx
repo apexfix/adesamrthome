@@ -19,14 +19,16 @@ export const metadata: Metadata = {
       "Delivery, cancellation, return and warranty information for ADE Smart Home installation packages.",
     url: deliveryAndReturnsUrl,
     siteName: "ADE Smart Home",
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
     locale: "en_AU",
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Delivery, Cancellations and Returns",
     description:
       "Delivery, cancellation, return and warranty information for ADE Smart Home installation packages.",
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

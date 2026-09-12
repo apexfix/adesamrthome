@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const url = `${siteUrl}/products/${product.slug}`;
   const image = product.images?.[0]?.src
     ? new URL(product.images[0].src, siteUrl).toString()
-    : `${siteUrl}/img/hero1.avif`;
+    : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const priceMessage = isService
     ? `from A$${current} for compatible customer-supplied smart locks across Adelaide`
     : priceIncludesInstallation

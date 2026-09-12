@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       "Request smart lock supply and installation or installation-only service for a compatible customer-supplied lock in Adelaide.",
     url: `${siteUrl}/contact`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/hero1.avif", width: 1200, height: 630 }],
+    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
     locale: "en_AU",
     type: "website",
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: "Get a Smart Lock Quote in Adelaide",
     description:
       "Request smart lock supply and installation or installation-only service in Adelaide.",
-    images: ["/img/hero1.avif"],
+    images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 
