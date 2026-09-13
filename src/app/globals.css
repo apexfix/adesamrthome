@@ -300,6 +300,11 @@ body:has(.site-header[data-menu-open="true"]) .mobile-contact-dock { display: no
 .mobile-contact-dock { bottom: max(10px, env(safe-area-inset-bottom)); }
 .mobile-contact-dock[data-primary-visible="true"] { display: none; }
 .mobile-contact-dock[data-primary-visible="false"] { animation: contact-dock-in 220ms ease-out; }
+@media (max-width: 767px) {
+  /* Native anchor/focus scrolling also needs clearance before hydration. */
+  html:has(.mobile-contact-dock) { scroll-padding-block: 104px calc(6rem + max(10px, env(safe-area-inset-bottom))); }
+  body:has(:is(main, .site-footer) :focus-visible) .mobile-contact-dock { display: none; }
+}
 @keyframes contact-dock-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (orientation: landscape) and (min-width: 640px) and (max-height: 500px) {
   .hero-carousel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: 140px auto; column-gap: 20px; height: auto; min-height: 0; padding: 106px 20px 16px; }

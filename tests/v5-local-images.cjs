@@ -85,7 +85,6 @@
         else await page.locator('.product-gallery-main .gallery-image-fallback').waitFor();
         assert.ok((await page.locator('meta[property="og:image"]').first().getAttribute('content')).includes(manifest.images[0].localUrl));
         const quote = page.locator('a[href^="/contact?service=supply-install&product="]').first();
-        await quote.evaluate(link => link.scrollIntoView({ block: 'center', behavior: 'instant' }));
         await quote.click();
         await page.waitForURL(url => url.pathname === '/contact' && url.searchParams.get('product') === product.name);
         assert.deepEqual(errors, []);

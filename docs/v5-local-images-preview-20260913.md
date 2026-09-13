@@ -23,3 +23,5 @@ Local preview implementation for chapter 24's external-image dependency boundary
 Final production build and focused ESLint passed. Final URL/schema inventory: 58 pages, 206 internal links, 123 local SEO image URLs, no reported issues. SEO content suite: 20 pages / 40 responsive checks passed. All 18 sources were visually reviewed using three browser-rendered contact sheets. Gallery screenshots are in `output/v5-local-images/`; results are in `results.json` in that directory. Generated evidence is not committed.
 
 The tests establish local asset delivery and the tested failure/navigation behavior. They do not simulate a production server's outbound network outage, establish a new speed score, prove rights to artwork or complete the full document's acceptance requirements. Real-user performance and production release remain open.
+
+Follow-up: `mobile-dock-clearance-preview-20260913.md` records the CSS fix for the no-JS scroll obstruction. The centre-scroll workaround was removed from this test, and all 76 checks passed again with ordinary direct clicking.
