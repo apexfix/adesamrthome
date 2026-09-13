@@ -362,7 +362,10 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-input:-webkit-autofill { -webkit-text-fill-color: #fff; -webkit-box-shadow: 0 0 0 1000px #202024 inset; caret-color: #e5c59f; }
 @media (forced-colors: active) {
   .enquiry-input:-webkit-autofill { -webkit-text-fill-color: FieldText; -webkit-box-shadow: none; }
-  .enquiry-service[aria-pressed="true"] { border: 2px solid Highlight; }
+  .enquiry-service { border: 3px solid ButtonText; }
+  .enquiry-service[aria-pressed="true"] { border-color: Highlight; border-style: double; }
+  .enquiry-service:focus-visible, .enquiry-service[aria-pressed="true"]:focus-visible { outline: 2px dashed Highlight !important; outline-offset: -6px !important; }
+  .enquiry-upload, .enquiry-submit, .enquiry-remove { border: 1px solid ButtonText; }
 }
 @media (max-width: 1099px) {
   .desktop-navigation { display: none; }
