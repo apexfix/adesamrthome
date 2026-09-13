@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { serviceAreas, siteLastModified, siteUrl } from "@/lib/seoData";
+import { installationProjects } from "@/lib/installationProjects";
 
 export const revalidate = 86400;
 
@@ -108,7 +109,7 @@ export async function GET() {
     xmlUrl(
       `${siteUrl}/`,
       siteLastModified,
-      ["/img/hero1-optimized.avif", "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png", installationImages.x9, installationImages.s6Max, installationImages.v5Max],
+      ["/img/hero1-optimized.avif", installationImages.x9, installationImages.s6Max, installationImages.v5Max],
       homeLanguages,
     ),
     xmlUrl(`${siteUrl}/products`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
@@ -128,7 +129,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/property-manager-smart-lock-installation-adelaide`, siteLastModified, [installationImages.s50m]),
     xmlUrl(`${siteUrl}/new-home-smart-lock-installation-adelaide`, siteLastModified, ["/img/products/lockin-v5-max/real-install-02.jpg"]),
     xmlUrl(`${siteUrl}/blog`, siteLastModified),
-    xmlUrl(`${siteUrl}/gallery`, siteLastModified, Object.values(installationImages)),
+    xmlUrl(`${siteUrl}/gallery`, "2026-09-13", installationProjects.map(project => project.image)),
     xmlUrl(`${siteUrl}/contact`, siteLastModified),
     xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
     xmlUrl(`${siteUrl}/delivery-and-returns`, siteLastModified),

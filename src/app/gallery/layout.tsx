@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { siteUrl } from "@/lib/seoData";
+import { installationProjects } from "@/lib/installationProjects";
 
 export const metadata: Metadata = {
   title: "Adelaide Smart Lock Installation Gallery",
   description:
-    "See real smart lock installations completed across Adelaide by ADE Smart Home, including timber, aluminium and selected security doors.",
+    "View real Lockin smart lock installations in Adelaide, including X9, V5 Max, S6 Max and OLA Slim. Compare installed models or enquire about installation only.",
   alternates: { canonical: `${siteUrl}/gallery` },
   openGraph: {
     title: "Adelaide Smart Lock Installation Gallery",
     description: "Real smart lock installation results from Adelaide homes.",
     url: `${siteUrl}/gallery`,
     siteName: "ADE Smart Home",
-    images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
+    images: [{ url: installationProjects[0].image, alt: installationProjects[0].title }],
     locale: "en_AU",
     type: "website",
   },
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adelaide Smart Lock Installation Gallery",
     description: "Real smart lock installation results from Adelaide homes.",
-    images: ["/img/og/ade-smart-home-adelaide.jpg"],
+    images: [installationProjects[0].image],
   },
 };
 
