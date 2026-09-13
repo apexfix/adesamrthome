@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   Camera,
@@ -15,6 +15,10 @@ import {
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
 import { analyticsProductId, contactValidationError, serviceOptions } from "@/lib/enquiry";
+
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 const propertyOptions = [
   { value: "", label: "Select property type" },
@@ -123,6 +127,7 @@ export function ContactForm({
   initialService,
   initialProduct,
 }: ContactFormProps = {}) {
+  const enhanced = useSyncExternalStore(subscribeToHydration, clientSnapshot, serverSnapshot);
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contactInputRef = useRef<HTMLInputElement>(null);
@@ -460,12 +465,30 @@ export function ContactForm({
                 : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
             </p>
 
+            {!enhanced && (
+              <div className="enquiry-direct mt-5 border-l-4 border-[#d9b98f] pl-4">
+                <p className="font-semibold text-white">Enquire by SMS or email</p>
+                <a href={`sms:${businessInfo.phoneInternational}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
+                  <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  <span>Text {businessInfo.phone}</span>
+                </a>
+                <a href={`mailto:${businessInfo.email}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
+                  <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  <span className="min-w-0">{businessInfo.email}</span>
+                </a>
+              </div>
+            )}
+
             <form
+              method="post"
+              action="/api/contact"
+              encType="multipart/form-data"
               onSubmit={handleSubmit}
               onFocusCapture={trackFormStart}
               onInvalidCapture={handleInvalid}
-              className="mt-7 space-y-5 [&_input]:text-base [&_select]:text-base [&_textarea]:text-base"
+              className="mt-7 [&_input]:text-base [&_select]:text-base [&_textarea]:text-base"
             >
+              <fieldset disabled={!enhanced} aria-label="Enquiry details" className="space-y-5">
               <fieldset disabled={isSubmitting}>
                 <legend className="mb-2 enquiry-label">
                   Service needed
@@ -706,6 +729,7 @@ export function ContactForm({
                 </Link>
                 .
               </p>
+              </fieldset>
             </form>
           </div>
         </div>
