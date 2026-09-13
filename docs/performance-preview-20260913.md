@@ -51,3 +51,5 @@ Raw generated evidence, intentionally outside the commit:
 ## Remaining Scope
 
 Production cold-origin/CDN behavior, real-user p75 LCP/INP/CLS, physical devices and incremental motion-JS gzip attribution remain unverified. Current V5 gallery still references 13 Shopify images in `src/lib/localProducts.ts`; the local V5 folder contains installation photos, not local copies of those exact gallery sources. The warm local image cache cannot establish independence from that origin. Localizing appropriate source assets and verifying their failure behavior remains a separate next action. Catalogue below-fold image traffic, longer-session shifts, complete API failure behavior and full-package acceptance also remain open. No production deployment or real enquiry was performed.
+
+Subsequent source-inventory correction: the lab observed 13 V5 image requests, but the configured gallery contains 18 images. All 18 were subsequently localized in the separate `v5-local-images-preview-20260913.md` batch. The measurements above predate that migration and must not be reused as post-migration performance evidence.

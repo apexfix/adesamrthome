@@ -1,0 +1,186 @@
+{
+  "recordedAt": "2026-09-13T10:58:24.831Z",
+  "basis": "Exact-byte copies of existing product gallery sources. No crop, retouch, re-encoding or new licensing assertion.",
+  "images": [
+    {
+      "position": 1,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/2_4fcda00f-b95e-4ca9-b52a-0cbbfc998dcb.png?v=1766553145",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-01-df7c5c67ef5c.png",
+      "sha256": "df7c5c67ef5c8a352e162ebf0ebe632f63c6418ba4fbe67786e060aff9e88285",
+      "bytes": 334507,
+      "width": 1000,
+      "height": 1000,
+      "format": "png"
+    },
+    {
+      "position": 2,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/2_4c09cc32-4ca0-4886-a6ce-ad05dc8fb425.png?v=1766556605",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-02-25813db68c23.png",
+      "sha256": "25813db68c23947c401a11dc8d6e09593341fab2f3c775cde362fe6993a9df03",
+      "bytes": 274140,
+      "width": 1000,
+      "height": 1000,
+      "format": "png"
+    },
+    {
+      "position": 3,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/3_9bcec49c-beca-4852-ae3c-3ad6766b02e1.jpg?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-03-61ec2d9b7430.jpg",
+      "sha256": "61ec2d9b743002e26d572f6576f643b89f114c4007f297c9db31643dbcc55205",
+      "bytes": 47363,
+      "width": 800,
+      "height": 650,
+      "format": "jpeg"
+    },
+    {
+      "position": 4,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/4_fd2ca3b6-ad10-42b4-9db9-b484f8e67510.jpg?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-04-b0150b472833.jpg",
+      "sha256": "b0150b4728337558f2ac7966ba2cea327769ace3f9a3f7cd0106db7da71b50f5",
+      "bytes": 47776,
+      "width": 800,
+      "height": 650,
+      "format": "jpeg"
+    },
+    {
+      "position": 5,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/5_6b4ca5ba-7013-4f93-9e48-5f89dc71d517.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-05-aebbba40ad3c.png",
+      "sha256": "aebbba40ad3c564f215dcca5beb3de258912cf439310ee512c5e93270875e071",
+      "bytes": 885398,
+      "width": 1080,
+      "height": 1350,
+      "format": "png"
+    },
+    {
+      "position": 6,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/6_9cddd9c7-96c6-42b6-b942-6f8a1403464c.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-06-21a67554a648.png",
+      "sha256": "21a67554a648216fc4b19ec26e99d258103b9f3451eb018155c24d84f5e556c1",
+      "bytes": 330008,
+      "width": 800,
+      "height": 650,
+      "format": "png"
+    },
+    {
+      "position": 7,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/7_9eb57677-1ab0-4505-af8e-2087c389c86d.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-07-570179965d1f.png",
+      "sha256": "570179965d1f235a9fe0c9b7087e1982901effd61bbe66a713c60458a1cde5bb",
+      "bytes": 478918,
+      "width": 800,
+      "height": 650,
+      "format": "png"
+    },
+    {
+      "position": 8,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/8_11c03a1b-f0c8-4f7b-90db-c8a9d2c05d50.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-08-180ac43af4e7.png",
+      "sha256": "180ac43af4e7017aaaf9155935d11c4b8f03ad171a829cccbac790562e93decd",
+      "bytes": 645792,
+      "width": 800,
+      "height": 650,
+      "format": "png"
+    },
+    {
+      "position": 9,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/f346de3c53d455697307a09576588032.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-09-64b1c824d8b7.png",
+      "sha256": "64b1c824d8b74e599ac07f67784135834910ce32bd8328ebe0961b8c150d6b68",
+      "bytes": 103937,
+      "width": 713,
+      "height": 713,
+      "format": "png"
+    },
+    {
+      "position": 10,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/1.1.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-10-470638ad449f.png",
+      "sha256": "470638ad449f8d7d851d6bf94591d39c5e3fe8610bd66a91a1ba0af6121eab3f",
+      "bytes": 330601,
+      "width": 823,
+      "height": 823,
+      "format": "png"
+    },
+    {
+      "position": 11,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/v5max-gallery-img-4_2_b6344428-bb92-45d9-be09-cf2145a15d2f.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-11-90e25ffa594e.png",
+      "sha256": "90e25ffa594e38627a61fc40de3c4478323d9770e657bd151abc5c1a21dfc7f6",
+      "bytes": 215595,
+      "width": 864,
+      "height": 1184,
+      "format": "png"
+    },
+    {
+      "position": 12,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/ChatGPT_Image_Sep_3_2025_10_54_33_PM_bd7d2226-e9f9-4aea-8b17-16550f2b3e5b.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-12-141f694e2609.png",
+      "sha256": "141f694e26095c5f408b2a54d3a7b1883cf9b22c20c61f31e9b4c99c669a1314",
+      "bytes": 595664,
+      "width": 1024,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "position": 13,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/Black-V5-Max_Righthanded_e6038978-9915-4b86-bb25-000578c3e7b6.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-13-7480ce4730da.png",
+      "sha256": "7480ce4730dad1decb6c700c4eed1bedc5e984c08cfaab2fe02f02c2607e5c24",
+      "bytes": 204459,
+      "width": 1400,
+      "height": 1400,
+      "format": "png"
+    },
+    {
+      "position": 14,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/Black-V5-Max_Lefthanded.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-14-8b5e9c4f81ed.png",
+      "sha256": "8b5e9c4f81ede5cfae6f8bfb86d6294bbbe330677f032836e7ded1007b596dae",
+      "bytes": 206244,
+      "width": 1400,
+      "height": 1400,
+      "format": "png"
+    },
+    {
+      "position": 15,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/Black-V5-Max_02_8cfa29d3-504b-4585-87de-085e2be73ed7.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-15-e54034678870.png",
+      "sha256": "e540346788706ae94e214fdd384098cf3060b57e150dc6fbe0725f5780b882fa",
+      "bytes": 222438,
+      "width": 1400,
+      "height": 1400,
+      "format": "png"
+    },
+    {
+      "position": 16,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/v5max-gallery-img-5.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-16-44d9b859409e.png",
+      "sha256": "44d9b859409e484e73167c66c6c93244ad3e7f0f48eff976faed0f61eb9d03f0",
+      "bytes": 266817,
+      "width": 855,
+      "height": 782,
+      "format": "png"
+    },
+    {
+      "position": 17,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/3_6f0339a2-e36a-454c-a596-63ff214f6738.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-17-88ee32f75acc.png",
+      "sha256": "88ee32f75accfbf752aac44e3028b92e0cd08d70dd8bee6bedf15bbb3fbd01de",
+      "bytes": 68681,
+      "width": 800,
+      "height": 800,
+      "format": "png"
+    },
+    {
+      "position": 18,
+      "sourceUrl": "https://cdn.shopify.com/s/files/1/0909/6747/4542/files/2_63165421-28fb-4338-9d28-e529b890e5ce.png?v=1766733143",
+      "localUrl": "/img/products/lockin-v5-max/gallery/v5-max-gallery-18-ff65fa0f267c.png",
+      "sha256": "ff65fa0f267c0bf3e7d8890da61698c367314e2b675035e854a157156ef4aaf7",
+      "bytes": 577146,
+      "width": 1136,
+      "height": 944,
+      "format": "png"
+    }
+  ]
+}
