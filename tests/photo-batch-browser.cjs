@@ -66,7 +66,7 @@ const { randomBytes } = require('node:crypto');
           await input.setInputFiles({ name: 'broken-large.png', mimeType: 'image/png', buffer: Buffer.alloc(900000, 7) });
           await page.getByRole('button', { name: 'Add another photo', exact: true }).waitFor();
           assert.match(await page.locator('form [role=alert]').first().innerText(), /broken-large.png/);
-          assert.equal(await page.evaluate(() => window.__photoURLs.size), 0);
+          assert.equal(await page.evaluate(() => window.__photoURLs.size), 2, 'Only the two retained previews should own URLs');
           await remove('good.png').click();
           await input.setInputFiles(file('good.png'));
           await remove('good.png').waitFor();

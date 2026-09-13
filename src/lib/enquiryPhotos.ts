@@ -1,7 +1,6 @@
 import sharp from "sharp";
-import { MAX_PHOTO_BYTES } from "./enquiryPhotoLimits";
+import { MAX_PHOTO_BYTES, MAX_PHOTO_PIXELS } from "./enquiryPhotoLimits";
 
-const MAX_INPUT_PIXELS = 25_000_000;
 const mimeFormats: Record<string, string> = {
   "image/jpeg": "jpeg",
   "image/png": "png",
@@ -17,12 +16,12 @@ export async function prepareEnquiryPhoto(photo: File, index: number) {
       throw new PhotoValidationError(errorMessage);
     }
     const input = Buffer.from(await photo.arrayBuffer());
-    const image = sharp(input, { failOn: "warning", limitInputPixels: MAX_INPUT_PIXELS });
+    const image = sharp(input, { failOn: "warning", limitInputPixels: MAX_PHOTO_PIXELS });
     const metadata = await image.metadata();
     if (
       metadata.format !== mimeFormats[photo.type] ||
       !metadata.width || !metadata.height ||
-      metadata.width * metadata.height > MAX_INPUT_PIXELS ||
+      metadata.width * metadata.height > MAX_PHOTO_PIXELS ||
       (metadata.pages ?? 1) > 1
     ) {
       throw new PhotoValidationError(errorMessage);

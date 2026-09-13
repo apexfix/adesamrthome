@@ -2,6 +2,8 @@
 (async()=>{
   const {default:assert}=await import('node:assert/strict');
   const fs=await import('node:fs/promises');
+  const { default: sharp } = await import('sharp');
+  const png = await sharp({create:{width:20,height:20,channels:3,background:'#406090'}}).png().toBuffer();
   const {chromium,webkit}=await import('file:///C:/Users/Linton/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
   const results=[];const output='output/photo-verification';await fs.mkdir(output,{recursive:true});
   for(const[engine,type]of[['chromium',chromium],['webkit',webkit]]){
@@ -10,8 +12,10 @@
       const page=await browser.newPage({viewport:{width:390,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
       await page.goto('http://localhost:6650/contact?service=installation-only',{waitUntil:'networkidle'});
       await page.locator('[name=name]').fill('LOCAL PHOTO TEST');await page.locator('[name=suburb]').fill('Adelaide 5000');await page.locator('[name=email]').fill('test@example.invalid');
-      await page.locator('input[type=file]').setInputFiles({name:'broken.png',mimeType:'image/png',buffer:Buffer.from('not a real image')});
+      // A valid dimensional header is not proof that encoded pixels are valid.
+      await page.locator('input[type=file]').setInputFiles({name:'broken.png',mimeType:'image/png',buffer:png.subarray(0,33)});
       await page.getByRole('button',{name:'Remove broken.png'}).waitFor();
+      await page.locator('.enquiry-photo-preview[data-state=failed]').waitFor();
       const responsePromise=page.waitForResponse(r=>new URL(r.url()).pathname==='/api/contact');
       await page.locator('form button[type=submit]').click();const response=await responsePromise;
       assert.equal(response.status(),400);const body=await response.json();assert.equal(body.success,false);assert.match(body.message,/Photo 1 could not be read/);

@@ -1,4 +1,5 @@
 export const MAX_PHOTO_COUNT = 4;
+export const MAX_PHOTO_PIXELS = 25_000_000;
 export const MAX_PHOTO_BYTES = 1_000_000;
 export const MAX_TOTAL_PHOTO_BYTES = 3_500_000;
 export const PHOTO_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];

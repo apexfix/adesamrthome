@@ -345,6 +345,18 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-upload:hover { background: #303036; border-color: #d9b98f; }
 .enquiry-remove { color: #e4e4e7; }
 .enquiry-remove:hover { background: #303036; }
+.enquiry-photos { container-type: inline-size; }
+.enquiry-photo-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 48px; align-items: center; gap: 12px; }
+.enquiry-photo-preview { width: 64px; height: 64px; position: relative; display: grid; place-items: center; overflow: hidden; border: 1px solid #71717a; border-radius: 4px; background: #202024; }
+.enquiry-photo-preview img { display: none; width: 100%; height: 100%; object-fit: contain; }
+.enquiry-photo-failed { display: none; }
+.enquiry-photo-preview[data-state="ready"] img { display: block; }
+.enquiry-photo-preview[data-state="failed"] .enquiry-photo-failed { display: inline-flex; }
+.enquiry-photo-preview:not([data-state="loading"]) .enquiry-photo-loading { display: none; }
+@container (max-width: 260px) {
+  .enquiry-photo-caption { grid-column: 1 / -1; grid-row: 2; }
+  .enquiry-photo-row .enquiry-remove { grid-column: 3; grid-row: 1; }
+}
 .enquiry-submit { background: #d9b98f; color: #111113; }
 .enquiry-submit:hover { background: #e5c59f; }
 .enquiry-panel button:disabled { background: #303036; color: #b8b8c0; cursor: not-allowed; }

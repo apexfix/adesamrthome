@@ -17,6 +17,8 @@ import { businessInfo } from "@/lib/seoData";
 import { analyticsProductId, contactValidationIssue, serviceOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
+import { checkEnquiryPhotoMetadata } from "@/lib/enquiryPhotoMetadata";
+import { EnquiryPhotoPreview } from "@/components/EnquiryPhotoPreview";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
@@ -78,7 +80,9 @@ async function compressPhoto(file: File, index: number): Promise<File> {
     throw new Error("Please use JPEG, PNG or WebP photos.");
   }
 
-  if (file.size <= MAX_PHOTO_BYTES) {
+  const metadata = await checkEnquiryPhotoMetadata(file);
+
+  if (file.size <= MAX_PHOTO_BYTES && Math.max(metadata.width, metadata.height) <= MAX_PHOTO_DIMENSION) {
     return file;
   }
 
@@ -104,6 +108,8 @@ async function compressPhoto(file: File, index: number): Promise<File> {
       throw new Error("One photo could not be prepared. Please try again.");
     }
 
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
     const blob = await new Promise<Blob | null>((resolve) => {
       canvas.toBlob(resolve, "image/jpeg", 0.72);
@@ -355,9 +361,16 @@ export function ContactForm({
     setIsPreparingPhotos(true);
 
     try {
-      const results = await Promise.allSettled(
-        selectedFiles.map((file, index) => compressPhoto(file, photos.length + index)),
-      );
+      const results: PromiseSettledResult<File>[] = [];
+      // Prepare one image at a time instead of decoding four full-size originals together.
+      for (const [index, file] of selectedFiles.entries()) {
+        if (selection !== photoSelectionRef.current) return;
+        try {
+          results.push({ status: "fulfilled", value: await compressPhoto(file, photos.length + index) });
+        } catch (reason) {
+          results.push({ status: "rejected", reason });
+        }
+      }
       if (selection !== photoSelectionRef.current) return;
       const prepared = results.flatMap(result => result.status === "fulfilled" ? [result.value] : []);
       const failures = results.flatMap((result, index) => {
@@ -718,10 +731,11 @@ export function ContactForm({
                   </p>
                 )}
                 {photos.length > 0 && (
-                  <ul className="mt-3 divide-y divide-zinc-700 border-y border-zinc-700">
+                  <ul className="enquiry-photos mt-3 divide-y divide-zinc-700 border-y border-zinc-700">
                     {photos.map((photo, index) => (
-                      <li key={`${photo.name}-${photo.lastModified}-${index}`} className="enquiry-muted flex min-h-12 items-center justify-between gap-3 py-2 text-sm">
-                        <span className="min-w-0 truncate">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
+                      <li key={`${photo.name}-${photo.lastModified}-${index}`} className="enquiry-photo-row enquiry-muted py-3 text-sm">
+                        <EnquiryPhotoPreview photo={photo} />
+                        <span className="enquiry-photo-caption min-w-0 break-words">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
                         <button
                           type="button"
                           disabled={isSubmitting || isPreparingPhotos}
