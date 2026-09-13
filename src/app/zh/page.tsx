@@ -6,7 +6,7 @@ import { businessInfo, serviceAreas, siteUrl } from "@/lib/seoData";
 export const metadata: Metadata = {
   title: "阿德莱德智能锁安装 | 电子锁 指纹锁",
   description:
-    "ADE Smart Home 提供阿德莱德智能锁销售安装，以及客户自购智能锁仅安装服务。400+ 本地安装案例，支持 Philips、EZVIZ、Samsung、Aqara 及进口智能锁，提供免费门型评估和本地售后。",
+    "ADE Smart Home 提供阿德莱德智能锁销售安装，以及客户自购智能锁仅安装服务。可评估 Philips、EZVIZ、Samsung、Aqara 及进口智能锁的适配情况，提供免费门型评估和本地售后。",
   keywords: [
     "阿德莱德智能锁安装",
     "阿德莱德电子锁安装",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "阿德莱德智能锁安装 | ADE Smart Home",
     description:
-      "阿德莱德智能锁、电子锁、指纹锁销售安装及客户自购智能锁仅安装。400+ 本地安装案例，免费门型评估，本地售后支持。",
+      "阿德莱德智能锁、电子锁、指纹锁销售安装及客户自购智能锁仅安装。免费门型评估，预约前确认安装范围和价格，本地售后支持。",
     url: `${siteUrl}/zh`,
     siteName: "ADE Smart Home",
     images: [
@@ -94,7 +94,7 @@ export default function ChineseLandingPage() {
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-200">
             提供智能门锁、电子锁、指纹锁和可视智能锁的销售安装，也提供客户自购智能锁仅安装服务。
-            我们专注于阿德莱德本地安装，已完成 400+ 本地安装案例，支持木门、铝合金门及部分防盗纱门的门型评估与安装。
+            我们专注于阿德莱德本地安装，提供木门、铝合金门及部分防盗纱门的门型评估；确认智能锁与门体适配后再安排安装。
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">

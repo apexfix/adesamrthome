@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: "/img/products/lockin-x9/real-install-03.jpg",
         width: 1292,
         height: 1723,
-        alt: "Local smart lock installer fitting a door lock in Adelaide",
+        alt: "Lockin X9 smart lock installed on an Adelaide door",
       },
     ],
     locale: "en_AU",
@@ -46,17 +46,17 @@ const faqs = [
   {
     question: "Do I need to buy a lock first for installation?",
     answer:
-      "Not always. You can choose a supplied package or send a compatible lock for installation-only service.",
+      "No. We offer smart locks with standard installation, or we can fit a compatible lock you have bought elsewhere. Send the model or product link before booking so we can check the fit.",
   },
   {
     question: "Can this installer handle apartment and unit doors?",
     answer:
-      "Yes. We assess each door type separately and check access, frames, and any building approval implications first.",
+      "Send photos and details of your apartment or unit door first. Suitability depends on the door, frame, existing hardware and any required building approvals; not every door can be modified.",
   },
   {
     question: "How quickly can installation be confirmed?",
     answer:
-      "After receiving photos and suburb details, we confirm compatibility and route scope first, then provide quote details.",
+      "Send your suburb, lock model and preferred timing. We confirm door compatibility, installation scope and available appointments before a booking is made.",
   },
   {
     question: "Do you do emergency or after-hours installs?",
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: "What is required from me before the visit?",
     answer:
-      "Clear door photos, lock model (if installed-only), suburb, and your preferred timing are usually enough to get started.",
+      "Your suburb and a mobile number or email are enough to start an enquiry. The exact lock model and photos of the outside, inside, door edge and frame help us confirm compatibility before the visit.",
   },
 ];
 
@@ -80,27 +80,27 @@ export default function SmartLockInstallerAdelaidePage() {
       audienceType="Adelaide homeowners, tenants, and property owners seeking installation support"
       breadcrumbName="Smart Lock Installer Adelaide"
       heroImage="/img/products/lockin-x9/real-install-03.jpg"
-      heroAlt="Smart lock installer working on an Adelaide entry door"
+      heroAlt="Completed Lockin X9 smart lock installation on an Adelaide entry door"
       eyebrow="Local installer service"
       title="Smart Lock Installer"
       accentTitle="Reliable Installation in Adelaide."
-      introduction="Searchers who ask for a 'smart lock installer' usually need hands-on help. We handle compatibility checks, fitting scope, and practical setup locally."
-      primaryCta="Book an Installer"
+      introduction="Need a smart lock fitted in Adelaide? Choose a lock with installation, or bring a compatible model you have purchased elsewhere. Send your suburb and lock details for a door check and quote by SMS or email."
+      primaryCta="Request an Installation Quote"
       smsBody="Hi ADE Smart Home, I am looking for a smart lock installer in Adelaide. Please advise available times."
       proofPoints={[
         "Adelaide-area installation coverage",
         "Clear installation scope before scheduling",
-        "Supply route and installation-only route",
+        "Supplied locks and compatible customer-supplied models",
         "Practical setup support after fitting",
       ]}
       sectionEyebrow="Hands-on installation service"
-      sectionTitle="The installer workflow that works"
-      sectionIntroduction="We start with photos and installation details so the visit is focused, predictable, and better scoped for your exact door."
+      sectionTitle="What Your Installation Involves"
+      sectionIntroduction="We check how the lock will fit your door, explain any extra work and confirm the price before arranging a visit."
       keyPoints={[
         {
           icon: "hardhat",
-          title: "Installer-led process",
-          detail: "We lead the process from compatibility review to handover in one workflow.",
+          title: "Choose the right fit",
+          detail: "Send the model or product link, including locks bought from another retailer, for a compatibility check.",
         },
         {
           icon: "file",
@@ -110,46 +110,46 @@ export default function SmartLockInstallerAdelaidePage() {
         {
           icon: "door",
           title: "Door and hardware check",
-          detail: "The existing lock body, frame, and access path determine the installation approach.",
+          detail: "We check the lock body, door material, frame and handle clearance before confirming the fitting work.",
         },
         {
           icon: "users",
-          title: "Flexible client needs",
-          detail: "One-off home upgrades and larger property portfolios are both supported through the same process.",
+          title: "Setup and handover",
+          detail: "After fitting, we test normal operation and explain supported passcode, user and app setup.",
         },
       ]}
       cautionEyebrow="Before appointment"
       cautionTitle="We only quote after a practical compatibility review"
-      cautionBody="This helps avoid mismatch and unexpected scope changes. If your photos show compatibility issues, we will advise an alternative route before booking."
-      idealTitle="When to use this page"
-      idealIntroduction="Use this service page when your requirement is explicitly for an on-site installer and structured support."
+      cautionBody="Send door photos when you can. If the chosen model does not suit the door, we will discuss alternatives before you commit to an installation."
+      idealTitle="Already Bought a Lock, or Still Choosing?"
+      idealIntroduction="Both are welcome. We can help you understand the fitting requirements before you book."
       idealFor={[
         {
           icon: "shield",
-          title: "Exact installation need",
-          detail: "You need a local technician to install and configure a lock.",
+          title: "A lock you already own",
+          detail: "Installation only is A$200 for a compatible compact lock or A$350 for a standard 6068 full-size mortise lock. Extra work is quoted before booking.",
         },
         {
           icon: "wrench",
-          title: "Ready-to-buy homeowners",
-          detail: "You already decided to install and want the right installer workflow.",
+          title: "A lock supplied and installed",
+          detail: "Compare our installed packages, including the Lockin X9 at A$699 with standard Adelaide installation, subject to a door compatibility check.",
         },
         {
           icon: "clipboard",
           title: "Multiple properties",
-          detail: "You need clean handover documentation and standard installation handling across jobs.",
+          detail: "Tell us how many doors need locks and whether they use the same hardware, so we can assess each fitting and discuss scheduling.",
         },
       ]}
-      processTitle="Installer-ready process"
+      processTitle="From Enquiry to Installation"
       process={[
         {
           title: "Submit request",
           detail:
-            "Use suburb, timing, photos, and current lock details for a practical compatibility check.",
+            "Leave your suburb and mobile or email. Add a model link and door photos if you have them ready.",
         },
         {
-          title: "Route confirmation",
-          detail: "You get a clear route and scope path based on your lock setup.",
+          title: "Confirm the quote",
+          detail: "We review the door and lock, explain any non-standard work and confirm the price and available appointments.",
         },
         {
           title: "Installation visit",
@@ -160,12 +160,12 @@ export default function SmartLockInstallerAdelaidePage() {
           detail: "You receive operation guidance and practical access setup tips.",
         },
       ]}
-      relatedTitle="More service pages"
+      relatedTitle="Compare Your Installation Options"
       relatedLinks={[
         {
           href: "/smart-lock-installation-adelaide",
           label: "Smart lock installation in Adelaide",
-          detail: "Complete installation and route options for Adelaide homes.",
+          detail: "Door checks, supported lock types and what to expect when booking.",
         },
         {
           href: "/smart-lock-supply-installation-adelaide",

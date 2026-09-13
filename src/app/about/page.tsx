@@ -15,7 +15,7 @@ import { businessInfo, siteUrl } from "@/lib/seoData";
 export const metadata: Metadata = {
   title: "About ADE Smart Home | Adelaide Smart Lock Team",
   description:
-    "Meet ADE Smart Home, Adelaide smart lock specialists with 400+ local installations, door compatibility checks, clear quotes and local after-sales support.",
+    "Meet ADE Smart Home: smart lock supply and installation in Adelaide, fitting for compatible customer-supplied locks, clear quotes and local after-sales support.",
   alternates: { canonical: `${siteUrl}/about` },
   openGraph: {
     title: "About ADE Smart Home | Adelaide Smart Lock Team",
@@ -132,7 +132,7 @@ export default function AboutPage() {
 
         <section className="grid border-y border-zinc-800 py-12 sm:grid-cols-3">
           {[
-            ["400+", "local installations"],
+            ["Adelaide", "local installation and after-sales support"],
             ["Two ways", "supply and install, or installation only"],
             ["Before booking", "door compatibility and scope confirmed"],
           ].map(([value, label]) => (

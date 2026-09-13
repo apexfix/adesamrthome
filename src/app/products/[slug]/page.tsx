@@ -313,9 +313,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       url: productUrl,
       priceCurrency: product.prices?.currency_code || "AUD",
       price: currentPrice,
-      availability: isCameraKit
-        ? (product.in_stock ? "https://schema.org/InStock" : undefined)
-        : "https://schema.org/LimitedAvailability",
+      availability: product.in_stock === true ? "https://schema.org/InStock" : undefined,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
       areaServed: {

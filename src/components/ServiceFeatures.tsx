@@ -13,7 +13,7 @@ export function ServiceFeatures() {
               Precision Installation
             </h3>
             <p className="text-zinc-400 text-base leading-relaxed max-w-sm">
-              Over 400 local installations across Adelaide. We focus on a neat, clean, flush finish while protecting your door&apos;s structural integrity.
+              Local smart lock installation across Adelaide. We check the existing door and hardware before fitting, with attention to alignment and a neat finish.
             </p>
           </div>
 

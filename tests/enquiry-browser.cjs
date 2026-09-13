@@ -33,7 +33,8 @@
       const pageErrors = [];
       page.on('pageerror', e => pageErrors.push(e.message));
       const open = async suffix => {
-        await page.goto(base + suffix);
+        await page.waitForLoadState('networkidle');
+        await page.goto(base + suffix, { waitUntil: 'networkidle' });
         await page.waitForFunction(() => typeof window.gtag === 'function');
       };
       await open('/contact?product=Lockin%20X9');

@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
-      "Adelaide smart lock installation specialists. 400+ local installations for Philips, EZVIZ, Samsung, Aqara and imported smart locks. Free door compatibility check.",
+      "Adelaide smart lock supply and installation, fitting for compatible customer-supplied locks, and free door photo compatibility checks. Contact us by SMS or email.",
     siteName: "ADE Smart Home",
     images: [
       {
@@ -157,11 +157,6 @@ const localBusinessSchema = {
     availableLanguage: ["English", "Chinese"],
   },
   additionalProperty: [
-    {
-      "@type": "PropertyValue",
-      name: "Completed local installations",
-      value: "400+",
-    },
     {
       "@type": "PropertyValue",
       name: "Warranty",

@@ -223,7 +223,6 @@ export default function SupplyInstallationPage() {
       "@type": "Offer",
       price: item.price,
       priceCurrency: "AUD",
-      availability: "https://schema.org/LimitedAvailability",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
       seller: {
