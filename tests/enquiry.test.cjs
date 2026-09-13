@@ -45,6 +45,14 @@ const setup = async () => {
    for(const [phone,email]of [['','a@example.test'],['0431060390',''],['+61 431 060 390','a@example.test']])assert.equal(enquiry.contactValidationError(phone,email),null);
    for(const [phone,email]of [['',''],['abc12345678',''],['0431060390','bad@'],['','a@@b.test']])assert(enquiry.contactValidationError(phone,email));
  });
+ test('contact validation identifies the actual invalid fields without including private values',()=>{
+   for(const [phone,email,fields]of [['','',['phone','email']],['bad12345678','valid@example.test',['phone']],['0431060390','bad@',['email']],['bad','bad@',['phone','email']]]){
+     const issue=enquiry.contactValidationIssue(phone,email);
+     assert.deepEqual(Array.from(issue.fields),fields);assert.equal(issue.message,enquiry.contactValidationError(phone,email));
+     assert(!issue.message.includes('bad@'));assert(!issue.message.includes('0431060390'));
+   }
+   assert.equal(enquiry.contactValidationIssue('0431060390',''),null);
+ });
  test('camera minimal email enquiry is accepted and has equipment-only receipt',async()=>{const{api,messages}=handler();const r=await submit(api);assert.equal(r.status,200);assert((await r.json()).leadId);assert.equal(messages.length,2);assert.match(messages[1].subject,/camera equipment/);assert.doesNotMatch(messages[1].text,/door|24 hours|48 hours/i);assert.match(messages[0].text,/Preferred equipment package/);});
  test('mobile-only installation enquiry is accepted with no customer email',async()=>{const{api,messages}=handler();assert.equal((await submit(api,{service:'installation-only',product:'Customer-supplied lock',phone:'0431060390',email:''})).status,200);assert.equal(messages.length,1);});
  test('optional selections may be empty but not invalid',async()=>{const{api}=handler();assert.equal((await submit(api,{propertyType:'',preferredTiming:''})).status,200);assert.equal((await submit(api,{propertyType:'invented'})).status,400);});

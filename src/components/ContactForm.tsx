@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   Camera,
@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
-import { analyticsProductId, contactValidationError, serviceOptions } from "@/lib/enquiry";
+import { analyticsProductId, contactValidationIssue, serviceOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 
@@ -132,6 +132,11 @@ export function ContactForm({
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contactInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const pendingContactFocus = useRef<"phone" | "email" | null>(null);
+  const contactHintId = useId();
+  const contactErrorId = useId();
+  const [contactValidationAttempt, setContactValidationAttempt] = useState(0);
   const photoSelectionRef = useRef(0);
   const submittingRef = useRef(false);
   const formStartedRef = useRef(false);
@@ -153,6 +158,7 @@ export function ContactForm({
   const [photoError, setPhotoError] = useState("");
   const isCameraKitEnquiry = formData.service === "security-camera-kit";
   const photoLimitError = isCameraKitEnquiry ? null : photoSelectionError(photos);
+  const contactIssue = contactValidationAttempt ? contactValidationIssue(formData.phone, formData.email) : null;
   const latestFunnelStateRef = useRef({
     service: selectedService,
     product: initialProduct?.trim().slice(0, 150) ?? "",
@@ -160,6 +166,12 @@ export function ContactForm({
   });
 
   useEffect(() => () => { photoSelectionRef.current += 1; }, []);
+
+  useEffect(() => {
+    const field = pendingContactFocus.current;
+    pendingContactFocus.current = null;
+    if (field) (field === "phone" ? contactInputRef : emailInputRef).current?.focus();
+  }, [contactValidationAttempt]);
 
   useEffect(() => {
     latestFunnelStateRef.current = {
@@ -222,6 +234,7 @@ export function ContactForm({
     setPhotos([]);
     setPhotoError("");
     setErrorMessage("");
+    setContactValidationAttempt(0);
     trackEvent("form_service_selected", {
       form_name: "website_enquiry",
       service,
@@ -232,10 +245,10 @@ export function ContactForm({
     event.preventDefault();
     if (submittingRef.current || isPreparingPhotos || photoLimitError) return;
 
-    const contactError = contactValidationError(formData.phone, formData.email);
+    const contactError = contactValidationIssue(formData.phone, formData.email);
     if (contactError) {
-      setErrorMessage(contactError);
-      contactInputRef.current?.focus();
+      pendingContactFocus.current = contactError.fields[0];
+      setContactValidationAttempt(current => current + 1);
       return;
     }
 
@@ -385,10 +398,11 @@ export function ContactForm({
   };
 
   const handleInvalid = (event: React.FormEvent<HTMLFormElement>) => {
+    const field = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    if (field.name === "phone" || field.name === "email") setContactValidationAttempt(current => current + 1);
     if (validationErrorTrackedRef.current) return;
 
     validationErrorTrackedRef.current = true;
-    const field = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
     trackEvent("form_validation_error", {
       form_name: "website_enquiry",
       field_name: field.name || "unknown",
@@ -487,7 +501,7 @@ export function ContactForm({
                   ? "Request a security camera quote"
                   : "Request an installation quote"}
             </h3>
-            <p className="enquiry-muted mt-3 text-base leading-7">
+            <p id={contactHintId} className="enquiry-muted mt-3 text-base leading-7">
               {isCameraKitEnquiry
                 ? "Leave your name, suburb and mobile or email. We will confirm the equipment and availability before you order."
                 : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
@@ -551,6 +565,8 @@ export function ContactForm({
                   <input
                     name="phone"
                     ref={contactInputRef}
+                    aria-invalid={contactIssue?.fields.includes("phone") || undefined}
+                    aria-describedby={`${contactHintId}${contactIssue?.fields.includes("phone") ? ` ${contactErrorId}` : ""}`}
                     type="tel"
                     inputMode="tel"
                     autoComplete="tel"
@@ -579,6 +595,9 @@ export function ContactForm({
                   Email
                   <input
                     name="email"
+                    ref={emailInputRef}
+                    aria-invalid={contactIssue?.fields.includes("email") || undefined}
+                    aria-describedby={`${contactHintId}${contactIssue?.fields.includes("email") ? ` ${contactErrorId}` : ""}`}
                     type="email"
                     autoComplete="email"
                     value={formData.email}
@@ -588,6 +607,8 @@ export function ContactForm({
                   />
                 </label>
               </div>
+
+              {contactIssue && <p id={contactErrorId} role="alert" className="enquiry-error border-l-4 px-3 py-3 text-sm">{contactIssue.message}</p>}
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="space-y-2 enquiry-label">

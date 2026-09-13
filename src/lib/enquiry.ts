@@ -18,16 +18,26 @@ export function isEnquiryService(value: string): boolean {
   return serviceOptions.some(option => option.value === value);
 }
 
-export function contactValidationError(phone: string, email: string): string | null {
-  if (!phone.trim() && !email.trim()) return "Please enter a mobile number or email address so we can reply.";
+type ContactField = "phone" | "email";
+export function contactValidationIssue(phone: string, email: string): { fields: ContactField[]; message: string } | null {
+  if (!phone.trim() && !email.trim()) return { fields: ["phone", "email"], message: "Please enter a mobile number or email address so we can reply." };
   const phoneDigits = phone.replace(/\D/g, "");
-  if (phone.trim() && (!/^[+\d\s().-]+$/.test(phone) || phoneDigits.length < 8 || phoneDigits.length > 15)) {
-    return "Please check your mobile number, or leave it blank and enter your email.";
+  const invalidPhone = Boolean(phone.trim()) && (!/^[+\d\s().-]+$/.test(phone) || phoneDigits.length < 8 || phoneDigits.length > 15);
+  const invalidEmail = Boolean(email.trim()) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (invalidPhone && invalidEmail) {
+    return { fields: ["phone", "email"], message: "Please check your mobile number and email address. You can leave either one blank." };
   }
-  if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return "Please check your email address, or leave it blank and enter your mobile number.";
+  if (invalidPhone) {
+    return { fields: ["phone"], message: "Please check your mobile number, or leave it blank and enter your email." };
+  }
+  if (invalidEmail) {
+    return { fields: ["email"], message: "Please check your email address, or leave it blank and enter your mobile number." };
   }
   return null;
+}
+
+export function contactValidationError(phone: string, email: string): string | null {
+  return contactValidationIssue(phone, email)?.message ?? null;
 }
 
 // Only fixed catalogue identifiers may leave the enquiry form through analytics.

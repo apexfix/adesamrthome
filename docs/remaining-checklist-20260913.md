@@ -8,6 +8,7 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Prices and visible contact information | Audited; preserved | Production SMTP environment and inbox remain unverified. |
 | CCTV form validation and service switching | Fixed in preview | Mock SMTP and browser regression pass; no real customer messages. |
 | Contact requirements and receipts | Fixed in preview | Name, suburb, mobile OR email; equipment-specific receipt. |
+| Contact-field error associations (ACCESS-03) | IMPLEMENTED IN SCOPED PREVIEW | Shared affected-field validation, unique error/requirement descriptions, correct custom focus and correction state; native email and delivery-error separation tested. Four browser flows, 21 API/contract tests, 22 enquiry checks and 32 hydration layouts passed. See contact-errors-preview-20260914.md. Full field/localization and physical assistive-technology acceptance remain open. |
 | Analytics free-text product leakage | Fixed for explicit event payloads | Actual GA4/Meta settings, automatic URL collection and delivery not audited. |
 | Unverified installation count and default limited-stock claims | Removed in preview | Add counts only with evidence; ask for current stock before adding availability claims. |
 | Installer-page draft copy | Rewritten in preview | Do not merge competing pages without query/conversion/backlink evidence. |
