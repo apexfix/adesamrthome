@@ -1,92 +1,97 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Camera, MapPin, ZoomIn } from "lucide-react";
-import { GalleryImage } from "@/components/GalleryImage";
-import { ImageLightbox } from "@/components/ImageLightbox";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ArrowRight, Camera, ChevronDown, SlidersHorizontal, X } from "lucide-react";
+import { GalleryResults } from "@/components/GalleryResults";
 import { siteUrl } from "@/lib/seoData";
 import { installationProjects as projects } from "@/lib/installationProjects";
+import { selectGallery, type GalleryParams } from "@/lib/galleryFilters";
 
-const categories = ["All", ...new Set(projects.map(project => project.category))];
-const gallerySchema = {
-  "@context": "https://schema.org",
-  "@type": "ImageGallery",
-  "@id": `${siteUrl}/gallery#gallery`,
-  name: "Adelaide Smart Lock Installation Gallery",
-  url: `${siteUrl}/gallery`,
-  inLanguage: "en-AU",
-  primaryImageOfPage: `${siteUrl}${projects[0].image}`,
-  associatedMedia: projects.map(project => ({
-    "@type": "ImageObject",
-    name: project.title,
-    caption: project.description,
-    contentUrl: `${siteUrl}${project.image}`,
-    representativeOfPage: project.id === 1,
-  })),
-};
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
-    { "@type": "ListItem", position: 2, name: "Installation Gallery", item: `${siteUrl}/gallery` },
-  ],
-};
+interface GalleryPageProps { searchParams?: Promise<GalleryParams> }
 
-export default function GalleryPage() {
-  const [filter, setFilter] = useState("All");
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const filteredProjects = filter === "All" ? projects : projects.filter(project => project.category === filter);
+export async function generateMetadata({ searchParams }: GalleryPageProps): Promise<Metadata> {
+  const selection = selectGallery(projects, searchParams ? await searchParams : {});
+  if (!selection.valid) return { title: "Gallery Filter Not Found", robots: { index: false, follow: false } };
+  return selection.filtered ? {
+    title: `${selection.model || "Smart Lock"} Installation Gallery${selection.suburb ? ` - ${selection.suburb}` : ""}`,
+    robots: { index: false, follow: true },
+    alternates: { canonical: `${siteUrl}/gallery` },
+  } : {};
+}
 
+export default async function GalleryPage({ searchParams }: GalleryPageProps) {
+  const selection = selectGallery(projects, searchParams ? await searchParams : {});
+  if (!selection.valid) notFound();
+  const { model, suburb, models, suburbs, results, filtered } = selection;
+  const gallerySchema = {
+    "@context": "https://schema.org", "@type": "ImageGallery",
+    "@id": `${siteUrl}/gallery#gallery`, name: "Adelaide Smart Lock Installation Gallery",
+    url: `${siteUrl}/gallery`, inLanguage: "en-AU",
+    primaryImageOfPage: results[0]?.image ? `${siteUrl}${results[0].image}` : undefined,
+    associatedMedia: results.map((project, index) => ({
+      "@type": "ImageObject", name: project.title, caption: project.description,
+      contentUrl: `${siteUrl}${project.image}`, representativeOfPage: index === 0,
+    })),
+  };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Installation Gallery", item: `${siteUrl}/gallery` },
+    ],
+  };
   return (
     <main className="min-h-screen bg-zinc-950 pb-16 pt-28 md:pb-24 md:pt-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap gap-2 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-white">Home</Link>
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">Installation gallery</span>
+          <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">Home</Link>
+          <span className="inline-flex min-h-11 items-center" aria-hidden="true">/</span>
+          <span className="inline-flex min-h-11 items-center" aria-current="page">Installation gallery</span>
         </nav>
         <header className="border-b border-zinc-800 pb-6 md:pb-8">
           <p className="text-sm font-semibold text-[#c5a47e]">Real Adelaide work</p>
           <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-white md:text-5xl">Smart lock installation gallery</h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">Real Adelaide installations. Compare models below, or book installation-only for a compatible lock you already own.</p>
-          <Link href="/smart-lock-installation-only-adelaide" className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">
-            Installation-only options <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <Link href="/smart-lock-installation-only-adelaide" className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">Installation-only options <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
         </header>
 
         <div className="flex flex-wrap items-end justify-between gap-4 py-5 md:py-7">
-          <label className="flex flex-wrap items-center gap-3 text-sm font-semibold text-zinc-300">
-            Lock model
-            <select value={filter} onChange={event => setFilter(event.target.value)} className="min-h-12 min-w-40 rounded-md border border-zinc-600 bg-zinc-900 px-3 text-base text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c5a47e]">
-              {categories.map(category => <option key={category} value={category}>{category === "All" ? "All models" : category}</option>)}
-            </select>
-          </label>
-          <p role="status" className="text-sm text-zinc-400"><span>{filteredProjects.length} {filteredProjects.length === 1 ? "installation" : "installations"}</span></p>
+          <form key={JSON.stringify([model, suburb])} action="/gallery" method="get" aria-label="Filter installation gallery" className="flex max-w-full flex-wrap items-end gap-3">
+            <label className="grid max-w-full gap-2 text-sm font-semibold text-zinc-300">
+              Lock model
+              <span className="relative block max-w-full">
+                <select name="model" defaultValue={model || ""} className="min-h-12 w-full min-w-40 max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
+                  <option value="">All models</option>
+                  {models.map(option => <option key={option} value={option}>{option}</option>)}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-4 h-4 w-4" aria-hidden="true" />
+              </span>
+            </label>
+            {(suburbs.length > 1 || suburb) && <label className="grid max-w-full gap-2 text-sm font-semibold text-zinc-300">
+              Area
+              <span className="relative block max-w-full">
+                <select name="suburb" defaultValue={suburb || ""} className="min-h-12 w-full min-w-40 max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
+                  <option value="">All areas</option>
+                  {suburbs.map(option => <option key={option} value={option}>{option}</option>)}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-4 h-4 w-4" aria-hidden="true" />
+              </span>
+            </label>}
+            <button type="submit" className="glass-control inline-flex min-h-12 items-center gap-2 rounded-md border px-4 text-sm font-semibold text-white"><SlidersHorizontal size={18} aria-hidden="true" />Apply</button>
+            {filtered && <Link prefetch={false} href="/gallery" className="inline-flex min-h-12 items-center gap-2 px-2 text-sm font-semibold text-[#d9b98f]"><X size={18} aria-hidden="true" />Clear filters</Link>}
+          </form>
+          <p role="status" data-gallery-count className="text-sm text-zinc-400">{results.length} {results.length === 1 ? "installation" : "installations"}{filtered && <span> / {projects.length} total</span>}</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {filteredProjects.map((project, index) => (
-            <article key={project.id} className="liquid-glass-soft flex min-w-0 flex-col overflow-hidden rounded-md border">
-              <button type="button" onClick={event => { event.currentTarget.focus({ preventScroll: true }); setSelectedIndex(index); }} aria-label={`View full photo: ${project.title}`} className="group relative block aspect-[4/5] w-full overflow-hidden bg-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#c5a47e]">
-                <GalleryImage key={project.image} photo={{ src: project.image, alt: `${project.title}: ${project.description}` }} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1279px) 46vw, 460px" className="object-contain" eager={index === 0} />
-                <span title="View full photo" className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-md border border-white/30 bg-black/75 text-white group-hover:bg-black"><ZoomIn className="h-5 w-5" aria-hidden="true" /></span>
-              </button>
-              <div className="flex flex-1 flex-col p-5 md:p-6">
-                <p className="flex items-center gap-2 text-sm text-[#c5a47e]"><MapPin className="h-4 w-4" aria-hidden="true" /> <span>{project.suburb}, SA</span></p>
-                <h2 className="mt-3 text-xl font-bold leading-7 text-white">{project.title}</h2>
-                <p className="mt-3 text-base leading-7 text-zinc-400">{project.description}</p>
-                <div className="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-5">
-                  <Link href={`/products/${project.productSlug}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">View {project.category}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-                  <Link href={`/contact?service=supply-install&product=${encodeURIComponent(`Lockin ${project.category}`)}#quote`} className="inline-flex min-h-11 items-center text-sm font-semibold text-white underline decoration-zinc-600 underline-offset-4">Ask about this model</Link>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        {results.length > 0 ? <GalleryResults key={JSON.stringify([model, suburb])} projects={results} /> : (
+          <section className="border-y border-zinc-800 py-10" aria-labelledby="gallery-empty">
+            <h2 id="gallery-empty" className="text-2xl font-bold text-white">{filtered ? "No matching installations" : "Installation photos unavailable"}</h2>
+            <p className="mt-3 text-base leading-7 text-zinc-400">{filtered ? "No published photos match these filters." : "Contact us about your lock and door requirements."}</p>
+            <Link href={filtered ? "/gallery" : "/contact#quote"} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">{filtered ? "Clear all filters" : "Ask about installation"}<ArrowRight size={18} aria-hidden="true" /></Link>
+          </section>
+        )}
 
         <section className="mt-12 grid gap-8 border-y border-zinc-800 py-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
           <div>
@@ -99,8 +104,6 @@ export default function GalleryPage() {
           </div>
         </section>
       </div>
-
-      {selectedIndex !== null && <ImageLightbox photos={filteredProjects.map(project => ({ src: project.image, alt: `${project.title}: ${project.description}` }))} index={selectedIndex} onIndexChange={setSelectedIndex} onClose={() => setSelectedIndex(null)} label="Installation gallery preview" />}
     </main>
   );
 }

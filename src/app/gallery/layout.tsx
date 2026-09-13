@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: "Real smart lock installation results from Adelaide homes.",
     url: `${siteUrl}/gallery`,
     siteName: "ADE Smart Home",
-    images: [{ url: installationProjects[0].image, alt: installationProjects[0].title }],
+    images: [{ url: installationProjects[0]?.image || "/img/og/ade-smart-home-adelaide.jpg", alt: installationProjects[0]?.title || "ADE Smart Home" }],
     locale: "en_AU",
     type: "website",
   },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adelaide Smart Lock Installation Gallery",
     description: "Real smart lock installation results from Adelaide homes.",
-    images: [installationProjects[0].image],
+    images: [installationProjects[0]?.image || "/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 

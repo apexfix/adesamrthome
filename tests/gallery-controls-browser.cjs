@@ -16,7 +16,10 @@
           const categories = await filter.locator('option').evaluateAll(nodes => nodes.map(node => node.value));
           for (const category of categories) {
             await filter.selectOption(category);
-            const photos = page.locator('button[aria-label^="View full photo:"]');
+            await page.getByRole('button', { name: 'Apply', exact: true }).click();
+            await page.waitForURL(url => url.searchParams.get('model') === category);
+            await page.waitForLoadState('networkidle');
+            const photos = page.locator('a[aria-label^="View full photo:"]');
             const count = await photos.count();
             assert.ok(count > 0);
             const first = photos.first();
@@ -50,7 +53,7 @@
             await page.screenshot({ path: `output/gallery-verification/${engine}-${width}-case-${category.replace(/[^a-z0-9]/gi, '-')}.png` });
             await page.keyboard.press('Escape');
             await dialog.waitFor({ state: 'detached' });
-            await page.waitForFunction(() => document.activeElement === document.querySelector('button[aria-label^="View full photo:"]'));
+            await page.waitForFunction(() => document.activeElement === document.querySelector('a[aria-label^="View full photo:"]'));
             assert.notEqual(await page.evaluate(() => document.body.style.overflow), 'hidden');
             results.push({ engine, width, category, count, passed: true });
           }

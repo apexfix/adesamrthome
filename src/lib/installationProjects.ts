@@ -1,4 +1,14 @@
-export const installationProjects = [
+export interface InstallationProject {
+  id: number;
+  title: string;
+  suburb: string;
+  description: string;
+  image: string;
+  category: string;
+  productSlug: string;
+}
+
+export const installationProjects: InstallationProject[] = [
   {
     id: 1,
     title: "Lockin S50M Pro Installation",
