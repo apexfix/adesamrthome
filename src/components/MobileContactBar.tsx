@@ -5,13 +5,27 @@ import { Camera, Cctv, Mail, MessageSquareText, Tag } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { businessInfo } from "@/lib/seoData";
 import { trackEvent } from "@/lib/analytics";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function MobileContactBar() {
   const pathname = usePathname();
   const [visiblePrimaryPath, setVisiblePrimaryPath] = useState<string | null>(null);
-  const [dockFocused, setDockFocused] = useState(false);
+  const dockRef = useRef<HTMLElement>(null);
   const [formActive, setFormActive] = useState(false);
+  useEffect(() => {
+    const dock = dockRef.current;
+    if (!dock) return;
+    const root = document.documentElement;
+    const measure = () => {
+      const height = dock.getBoundingClientRect().height;
+      // Keep the last visible size while automatic hiding collapses the dock.
+      if (height > 0) root.style.setProperty('--mobile-contact-height', `${Math.ceil(height)}px`);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(dock);
+    return () => { observer.disconnect(); root.style.removeProperty('--mobile-contact-height'); };
+  }, [pathname]);
   useEffect(() => {
     let pointerDown = false;
     let releaseTimer: ReturnType<typeof setTimeout> | undefined;
@@ -88,23 +102,21 @@ export function MobileContactBar() {
   return (
     <>
       <div className="mobile-contact-spacer h-24 bg-zinc-950 md:hidden" aria-hidden="true" />
-      <nav aria-label="Quick contact" data-primary-visible={visiblePrimaryPath === pathname && !dockFocused} data-form-active={formActive}
-        onFocusCapture={() => setDockFocused(true)}
-        onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDockFocused(false); }}
-        className="liquid-glass mobile-contact-dock fixed inset-x-3 z-[70] grid grid-cols-[1fr_1.3fr_44px] items-center gap-1 rounded-lg border p-2 md:hidden">
+      <nav ref={dockRef} aria-label="Quick contact" data-primary-visible={visiblePrimaryPath === pathname} data-form-active={formActive}
+        className="liquid-glass mobile-contact-dock fixed z-[70] grid items-center rounded-lg border md:hidden">
         <a
           href={smsHref}
           onClick={onSmsClick}
-          aria-label="Text for Quote"
+          aria-label="Text us for a quote"
           className="flex min-h-12 items-center justify-center gap-2 rounded-md text-sm font-bold text-white"
         >
-          <MessageSquareText className="h-4 w-4 text-[#c5a47e]" />
-          Text us
+          <MessageSquareText className="h-4 w-4 text-[#c5a47e]" aria-hidden="true" />
+          <span>Text us</span>
         </a>
         <Link
           href={isCameraPage ? "/contact?service=security-camera-kit#quote" : "/contact#quote"}
           onClick={onQuoteFormClick}
-          aria-label={isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}
+          aria-label={isCameraPage ? "Get quote for a camera kit" : isMixedProductsPage ? "Get quote" : "Get quote with door photos"}
           className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-2 text-sm font-bold text-black"
         >
           <span className="flex shrink-0" aria-hidden="true">{isCameraPage ? (
@@ -114,7 +126,7 @@ export function MobileContactBar() {
           ) : (
             <Camera className="h-4 w-4" />
           )}</span>
-          <span>{isCameraPage ? "Get Camera Quote" : isMixedProductsPage ? "Get a Quote" : "Send Door Photos"}</span>
+          <span>Get quote</span>
         </Link>
         <a
           href={mailHref}

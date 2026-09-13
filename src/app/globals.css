@@ -4,6 +4,7 @@
   --background: #000000;
   --foreground: #ffffff;
   --site-header-clearance: max(96px, calc(9rem - 48px));
+  --mobile-contact-clearance: calc(var(--mobile-contact-height, 6rem) + max(10px, env(safe-area-inset-bottom)) + 8px);
 }
 
 @theme inline {
@@ -287,14 +288,21 @@ body:has(.site-header[data-menu-open="true"]) .mobile-contact-dock { display: no
   .hero-description { font-size: 14px; margin-top: 10px; }
   .hero-caption { min-height: 72px; }
 }
-.mobile-contact-dock { bottom: max(10px, env(safe-area-inset-bottom)); }
+.mobile-contact-dock { inset-inline: 12px; bottom: max(10px, env(safe-area-inset-bottom)); grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) 48px; gap: 4px; padding: 8px; }
+.mobile-contact-dock > a { min-width: 0; min-height: 48px; gap: 6px; padding: 8px; flex-wrap: wrap; line-height: 1.3; text-align: center; }
+.mobile-contact-dock > a:not(:last-child) { align-self: stretch; }
+.mobile-contact-dock > a:last-child { width: 48px; height: 48px; padding: 0; }
+.mobile-contact-dock > a > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.mobile-contact-dock svg { flex-shrink: 0; width: 18px; height: 18px; }
+.mobile-contact-dock a:focus-visible { outline: 2px solid #d9b98f; outline-offset: 2px; }
+.mobile-contact-spacer { height: var(--mobile-contact-clearance); }
 /* Recovery pages provide their own destinations, including without scripts. */
 body:has([data-not-found]) :is(.mobile-contact-dock, .mobile-contact-spacer) { display: none; }
-.mobile-contact-dock[data-primary-visible="true"] { display: none; }
+.mobile-contact-dock[data-primary-visible="true"]:not(:focus-within) { display: none; }
 .mobile-contact-dock[data-primary-visible="false"] { animation: contact-dock-in 220ms ease-out; }
 @media (max-width: 767px) {
   /* Native anchor/focus scrolling also needs clearance before hydration. */
-  html:has(.mobile-contact-dock) { scroll-padding-block: max(104px, var(--site-header-clearance)) calc(6rem + max(10px, env(safe-area-inset-bottom))); }
+  html:has(.mobile-contact-dock) { scroll-padding-block: max(104px, var(--site-header-clearance)) var(--mobile-contact-clearance); }
   body:has(:is(main, .site-footer) :focus-visible) .mobile-contact-dock { display: none; }
 }
 @keyframes contact-dock-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -314,7 +322,7 @@ body:has([data-not-found]) :is(.mobile-contact-dock, .mobile-contact-spacer) { d
   .hero-controls-slot { min-height: 50px; }
 }
 body:has(.quote-section:focus-within) .mobile-contact-dock,
-.mobile-contact-dock[data-form-active="true"] { display: none; }
+.mobile-contact-dock[data-form-active="true"]:not(:focus-within) { display: none; }
 .quote-section :is(input:not([type="checkbox"]):not([type="file"]), select, textarea) { font-size: 16px; border-radius: 6px; letter-spacing: 0; }
 .quote-section label, .quote-section legend { letter-spacing: 0; }
 .enquiry-panel { background: #18181b; border-color: #3f3f46; color: #fff; color-scheme: dark; overflow-wrap: anywhere; }
