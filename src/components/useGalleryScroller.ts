@@ -16,9 +16,10 @@ export function useGalleryScroller(count: number) {
     };
     measure();
     node.addEventListener("scroll", measure, { passive: true });
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    return () => { node.removeEventListener("scroll", measure); observer.disconnect(); };
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(node);
+    window.addEventListener("resize", measure);
+    return () => { node.removeEventListener("scroll", measure); window.removeEventListener("resize", measure); observer?.disconnect(); };
   }, [count]);
   const scroll = (direction: "left" | "right") => {
     const node = scrollerRef.current;

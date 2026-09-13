@@ -2,7 +2,8 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
-import Image from "next/image";
+import { GalleryImage } from "@/components/GalleryImage";
+import { RevealGroup } from "@/components/RevealGroup";
 import { Calendar, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
@@ -144,33 +145,32 @@ export default function BlogListPage() {
 
         {/* Stories Grid */}
         {posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {posts.map((post) => (
               <Link 
                 key={post.slug} 
                 href={`/blog/${post.slug}`} 
-                className="liquid-glass-soft group relative flex flex-col overflow-hidden rounded-md border transition-colors hover:border-[#c5a47e]/50"
+                prefetch={false}
+                className="article-card liquid-glass-soft motion-card group relative flex min-w-0 flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/50"
               >
-                {/* 封面图容器：恢复为 object-cover 模式 */}
                 <div className="aspect-[16/9] relative overflow-hidden bg-zinc-900">
-                  <Image 
-                    src={post.coverImage || "/img/og/ade-smart-home-adelaide.jpg"}
-                    alt={post.title || "Case Study"} 
-                    fill 
+                  <GalleryImage
+                    key={post.coverImage}
+                    photo={{ src: post.coverImage || "", alt: post.title || "Article" }}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                    className="object-contain"
                   />
                   <div className="absolute left-4 top-4 z-10 bg-[#c5a47e] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-black">
-                    {post.category || "Installation"}
+                    {post.category || "Article"}
                   </div>
                 </div>
                 
-                <div className="flex flex-1 flex-col p-5 md:p-7">
+                <div data-glass-highlight className="flex flex-1 flex-col p-5 md:p-7">
                   <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
-                    <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {post.date}</span>
-                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {post.suburb}</span>
+                    {post.date && <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" aria-hidden="true" /><time dateTime={post.date}>{post.date}</time></span>}
+                    {post.suburb && <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" aria-hidden="true" />{post.suburb}</span>}
                   </div>
-                  <h2 className="text-xl font-bold mb-4 group-hover:text-[#c5a47e] transition-colors md:text-2xl">
+                  <h2 className="mb-4 break-words text-xl font-bold transition-colors group-hover:text-[#c5a47e] md:text-2xl">
                     {post.title}
                   </h2>
                   {post.description && <p className="mb-6 line-clamp-3 text-base leading-7 text-zinc-400">{post.description}</p>}
@@ -181,7 +181,7 @@ export default function BlogListPage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </RevealGroup>
         ) : (
           <div className="rounded-md border border-dashed border-zinc-800 py-24 text-center">
             <p className="text-zinc-500">Our latest project stories are being prepared...</p>

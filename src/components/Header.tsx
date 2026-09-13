@@ -72,6 +72,10 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
     const nav = navigationRef.current;
     const indicator = indicatorRef.current;
     if (!nav || !indicator) return;
+    if (typeof ResizeObserver === "undefined") {
+      nav.dataset.indicatorReady = "false";
+      return;
+    }
     let cancelled = false;
     const measure = () => {
       if (cancelled) return;

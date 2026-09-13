@@ -74,6 +74,9 @@ body {
 .installation-photo-scroller { scroll-padding-inline: 16px; }
 .gallery-scroller[data-dragging="true"] { scroll-snap-type: none; }
 .gallery-snap-item { scroll-snap-align: start; }
+.story-card { flex: 0 0 min(88%, 450px); }
+.story-card .gallery-image-fallback, .article-card .gallery-image-fallback { background: #18181b; color: #d4d4d8; }
+.story-scroller[data-dragging="true"] { cursor: grabbing; user-select: none; }
 .image-lightbox { width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; border: 0; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); color: white; background: #09090b; }
 .image-lightbox[open] { display: grid; grid-template-rows: 48px minmax(0,1fr) auto; gap: 12px; animation: image-lightbox-in 240ms ease-out; }
 .image-lightbox[data-closing="true"] { animation: image-lightbox-out 240ms ease-in forwards; }

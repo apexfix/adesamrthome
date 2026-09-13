@@ -1,6 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { MapPin, ChevronRight } from "lucide-react";
+import { GalleryImage } from "@/components/GalleryImage";
+import { StoryRail } from "@/components/StoryRail";
 
 interface Story {
   slug: string;
@@ -14,44 +15,32 @@ export default function StoryCarousel({ stories }: { stories: Story[] }) {
   if (!stories.length) return null;
 
   return (
-    <div className="relative group">
-      {/* Horizontal Scroll Container */}
-      <div className="no-scrollbar flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory">
+    <StoryRail key={stories.map(story => story.slug).join("|")} count={stories.length}>
         {stories.map((story) => (
           <Link 
             key={story.slug}
             href={`/blog/${story.slug}`}
-            className="liquid-glass-soft group/card relative aspect-[16/10] min-w-[300px] snap-start overflow-hidden rounded-md border md:min-w-[450px]"
+            prefetch={false}
+            className="story-card gallery-snap-item liquid-glass-soft motion-card group/card relative flex min-w-0 flex-col overflow-hidden rounded-md border"
           >
-            {/* Image Layer */}
-            <Image 
-              src={story.coverImage} 
-              alt={story.title}
-              fill
-              quality={65}
-              sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 450px"
-              className="object-cover transition-transform duration-700 group-hover/card:scale-105"
-            />
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover/card:opacity-100 transition-opacity" />
-
-            {/* Content Layer */}
-            <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-              <div className="mb-3 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e]">
-                <span className="bg-[#c5a47e] text-black px-2 py-0.5 rounded-sm">{story.category}</span>
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {story.suburb}</span>
+            <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-zinc-900">
+              <GalleryImage key={story.coverImage} photo={{ src: story.coverImage, alt: story.title }}
+                sizes="(max-width: 640px) 88vw, 450px" className="object-contain" />
+            </div>
+            <div data-glass-highlight className="flex flex-1 flex-col p-5 md:p-6">
+              <div className="mb-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold text-[#c5a47e]">
+                {story.category && <span className="break-words">{story.category}</span>}
+                {story.suburb && <span className="flex min-w-0 items-center gap-1"><MapPin className="h-3 w-3 shrink-0" aria-hidden="true" /><span className="break-words">{story.suburb}</span></span>}
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-1 group-hover/card:text-[#c5a47e] transition-colors">
+              <h3 className="mb-5 break-words text-lg font-bold leading-7 text-white transition-colors group-hover/card:text-[#c5a47e] md:text-xl">
                 {story.title}
               </h3>
-              <div className="flex items-center text-xs font-bold uppercase tracking-[0.1em] text-white/60 transition-colors group-hover/card:text-white">
-                View Details <ChevronRight className="w-4 h-4 ml-1" />
+              <div className="mt-auto flex items-center text-sm font-semibold text-[#d9b98f]">
+                View Details <ChevronRight className="ml-1 h-4 w-4" aria-hidden="true" />
               </div>
             </div>
           </Link>
         ))}
-      </div>
-    </div>
+    </StoryRail>
   );
 }
