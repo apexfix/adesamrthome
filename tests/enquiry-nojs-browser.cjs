@@ -70,7 +70,8 @@ async function checkFallback(page) {
           if (mode === 'delayed') {
             release();
             await page.waitForLoadState('networkidle');
-            await page.locator('.enquiry-direct').waitFor({state:'detached'});
+            assert.equal(await page.locator('.enquiry-direct').isVisible(), true);
+            await page.waitForFunction(() => !document.querySelector('.enquiry-submit').matches(':disabled'));
             await page.screenshot({path:`output/enquiry-nojs/${engine}-loaded.png`});
             await page.locator('[name=name]').fill('Local test only');
             await page.locator('[name=suburb]').fill('5000');

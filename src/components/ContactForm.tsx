@@ -472,19 +472,16 @@ export function ContactForm({
                 : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
             </p>
 
-            {!enhanced && (
-              <div className="enquiry-direct mt-5 border-l-4 border-[#d9b98f] pl-4">
-                <p className="font-semibold text-white">Enquire by SMS or email</p>
+              <div className="enquiry-direct mt-5 flex flex-wrap items-center gap-x-6 border-y border-[#3f3f46] py-1">
                 <a href={`sms:${businessInfo.phoneInternational}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
                   <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  <span>Text {businessInfo.phone}</span>
+                  <span>Enquire by SMS</span>
                 </a>
                 <a href={`mailto:${businessInfo.email}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
                   <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0">{businessInfo.email}</span>
+                  <span className="min-w-0">Enquire by email</span>
                 </a>
               </div>
-            )}
 
             <form
               method="post"
