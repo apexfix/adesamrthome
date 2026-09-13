@@ -36,7 +36,8 @@
       assert.deepEqual(await page.locator('.motion-card').evaluateAll(nodes => nodes.map(n => n.getAttribute('href'))), urls);
       await page.locator('main a[href="/products"]').first().click();
       await page.waitForURL('**/products');
-      assert.equal(await page.locator('.motion-card').first().getAttribute('href'), '/products/smart-lock-installation-only-service');
+      assert.equal(await page.locator('[data-catalogue-section]').first().getAttribute('data-catalogue-section'), 'installation-service');
+      assert.equal(await page.locator('[data-installation-listing] a').first().getAttribute('href'), '/products/smart-lock-installation-only-service');
       const footerPreference = page.getByRole('checkbox', { name: 'Reduce visual effects' });
       await footerPreference.check();
       await page.locator('[data-glass-highlight]').first().hover();

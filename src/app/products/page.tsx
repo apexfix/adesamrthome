@@ -1,346 +1,143 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import { RevealGroup } from "@/components/RevealGroup";
+import { CatalogueInstallation } from "@/components/CatalogueInstallation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
-import type { Product } from "@/types";
 import { TrackingCTAs } from "@/components/cta/TrackingCTAs";
 import { notFound } from "next/navigation";
-import { isSecurityCameraKit } from "@/lib/productType";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronDown, SlidersHorizontal, X, ArrowRight } from "lucide-react";
+import { catalogueHref, groupCatalogue, selectCatalogue, type CatalogueParams } from "@/lib/catalogue";
+
+interface ProductsPageProps { searchParams?: Promise<CatalogueParams> }
 
 const baseMetadata: Metadata = {
   title: "Smart Locks & Security Camera Kits Adelaide",
-  description:
-    "Shop smart locks with Adelaide installation and Dahua security camera kits from ADE Smart Home.",
+  description: "Shop smart locks with Adelaide installation and Dahua security camera kits from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
     title: "Smart Locks & Security Camera Kits Adelaide",
-    description:
-      "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
-    url: `${siteUrl}/products`,
-    siteName: "ADE Smart Home",
+    description: "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
+    url: `${siteUrl}/products`, siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
-    locale: "en_AU",
-    type: "website",
+    locale: "en_AU", type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Smart Locks & Security Camera Kits Adelaide",
-    description:
-      "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
+    card: "summary_large_image", title: "Smart Locks & Security Camera Kits Adelaide",
+    description: "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
 
-export async function generateMetadata(props: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}): Promise<Metadata> {
-  const params = props.searchParams ? await props.searchParams : {};
-  const categoryParam = typeof params.category === "string" ? params.category : null;
-  const brandParam = typeof params.brand === "string" ? params.brand : null;
-  const hasFilters = categoryParam !== null || brandParam !== null;
-
-  if (hasFilters) {
-    const allProducts = await getProducts(1, 50);
-    const matchingCategory = categoryParam
-      ? allProducts.filter((product) => productMatchesCategory(product, categoryParam))
-      : allProducts;
-    const matchingProducts = brandParam
-      ? matchingCategory.filter((product) => productMatchesBrand(product, brandParam))
-      : matchingCategory;
-
-    if (matchingProducts.length === 0) {
-      return {
-        title: "Product Filter Not Found",
-        description: "The requested product filter is not available.",
-        robots: { index: false, follow: false },
-      };
-    }
-    return {
-      ...baseMetadata,
-      title: `${getPageTitle(categoryParam, brandParam, matchingProducts)} Adelaide`,
-      robots: { index: false, follow: true },
-    };
-  }
-
-  return {
-    ...baseMetadata,
-    robots: hasFilters ? { index: false, follow: true } : undefined,
+export async function generateMetadata({ searchParams }: ProductsPageProps): Promise<Metadata> {
+  const params = searchParams ? await searchParams : {};
+  const selection = selectCatalogue(await getProducts(1, 50), params);
+  if (!selection.valid) return {
+    title: "Product Filter Not Found", description: "The requested product filter is not available.",
+    robots: { index: false, follow: false },
   };
+  return selection.filtered ? {
+    ...baseMetadata,
+    title: `${selection.title} Adelaide`, robots: { index: false, follow: true },
+  } : baseMetadata;
 }
 
-const SMART_LOCK_CHILD_CATEGORIES = new Set([
-  "smartlock",
-  "smartlocks",
-  "smartlockwithcamera",
-  "lockin",
-  "philips",
-  "ezviz",
-  "samsung",
-  "dessmann",
-  "aqara",
-  "kaadas",
-  "eufy",
-  "yale",
-]);
-
-const SMART_LOCK_BRANDS = [
-  { name: "Lockin", href: "/brands/lockin" },
-  { name: "Kaadas", href: "/brands/kaadas" },
-];
-
-const PRODUCT_CATEGORIES = [
-  { name: "Smart Locks", href: "/products?category=smart-lock" },
-  { name: "Security Camera Kits", href: "/products/security-camera-kits" },
-];
-
-function normalizeCategory(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-function productMatchesCategory(product: Product, categoryParam: string) {
-  const requested = normalizeCategory(categoryParam);
-  const categories = product.categories || [];
-
-  return categories.some((cat) => {
-    const categoryName = normalizeCategory(cat.name || "");
-    const categorySlug = normalizeCategory(cat.slug || "");
-
-    if (categoryName === requested || categorySlug === requested) {
-      return true;
-    }
-
-    if (requested === "smartlock" || requested === "smartlocks") {
-      return (
-        SMART_LOCK_CHILD_CATEGORIES.has(categoryName) ||
-        SMART_LOCK_CHILD_CATEGORIES.has(categorySlug)
-      );
-    }
-
-    return false;
-  });
-}
-
-function productMatchesBrand(product: Product, brandParam: string) {
-  const requested = normalizeCategory(brandParam);
-  const searchableValues = [
-    ...(product.tags || []).map((tag) => tag.name || tag.slug || ""),
-    ...(product.brands || []).map((brand) => brand.name || brand.slug || ""),
-    ...(product.categories || []).map((cat) => cat.name || cat.slug || ""),
-    product.name || "",
-    product.sku || "",
-  ];
-
-  return searchableValues.some((value) => normalizeCategory(value).includes(requested));
-}
-
-function getPageTitle(categoryParam: string | null, brandParam: string | null, products: Product[]) {
-  if (brandParam) {
-    const brand = products.flatMap(product => product.brands || []).find(
-      item => normalizeCategory(item.name) === normalizeCategory(brandParam),
-    )?.name || brandParam;
-    const productType = products.every(isSecurityCameraKit) ? "Security Camera Kits" : "Smart Locks";
-    return `${brand} ${productType}`;
-  }
-
-  const normalized = categoryParam ? normalizeCategory(categoryParam) : "";
-
-  if (normalized === "smartlock" || normalized === "smartlocks") {
-    return "Smart Locks";
-  }
-
-  if (normalized === "lockin") {
-    return "Lockin Smart Locks";
-  }
-
-  if (normalized === "kaadas") {
-    return "Kaadas Smart Locks";
-  }
-
-  if (normalized === "securitycamerakits") {
-    return "Security Camera Kits";
-  }
-
-  return categoryParam || "All Products";
-}
-
-export default async function ProductsPage(props: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  // 兼容 Next.js 最新版本的异步参数读取逻辑
-  const params = props.searchParams ? await props.searchParams : {};
-  const categoryParam = typeof params.category === 'string' ? params.category : null;
-  const brandParam = typeof params.brand === 'string' ? params.brand : null;
-
-  const allProducts: Product[] = await getProducts(1, 50);
-
-  const categoryProducts = categoryParam
-    ? allProducts.filter((product) => productMatchesCategory(product, categoryParam))
-    : allProducts;
-
-  const displayedProducts = brandParam
-    ? categoryProducts.filter((product) => productMatchesBrand(product, brandParam))
-    : categoryProducts;
-
-  if ((categoryParam || brandParam) && displayedProducts.length === 0) {
-    notFound();
-  }
-
-  const pageTitle = getPageTitle(categoryParam, brandParam, displayedProducts);
-  const isAllProductsPage = categoryParam === null && brandParam === null;
-  const normalizedCategory = categoryParam ? normalizeCategory(categoryParam) : "";
-  const isCameraKitsPage =
-    !isAllProductsPage && displayedProducts.length > 0 && displayedProducts.every(isSecurityCameraKit);
-  const isSmartLocksPage =
-    !isCameraKitsPage && (brandParam !== null || SMART_LOCK_CHILD_CATEGORIES.has(normalizedCategory));
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  const params = searchParams ? await searchParams : {};
+  const allProducts = await getProducts(1, 50);
+  const selection = selectCatalogue(allProducts, params);
+  if (!selection.valid) notFound();
+  const { category, brand, brands, groups, products, title, filtered } = selection;
+  const categories = groupCatalogue(allProducts).filter(group => group.products.length > 0);
+  const isSmartLocksPage = category?.slug === "smart-lock" ||
+    (filtered && products.length > 0 && groups.find(group => group.id === "smart-lock")?.products.length === products.length);
 
   const collectionSchema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": `${siteUrl}/products#collection`,
-    url: `${siteUrl}/products`,
+    "@context": "https://schema.org", "@type": "CollectionPage",
+    "@id": `${siteUrl}/products#collection`, url: `${siteUrl}/products`,
     name: "Smart Locks and Security Camera Kits Adelaide",
-    description:
-      "Smart locks, installation-only service and security camera equipment packages from ADE Smart Home in Adelaide.",
+    description: "Smart locks, installation-only service and security camera equipment packages from ADE Smart Home in Adelaide.",
     mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: allProducts.length,
-      itemListElement: allProducts.map((product, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        url: `${siteUrl}/products/${product.slug}`,
-        name: product.name,
+      "@type": "ItemList", numberOfItems: products.length,
+      itemListElement: products.map((product, index) => ({
+        "@type": "ListItem", position: index + 1, url: `${siteUrl}/products/${product.slug}`, name: product.name,
       })),
     },
   };
-
   const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Products",
-        item: `${siteUrl}/products`,
-      },
+      { "@type": "ListItem", position: 2, name: "Products", item: `${siteUrl}/products` },
     ],
   };
 
   return (
     <main className="min-h-screen bg-black pt-32 pb-24">
-      {!categoryParam && !brandParam && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
-        />
-      )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      {!filtered && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm text-zinc-400">
           <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">Home</Link>
           <ChevronRight className="h-4 w-4" aria-hidden="true" />
-          {isAllProductsPage ? <span aria-current="page">Products</span> : <><Link href="/products" className="inline-flex min-h-11 items-center hover:text-white">Products</Link><ChevronRight className="h-4 w-4" aria-hidden="true" /><span aria-current="page" className="text-[#d9b98f]">{pageTitle}</span></>}
+          {!filtered ? <span aria-current="page">Products</span> : <><Link href="/products" className="inline-flex min-h-11 items-center hover:text-white">Products</Link><ChevronRight className="h-4 w-4" aria-hidden="true" /><span aria-current="page" className="text-[#d9b98f]">{title}</span></>}
         </nav>
-        
-        {/* 页面标题区域 */}
-        <div className="mb-14 border-b border-zinc-800 pb-12">
+        <header className="mb-8 border-b border-zinc-800 pb-8">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Adelaide smart security</p>
-          <h1 className="mb-5 mt-3 text-4xl font-extrabold text-white md:text-6xl">
-            {pageTitle}
-          </h1>
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            <Link
-              href="/products"
-              aria-current={!categoryParam && !brandParam ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
-                !categoryParam && !brandParam
-                  ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                  : "glass-control text-zinc-200 hover:text-white"
-              }`}
-            >
-              All Products
-            </Link>
-            {PRODUCT_CATEGORIES.map((category) => {
-              const isActive =
-                category.name === "Smart Locks" &&
-                ["smartlock", "smartlocks"].includes(normalizedCategory);
-
-              return (
-                <Link
-                  key={category.name}
-                  href={category.href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "border-[#c5a47e] bg-[#c5a47e] text-black"
-                      : "glass-control text-zinc-200 hover:text-white"
-                  }`}
-                >
-                  {category.name}
-                </Link>
-              );
-            })}
+          <h1 className="mb-5 mt-3 break-words text-4xl font-extrabold text-white md:text-5xl">{title}</h1>
+          {!filtered && <p className="max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">Smart locks, installation-only services and CCTV kits in Adelaide.</p>}
+          <nav aria-label="Product categories" className="mt-6 flex flex-wrap gap-2">
+            <Link href="/products" aria-current={!filtered ? "page" : undefined} className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold ${!filtered ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "glass-control text-zinc-200 hover:text-white"}`}>All Products</Link>
+            {categories.map(item => <Link key={item.id} href={catalogueHref(item.id, brand?.slug)} aria-current={category?.slug === item.id ? "page" : undefined} className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold ${category?.slug === item.id ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "glass-control text-zinc-200 hover:text-white"}`}>{item.name}</Link>)}
+          </nav>
+          <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <form action="/products" method="get" className="flex max-w-full flex-wrap items-end gap-3" aria-label="Filter by brand">
+              {category && <input type="hidden" name="category" value={category.slug} />}
+              <div className="min-w-0 max-w-full">
+                <label htmlFor="catalogue-brand" className="mb-2 block text-sm font-semibold text-zinc-300">Brand</label>
+                <div className="relative">
+                <select key={brand?.slug || "all"} id="catalogue-brand" name="brand" defaultValue={brand?.slug || ""} className="min-h-11 w-52 max-w-full appearance-none rounded-md border border-zinc-700 bg-zinc-950 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
+                  <option value="">All brands</option>
+                  {brands.map(item => <option key={item.slug} value={item.slug}>{item.name}</option>)}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300" aria-hidden="true" />
+                </div>
+              </div>
+              <button type="submit" className="glass-control inline-flex min-h-11 items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold text-white"><SlidersHorizontal className="h-4 w-4" aria-hidden="true" />Apply</button>
+              {filtered && <Link href="/products" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]"><X className="h-4 w-4" aria-hidden="true" />Clear filters</Link>}
+            </form>
+            <p data-catalogue-count className="pb-2 text-sm text-zinc-300">{products.length} {products.length === 1 ? "result" : "results"}</p>
           </div>
-          {(categoryParam || brandParam) && (
-               <p className="mt-6 max-w-2xl text-zinc-400">
-               Showing all available products in the {pageTitle} category.
-             </p>
-          )}
-          {isAllProductsPage && (
-            <p className="mt-7 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
-              Browse smart locks, installation-only service and security camera
-              equipment packages available from ADE Smart Home in Adelaide.
-            </p>
-          )}
-          {isSmartLocksPage && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {SMART_LOCK_BRANDS.map((brand) => (
-                <Link
-                  key={brand.name}
-                  href={brand.href}
-                  className="glass-control inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold text-zinc-200 hover:text-white"
-                >
-                  {brand.name}
-                </Link>
-              ))}
+          {isSmartLocksPage && <div className="mt-6 text-base leading-7 text-zinc-300">Already have a smart lock? <Link href="/smart-lock-installation-only-adelaide" className="font-semibold text-[#c5a47e] hover:text-white">Request an installation-only quote</Link>.</div>}
+          {isSmartLocksPage && <TrackingCTAs context="products" />}
+        </header>
+
+        {products.length ? groups.filter(group => group.products.length > 0).map(group => (
+          <section key={group.id} data-catalogue-section={group.id} aria-labelledby={`catalogue-${group.id}`} className="mb-12 last:mb-0">
+            <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3">
+              <h2 id={`catalogue-${group.id}`} className="text-2xl font-bold text-white">{group.name}</h2>
+              <span className="text-sm text-zinc-400">{group.products.length} {group.id === "installation-service" ? "service" : group.products.length === 1 ? "product" : "products"}</span>
             </div>
-          )}
-          {isAllProductsPage && <p className="mt-4 text-base leading-7 text-zinc-400">Shopping by brand? <Link href="/brands" className="text-[#d9b98f] underline underline-offset-4">Explore our Lockin and Kaadas ranges</Link>.</p>}
-          {isSmartLocksPage && <div className="mt-10 w-full max-w-2xl border-y border-zinc-800 py-5 text-base leading-7 text-zinc-300">
-            Already have a smart lock?{" "}
-            <Link
-              href="/smart-lock-installation-only-adelaide"
-              className="font-semibold text-[#c5a47e] hover:text-white"
-            >
-              Request an installation-only quote
-            </Link>
-            .
-          </div>}
-
-          {isSmartLocksPage && !isCameraKitsPage && <TrackingCTAs context="products" />}
-        </div>
-
-        {/* 产品网格展示 */}
-        {displayedProducts.length > 0 ? (
-          <RevealGroup className={isCameraKitsPage ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
-            {displayedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </RevealGroup>
-        ) : (
-          <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-md bg-zinc-900/50 max-w-3xl mx-auto">
-            <p className="text-xl">No products found in this category.</p>
-            <p className="text-sm mt-2">Try another category or contact us for current availability.</p>
-          </div>
+            {group.id === "installation-service" ? group.products.map(product => <CatalogueInstallation key={product.id} product={product} />) : <RevealGroup className={group.id === "security-camera-kits" ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
+              {group.products.map(product => <ProductCard key={product.id} product={product} prefetch={false} />)}
+            </RevealGroup>}
+          </section>
+        )) : (
+          <section aria-labelledby="catalogue-empty-title" className="max-w-3xl py-10">
+            <h2 id="catalogue-empty-title" className="text-2xl font-bold text-white">{filtered ? "No matching products" : "Catalogue unavailable"}</h2>
+            <p className="mt-3 text-base leading-7 text-zinc-400">{filtered ? "No listings match this category and brand combination." : "There are no listings to display right now. Please contact us for product availability."}</p>
+            <div className="mt-5 flex flex-wrap gap-5">
+              {filtered && <Link href="/products" className="inline-flex min-h-11 items-center gap-2 font-semibold text-[#d9b98f]"><X className="h-4 w-4" aria-hidden="true" />Clear all filters</Link>}
+              <Link href="/contact" className="inline-flex min-h-11 items-center gap-2 font-semibold text-[#d9b98f]">Ask about availability <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            </div>
+          </section>
         )}
-        
+        <nav aria-label="Product guides" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-zinc-800 pt-6 text-sm text-[#d9b98f]">
+          <Link prefetch={false} href="/brands/lockin" className="inline-flex min-h-11 items-center underline underline-offset-4">Lockin range</Link>
+          <Link prefetch={false} href="/brands/kaadas" className="inline-flex min-h-11 items-center underline underline-offset-4">Kaadas range</Link>
+          <Link prefetch={false} href="/products/security-camera-kits" className="inline-flex min-h-11 items-center underline underline-offset-4">Compare camera kits</Link>
+        </nav>
       </div>
     </main>
   );

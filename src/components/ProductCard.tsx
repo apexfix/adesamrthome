@@ -8,10 +8,12 @@ import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
 export function ProductCard({
   product,
   priority = false,
+  prefetch,
   imageSizes = "(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1279px) 33vw, (max-width: 1500px) 25vw, 350px",
 }: {
   product: Product;
   priority?: boolean;
+  prefetch?: boolean;
   imageSizes?: string;
 }) {
   const { current: currentPrice, regular: regularPrice, isOnSale } = getPrice(product);
@@ -32,6 +34,7 @@ export function ProductCard({
   return (
     <Link 
       href={`/products/${product.slug || product.id}`}
+      prefetch={prefetch}
       className="liquid-glass-soft motion-card group relative flex flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/60"
     >
       {/* 1. Image Section */}
