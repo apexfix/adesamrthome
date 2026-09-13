@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Cctv, Cable, HardDrive } from "lucide-react";
 import type { Product } from "@/types";
+import { getOptionalPrice, priceLabel } from "@/lib/productPricing";
 
 export function HomeCameraFeature({ product }: { product: Product }) {
   const poster = product.images?.[0];
-  const prices = product.prices;
-  if (!poster || !prices || !Number.isFinite(Number(prices.price))) return null;
-  const price = Number(prices.price) / 10 ** (prices.currency_minor_unit ?? 2);
+  if (!poster) return null;
+  const price = getOptionalPrice(product, product.prices?.price, true);
   const attribute = (name: string) => product.attributes?.find(item => item.name === name)?.options?.[0] || "";
   const resolution = attribute("Camera Resolution").split(" ")[0];
   const hasDualLight = product.tags?.some(tag => tag.slug === "smart-dual-light");
@@ -33,7 +33,7 @@ export function HomeCameraFeature({ product }: { product: Product }) {
                 { icon: Cable, label: "Wired PoE connection", detail: "Power and video through network cabling" },
               ].map(({ icon: Icon, label, detail }) => <div key={label} className="flex gap-4 py-4"><Icon className="mt-1 h-5 w-5 shrink-0 text-[#755536]" aria-hidden="true" /><div className="min-w-0"><dt className="font-bold">{label}</dt><dd className="mt-1 break-words text-sm text-zinc-600">{detail}</dd></div></div>)}
             </dl>
-            <div className="mt-7 flex flex-wrap items-end gap-x-4 gap-y-2"><p className="text-4xl font-bold">A${price.toLocaleString("en-AU")}</p><p className="pb-1 text-sm text-zinc-600">Equipment package</p></div>
+            <div className="mt-7 flex flex-wrap items-end gap-x-4 gap-y-2"><p className="text-4xl font-bold">{priceLabel(price, "A$")}</p><p className="pb-1 text-sm text-zinc-600">Equipment package</p></div>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href={`/products/${product.slug}`} className="inline-flex min-h-12 items-center gap-2 rounded-md bg-zinc-950 px-6 text-sm font-bold text-white">View kit details <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
               <Link href={`/contact?service=security-camera-kit&product=${encodeURIComponent(product.name)}#quote`} className="inline-flex min-h-12 items-center rounded-md border border-zinc-400 px-6 text-sm font-bold">Enquire about this kit</Link>

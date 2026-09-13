@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import type { Product } from "@/types";
 import { isSecurityCameraKit } from "@/lib/productType";
+import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
 
 export function ProductCard({
   product,
@@ -13,28 +14,13 @@ export function ProductCard({
   priority?: boolean;
   imageSizes?: string;
 }) {
-  // 1. 处理价格逻辑
-  const minorUnit = product.prices?.currency_minor_unit ?? 2;
-  const divider = Math.pow(10, minorUnit);
-
-  // 现价（折扣后的价格）
-  const currentPrice = (parseInt(product.prices?.price || "0") / divider).toFixed(0);
-  
-  // 原价
-  const regularPrice = (parseInt(product.prices?.regular_price || "0") / divider).toFixed(0);
-
-  // 判断是否正在打折
-  const isOnSale = Number(regularPrice) > Number(currentPrice) && Number(currentPrice) > 0;
-  const hasPrice = parseInt(product.prices?.price || "0") > 0;
-  const installedPrice = product.installed_price
-    ? (parseInt(product.installed_price, 10) / divider).toFixed(0)
-    : null;
+  const { current: currentPrice, regular: regularPrice, isOnSale } = getPrice(product);
+  const hasPrice = currentPrice !== null;
+  const installedPrice = getOptionalPrice(product, product.installed_price);
   const isService = product.kind === "service";
   const isCameraKit = isSecurityCameraKit(product);
   const serviceOptions = product.service_options || [];
-  const standardMortisePrice = serviceOptions[1]
-    ? (parseInt(serviceOptions[1].price, 10) / divider).toFixed(0)
-    : null;
+  const standardMortisePrice = getOptionalPrice(product, serviceOptions[1]?.price);
   const priceIncludesInstallation = product.price_includes_installation !== false;
 
   // 处理图片和分类
@@ -109,7 +95,7 @@ export function ProductCard({
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
               {/* 现价 */}
               <p className="text-2xl font-black text-[#c5a47e]">
-                {hasPrice ? `$${currentPrice}` : "Quote Required"}
+                {priceLabel(currentPrice)}
               </p>
               {/* 原价（仅在打折时显示） */}
               {hasPrice && isOnSale && (

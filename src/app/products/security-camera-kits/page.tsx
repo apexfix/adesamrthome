@@ -7,6 +7,7 @@ import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 import { cameraKitFaqs } from "@/lib/cameraContent";
+import { getPrice, priceLabel } from "@/lib/productPricing";
 
 const pageUrl = `${siteUrl}/products/security-camera-kits`;
 const pageDescription = "Dahua CCTV kits in Adelaide: 5MP for A$443 or 6MP Smart Dual Light for A$590. Each includes two cameras and a four-channel PoE recorder. Compare packages.";
@@ -154,7 +155,7 @@ export default function SecurityCameraKitsPage() {
                 <th scope="col" className="w-[28%] py-4 pr-3 font-semibold">Package</th>
                 {cameraKits.map(product => <th key={product.id} scope="col" className="break-words px-2 py-4 font-bold text-[#d9b98f]">
                   {product.attributes?.find(attribute => attribute.name === "Camera Resolution")?.options?.[0]?.split(" ")[0]} kit
-                  <span className="mt-1 block text-lg text-white">A${Number(product.prices.price) / 10 ** product.prices.currency_minor_unit}</span>
+                  <span className="mt-1 block text-lg text-white">{priceLabel(getPrice(product).current, "A$")}</span>
                 </th>)}
               </tr>
             </thead>

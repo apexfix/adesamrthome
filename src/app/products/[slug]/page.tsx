@@ -27,6 +27,7 @@ import {
 import type { Product, ProductAttribute, ProductImage } from "@/types";
 import { getSmartLockBrandUrl } from "@/lib/brandData";
 import { isSecurityCameraKit } from "@/lib/productType";
+import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
 
 interface ProductPageProps {
   params: Promise<{
@@ -46,27 +47,6 @@ interface Story {
 
 function stripHtml(value: string) {
   return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function getPrice(product: Product) {
-  const minorUnit = product.prices?.currency_minor_unit || 2;
-  const divider = Math.pow(10, minorUnit);
-  const current = (parseInt(product.prices?.price || "0", 10) / divider).toFixed(0);
-  const regular = (
-    parseInt(product.prices?.regular_price || product.prices?.price || "0", 10) /
-    divider
-  ).toFixed(0);
-
-  return { current, regular, isOnSale: regular !== current };
-}
-
-function getOptionalPrice(product: Product, value?: string) {
-  if (!value) {
-    return null;
-  }
-
-  const minorUnit = product.prices?.currency_minor_unit || 2;
-  return (parseInt(value, 10) / Math.pow(10, minorUnit)).toFixed(0);
 }
 
 function getProductBrand(product: Product) {
@@ -104,7 +84,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const image = product.images?.[0]?.src
     ? new URL(product.images[0].src, siteUrl).toString()
     : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
-  const priceMessage = isService
+  const priceMessage = current === null
+    ? "is available by enquiry in Adelaide"
+    : isService
     ? `from A$${current} for compatible customer-supplied smart locks across Adelaide`
     : isCameraKit
       ? `A$${current} equipment package with two ${cameraResolution} cameras and a four-channel PoE recorder`
@@ -112,9 +94,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       ? `from $${current} with standard Adelaide installation included`
       : `from $${current} lock only, with an Adelaide installation package available`;
   const description = isService
-    ? "Smart lock installation-only service across Adelaide. A$200 for compact locks and A$350 for standard 6068 mortise locks. Customer supplies the lock."
+    ? `Adelaide smart lock installation only. ${current === null ? "Request a quote" : `From A$${current}`}. Customer supplies the lock. Send door photos for a compatibility check.`
     : isCameraKit
-      ? `Two Dahua ${cameraResolution} cameras and a four-channel PoE recorder for A$${current}. ${cameraResolution === "6MP" ? "Smart Dual Light monitoring. " : ""}Camera kit advice in Adelaide.`
+      ? `Two Dahua ${cameraResolution} cameras and a four-channel PoE recorder${current === null ? ". Request a quote" : ` for A$${current}`}. ${cameraResolution === "6MP" ? "Smart Dual Light monitoring. " : ""}Camera kit advice in Adelaide.`
     : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
   const seoTitle = isService
     ? "Smart Lock Installation Prices Adelaide"
@@ -312,7 +294,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     category: isCameraKit ? "Video Surveillance System" : "Smart Lock",
     image: productImages,
     mainEntityOfPage: productUrl,
-    offers: {
+    offers: currentPrice === null ? undefined : {
       "@type": "Offer",
       url: productUrl,
       priceCurrency: product.prices?.currency_code || "AUD",
@@ -337,7 +319,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             name: "Standard Adelaide installation",
             value: hasSeparateInstallationPrice
               ? `A$${installedPrice} total package after door compatibility confirmation`
-              : "Included",
+              : product.price_includes_installation === false ? "Quoted separately" : "Included",
           },
           {
             "@type": "PropertyValue",
@@ -367,7 +349,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       itemListElement: serviceOptions.map((option) => ({
         "@type": "Offer",
         priceCurrency: product.prices?.currency_code || "AUD",
-        price: getOptionalPrice(product, option.price),
+        price: getOptionalPrice(product, option.price) ?? undefined,
         url: productUrl,
         itemOffered: {
           "@type": "Service",
@@ -519,8 +501,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       <dt className="max-w-72 text-sm font-semibold leading-6 text-zinc-300">
                         {option.name}
                       </dt>
-                      <dd className="shrink-0 text-3xl font-bold text-[#c5a47e]">
-                        {currencySymbol}{getOptionalPrice(product, option.price)}
+                      <dd className={`max-w-[60%] shrink-0 break-words text-right font-bold text-[#c5a47e] ${getOptionalPrice(product, option.price) === null ? "text-lg" : "text-3xl"}`}>
+                        {priceLabel(getOptionalPrice(product, option.price), currencySymbol)}
                       </dd>
                     </div>
                   ))}
@@ -530,8 +512,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
                     Two-camera equipment package
                   </p>
-                  <p className="text-5xl font-black text-[#c5a47e]">
-                    {currencySymbol}{currentPrice}
+                  <p className={`break-words font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-5xl"}`}>
+                    {priceLabel(currentPrice, currencySymbol)}
                   </p>
                 </div>
               ) : hasSeparateInstallationPrice ? (
@@ -540,8 +522,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     <p className="mb-2 text-sm font-semibold text-zinc-400">
                       Lock only
                     </p>
-                    <p className="text-3xl font-bold text-white">
-                      {currencySymbol}{currentPrice}
+                    <p className={`break-words font-bold text-white ${currentPrice === null ? "text-xl" : "text-3xl"}`}>
+                      {priceLabel(currentPrice, currencySymbol)}
                     </p>
                   </div>
                   <div className="border-l-2 border-[#c5a47e] pl-5">
@@ -555,8 +537,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               ) : (
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                  <span className="text-5xl font-black text-[#c5a47e]">
-                    {currencySymbol}{currentPrice}
+                  <span className={`break-words font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-5xl"}`}>
+                    {priceLabel(currentPrice, currencySymbol)}
                   </span>
                   {isOnSale && (
                     <span className="text-xl text-zinc-600 line-through decoration-zinc-700 font-medium">
@@ -564,7 +546,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </span>
                   )}
                   <span className="basis-full text-sm font-semibold text-zinc-300">
-                    Lock + standard Adelaide installation
+                    {product.price_includes_installation === false ? "Lock only; installation quoted separately" : "Lock + standard Adelaide installation"}
                   </span>
                 </div>
               )}

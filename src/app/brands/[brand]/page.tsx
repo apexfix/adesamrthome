@@ -7,6 +7,7 @@ import { RevealGroup } from "@/components/RevealGroup";
 import { getProducts } from "@/lib/api";
 import { getSmartLockBrand, isProductFromBrand, smartLockBrandPages } from "@/lib/brandData";
 import { businessInfo, siteUrl } from "@/lib/seoData";
+import { getOptionalPrice } from "@/lib/productPricing";
 
 interface BrandPageProps { params: Promise<{ brand: string }> }
 
@@ -55,9 +56,8 @@ export default async function BrandPage({ params }: BrandPageProps) {
   );
   const pageUrl = `${siteUrl}/brands/${brand.slug}`;
   const singleProduct = products.length === 1 ? products[0] : null;
-  const packageDivider = 10 ** (singleProduct?.prices?.currency_minor_unit ?? 2);
-  const lockOnlyPrice = singleProduct?.prices?.price ? Number(singleProduct.prices.price) / packageDivider : null;
-  const installedPrice = singleProduct?.installed_price ? Number(singleProduct.installed_price) / packageDivider : null;
+  const lockOnlyPrice = singleProduct ? getOptionalPrice(singleProduct, singleProduct.prices?.price, true) : null;
+  const installedPrice = singleProduct ? getOptionalPrice(singleProduct, singleProduct.installed_price, true) : null;
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -117,8 +117,8 @@ export default async function BrandPage({ params }: BrandPageProps) {
                 <h3 className="text-2xl font-bold">Choose your package</h3>
                 <p className="mt-4 text-base leading-7 text-zinc-400">{singleProduct.name}. Choose the lock by itself or include standard Adelaide installation.</p>
                 <dl className="mt-6 divide-y divide-zinc-800 border-y border-zinc-800">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3 py-5"><dt className="font-semibold">Lock only</dt><dd className="text-3xl font-bold text-[#d9b98f]">A${lockOnlyPrice.toLocaleString("en-AU")}</dd></div>
-                  <div className="flex flex-wrap items-baseline justify-between gap-3 py-5"><dt className="font-semibold">With standard installation</dt><dd className="text-3xl font-bold text-[#d9b98f]">A${installedPrice.toLocaleString("en-AU")}</dd></div>
+                  <div className="flex flex-wrap items-baseline justify-between gap-3 py-5"><dt className="font-semibold">Lock only</dt><dd className="text-3xl font-bold text-[#d9b98f]">A${lockOnlyPrice}</dd></div>
+                  <div className="flex flex-wrap items-baseline justify-between gap-3 py-5"><dt className="font-semibold">With standard installation</dt><dd className="text-3xl font-bold text-[#d9b98f]">A${installedPrice}</dd></div>
                 </dl>
                 <p className="mt-5 text-base leading-7 text-zinc-400">We confirm door compatibility and the installation scope before booking. Any non-standard work is quoted first.</p>
                 <Link href={`/contact?service=supply-install&product=${encodeURIComponent(singleProduct.name)}`} className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-md bg-[#d9b98f] px-5 text-sm font-bold text-black">Ask about this model <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
