@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react"
 import {
   ArrowRight,
   Camera,
+  CheckCircle2,
   ImagePlus,
   Mail,
   MessageSquareText,
@@ -147,6 +148,8 @@ export function ContactForm({
   const photoSelectionRef = useRef(0);
   const submittingRef = useRef(false);
   const deliveryRequestRef = useRef<{ controller: AbortController; timer: number } | null>(null);
+  const receiptRef = useRef<HTMLDivElement>(null);
+  const [confirmedLeadId, setConfirmedLeadId] = useState<string | null>(null);
   const formStartedRef = useRef(false);
   const completedRef = useRef(false);
   const abandonmentTrackedRef = useRef(false);
@@ -175,6 +178,9 @@ export function ContactForm({
   });
 
   useEffect(() => () => { photoSelectionRef.current += 1; }, []);
+  useEffect(() => {
+    if (confirmedLeadId) receiptRef.current?.focus();
+  }, [confirmedLeadId]);
   useEffect(() => () => {
     const request = deliveryRequestRef.current;
     deliveryRequestRef.current = null;
@@ -290,6 +296,7 @@ export function ContactForm({
     deliveryRequestRef.current = request;
     let timedOut = false;
     let failure: { message: string; uncertain: boolean } | null = null;
+    let acceptedLeadId: string | null = null;
     request.timer = window.setTimeout(() => {
       timedOut = true;
       request.controller.abort();
@@ -315,6 +322,7 @@ export function ContactForm({
         throw new Error(result.message);
       }
 
+      acceptedLeadId = result.leadId;
       completedRef.current = true;
       try {
         sessionStorage.setItem(
@@ -328,11 +336,13 @@ export function ContactForm({
           }),
         );
       } catch {
+        setConfirmedLeadId(result.leadId);
         trackEvent("lead_storage_error", {
           form_name: "website_enquiry",
           service: formData.service,
           photo_count: photos.length,
         });
+        return;
       }
       trackEvent("form_submit_success", {
         form_name: "website_enquiry",
@@ -343,6 +353,10 @@ export function ContactForm({
       router.push(`/contact/thank-you?service=${encodeURIComponent(formData.service)}`);
     } catch {
       if (deliveryRequestRef.current !== request) return;
+      if (acceptedLeadId) {
+        setConfirmedLeadId(acceptedLeadId);
+        return;
+      }
       trackEvent("form_submit_error", {
         form_name: "website_enquiry",
         service: formData.service,
@@ -454,6 +468,29 @@ export function ContactForm({
       validationErrorTrackedRef.current = false;
     }, 1000);
   };
+
+  if (confirmedLeadId) {
+    const referenceMessage = `Hi ADE Smart Home, I would like to add details to enquiry ${confirmedLeadId}.`;
+    return (
+      <section id="quote" className="quote-section border-y border-zinc-800 bg-zinc-950 px-5 py-12 text-white md:px-8 md:py-16">
+        <div ref={receiptRef} data-enquiry-receipt role="status" tabIndex={-1} className="mx-auto max-w-3xl wrap-anywhere focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#d9b98f]">
+          <CheckCircle2 className="mb-5 h-10 w-10 text-emerald-400" aria-hidden="true" />
+          <h2 className="text-2xl font-bold leading-tight md:text-3xl">Your enquiry has been received.</h2>
+          <p className="mt-5 text-base leading-relaxed text-zinc-300">No need to send it again. Please keep your reference number:</p>
+          <p className="mt-3 text-xl font-bold leading-relaxed text-[#d9b98f]">{confirmedLeadId}</p>
+          <p className="mt-5 text-base leading-relaxed text-zinc-300">{isCameraKitEnquiry ? "We will review your equipment enquiry and reply by SMS or email." : "We will review your requirements and reply by SMS or email."}</p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(referenceMessage)}`} className="inline-flex min-h-12 items-center gap-3 border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
+              <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add details by SMS</span>
+            </a>
+            <a href={`mailto:${businessInfo.email}?subject=${encodeURIComponent(`Enquiry ${confirmedLeadId}`)}`} className="inline-flex min-h-12 items-center gap-3 border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
+              <Mail className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add details by email</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="quote" className={`quote-section border-y border-zinc-800 bg-zinc-950 ${compact ? "py-8 md:py-12" : "py-16 md:py-24"}`}>
