@@ -16,6 +16,7 @@ import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
 import { analyticsProductId, contactValidationError, serviceOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
+import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
@@ -57,10 +58,9 @@ const initialFormData = {
   message: "",
 };
 
-const MAX_PHOTOS = 4;
 const MAX_PHOTO_BYTES = 850_000;
 const MAX_PHOTO_DIMENSION = 1600;
-const acceptedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+const acceptedPhotoTypes = new Set(PHOTO_MIME_TYPES);
 
 type ContactFormProps = {
   compact?: boolean;
@@ -109,7 +109,7 @@ async function compressPhoto(file: File, index: number): Promise<File> {
       canvas.toBlob(resolve, "image/jpeg", 0.72);
     });
 
-    if (!blob || blob.size > 1_000_000) {
+    if (!blob || blob.size > MAX_PREPARED_PHOTO_BYTES) {
       throw new Error("One photo is still too large. Please crop it or choose a smaller image.");
     }
 
@@ -152,6 +152,7 @@ export function ContactForm({
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
   const isCameraKitEnquiry = formData.service === "security-camera-kit";
+  const photoLimitError = isCameraKitEnquiry ? null : photoSelectionError(photos);
   const latestFunnelStateRef = useRef({
     service: selectedService,
     product: initialProduct?.trim().slice(0, 150) ?? "",
@@ -229,7 +230,7 @@ export function ContactForm({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (submittingRef.current || isPreparingPhotos) return;
+    if (submittingRef.current || isPreparingPhotos || photoLimitError) return;
 
     const contactError = contactValidationError(formData.phone, formData.email);
     if (contactError) {
@@ -688,8 +689,9 @@ export function ContactForm({
                 <p className="enquiry-muted mt-3 text-sm leading-6">
                   Send what you have; more photos can be added later by SMS or email.
                   Up to four JPEG, PNG or WebP images. Large photos are resized before sending.
+                  {" "}Prepared photos can be up to 1 MB each and 3.5 MB combined.
                 </p>
-                {photos.length === MAX_PHOTOS && (
+                {photos.length === MAX_PHOTOS && !photoLimitError && (
                   <p role="status" className="enquiry-success mt-3 border-l-4 px-3 py-3 text-sm font-semibold">
                     Four photos added. This gives us a better starting point for the door check.
                   </p>
@@ -713,6 +715,7 @@ export function ContactForm({
                   </ul>
                 )}
                 {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm [overflow-wrap:anywhere]">{photoError}</p>}
+                {photoLimitError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm">{photoLimitError}</p>}
               </fieldset>}
 
               <label className="block space-y-2 enquiry-label">
@@ -735,7 +738,7 @@ export function ContactForm({
 
               <button
                 type="submit"
-                disabled={isSubmitting || isPreparingPhotos}
+                disabled={isSubmitting || isPreparingPhotos || Boolean(photoLimitError)}
                 className="enquiry-submit flex min-h-14 w-full items-center justify-center gap-3 rounded-md px-5 py-3 text-base font-bold"
               >
                 {isSubmitting

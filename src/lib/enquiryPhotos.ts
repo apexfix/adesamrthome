@@ -1,8 +1,7 @@
 import sharp from "sharp";
+import { MAX_PHOTO_BYTES } from "./enquiryPhotoLimits";
 
 const MAX_INPUT_PIXELS = 25_000_000;
-const MAX_INPUT_BYTES = 1_000_000;
-const MAX_OUTPUT_BYTES = 1_000_000;
 const mimeFormats: Record<string, string> = {
   "image/jpeg": "jpeg",
   "image/png": "png",
@@ -14,7 +13,7 @@ export class PhotoValidationError extends Error {}
 export async function prepareEnquiryPhoto(photo: File, index: number) {
   const errorMessage = `Photo ${index + 1} could not be read. Please use a valid, non-animated JPEG, PNG or WebP under 1 MB and 25 megapixels, or remove it and send photos later.`;
   try {
-    if (!mimeFormats[photo.type] || !photo.size || photo.size > MAX_INPUT_BYTES) {
+    if (!mimeFormats[photo.type] || !photo.size || photo.size > MAX_PHOTO_BYTES) {
       throw new PhotoValidationError(errorMessage);
     }
     const input = Buffer.from(await photo.arrayBuffer());
@@ -37,7 +36,7 @@ export async function prepareEnquiryPhoto(photo: File, index: number) {
       .jpeg({ quality: 75 })
       .timeout({ seconds: 5 })
       .toBuffer();
-    if (content.length > MAX_OUTPUT_BYTES) throw new PhotoValidationError(errorMessage);
+    if (content.length > MAX_PHOTO_BYTES) throw new PhotoValidationError(errorMessage);
     return { filename: `door-photo-${index + 1}.jpg`, content, contentType: "image/jpeg" };
   } catch {
     throw new PhotoValidationError(errorMessage);

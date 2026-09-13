@@ -3,13 +3,10 @@ import nodemailer from "nodemailer";
 import { randomUUID } from "node:crypto";
 import { contactValidationError, isEnquiryService, serviceLabels } from "@/lib/enquiry";
 import { PhotoValidationError, prepareEnquiryPhoto } from "@/lib/enquiryPhotos";
+import { MAX_TOTAL_PHOTO_BYTES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 
 export const runtime = "nodejs";
 
-const MAX_PHOTO_COUNT = 4;
-const MAX_PHOTO_BYTES = 1_000_000;
-const MAX_TOTAL_PHOTO_BYTES = 3_500_000;
-const allowedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 const allowedPropertyTypes = new Set([
   "house",
   "apartment",
@@ -145,24 +142,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const totalPhotoBytes = photoFiles.reduce((total, photo) => total + photo.size, 0);
     if (isCameraKit && photoFiles.length) {
       return NextResponse.json(
         { success: false, message: "Camera equipment enquiries do not accept door photos. Please remove the photos and try again." },
         { status: 400 },
       );
     }
-    if (
-      photoFiles.length > MAX_PHOTO_COUNT ||
-      totalPhotoBytes > MAX_TOTAL_PHOTO_BYTES ||
-      photoFiles.some(
-        (photo) => !photo.size || photo.size > MAX_PHOTO_BYTES || !allowedPhotoTypes.has(photo.type),
-      )
-    ) {
+    const photoError = photoSelectionError(photoFiles);
+    if (photoError) {
       return NextResponse.json(
         {
           success: false,
-          message: "Please upload up to four JPEG, PNG or WebP photos. Each photo must be under 1 MB.",
+          message: photoError,
         },
         { status: 400 },
       );
