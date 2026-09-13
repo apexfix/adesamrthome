@@ -4,11 +4,11 @@ import {
   Calendar,
   Camera,
   ChevronRight,
+  Mail,
   MessageSquareText,
   Ruler,
   ShieldCheck,
   Tag,
-  Zap,
 } from "lucide-react";
 import { ProductGallery } from "@/components/ProductGallery";
 import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
@@ -269,6 +269,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const brandName = getProductBrand(product);
   const brandPath = isService || isCameraKit ? null : getSmartLockBrandUrl(brandName);
   const brandUrl = brandPath ? `${siteUrl}${brandPath}` : undefined;
+  const collectionPath = isService
+    ? "/smart-lock-installation-only-adelaide"
+    : isCameraKit ? "/products/security-camera-kits" : "/products";
+  const collectionName = isService ? "Installation Only" : isCameraKit ? "Security Camera Kits" : "Smart Locks";
   
   const galleryImages = product.images && product.images.length > 0 
     ? product.images 
@@ -384,12 +388,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: isService
-          ? "Installation Services"
-          : isCameraKit
-            ? "Security Camera Kits"
-            : "Smart Locks",
-        item: `${siteUrl}/products`,
+        name: collectionName,
+        item: `${siteUrl}${collectionPath}`,
       },
       ...(!isService && brandUrl
         ? [{
@@ -469,11 +469,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         
         {/* 面包屑导航 */}
-        <nav className="mb-10 flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
+        <nav aria-label="Breadcrumb" className="product-breadcrumb mb-6 flex flex-wrap items-center gap-x-2 text-sm text-zinc-400">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
-          <Link href="/products" className="hover:text-white transition-colors">
-            {isService ? "Services" : "Collection"}
+          <Link href={collectionPath} className="hover:text-white transition-colors">
+            {collectionName}
           </Link>
           <ChevronRight className="w-3 h-3" />
           {!isService && brandPath && (
@@ -484,12 +484,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <ChevronRight className="w-3 h-3" />
             </>
           )}
-          <span className="text-[#c5a47e]">{product.name}</span>
+          <span aria-current="page" className="text-[#c5a47e]">{product.name}</span>
         </nav>
 
-        <div className="mb-24 grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
+        <section aria-labelledby="product-title" className="product-intro mb-16">
+          <div className="product-heading">
+            <p className="mb-2 text-sm font-semibold text-[#c5a47e]">
+              {isService ? "Customer-supplied smart locks" : product.categories?.[0]?.name || "Smart Security"}
+            </p>
+            <h1 id="product-title" className="text-3xl font-bold leading-tight md:text-4xl">
+              {product.name}
+            </h1>
+          </div>
           {/* 左侧：图片展示 */}
-          <div className={`relative ${isCameraKit ? "order-1" : "order-2 lg:order-1"}`}>
+          <div className="product-media relative min-w-0">
             <ProductGallery images={galleryImages} square={isCameraKit || detailImages.length > 0} />
             {isOnSale && (
               <div className="absolute right-5 top-5 z-20 bg-red-700 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-white">
@@ -499,40 +507,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* 右侧：产品信息 */}
-          <div className={`flex flex-col ${isCameraKit ? "order-2" : "order-1 lg:order-2"}`}>
-            <div className="mb-10">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-                {product.categories?.[0]?.name || "Premium Smart Security"}
-              </p>
-              <h1 className="mb-8 text-4xl font-black leading-tight md:text-5xl">
-                {product.name}
-              </h1>
-              
+          <div className="product-purchase min-w-0">
+            <div className="product-pricing">
               {isService ? (
-                <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {serviceOptions.map((option, index) => (
+                <dl className="divide-y divide-zinc-800">
+                  {serviceOptions.map((option) => (
                     <div
                       key={option.name}
-                      className={`border p-5 ${
-                        index === 0
-                          ? "border-zinc-700 bg-zinc-900/50"
-                          : "border-[#c5a47e]/60 bg-[#c5a47e]/5"
-                      }`}
+                      className="flex items-center justify-between gap-4 py-3 first:pt-0"
                     >
-                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-zinc-400">
+                      <dt className="max-w-72 text-sm font-semibold leading-6 text-zinc-300">
                         {option.name}
-                      </p>
-                      <p className="text-4xl font-black text-[#c5a47e]">
+                      </dt>
+                      <dd className="shrink-0 text-3xl font-bold text-[#c5a47e]">
                         {currencySymbol}{getOptionalPrice(product, option.price)}
-                      </p>
-                      <p className="mt-3 text-sm leading-6 text-zinc-400">
-                        {option.description}
-                      </p>
+                      </dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               ) : isCameraKit ? (
-                <div className="mb-8 border-l-2 border-[#c5a47e] pl-5">
+                <div>
                   <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
                     Two-camera equipment package
                   </p>
@@ -541,26 +535,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </p>
                 </div>
               ) : hasSeparateInstallationPrice ? (
-                <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="border-l-2 border-zinc-700 pl-5">
-                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
+                    <p className="mb-2 text-sm font-semibold text-zinc-400">
                       Lock only
                     </p>
-                    <p className="text-4xl font-black text-white">
+                    <p className="text-3xl font-bold text-white">
                       {currencySymbol}{currentPrice}
                     </p>
                   </div>
                   <div className="border-l-2 border-[#c5a47e] pl-5">
-                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
+                    <p className="mb-2 text-sm font-semibold text-[#c5a47e]">
                       Lock + standard Adelaide installation
                     </p>
-                    <p className="text-4xl font-black text-[#c5a47e]">
+                    <p className="text-3xl font-bold text-[#c5a47e]">
                       {currencySymbol}{installedPrice}
                     </p>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-baseline gap-4 mb-8">
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
                   <span className="text-5xl font-black text-[#c5a47e]">
                     {currencySymbol}{currentPrice}
                   </span>
@@ -569,130 +563,88 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       {currencySymbol}{regularPrice}
                     </span>
                   )}
-                  <span className="ml-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
-                    Standard Adelaide Install Included
+                  <span className="basis-full text-sm font-semibold text-zinc-300">
+                    Lock + standard Adelaide installation
                   </span>
                 </div>
               )}
 
-              <div className="mb-10 h-px w-full bg-zinc-800" />
-
-              <div 
-                className="prose prose-invert prose-zinc max-w-none text-zinc-400 font-light leading-relaxed text-lg"
-                dangerouslySetInnerHTML={{ __html: product.short_description || "" }} 
-              />
+              <p className="mt-3 text-xs text-zinc-400">All prices in AUD.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-              <div className="liquid-glass-soft flex items-center gap-4 rounded-md border p-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[#c5a47e]/10">
-                  <ShieldCheck className="w-6 h-6 text-[#c5a47e]" />
-                </div>
-                <div>
-                  <p className="font-bold text-sm">
-                    {isService
-                      ? "Free Compatibility Check"
-                      : isCameraKit
-                        ? `Two ${getCameraAttribute(product, "Camera Resolution").split(" ")[0]} Cameras`
-                      : hasReplacementWarranty
-                        ? "2-Year Warranty"
-                        : "Local Product Support"}
-                  </p>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
-                    {isService
-                      ? "Before Booking"
-                      : isCameraKit
-                        ? "Clear day and night monitoring"
-                      : hasReplacementWarranty
-                        ? "Covered lock faults replaced"
-                        : "Terms confirmed before booking"}
-                  </p>
-                </div>
-              </div>
-              <div className="liquid-glass-soft flex items-center gap-4 rounded-md border p-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[#c5a47e]/10">
-                  <Zap className="w-6 h-6 text-[#c5a47e]" />
-                </div>
-                <div>
-                  <p className="font-bold text-sm">
-                    {isService
-                      ? "Adelaide-Wide Service"
-                      : isCameraKit
-                        ? "4-Channel PoE NVR"
-                        : "Expert Install"}
-                  </p>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
-                    {isCameraKit ? "Room for two more cameras" : "Adelaide Local Team"}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-sm text-zinc-400 sm:col-span-2">
-                {isService
-                  ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
-                  : isCameraKit
-                    ? `The A$${currentPrice} equipment package contains two ${getCameraAttribute(product, "Camera Model")} cameras and one ${getCameraAttribute(product, "Recorder Model")} four-channel PoE recorder.`
-                  : hasSeparateInstallationPrice
-                    ? `Choose ${currencySymbol}${currentPrice} lock only or ${currencySymbol}${installedPrice} with standard Adelaide installation. Door compatibility is confirmed before booking; non-standard work is quoted first if required.`
-                    : hasReplacementWarranty
-                      ? "Listed price includes the lock, standard Adelaide installation and a 2-year local warranty. Covered lock faults are replaced under the stated warranty terms after assessment."
-                      : "Listed price includes the lock and standard Adelaide installation. Product support and warranty terms are confirmed before booking."}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div className="mb-2 flex items-center gap-2 px-1 text-xs font-bold uppercase tracking-[0.12em] text-emerald-500">
-                <div className="h-2 w-2 bg-emerald-500" />
+            <div className="product-actions mt-4 flex flex-col gap-3">
+              <p className="text-sm text-emerald-400">
                 {isService
                   ? "Send photos before booking"
                   : isCameraKit
                     ? (product.in_stock ? "In stock now" : "Enquire about availability")
                     : "Ask for current availability"}
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              </p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Link
                   href={`/contact?service=${isService ? "installation-only" : isCameraKit ? "security-camera-kit" : "supply-install"}&product=${encodedProductName}`}
-                  className="h-16 bg-[#c5a47e] text-black hover:bg-[#e8d0a9] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
+                  data-product-enquiry
+                  className="product-primary-action min-h-12 bg-[#c5a47e] px-4 py-3 text-black hover:bg-[#e8d0a9] rounded-md font-bold text-base flex items-center justify-center gap-2 transition-colors"
                 >
-                  <Calendar className="w-5 h-5" />
-                  {isService
-                    ? "Request Installation Quote"
-                    : isCameraKit
-                      ? "Enquire About This Kit"
-                      : "Check Price & Availability"}
+                  <Calendar className="w-5 h-5" aria-hidden="true" />
+                  {isService ? "Request Installation Quote" : isCameraKit ? "Enquire About This Kit" : "Enquire About This Lock"}
                 </Link>
-                {!isCameraKit && <Link
-                  href="/blog/smart-lock-door-compatibility-check"
-                  className="h-16 bg-transparent text-white border-2 border-zinc-800 hover:border-[#c5a47e] rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all"
-                >
-                  <Ruler className="w-5 h-5" />
-                  Check Door Fit
-                </Link>}
                 <a
                   href={`sms:${businessInfo.phoneInternational}?body=${quotePrefill}`}
-                  className="liquid-glass-soft flex h-16 items-center justify-center gap-3 rounded-sm border border-zinc-800 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-[#c5a47e]"
+                  className="liquid-glass-soft flex min-h-12 items-center justify-center gap-2 rounded-md border border-zinc-800 px-4 py-3 text-base font-bold text-white transition-colors hover:border-[#c5a47e]"
                 >
-                  <MessageSquareText className="w-5 h-5" />
-                  Text Quote
+                  <MessageSquareText className="w-5 h-5" aria-hidden="true" />
+                  Text Us
                 </a>
+              </div>
+              <p className="product-scope my-4 text-sm leading-6 text-zinc-300">
+                {isService
+                  ? "Installation only; the customer supplies the smart lock. Standard prices apply after compatibility confirmation. Extra parts, repairs and non-standard work are quoted before booking."
+                  : isCameraKit
+                    ? `Two ${getCameraAttribute(product, "Camera Model")} cameras and one ${getCameraAttribute(product, "Recorder Model")} four-channel PoE recorder.`
+                    : hasSeparateInstallationPrice
+                      ? "Door compatibility is confirmed before booking. Non-standard installation work is quoted first if required."
+                      : hasReplacementWarranty
+                        ? "Includes a 2-year local warranty. Covered lock faults are replaced after assessment under the warranty terms."
+                        : "Product support and warranty terms are confirmed before booking."}
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm font-semibold">
                 <a
                   href={`mailto:${businessInfo.email}?subject=${isCameraKit ? "Dahua%20Camera%20Kit%20Enquiry" : "Door%20Photos%20for%20Install"}&body=${emailPrefill}`}
-                  className="h-16 bg-transparent text-white border border-zinc-800 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:border-[#c5a47e] transition-all"
+                  className="inline-flex min-h-11 items-center gap-2 text-zinc-300 hover:text-[#c5a47e]"
                 >
-                  <Camera className="w-5 h-5" />
+                  {isCameraKit ? <Mail className="h-4 w-4" aria-hidden="true" /> : <Camera className="h-4 w-4" aria-hidden="true" />}
                   {isCameraKit ? "Email Enquiry" : "Send Door Photos"}
                 </a>
+                {!isCameraKit && (
+                  <Link
+                    href="/blog/smart-lock-door-compatibility-check"
+                    className="inline-flex min-h-11 items-center gap-2 text-zinc-300 hover:text-[#c5a47e]"
+                  >
+                    <Ruler className="h-4 w-4" aria-hidden="true" />
+                    Check Door Fit
+                  </Link>
+                )}
                 {!isService && !isCameraKit && (
                   <Link
                     href={`/contact?service=installation-only&product=${encodedProductName}`}
-                    className="h-16 bg-transparent text-[#d9b98f] border border-zinc-700 rounded-sm font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all col-span-1 sm:col-span-2"
+                    className="inline-flex min-h-11 items-center gap-2 text-[#d9b98f] hover:underline"
                   >
-                    <Tag className="w-5 h-5" />
+                    <Tag className="h-4 w-4" aria-hidden="true" />
                     Installation-only for my lock
                   </Link>
                 )}
               </div>
+              <div
+                className="border-t border-zinc-800 pt-5 text-base leading-7 text-zinc-300"
+                dangerouslySetInnerHTML={{ __html: product.short_description || "" }}
+              />
+              {!isCameraKit && (
+                <p className="flex items-start gap-2 text-sm leading-6 text-zinc-400">
+                  <ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-[#c5a47e]" aria-hidden="true" />
+                  {isService ? "Free door compatibility check before booking." : "Adelaide local product support."}
+                </p>
+              )}
               {!isService && !isCameraKit && (
                 <p className="text-xs leading-6 text-zinc-500">
                   Supplied installation packages are brought to the confirmed Adelaide appointment;
@@ -708,7 +660,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* 详细描述区 */}
         <nav aria-label="Product details" className="mb-10 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-800 py-3 text-sm font-semibold text-[#d9b98f]">
@@ -764,7 +716,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </h2>
             </div>
             <div className="mx-auto max-w-5xl overflow-hidden bg-black">
-              {detailImages.map((image, index) => (
+              {detailImages.map((image) => (
                 <Image
                   key={image.id || image.src}
                   src={image.src}
@@ -772,7 +724,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   width={image.width || 1920}
                   height={image.height || 1920}
                   sizes="(max-width: 1024px) 100vw, 1024px"
-                  loading={index < 2 ? "eager" : "lazy"}
+                  loading="lazy"
                   className="h-auto w-full"
                 />
               ))}

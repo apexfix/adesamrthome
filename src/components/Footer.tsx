@@ -1,239 +1,137 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, MessageSquareText, Mail, MapPin, Facebook, Instagram, ShieldCheck, Link2 } from "lucide-react";
+import { MessageSquareText, Mail, MapPin, Facebook, Instagram, Link2 } from "lucide-react";
 import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
+
+const serviceLinks = [
+  ["/smart-lock-supply-installation-adelaide", "Lock + Installation Packages"],
+  ["/smart-lock-installation-only-adelaide", "Installation Only"],
+  ["/products/security-camera-kits", "Security Camera Kits"],
+  ["/blog/smart-lock-door-compatibility-check", "Door Compatibility Check"],
+];
+const specialistLinks = [
+  ["/smart-lock-installation-adelaide", "Smart Lock Installation"],
+  ["/digital-door-lock-adelaide", "Digital Door Lock Services"],
+  ["/smart-lock-installer-adelaide", "Smart Lock Installer"],
+  ["/airbnb-smart-lock-installation-adelaide", "Airbnb & Short-Stay Properties"],
+  ["/apartment-smart-lock-installation-adelaide", "Apartments & Units"],
+  ["/property-manager-smart-lock-installation-adelaide", "Property Managers"],
+  ["/new-home-smart-lock-installation-adelaide", "New Homes & Renovations"],
+];
+const exploreLinks = [
+  ["/products", "All Products"],
+  ["/gallery", "Installation Gallery"],
+  ["/brands", "Smart Lock Brands"],
+  ["/blog", "Installation Guides"],
+  ["/about", "About ADE Smart Home"],
+];
+const moreLinks = [
+  ["/", "Home"],
+  ["/brands/lockin", "Lockin Smart Locks"],
+  ["/brands/kaadas", "Kaadas Smart Locks"],
+  ["/service-areas", "Adelaide Service Areas"],
+  ["/contact#quote", "Contact & Support"],
+];
+const socialNames = ["Facebook", "Instagram", "TikTok", "Xiaohongshu"];
+
+function FooterLinks({ links }: { links: string[][] }) {
+  return (
+    <ul>
+      {links.map(([href, label]) => (
+        <li key={href}><Link href={href}>{label}</Link></li>
+      ))}
+    </ul>
+  );
+}
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const textSmsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a product quote.")}`;
-  const emailHref = `mailto:${businessInfo.email}`;
 
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-900 text-zinc-400">
-      <div className="container mx-auto max-w-[1500px] px-5 py-16 md:px-8 md:py-20 xl:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          
-          {/* 品牌与介绍区 */}
-          <div className="space-y-6 lg:pr-8">
-            <Link href="/" className="inline-block relative w-40 h-10">
-              <Image 
-                src="/img/logo.png" 
-                alt="ADE Smart Home Logo" 
-                fill 
-                sizes="160px"
-                className="object-contain object-left opacity-90 hover:opacity-100 transition-opacity"
-              />
+    <footer className="site-footer border-t border-zinc-800 bg-zinc-950 text-zinc-400">
+      <div className="container mx-auto max-w-[1500px] px-5 py-12 md:px-8 xl:px-10">
+        <div className="footer-columns grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="min-w-0">
+            <Link href="/" className="relative inline-block h-12 w-40">
+              <Image src="/img/logo.png" alt="ADE Smart Home Logo" fill sizes="160px" className="object-contain object-left" />
             </Link>
-            <p className="text-sm leading-relaxed">
+            <p className="mt-4 text-sm leading-6">
               Adelaide smart security products, smart lock installation and practical local support for homes and small businesses.
             </p>
-            
-            {/* 社交媒体链接 */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a 
-                href={socialProfiles[0]}
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="ADE Smart Home on Facebook"
-                className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 group"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a 
-                href={socialProfiles[1]}
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="ADE Smart Home on Instagram"
-                className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a 
-                href={socialProfiles[2]}
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="ADE Smart Home on TikTok"
-                className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-              </a>
-              <a 
-                href={socialProfiles[3]}
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="ADE Smart Home on Xiaohongshu"
-                className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#c5a47e] hover:text-black transition-all duration-300 relative group"
-              >
-                <Link2 className="w-4 h-4" />
-                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  Xiaohongshu
-                </span>
-              </a>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {socialProfiles.map((href, index) => (
+                <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+                  aria-label={`ADE Smart Home on ${socialNames[index]}`} title={socialNames[index]}
+                  className="flex h-11 w-11 items-center justify-center rounded-md border border-zinc-800">
+                  {index === 0 ? <Facebook className="h-4 w-4" aria-hidden="true" />
+                    : index === 1 ? <Instagram className="h-4 w-4" aria-hidden="true" />
+                    : <Link2 className="h-4 w-4" aria-hidden="true" />}
+                </a>
+              ))}
             </div>
           </div>
 
-          <div>
-            <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#c5a47e]" />
-              Our Services
-            </h4>
-            <ul className="space-y-3 text-sm">
+          <section aria-labelledby="footer-contact" className="min-w-0 lg:order-last">
+            <h2 id="footer-contact">Contact Us</h2>
+            <ul className="space-y-2">
               <li>
-                <Link href="/products/security-camera-kits" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Security Camera Kits
-                </Link>
-              </li>
-              <li>
-                <Link href="/smart-lock-supply-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Supplied Smart Lock Packages
-                </Link>
-              </li>
-              <li>
-                <Link href="/smart-lock-installation-only-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Customer-Supplied Lock Installation
-                </Link>
-              </li>
-              <li>
-                <Link href="/smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Smart Lock Installation
-                </Link>
-              </li>
-              <li>
-                <Link href="/digital-door-lock-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Digital Door Lock Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/smart-lock-installer-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Smart Lock Installer
-                </Link>
-              </li>
-              <li>
-                <Link href="/airbnb-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Airbnb & Short-Stay Properties
-                </Link>
-              </li>
-              <li>
-                <Link href="/apartment-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Apartments & Units
-                </Link>
-              </li>
-              <li>
-                <Link href="/property-manager-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Property Managers
-                </Link>
-              </li>
-              <li>
-                <Link href="/new-home-smart-lock-installation-adelaide" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  New Homes & Renovations
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog/smart-lock-door-compatibility-check" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full group-hover:bg-[#c5a47e] transition-colors" />
-                  Door Compatibility Check
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact#quote" className="hover:text-[#c5a47e] transition-colors flex items-center gap-2 group mt-4 font-semibold text-zinc-300 border-l-2 border-[#c5a47e] pl-3">
-                  Request a Quote
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* 快速导航区 */}
-          <div>
-            <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6">
-              Quick Links
-            </h4>
-            <ul className="space-y-3 text-sm">
-              <li><Link href="/" className="hover:text-[#c5a47e] transition-colors">Home</Link></li>
-              <li><Link href="/products" className="hover:text-[#c5a47e] transition-colors">All Products</Link></li>
-              <li><Link href="/gallery" className="hover:text-[#c5a47e] transition-colors">Installation Gallery</Link></li>
-              <li><Link href="/brands" className="hover:text-[#c5a47e] transition-colors">Smart Lock Brands</Link></li>
-              <li><Link href="/brands/lockin" className="hover:text-[#c5a47e] transition-colors">Lockin Smart Locks</Link></li>
-              <li><Link href="/brands/kaadas" className="hover:text-[#c5a47e] transition-colors">Kaadas Smart Locks</Link></li>
-              <li><Link href="/service-areas" className="hover:text-[#c5a47e] transition-colors">Adelaide Service Areas</Link></li>
-              <li><Link href="/blog" className="hover:text-[#c5a47e] transition-colors">Installation Guides</Link></li>
-              <li><Link href="/about" className="hover:text-[#c5a47e] transition-colors">About ADE Smart Home</Link></li>
-              <li><Link href="/contact#quote" className="hover:text-[#c5a47e] transition-colors">Contact & Support</Link></li>
-              <li><Link href="/zh" lang="zh-CN" className="hover:text-[#c5a47e] transition-colors">中文服务</Link></li>
-            </ul>
-          </div>
-
-          {/* 联系方式区 */}
-          <div>
-            <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6">
-              Contact Us
-            </h4>
-            <ul className="space-y-4 text-sm">
-              <li>
-                <a href={textSmsHref} className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
-                  <MessageSquareText className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Text / SMS</div>
-                    <div>{businessInfo.phone}</div>
-                  </div>
+                <a href={textSmsHref} className="gap-3">
+                  <MessageSquareText className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
+                  <span><span className="block font-semibold text-zinc-200">Text / SMS</span>{businessInfo.phone}</span>
                 </a>
               </li>
               <li>
-                <a href={emailHref} className="flex items-start gap-3 hover:text-[#c5a47e] transition-colors group">
-                  <Mail className="w-5 h-5 text-zinc-500 group-hover:text-[#c5a47e] transition-colors mt-0.5" />
-                  <div className="overflow-hidden">
-                    <div className="font-semibold text-zinc-300 group-hover:text-white transition-colors">Email</div>
-                    <div className="truncate">{businessInfo.email}</div>
-                  </div>
+                <a href={`mailto:${businessInfo.email}`} className="gap-3">
+                  <Mail className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
+                  <span className="min-w-0 break-words"><span className="block font-semibold text-zinc-200">Email</span>{businessInfo.email}</span>
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-zinc-400">
-                <MapPin className="w-5 h-5 text-zinc-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-zinc-300">Service Area</div>
-                  <div>Adelaide, South Australia</div>
-                </div>
+              <li className="flex items-center gap-3 py-2">
+                <MapPin className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
+                <span>Adelaide, South Australia</span>
               </li>
+              <li><Link href="/contact#quote" className="font-semibold text-[#d9b98f]">Request a Quote</Link></li>
             </ul>
-          </div>
+          </section>
 
+          <nav aria-labelledby="footer-services">
+            <h2 id="footer-services">Products & Services</h2>
+            <FooterLinks links={serviceLinks} />
+            <details className="mt-2 border-t border-zinc-800">
+              <summary>Specialist Installation</summary>
+              <FooterLinks links={specialistLinks} />
+            </details>
+          </nav>
+
+          <nav aria-labelledby="footer-explore">
+            <h2 id="footer-explore">Explore</h2>
+            <FooterLinks links={exploreLinks} />
+            <Link href="/zh" lang="zh-CN">中文服务</Link>
+            <details className="mt-2 border-t border-zinc-800">
+              <summary>More Links</summary>
+              <FooterLinks links={moreLinks} />
+            </details>
+          </nav>
         </div>
 
-        <nav aria-label="Adelaide service areas" className="mt-14 border-t border-zinc-900 pt-8">
-          <Link
-            href="/service-areas"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white hover:text-[#c5a47e]"
-          >
-            Areas We Serve
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </Link>
-          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-xs">
-            {serviceAreas.map((area) => (
-              <Link
-                key={area.slug}
-                href={`/smart-lock-installation/${area.slug}`}
-                className="hover:text-[#c5a47e]"
-              >
-                {area.name}
-              </Link>
-            ))}
-          </div>
+        <nav aria-label="Adelaide service areas" className="mt-8 border-t border-zinc-800 pt-4">
+          <details>
+            <summary>Areas We Serve</summary>
+            <Link href="/service-areas" className="font-semibold text-[#d9b98f]">All Adelaide Service Areas</Link>
+            <ul className="grid grid-cols-2 gap-x-5 md:grid-cols-4 lg:grid-cols-6">
+              {serviceAreas.map((area) => (
+                <li key={area.slug}><Link href={`/smart-lock-installation/${area.slug}`}>{area.name}</Link></li>
+              ))}
+            </ul>
+          </details>
         </nav>
 
-        <div className="mt-10 pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+        <div className="mt-4 flex flex-col gap-2 border-t border-zinc-800 pt-4 text-xs md:flex-row md:items-center md:justify-between">
           <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="/privacy-policy" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
-            <Link href="/delivery-and-returns" className="hover:text-zinc-400 transition-colors">Delivery & Returns</Link>
+          <div className="flex flex-wrap gap-x-5">
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/delivery-and-returns">Delivery & Returns</Link>
           </div>
         </div>
       </div>

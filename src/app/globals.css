@@ -56,6 +56,35 @@ body {
 .product-description table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 .product-description :where(th, td) { padding: 0.75rem; border-bottom: 1px solid #27272a; text-align: left; }
 
+.product-intro { display: grid; grid-template-areas: "heading" "media" "purchase"; gap: 24px; }
+.product-heading { grid-area: heading; min-width: 0; }
+.product-media { grid-area: media; }
+.product-purchase { grid-area: purchase; }
+.product-intro :where(h1, p, a, dt) { overflow-wrap: anywhere; letter-spacing: 0; }
+.product-intro svg { flex-shrink: 0; }
+.product-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.product-breadcrumb > span { overflow-wrap: anywhere; }
+.product-gallery-main { width: 100%; max-height: 260px; }
+.site-footer { font-size: 14px; line-height: 1.6; }
+.site-footer h2 { margin-bottom: 12px; color: #ededed; font-size: 16px; font-weight: 700; }
+.site-footer a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; overflow-wrap: anywhere; }
+.site-footer a:hover { color: #d9b98f; }
+.site-footer summary { min-height: 44px; padding: 10px 0; cursor: pointer; color: #d4d4d8; font-weight: 600; }
+.site-footer summary:focus-visible { outline: 2px solid #d9b98f; outline-offset: 4px; }
+.site-footer details[open] > summary { color: #d9b98f; }
+@media (min-width: 768px) {
+  .product-gallery-main { max-height: 460px; }
+}
+@media (min-width: 1024px) {
+  .product-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "media heading" "media purchase";
+    grid-template-rows: auto 1fr;
+    column-gap: 48px;
+  }
+  .product-gallery-main { max-height: 640px; }
+}
+
 .article-content { color: #d4d4d8; font-size: 1rem; line-height: 1.8; overflow-wrap: anywhere; }
 .article-content :where(h2, h3) { color: #d9b98f; font-weight: 700; line-height: 1.4; }
 .article-content h2 { margin: 2.5rem 0 1rem; font-size: 1.5rem; }

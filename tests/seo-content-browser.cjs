@@ -44,10 +44,29 @@
         }
         for (const width of [390, 1440]) {
           await page.setViewportSize({ width, height: 900 });
-          await page.waitForFunction(() => [...document.querySelectorAll('main img')].filter(img => {
-            const box = img.getBoundingClientRect();
-            return box.top < innerHeight && box.bottom > 0 && box.width > 0;
-          }).every(img => img.complete && img.naturalWidth > 0));
+          try {
+            await page.waitForFunction(() => [...document.querySelectorAll('main img')].filter(img => {
+              const box = img.getBoundingClientRect();
+              let left = Math.max(0, box.left), right = Math.min(innerWidth, box.right);
+              let top = Math.max(0, box.top), bottom = Math.min(innerHeight, box.bottom);
+              // Horizontally scrolled thumbnails may lie inside the viewport but outside their clipped parent.
+              for (let parent = img.parentElement; parent; parent = parent.parentElement) {
+                const style = getComputedStyle(parent), clip = parent.getBoundingClientRect();
+                if (/(auto|scroll|hidden|clip)/.test(style.overflowX)) {
+                  left = Math.max(left, clip.left); right = Math.min(right, clip.right);
+                }
+                if (/(auto|scroll|hidden|clip)/.test(style.overflowY)) {
+                  top = Math.max(top, clip.top); bottom = Math.min(bottom, clip.bottom);
+                }
+              }
+              return right > left && bottom > top;
+            }).every(img => img.complete && img.naturalWidth > 0));
+          } catch (error) {
+            console.error({ engine, path, width, images: await page.locator('main img').evaluateAll(ns => ns.filter(n => {
+              const b = n.getBoundingClientRect(); return b.top < innerHeight && b.bottom > 0 && b.left < innerWidth && b.right > 0 && b.width > 0;
+            }).map(n => ({ src: n.currentSrc, complete: n.complete, naturalWidth: n.naturalWidth, loading: n.loading }))) });
+            throw error;
+          }
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${path} ${width}`);
           if (['/about', '/smart-lock-installer-adelaide', '/zh'].includes(path)) {
             await page.screenshot({ path: `${out}/${engine}-${path.slice(1)}-${width}.png` });

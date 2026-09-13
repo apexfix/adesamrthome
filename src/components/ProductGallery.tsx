@@ -19,7 +19,7 @@ export function ProductGallery({ images, square = false }: ProductGalleryProps) 
       {/* Main Image */}
       <div
         className={cn(
-          "relative flex items-center justify-center overflow-hidden rounded-md border border-zinc-800 bg-white p-6 md:p-10",
+          "product-gallery-main relative flex items-center justify-center overflow-hidden rounded-md border border-zinc-800 bg-white",
           square ? "aspect-square" : "aspect-[3/4]"
         )}
       >
@@ -27,15 +27,16 @@ export function ProductGallery({ images, square = false }: ProductGalleryProps) 
           src={images[selectedIndex].src}
           alt={images[selectedIndex].alt || "Product image"}
           fill
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="(max-width: 1023px) calc(100vw - 40px), (max-width: 1500px) 45vw, 660px"
           className="object-contain p-4 transition-all duration-300 ease-in-out"
           loading="eager"
+          fetchPriority={selectedIndex === 0 ? "high" : "auto"}
         />
       </div>
       
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex justify-start gap-4 overflow-x-auto px-1 pb-2 scrollbar-hide">
+        <div role="group" aria-label="Product images" className="product-thumbnails flex justify-start gap-3 overflow-x-auto px-1 py-2">
           {images.map((img, idx) => (
             <button
               key={idx}
@@ -44,7 +45,7 @@ export function ProductGallery({ images, square = false }: ProductGalleryProps) 
               aria-label={`Show image ${idx + 1} of ${images.length}: ${img.alt || "product view"}`}
               aria-pressed={selectedIndex === idx}
               className={cn(
-                "relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-sm border bg-white transition-colors",
+                "relative h-14 w-14 md:h-20 md:w-20 shrink-0 cursor-pointer overflow-hidden rounded-sm border bg-white transition-colors",
                 selectedIndex === idx 
                   ? "border-[#c5a47e] opacity-100"
                   : "border-zinc-800 opacity-70 hover:border-zinc-500 hover:opacity-100"

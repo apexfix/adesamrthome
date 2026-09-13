@@ -14,13 +14,13 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Homepage routing and direct service navigation | Implemented in current preview | See navigation batch evidence. |
 | Mobile focus / fixed contact dock | Implemented in preview | Real iPhone keyboard, text enlargement and screen-reader testing remain open. |
 | Uploaded image contents | IMPLEMENTED IN PREVIEW | Real decoding and JPEG normalization via sharp, strict format/size/pixel checks, metadata removal and animated WebP rejection tested. See photo-validation batch. Not antivirus or distributed abuse protection. |
-| Durable enquiry acceptance | DESIGN REQUIRED | A Vercel function's local file or memory is not reliable storage. Select an approved durable store and retention/access policy before implementation. |
+| Durable enquiry acceptance | STORAGE CONFIGURATION REQUIRED | This round found no database dependency, adapter or configured local storage credentials; only `.env.example` is present. Do not assume this proves anything about production secrets. A Vercel function's local file or memory is not reliable storage. Select an approved durable store and retention/access policy before implementation; continue independent checklist items meanwhile. |
 | Retry and idempotency | DEPENDS ON DURABLE STORE | Persist a stable request key and accepted enquiry; deduplicate across requests/instances. Do not treat the existing button guard as server-level deduplication. |
 | Anti-spam | OPEN | Use validated limits and an approved persistent counter/challenge approach. Do not invent a reliable distributed limit using process memory. |
 | Browser conversion reliability | OPEN | Needs robust accepted-enquiry IDs and deduplication, including blocked storage/scripts. No button click should count as an accepted lead. |
 | CCTV policy and inclusions | OWNER FACTS REQUIRED | Do not add installation, cabling, disk, tax, delivery or warranty promises. Resolve wording before publishing new claims. |
-| Product detail first-screen hierarchy | OPEN | Compare desktop/mobile layout; retain prices and scope before long manufacturer image sections. |
-| Footer simplification | OPEN | Preserve useful service links and contact methods; measure layout before removing links. |
+| Product detail first-screen hierarchy | IMPLEMENTED IN PREVIEW | All ten product pages now use a shared heading/media/price/enquiry hierarchy. Both engines at five widths pass; prices, scopes and prefill retained. See product-layout batch. Real-device accessibility and field performance remain unverified. |
+| Footer simplification | IMPLEMENTED IN PREVIEW | SMS/email precede navigation on mobile; secondary links use native disclosure lists. All previous footer destinations retained and tested. No pages deleted or redirected. |
 | Whole-site final URL/schema inventory | RELEASE CHECK | Regenerate after all approved changes. Local checks are not Google validation. |
 | Performance | UNVERIFIED | Collect reproducible lab data and distinguish it from CrUX real-user p75. No invented scores or ranking gains. |
 | Production release | NOT AUTHORIZED BY CURRENT CHECKLIST | Requires further authorization; release the reviewed batches together and perform an operator-only real enquiry test. |
