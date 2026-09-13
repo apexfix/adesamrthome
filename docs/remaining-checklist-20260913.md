@@ -61,6 +61,8 @@ Chapter 20 delivery states are implemented in scoped local preview: 30-second de
 
 ## Current Usage Boundary
 
+Chapter 20 conversion context follow-up: missing/malformed lead references no longer trigger conversions. Known service/product IDs and bounded integer photo counts are independently normalized in the tracker. 23 contract checks, eight isolated browser flows, 20 delivery contracts and 22 enquiry regressions passed; see `lead-conversion-preview-20260914.md`. This is not server-authenticated acceptance or durable deduplication. Direct-visit receipt copy and the storage-unavailable inline confirmation remain open.
+
 User instructed autonomous continuation until account usage leaves 10% remaining (13 September 2026). Check live usage periodically and before starting another substantial batch; stop work and preserve state at or below 10% remaining in any available applicable usage window. Do not consume a reset, change the goal objective, mark unfinished work complete, or treat this user-requested stop as a technical blocker.
 
 ## Durable enquiry design boundary

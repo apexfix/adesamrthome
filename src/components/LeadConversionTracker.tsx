@@ -1,18 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { analyticsProductId, isEnquiryService } from "@/lib/enquiry";
+import { isEnquiryLeadId } from "@/lib/enquiryDelivery";
 import {
   trackEvent,
   trackGoogleAdsLead,
   trackMetaLead,
 } from "@/lib/analytics";
-
-type CompletedLead = {
-  service?: string;
-  product?: string;
-  photoCount?: number;
-  preferredTiming?: string;
-};
 
 export function LeadConversionTracker() {
   useEffect(() => {
@@ -20,14 +15,17 @@ export function LeadConversionTracker() {
       const storedLead = sessionStorage.getItem("ade_completed_lead");
       if (!storedLead) return;
       sessionStorage.removeItem("ade_completed_lead");
-      const lead = JSON.parse(storedLead) as CompletedLead;
-      const service = lead.service || "not-specified";
-      const product = lead.product || "not-specified";
-      const photoCount = lead.photoCount || 0;
+      const parsed: unknown = JSON.parse(storedLead);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return;
+      const lead = parsed as Record<string, unknown>;
+      if (!isEnquiryLeadId(lead.leadId)) return;
+      const service = typeof lead.service === "string" && isEnquiryService(lead.service) ? lead.service : "not-specified";
+      const product = analyticsProductId(lead.product);
+      const photoCount = typeof lead.photoCount === "number" && Number.isInteger(lead.photoCount) && lead.photoCount >= 0 && lead.photoCount <= 4 ? lead.photoCount : 0;
       const highIntentTiming = [
         "as-soon-as-possible",
         "within-one-week",
-      ].includes(lead.preferredTiming || "");
+      ].includes(typeof lead.preferredTiming === "string" ? lead.preferredTiming : "");
       const photoStatus = photoCount >= 4
         ? "complete"
         : photoCount > 0
