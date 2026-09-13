@@ -158,6 +158,8 @@ export function ContactForm({
     photoCount: 0,
   });
 
+  useEffect(() => () => { photoSelectionRef.current += 1; }, []);
+
   useEffect(() => {
     latestFunnelStateRef.current = {
       service: formData.service,
@@ -339,16 +341,34 @@ export function ContactForm({
     setIsPreparingPhotos(true);
 
     try {
-      const prepared = await Promise.all(
+      const results = await Promise.allSettled(
         selectedFiles.map((file, index) => compressPhoto(file, photos.length + index)),
       );
       if (selection !== photoSelectionRef.current) return;
-      setPhotos((current) => [...current, ...prepared]);
-      trackEvent("form_photo_added", {
-        form_name: "website_enquiry",
-        selected_photo_count: prepared.length,
-        total_photo_count: photos.length + prepared.length,
+      const prepared = results.flatMap(result => result.status === "fulfilled" ? [result.value] : []);
+      const failures = results.flatMap((result, index) => {
+        if (result.status !== "rejected") return [];
+        const name = selectedFiles[index].name;
+        const label = name.length > 40 ? `${name.slice(0, 24)}...${name.slice(-12)}` : name;
+        return [`${label}: ${result.reason instanceof Error ? result.reason.message : "Please choose another photo."}`];
       });
+      if (prepared.length) {
+        setPhotos((current) => [...current, ...prepared]);
+        trackEvent("form_photo_added", {
+          form_name: "website_enquiry",
+          selected_photo_count: prepared.length,
+          total_photo_count: photos.length + prepared.length,
+        });
+      }
+      if (failures.length) {
+        setPhotoError(`Could not add ${failures.length} ${failures.length === 1 ? "photo" : "photos"}. ${failures.join(" ")}`);
+        // Filenames may contain personal information; report counts only.
+        trackEvent("form_photo_error", {
+          form_name: "website_enquiry",
+          reason: "photo-preparation-failed",
+          failed_photo_count: failures.length,
+        });
+      }
     } catch (error) {
       if (selection !== photoSelectionRef.current) return;
       trackEvent("form_photo_error", {
@@ -681,7 +701,7 @@ export function ContactForm({
                         <span className="min-w-0 truncate">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
                         <button
                           type="button"
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || isPreparingPhotos}
                           onClick={() => setPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))}
                           className="enquiry-remove inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md"
                           aria-label={`Remove ${photo.name}`}
@@ -692,7 +712,7 @@ export function ContactForm({
                     ))}
                   </ul>
                 )}
-                {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm">{photoError}</p>}
+                {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm [overflow-wrap:anywhere]">{photoError}</p>}
               </fieldset>}
 
               <label className="block space-y-2 enquiry-label">
