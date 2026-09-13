@@ -16,12 +16,10 @@ type CompletedLead = {
 
 export function LeadConversionTracker() {
   useEffect(() => {
-    const storedLead = sessionStorage.getItem("ade_completed_lead");
-    if (!storedLead) return;
-
-    sessionStorage.removeItem("ade_completed_lead");
-
     try {
+      const storedLead = sessionStorage.getItem("ade_completed_lead");
+      if (!storedLead) return;
+      sessionStorage.removeItem("ade_completed_lead");
       const lead = JSON.parse(storedLead) as CompletedLead;
       const service = lead.service || "not-specified";
       const product = lead.product || "not-specified";

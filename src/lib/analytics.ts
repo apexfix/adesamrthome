@@ -1,3 +1,5 @@
+import { analyticsProductId, isEnquiryService } from "./enquiry";
+
 export type LeadAttribution = {
   source: string;
   medium: string;
@@ -148,10 +150,7 @@ export function captureLeadAttribution(): LeadAttribution {
     wbraid,
     gbraid,
     fbclid,
-    landingPage: `${window.location.pathname}${window.location.search}`.slice(
-      0,
-      500,
-    ),
+    landingPage: window.location.pathname.slice(0, 500),
     referrer,
   };
 
@@ -162,6 +161,29 @@ export function captureLeadAttribution(): LeadAttribution {
   }
 
   return attribution;
+}
+
+export function sanitizeAnalyticsParameters(parameters: AnalyticsParameters) {
+  const safe: Record<string, AnalyticsValue> = {};
+  const privateKeys = new Set(["name", "phone", "email", "address", "message", "photos", "photo_url", "suburb"]);
+  for (const [key, value] of Object.entries(parameters)) {
+    if (value === undefined || value === null || value === "" || privateKeys.has(key)) continue;
+    if (["product", "product_id", "content_name"].includes(key)) {
+      safe[key] = key === "content_name" && typeof value === "string" && isEnquiryService(value)
+        ? value : analyticsProductId(value);
+    } else if (key === "service") {
+      safe[key] = typeof value === "string" && isEnquiryService(value) ? value : "not-specified";
+    } else if (["page_path", "page_location"].includes(key)) {
+      if (typeof value !== "string") continue;
+      try {
+        const url = new URL(value, "https://www.adesmarthome.com.au");
+        safe[key] = key === "page_path" ? url.pathname : `${url.origin}${url.pathname}`;
+      } catch { /* Ignore invalid page locations. */ }
+    } else {
+      safe[key] = value;
+    }
+  }
+  return safe;
 }
 
 export function trackEvent(
@@ -176,7 +198,7 @@ export function trackEvent(
     ),
   );
 
-  window.gtag("event", eventName, safeParameters);
+  window.gtag("event", eventName, sanitizeAnalyticsParameters(safeParameters));
 }
 
 export function trackGoogleAdsLead() {
@@ -209,5 +231,5 @@ export function trackMetaLead(parameters: AnalyticsParameters = {}) {
     ),
   );
 
-  window.fbq("track", "Lead", safeParameters);
+  window.fbq("track", "Lead", sanitizeAnalyticsParameters(safeParameters));
 }

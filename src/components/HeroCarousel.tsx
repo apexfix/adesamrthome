@@ -19,7 +19,7 @@ export function HeroCarousel() {
           </p>
           <div className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <Link href="#smart-locks" className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-4 text-sm font-bold text-black transition-colors hover:bg-white sm:min-h-14 sm:px-7 sm:text-base"><LockKeyhole className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Smart locks</span></Link>
-            <Link href="#camera-kits" className="liquid-glass flex min-h-12 items-center justify-center gap-2 rounded-md border px-4 text-sm font-bold text-white hover:border-white sm:min-h-14 sm:px-7 sm:text-base"><Cctv className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Camera kits</span></Link>
+            <Link href="/products/security-camera-kits" className="liquid-glass flex min-h-12 items-center justify-center gap-2 rounded-md border px-4 text-sm font-bold text-white hover:border-white sm:min-h-14 sm:px-7 sm:text-base"><Cctv className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Camera kits</span></Link>
           </div>
           <Link href="/smart-lock-installation-only-adelaide" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white hover:text-[#e5c59f]"><Wrench className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Already have a smart lock? We fit it.</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link>
           <div className="mt-8 hidden flex-wrap gap-x-7 gap-y-3 border-t border-white/25 pt-6 text-sm text-zinc-100 sm:flex">

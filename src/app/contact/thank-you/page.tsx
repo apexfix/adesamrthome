@@ -5,37 +5,41 @@ import {
   Camera,
   CheckCircle2,
   MessageSquareText,
+  Mail,
 } from "lucide-react";
 import { LeadConversionTracker } from "@/components/LeadConversionTracker";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
   title: "Enquiry Received",
-  description: "Your ADE Smart Home smart lock enquiry has been received.",
+  description: "Your ADE Smart Home enquiry has been received.",
   alternates: { canonical: `${siteUrl}/contact/thank-you` },
   robots: { index: false, follow: false },
 };
 
-const nextSteps = [
+export default async function ThankYouPage({ searchParams }: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  const isCameraKit = params.service === "security-camera-kit";
+  const nextSteps = [
   {
     number: "01",
     title: "We review the details",
-    detail: "We review the door, current lock, requested service and any photos you supplied within 24 hours.",
+    detail: isCameraKit ? "We review the equipment package and any coverage requirements you shared." : "We review the door, current lock, requested service and any photos you supplied.",
   },
   {
     number: "02",
     title: "We ask for anything missing",
-    detail: "If we need another photo or measurement, we will contact you by SMS or email.",
+    detail: isCameraKit ? "We will contact you by SMS or email if we need more information about the equipment you need." : "If we need another photo or measurement, we will contact you by SMS or email.",
   },
   {
     number: "03",
     title: "You receive the next step",
     detail:
-      "We confirm suitability, scope and pricing (normally within 48 hours) before you decide whether to book.",
+      isCameraKit ? "We confirm equipment availability, package contents and pricing before you order." : "We confirm suitability, scope and pricing before you decide whether to book.",
   },
-];
-
-export default function ThankYouPage() {
+  ];
   return (
     <main className="min-h-screen bg-zinc-950 pt-28 text-white md:pt-32">
       <LeadConversionTracker />
@@ -50,9 +54,7 @@ export default function ThankYouPage() {
             Thank You. We Have Your Details.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 md:text-lg">
-            We will review your smart lock requirements and reply by SMS or email.
-            If you entered an email address, a confirmation and checklist should
-            also arrive in your inbox within a short time.
+            {isCameraKit ? "We will review your camera equipment enquiry and reply by SMS or email." : "We will review your smart lock requirements and reply by SMS or email."}
           </p>
         </div>
       </section>
@@ -84,20 +86,20 @@ export default function ThankYouPage() {
               Add Details by SMS
             </a>
             <a
-              href={`mailto:${businessInfo.email}?subject=More%20door%20photos%20for%20my%20enquiry`}
+              href={`mailto:${businessInfo.email}?subject=${isCameraKit ? "Camera%20equipment%20enquiry" : "More%20door%20photos%20for%20my%20enquiry"}`}
               className="inline-flex min-h-14 items-center justify-center gap-3 border border-zinc-700 px-5 text-sm font-bold text-white transition-colors hover:border-[#d9b98f] hover:text-[#d9b98f]"
             >
-              <Camera className="h-5 w-5" aria-hidden="true" />
-              Email More Door Photos
+              <span aria-hidden="true">{isCameraKit ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>
+              <span>{isCameraKit ? "Email More Details" : "Email More Door Photos"}</span>
             </a>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm">
             <Link
-              href="/blog/smart-lock-door-compatibility-check"
+              href={isCameraKit ? "/products/security-camera-kits" : "/blog/smart-lock-door-compatibility-check"}
               className="inline-flex items-center gap-2 font-bold text-[#d9b98f] hover:text-white"
             >
-              Check door photo requirements
+              <span>{isCameraKit ? "Browse camera equipment" : "Check door photo requirements"}</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link href="/" className="font-bold text-zinc-400 hover:text-white">

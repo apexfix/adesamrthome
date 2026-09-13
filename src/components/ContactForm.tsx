@@ -7,23 +7,14 @@ import {
   ArrowRight,
   Camera,
   ImagePlus,
+  Mail,
   MessageSquareText,
   Send,
   X,
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
-
-const serviceOptions = [
-  { value: "supply-install", label: "Supply & install" },
-  {
-    value: "installation-only",
-    label: "Installation only (other compatible brands supported)",
-  },
-  { value: "security-camera-kit", label: "Security camera kit" },
-  { value: "portfolio-project", label: "Property / project" },
-  { value: "not-sure", label: "Not sure" },
-] as const;
+import { analyticsProductId, contactValidationError, serviceOptions } from "@/lib/enquiry";
 
 const propertyOptions = [
   { value: "", label: "Select property type" },
@@ -134,6 +125,9 @@ export function ContactForm({
 }: ContactFormProps = {}) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const contactInputRef = useRef<HTMLInputElement>(null);
+  const photoSelectionRef = useRef(0);
+  const submittingRef = useRef(false);
   const formStartedRef = useRef(false);
   const completedRef = useRef(false);
   const abandonmentTrackedRef = useRef(false);
@@ -211,8 +205,14 @@ export function ContactForm({
   };
 
   const handleServiceSelection = (service: string) => {
+    if (service === formData.service || submittingRef.current) return;
     trackFormStart();
-    setFormData((current) => ({ ...current, service }));
+    photoSelectionRef.current += 1;
+    setIsPreparingPhotos(false);
+    setFormData((current) => ({ ...current, service, product: "" }));
+    setPhotos([]);
+    setPhotoError("");
+    setErrorMessage("");
     trackEvent("form_service_selected", {
       form_name: "website_enquiry",
       service,
@@ -221,7 +221,14 @@ export function ContactForm({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isSubmitting || isPreparingPhotos) return;
+    if (submittingRef.current || isPreparingPhotos) return;
+
+    const contactError = contactValidationError(formData.phone, formData.email);
+    if (contactError) {
+      setErrorMessage(contactError);
+      contactInputRef.current?.focus();
+      return;
+    }
 
     trackFormStart();
     trackEvent("form_submit_attempt", {
@@ -231,23 +238,24 @@ export function ContactForm({
       photo_count: photos.length,
     });
     setIsSubmitting(true);
+    submittingRef.current = true;
     setErrorMessage("");
 
     try {
       const payload = new FormData();
       Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
       payload.append("attribution", JSON.stringify(captureLeadAttribution()));
-      photos.forEach((photo) => payload.append("photos", photo, photo.name));
+      if (!isCameraKitEnquiry) photos.forEach((photo) => payload.append("photos", photo, photo.name));
 
       const response = await fetch("/api/contact", {
         method: "POST",
         body: payload,
       });
       const result = (await response.json().catch(() => null)) as
-        | { message?: string; leadId?: string }
+        | { success?: boolean; message?: string; leadId?: string }
         | null;
 
-      if (!response.ok) {
+      if (!response.ok || result?.success !== true || !result.leadId) {
         throw new Error(
           result?.message || "We could not send your request. Please text or email us instead.",
         );
@@ -259,8 +267,8 @@ export function ContactForm({
           "ade_completed_lead",
           JSON.stringify({
             service: formData.service,
-            product: formData.product,
-            photoCount: photos.length,
+            product: analyticsProductId(formData.product),
+            photoCount: isCameraKitEnquiry ? 0 : photos.length,
             preferredTiming: formData.preferredTiming,
             leadId: result?.leadId,
           }),
@@ -278,7 +286,7 @@ export function ContactForm({
         product: formData.product || "not-specified",
         photo_count: photos.length,
       });
-      router.push("/contact/thank-you");
+      router.push(`/contact/thank-you?service=${encodeURIComponent(formData.service)}`);
     } catch (error) {
       trackEvent("form_submit_error", {
         form_name: "website_enquiry",
@@ -291,6 +299,7 @@ export function ContactForm({
           : "We could not send your request. Please text or email us instead.",
       );
       setIsSubmitting(false);
+      submittingRef.current = false;
     }
   };
 
@@ -304,6 +313,7 @@ export function ContactForm({
   };
 
   const handlePhotoSelection = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selection = ++photoSelectionRef.current;
     const selectedFiles = Array.from(event.target.files ?? []);
     event.target.value = "";
     setPhotoError("");
@@ -326,6 +336,7 @@ export function ContactForm({
       const prepared = await Promise.all(
         selectedFiles.map((file, index) => compressPhoto(file, photos.length + index)),
       );
+      if (selection !== photoSelectionRef.current) return;
       setPhotos((current) => [...current, ...prepared]);
       trackEvent("form_photo_added", {
         form_name: "website_enquiry",
@@ -333,6 +344,7 @@ export function ContactForm({
         total_photo_count: photos.length + prepared.length,
       });
     } catch (error) {
+      if (selection !== photoSelectionRef.current) return;
       trackEvent("form_photo_error", {
         form_name: "website_enquiry",
         reason: "photo-preparation-failed",
@@ -341,7 +353,7 @@ export function ContactForm({
         error instanceof Error ? error.message : "The selected photos could not be prepared.",
       );
     } finally {
-      setIsPreparingPhotos(false);
+      if (selection === photoSelectionRef.current) setIsPreparingPhotos(false);
     }
   };
 
@@ -376,7 +388,7 @@ export function ContactForm({
             {mixedServices
               ? "Smart locks, installation-only service or CCTV camera kits. Choose your service below and we will reply by SMS or email."
               : isCameraKitEnquiry
-              ? "Add your suburb, property type and preferred timing. This kit is currently in stock, and we will reply by SMS or email with the next step."
+              ? "Tell us which equipment package interests you. We will confirm availability and reply by SMS or email."
               : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>
         </div>}
@@ -396,8 +408,8 @@ export function ContactForm({
                 href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
-                <Camera className="h-5 w-5" aria-hidden="true" />
-                {isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}
+                <span aria-hidden="true">{isCameraKitEnquiry ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>
+                <span>{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}</span>
               </a>
             </div>
 
@@ -435,7 +447,7 @@ export function ContactForm({
           </aside>
 
           <div className="liquid-glass-light relative order-1 rounded-lg border p-5 md:p-9 lg:order-2">
-            <h3 className="text-2xl font-black tracking-tight text-slate-950">
+            <h3 className="break-words text-2xl font-black tracking-tight text-slate-950">
               {formData.product
                 ? `Ask about ${formData.product}`
                 : isCameraKitEnquiry
@@ -444,27 +456,27 @@ export function ContactForm({
             </h3>
             <p className="mt-2 text-sm text-slate-600">
               {isCameraKitEnquiry
-                ? "Name, mobile, email, suburb, property type and preferred timing are required. Add any coverage requirements in the message box."
-                : "Name, mobile, email, suburb, property type and preferred timing are required. Adding all four door angles helps us check compatibility before quoting. You can still submit now and send photos later."}
+                ? "Leave your name, suburb and mobile or email. We will confirm the equipment and availability before you order."
+                : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
             </p>
 
             <form
               onSubmit={handleSubmit}
               onFocusCapture={trackFormStart}
               onInvalidCapture={handleInvalid}
-              className="mt-7 space-y-5"
+              className="mt-7 space-y-5 [&_input]:text-base [&_select]:text-base [&_textarea]:text-base"
             >
-              <fieldset>
+              <fieldset disabled={isSubmitting}>
                 <legend className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
                   Service needed
                 </legend>
-                <div className="grid grid-cols-2 gap-px bg-slate-300 p-px sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-px bg-slate-300 p-px [&>button:last-child]:col-span-2">
                   {serviceOptions.map((option) => (
                     <button
                       key={option.value}
                       type="button"
                       onClick={() => handleServiceSelection(option.value)}
-                      className={`min-h-12 px-2 text-xs font-bold transition-colors ${
+                      className={`min-h-12 px-3 py-2 text-sm font-bold transition-colors ${
                         formData.service === option.value
                           ? "bg-slate-950 text-white"
                           : "bg-white text-slate-700 hover:bg-slate-100"
@@ -494,10 +506,10 @@ export function ContactForm({
                   Mobile
                   <input
                     name="phone"
+                    ref={contactInputRef}
                     type="tel"
                     inputMode="tel"
                     autoComplete="tel"
-                    required
                     value={formData.phone}
                     onChange={handleChange}
                     className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
@@ -525,7 +537,6 @@ export function ContactForm({
                     name="email"
                     type="email"
                     autoComplete="email"
-                    required
                     value={formData.email}
                     onChange={handleChange}
                     className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
@@ -536,10 +547,9 @@ export function ContactForm({
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
-                  Property type
+                  Property type <span className="font-normal normal-case">optional</span>
                   <select
                     name="propertyType"
-                    required
                     value={formData.propertyType}
                     onChange={handleChange}
                     className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
@@ -550,10 +560,9 @@ export function ContactForm({
                   </select>
                 </label>
                 <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
-                  Preferred timing
+                  Preferred timing <span className="font-normal normal-case">optional</span>
                   <select
                     name="preferredTiming"
-                    required
                     value={formData.preferredTiming}
                     onChange={handleChange}
                     className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
@@ -576,6 +585,7 @@ export function ContactForm({
                   placeholder={isCameraKitEnquiry ? "e.g. Dahua 6MP Smart Dual Light kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
                 />
                 <datalist id="smart-lock-models">
+                  {!isCameraKitEnquiry && <>
                   <option value="Not sure – please recommend" />
                   <option value="Customer-supplied smart lock" />
                   <option value="Other brand smart lock (compatible model link)" />
@@ -589,8 +599,11 @@ export function ContactForm({
                   <option value="Lockin S6 Max" />
                   <option value="Lockin V5 Max" />
                   <option value="Kaadas K70 SE" />
+                  </>}
+                  {isCameraKitEnquiry && <>
                   <option value="Dahua 5MP 2-Camera PoE Security Kit" />
                   <option value="Dahua 6MP Smart Dual Light 2-Camera PoE Kit" />
+                  </>}
                 </datalist>
               </label>
 
@@ -599,26 +612,15 @@ export function ContactForm({
                   Door photos <span className="font-normal normal-case text-slate-600">recommended for a more accurate quote</span>
                 </legend>
                 <div className="mt-3 flex items-center justify-between gap-4 border-y border-slate-200 py-3">
-                  <p className="text-xs font-bold text-slate-700">Four-photo checklist</p>
+                  <p className="text-sm text-slate-700">Outside, inside, door edge and frame</p>
                   <p className="text-xs font-bold text-[#7a5a38]" aria-live="polite">
                     {photos.length} of {MAX_PHOTOS} added
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-px bg-slate-200 p-px">
-                  {photoChecklist.map((photo, index) => (
-                    <div key={photo.title} className="min-h-24 bg-white p-3">
-                      <p className="text-xs font-black uppercase tracking-[0.1em] text-[#8a6b48]">
-                        {String(index + 1).padStart(2, "0")}
-                      </p>
-                      <p className="mt-2 text-xs font-bold text-slate-900">{photo.title}</p>
-                      <p className="mt-1 text-[11px] leading-4 text-slate-500">{photo.detail}</p>
-                    </div>
-                  ))}
-                </div>
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  disabled={isPreparingPhotos || photos.length >= MAX_PHOTOS}
+                  disabled={isSubmitting || isPreparingPhotos || photos.length >= MAX_PHOTOS}
                   className="mt-3 flex min-h-20 w-full items-center justify-center gap-3 border border-dashed border-slate-400 bg-slate-50 px-4 text-sm font-bold text-slate-700 transition-colors hover:border-[#9c7953] hover:bg-[#f8f3ec] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <ImagePlus className="h-5 w-5 text-[#8a6b48]" aria-hidden="true" />
@@ -628,7 +630,7 @@ export function ContactForm({
                       ? "Four photos added"
                       : photos.length
                       ? "Add another photo"
-                      : "Add your 4 door photos"}
+                      : "Add door photos"}
                 </button>
                 <input
                   ref={fileInputRef}
@@ -637,11 +639,12 @@ export function ContactForm({
                   multiple
                   aria-label="Upload door photos"
                   onChange={handlePhotoSelection}
+                  disabled={isPreparingPhotos || isSubmitting}
                   className="sr-only"
                 />
                 <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Select several photos at once or add them one by one. Large images are resized
-                  before sending. Photos are recommended, not required to submit the form.
+                  Send what you have; more photos can be added later by SMS or email.
+                  Up to four JPEG, PNG or WebP images. Large photos are resized before sending.
                 </p>
                 {photos.length === MAX_PHOTOS && (
                   <p role="status" className="mt-3 border-l-4 border-emerald-600 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-900">
@@ -655,6 +658,7 @@ export function ContactForm({
                         <span className="min-w-0 truncate">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
                         <button
                           type="button"
+                          disabled={isSubmitting}
                           onClick={() => setPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))}
                           className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-black"
                           aria-label={`Remove ${photo.name}`}
@@ -699,7 +703,7 @@ export function ContactForm({
                 {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
               </button>
               <p className="text-center text-xs text-slate-500">
-                No payment required. We confirm scope and pricing before booking. By submitting,
+                <span>{isCameraKitEnquiry ? "No payment required. We confirm package contents and pricing before you order." : "No payment required. We confirm scope and pricing before booking."}</span>{" "}By submitting,
                 you agree that we may use these details and photos to respond to your enquiry. See our{" "}
                 <Link href="/privacy-policy" className="font-semibold text-[#8a6b48] underline underline-offset-2 hover:text-black">
                   Privacy Policy

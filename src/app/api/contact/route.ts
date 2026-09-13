@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { randomUUID } from "node:crypto";
+import { contactValidationError, isEnquiryService, serviceLabels } from "@/lib/enquiry";
 
 export const runtime = "nodejs";
 
@@ -8,12 +9,6 @@ const MAX_PHOTO_COUNT = 4;
 const MAX_PHOTO_BYTES = 1_000_000;
 const MAX_TOTAL_PHOTO_BYTES = 3_500_000;
 const allowedPhotoTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-const allowedServices = new Set([
-  "supply-install",
-  "installation-only",
-  "portfolio-project",
-  "not-sure",
-]);
 const allowedPropertyTypes = new Set([
   "house",
   "apartment",
@@ -28,12 +23,6 @@ const allowedTimings = new Set([
   "flexible",
 ]);
 
-const serviceLabels: Record<string, string> = {
-  "supply-install": "Supply and installation",
-  "installation-only": "Installation only",
-  "portfolio-project": "Property portfolio / building project",
-  "not-sure": "Not sure / recommendation needed",
-};
 
 const propertyLabels: Record<string, string> = {
   house: "House",
@@ -139,30 +128,34 @@ export async function POST(request: Request) {
       landingPage: readField(attributionPayload.landingPage, 500),
       referrer: readField(attributionPayload.referrer, 500),
     };
-    const phoneDigits = phone.replace(/\D/g, "");
+    const contactError = contactValidationError(phone, email);
+    const isCameraKit = service === "security-camera-kit";
 
     if (
       !name ||
-      phoneDigits.length < 8 ||
-      phoneDigits.length > 15 ||
       !suburb ||
-      !allowedServices.has(service) ||
-      !allowedPropertyTypes.has(propertyType) ||
-      !allowedTimings.has(preferredTiming) ||
-      !email ||
-      !/^\S+@\S+\.\S+$/.test(email)
+      !isEnquiryService(service) ||
+      (propertyType && !allowedPropertyTypes.has(propertyType)) ||
+      (preferredTiming && !allowedTimings.has(preferredTiming)) ||
+      contactError
     ) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "Please complete your name, mobile, email, suburb, property type and preferred timing.",
+            contactError || "Please complete your name, suburb and service, and check any optional selections.",
         },
         { status: 400 },
       );
     }
 
     const totalPhotoBytes = photoFiles.reduce((total, photo) => total + photo.size, 0);
+    if (isCameraKit && photoFiles.length) {
+      return NextResponse.json(
+        { success: false, message: "Camera equipment enquiries do not accept door photos. Please remove the photos and try again." },
+        { status: 400 },
+      );
+    }
     if (
       photoFiles.length > MAX_PHOTO_COUNT ||
       totalPhotoBytes > MAX_TOTAL_PHOTO_BYTES ||
@@ -202,8 +195,8 @@ export async function POST(request: Request) {
       })),
     );
     const serviceLabel = serviceLabels[service] || service;
-    const propertyLabel = propertyLabels[propertyType] || propertyType;
-    const timingLabel = timingLabels[preferredTiming] || preferredTiming;
+    const propertyLabel = propertyLabels[propertyType] || "Not specified";
+    const timingLabel = timingLabels[preferredTiming] || "Not specified";
     const receivedAt = new Date();
     const leadId = `ADE-${receivedAt.toISOString().slice(0, 10).replace(/-/g, "")}-${randomUUID().slice(0, 8).toUpperCase()}`;
 
@@ -224,7 +217,7 @@ Email: ${email || "Not provided"}
 Suburb / postcode: ${suburb}
 Property type: ${propertyLabel}
 Service: ${serviceLabel}
-Preferred model: ${product || "Not specified"}
+${isCameraKit ? "Preferred equipment package" : "Preferred model"}: ${product || "Not specified"}
 Preferred timing: ${timingLabel}
 Door photos attached: ${photoFiles.length}
 
@@ -253,7 +246,7 @@ ${message || "No additional details provided."}
         <p><strong>Suburb / postcode:</strong> ${escapeHtml(suburb)}</p>
         <p><strong>Property type:</strong> ${escapeHtml(propertyLabel)}</p>
         <p><strong>Service:</strong> ${escapeHtml(serviceLabel)}</p>
-        <p><strong>Preferred model:</strong> ${escapeHtml(product || "Not specified")}</p>
+        <p><strong>${isCameraKit ? "Preferred equipment package" : "Preferred model"}:</strong> ${escapeHtml(product || "Not specified")}</p>
         <p><strong>Preferred timing:</strong> ${escapeHtml(timingLabel)}</p>
         <p><strong>Door photos attached:</strong> ${photoFiles.length}</p>
         <hr>
@@ -278,51 +271,28 @@ ${message || "No additional details provided."}
     let acknowledgementSent = false;
 
     if (email) {
+      const enquiryName = isCameraKit ? "camera equipment" : "smart lock";
+      const receiptParagraphs = [
+        `Hi ${name},`,
+        `Thank you for contacting ADE Smart Home. We have received your ${enquiryName} enquiry. Your reference is ${leadId}.`,
+        isCameraKit
+          ? "We will review your preferred equipment package and confirm availability, package contents and pricing before you order."
+          : "We will review your requested service and any door photos, then confirm compatibility, installation scope and pricing before booking.",
+        "We will contact you by SMS or email if we need any further details.",
+        isCameraKit
+          ? "You can reply with the equipment model or the areas you would like to monitor."
+          : "You can reply with more photos of the outside, inside, door edge and frame, or send them later by SMS.",
+        "Text 0431060390 or reply to this email to add details.",
+        "ADE Smart Home\nhttps://www.adesmarthome.com.au/",
+      ];
       try {
         await transporter.sendMail({
           from: `"ADE Smart Home" <${smtpUser}>`,
           to: email,
           replyTo: contactEmail,
-          subject: `We received your smart lock enquiry [${leadId}] | ADE Smart Home`,
-      text: `Hi ${name},
-
-Thank you for contacting ADE Smart Home. We have received your smart lock enquiry${photoFiles.length ? ` and ${photoFiles.length} door photo${photoFiles.length === 1 ? "" : "s"}` : ""}.
-
-Your enquiry reference is ${leadId}.
-
-What happens next:
-1. We review the door, current lock and requested service within 24 hours.
-2. If we need another photo or measurement, we will ask by SMS or email.
-3. We confirm suitability, scope and pricing before any booking.
-4. If all details are complete, we will provide a quote or scope within 48 hours.
-
-To speed this up, please send these 4 angles:
-- Door outside
-- Door inside near the lock side
-- Door edge
-- Door frame
-
-You can add more door photos by replying to this email, or text 0431060390.
-
-ADE Smart Home
-Adelaide smart lock supply and installation
-https://www.adesmarthome.com.au/
-          `,
-          html: `
-            <p>Hi ${escapeHtml(name)},</p>
-            <p>Thank you for contacting ADE Smart Home. We have received your smart lock enquiry${photoFiles.length ? ` and ${photoFiles.length} door photo${photoFiles.length === 1 ? "" : "s"}` : ""}.</p>
-            <p>Your enquiry reference is <strong>${leadId}</strong>.</p>
-            <h3>What happens next</h3>
-            <ol>
-              <li>We review the door, current lock and requested service within 24 hours.</li>
-              <li>If we need another photo or measurement, we will ask by SMS or email.</li>
-              <li>We confirm suitability, scope and pricing before any booking.</li>
-              <li>If all information is complete, we normally send a quote within 48 hours.</li>
-            </ol>
-            <p>You can add more door photos by replying to this email. Best angles: outside, inside lock side, edge, and frame.</p>
-            <p>If you need urgent confirmation, text <strong>0431060390</strong>.</p>
-            <p>ADE Smart Home<br>Adelaide smart lock supply and installation<br><a href="https://www.adesmarthome.com.au/">adesmarthome.com.au</a></p>
-          `,
+          subject: `We received your ${enquiryName} enquiry [${leadId}] | ADE Smart Home`,
+          text: receiptParagraphs.join("\n\n"),
+          html: receiptParagraphs.map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join(""),
         });
         acknowledgementSent = true;
       } catch (customerReplyError) {

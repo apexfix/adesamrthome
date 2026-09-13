@@ -8,9 +8,11 @@ import { trackEvent } from "@/lib/analytics";
 
 export function MobileContactBar() {
   const pathname = usePathname();
+  // The enquiry page already provides contact links; keep its form unobstructed.
+  if (pathname === "/contact") return null;
   const isCameraPage =
     pathname.includes("security-camera") || (pathname.includes("dahua-") && pathname.includes("camera"));
-  const isMixedProductsPage = pathname === "/products" || pathname === "/";
+  const isMixedProductsPage = pathname === "/products" || pathname === "/" || pathname.startsWith("/contact");
   const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(
     isCameraPage
       ? "Hi ADE Smart Home, I would like a security camera kit quote."

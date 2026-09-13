@@ -25,7 +25,7 @@ const pathways = [
     label: "Security Cameras",
     title: "Dahua camera kits for homes and small businesses",
     description:
-      "Start with a practical 5MP PoE camera and recorder package from $443, with local advice and installation quotes available.",
+      "Explore 5MP PoE camera and recorder equipment packages from $443. Ask us about package contents and product availability.",
     href: "/products/security-camera-kits",
     action: "View camera kits",
   },

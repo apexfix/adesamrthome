@@ -101,8 +101,8 @@ export function SiteAnalytics() {
     }
 
     trackEvent("page_view", {
-      page_path: `${window.location.pathname}${window.location.search}`,
-      page_location: window.location.href,
+      page_path: window.location.pathname,
+      page_location: `${window.location.origin}${window.location.pathname}`,
       page_title: document.title,
     });
     trackMetaPageView();
@@ -124,8 +124,11 @@ export function SiteAnalytics() {
               function gtag(){dataLayer.push(arguments);}
               window.gtag = gtag;
               gtag('js', new Date());
+              var safePageLocation = window.location.origin + window.location.pathname;
+              var safePageReferrer = '';
+              try { var ref = new URL(document.referrer); safePageReferrer = ref.origin + ref.pathname; } catch (_) {}
               ${googleTagIds
-                .map((id) => `gtag('config', ${JSON.stringify(id)});`)
+                .map((id) => `gtag('config', ${JSON.stringify(id)}, { page_location: safePageLocation, page_referrer: safePageReferrer });`)
                 .join("\n              ")}
             `}
           </Script>
