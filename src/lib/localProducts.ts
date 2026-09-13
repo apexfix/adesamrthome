@@ -131,8 +131,6 @@ export const localProducts = [
       <p>Camera-side SMD 4.0 and supported tripwire or intrusion rules help distinguish people and vehicles from other movement. A built-in microphone provides audio capture, while IP67-rated camera housings suit appropriately installed outdoor positions. These are camera capabilities; recorder event handling depends on firmware and configuration.</p>
       <h2>A Wired PoE Recorder</h2>
       <p>The included NVR has four camera channels, four PoE ports and support for 6MP input. Suitable network cabling carries power and video to the cameras. Future expansion requires a compatibility and power-budget check. AcuPick and Quick Pick are not advertised as included features of this recorder.</p>
-      <h2>Plan Your Adelaide Camera Setup</h2>
-      <p>Send your suburb, the areas you want to monitor and details of existing cabling. We can discuss lens selection, camera positions, recording storage requirements and the complete setup scope before you order. The recorder belongs indoors in a suitable protected location.</p>
       <p><a href="/contact?service=security-camera-kit&amp;product=Dahua%206MP%20Smart%20Dual%20Light%202-Camera%20PoE%20Kit#quote">Enquire about the A$590 camera kit</a>, compare our <a href="/products/security-camera-kits">Adelaide security camera packages</a> or read our <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera buying guide</a>.</p>
       <h2>Manufacturer Specifications</h2>
       <p><a href="/downloads/dahua/DH-IPC-HDW3667EM-S-IL-ANZ-datasheet.pdf">Download the Dahua 6MP camera datasheet (PDF)</a>. Camera details are based on <a href="https://www.dahuasecurity.com/au/products/network-products/network-cameras/WizSense-3-Series/Smart-Dual-Light/IPC-HDW3667EM-S-IL-ANZ">Dahua's official camera specifications</a>; see the <a href="https://www.dahuasecurity.com/tr/products/All-Products/Network-Recorders/Lite-Series/NVR4/L-Series/1HDD/NVR4104HS-P-4KS2/L">official recorder specifications</a> for recorder capabilities.</p>
@@ -269,14 +267,8 @@ export const localProducts = [
       <p>Each camera captures up to 5MP video and includes infrared illumination up to 30 metres. Smart H.265+ compression helps reduce bandwidth and storage use, while built-in intelligent monitoring can distinguish people and vehicles for supported tripwire and intrusion events.</p>
       <h2>Simple PoE Recorder</h2>
       <p>The compact recorder provides four PoE camera ports, supports Smart H.265+ and Smart H.264+ compression, and offers simultaneous HDMI and VGA output with up to 4K HDMI display output. The four-channel design leaves room to expand the system with up to two additional compatible cameras.</p>
-      <h2>Suitable For</h2>
-      <ul>
-        <li>Front entrance and driveway coverage for Adelaide homes.</li>
-        <li>Small shops, offices, workshops and storage areas.</li>
-        <li>Owners who want a reliable wired PoE security camera system.</li>
-      </ul>
       <p>This exact Dahua package is currently in stock and available while supplies last.</p>
-      <p>Explore our <a href="/products/security-camera-kits">security camera kits in Adelaide</a> or read the <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera kit buying guide</a> for help planning views, cabling and future expansion.</p>
+      <p>Explore our <a href="/products/security-camera-kits">security camera kits in Adelaide</a> or compare model specifications in our <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera kit guide</a>.</p>
     `,
     categories: [
       { id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" },

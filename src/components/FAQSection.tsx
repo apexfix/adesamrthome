@@ -124,7 +124,7 @@ export function FAQSection({ includeCameras = false }: { includeCameras?: boolea
           <div>
             <h3 className="text-2xl font-bold">{includeCameras ? "Find the right setup for your property" : "Not sure if your door can fit a smart lock?"}</h3>
             <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
-              {includeCameras ? "Tell us about your door or the areas you want to monitor. We will help you choose a suitable product and confirm pricing." : "Send photos of your door, current lock and frame. We will check the door type and recommend a suitable installation option."}
+              {includeCameras ? "For smart locks, send your door details. For camera equipment, send the package name and quantity to confirm contents and pricing." : "Send photos of your door, current lock and frame. We will check the door type and recommend a suitable installation option."}
             </p>
           </div>
           <div>

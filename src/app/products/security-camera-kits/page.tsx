@@ -114,8 +114,8 @@ export default function SecurityCameraKitsPage() {
             Security Camera Kits Adelaide
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
-            Dahua 5MP and 6MP Smart Dual Light camera and recorder packages for key areas around homes,
-            shops, offices and small commercial properties, with local advice in Adelaide.
+            Dahua 5MP and 6MP Smart Dual Light equipment packages. Each contains two cameras
+            and one four-channel PoE recorder. Compare model specifications and package prices below.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -171,28 +171,6 @@ export default function SecurityCameraKitsPage() {
             </tbody>
           </table>
           <p className="mt-4 text-sm leading-6 text-zinc-400">Night-time detail depends on lighting, placement and lens choice. Extra cameras must be compatible with the recorder and remain within its bandwidth and PoE power limits.</p>
-        </section>
-
-        <section className="mt-16 grid gap-10 border-t border-zinc-800 pt-12 lg:grid-cols-2" aria-labelledby="camera-planning">
-          <div>
-            <h2 id="camera-planning" className="text-3xl font-bold">Plan the views you actually need</h2>
-            <p className="mt-5 text-base leading-7 text-zinc-300">A two-camera CCTV kit can be a useful starting point when you have two priority areas. Think about the activity you want to see before choosing camera positions.</p>
-            <dl className="mt-6 divide-y divide-zinc-800">
-              {[
-                ["Home entrance & driveway", "Check visitors at the front door and movement around vehicle access. Consider door recesses, trees and parked cars when choosing the view."],
-                ["Shop entrance & stock area", "Choose views around customer access and stock movement. Tell us about the room layout and the distance to the recorder."],
-                ["Side access & rear entry", "Compare sightlines and lighting along each route. A corner or a fence may create a blind spot that needs a different camera position."],
-              ].map(([label, detail]) => <div key={label} className="py-5"><dt className="font-bold text-[#d9b98f]">{label}</dt><dd className="mt-2 leading-7 text-zinc-400">{detail}</dd></div>)}
-            </dl>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold">Local product advice in Adelaide</h2>
-            <p className="mt-5 leading-7 text-zinc-300">Ask ADE Smart Home about camera packages for a house, shop, office or workshop. We discuss the equipment, the areas you want covered and your preferred timing before you order.</p>
-            <p className="mt-4 leading-7 text-zinc-400">Send your suburb with your enquiry, whether you are in Adelaide CBD, Glenelg, Norwood, Mawson Lakes, Modbury, Marion or another Adelaide suburb.</p>
-            <p className="mt-4 leading-7 text-zinc-400">Useful details include the two main areas to monitor, a simple property layout, existing network cabling and where you would like to keep the recorder.</p>
-            <Link href="/blog/security-camera-kits-adelaide-buying-guide" className="glass-control mt-7 inline-flex min-h-12 items-center rounded-md border px-5 text-sm font-bold">Read our Adelaide camera kit buying guide</Link>
-            <p className="mt-6 leading-7 text-zinc-400">Upgrading your entry too? Compare our <Link href="/products?category=smart-lock" className="text-[#d9b98f] underline underline-offset-4">smart locks</Link> and <Link href="/smart-lock-installation-only-adelaide" className="text-[#d9b98f] underline underline-offset-4">installation-only service</Link>.</p>
-          </div>
         </section>
 
         <section className="pt-16" aria-labelledby="camera-kit-faq">

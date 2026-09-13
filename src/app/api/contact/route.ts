@@ -281,7 +281,7 @@ ${message || "No additional details provided."}
           : "We will review your requested service and any door photos, then confirm compatibility, installation scope and pricing before booking.",
         "We will contact you by SMS or email if we need any further details.",
         isCameraKit
-          ? "You can reply with the equipment model or the areas you would like to monitor."
+          ? "You can reply with the equipment model, package name or quantity required."
           : "You can reply with more photos of the outside, inside, door edge and frame, or send them later by SMS.",
         "Text 0431060390 or reply to this email to add details.",
         "ADE Smart Home\nhttps://www.adesmarthome.com.au/",

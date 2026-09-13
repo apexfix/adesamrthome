@@ -97,7 +97,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const description = isService
     ? `Adelaide smart lock installation only. ${current === null ? "Request a quote" : `From A$${current}`}. Customer supplies the lock. Send door photos for a compatibility check.`
     : isCameraKit
-      ? `Two Dahua ${cameraResolution} cameras and a four-channel PoE recorder${current === null ? ". Request a quote" : ` for A$${current}`}. ${cameraResolution === "6MP" ? "Smart Dual Light monitoring. " : ""}Camera kit advice in Adelaide.`
+      ? `Two Dahua ${cameraResolution} cameras and a four-channel PoE recorder${current === null ? ". Request a quote" : ` for A$${current}`}. ${cameraResolution === "6MP" ? "Smart Dual Light monitoring. " : ""}Compare equipment specifications.`
     : `${product.name} ${priceMessage}. ${stripHtml(product.short_description || "")} Free door compatibility check.`.slice(0, 158);
   const seoTitle = isService
     ? "Smart Lock Installation Prices Adelaide"

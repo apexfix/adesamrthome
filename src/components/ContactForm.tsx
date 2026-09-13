@@ -382,7 +382,7 @@ export function ContactForm({
             Fast Adelaide quote
           </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            {isCameraKitEnquiry || mixedServices ? "Tell Us About Your Security Needs" : "Tell Us About Your Door"}
+            {isCameraKitEnquiry ? "Camera Equipment Enquiry" : mixedServices ? "Product and Service Enquiries" : "Tell Us About Your Door"}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
             {mixedServices
@@ -680,7 +680,7 @@ export function ContactForm({
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
-                  placeholder={isCameraKitEnquiry ? "Tell us which areas you would like to monitor and any special requirements." : "Tell us about the existing lock, security screen, building access or any special requirements."}
+                  placeholder={isCameraKitEnquiry ? "Enter the package name, quantity or a question about listed product specifications." : "Tell us about the existing lock, security screen, building access or any special requirements."}
                 />
               </label>
 

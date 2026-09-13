@@ -210,7 +210,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </p>
             <p className="text-zinc-400 text-base leading-7">
               {isCameraGuide
-                ? "Plan your camera views, cabling and recording needs. Final equipment suitability depends on the property layout and the complete system configuration."
+                ? "Compare listed camera models, package contents and recorder specifications. This is equipment information, not a site-specific security assessment."
                 : isDoorGuide
                 ? "Use this guide to prepare useful photos and measurements. Final suitability depends on the exact lock model, door, frame and site conditions."
                 : isGuide
@@ -287,11 +287,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
         <div className="mt-14 border-t border-zinc-700 py-10 text-center">
           <h3 className="text-2xl font-bold mb-4">
-            {isCameraGuide ? "Planning your camera setup?" : isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
+            {isCameraGuide ? "Interested in a camera package?" : isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
           </h3>
           <p className="text-zinc-400 mb-7 max-w-lg mx-auto text-base leading-7">
             {isCameraGuide
-              ? "Send your suburb, property layout and the areas you want to monitor. We will reply by SMS or email with the next step."
+              ? "Send the package name and quantity. We will confirm contents, availability and pricing by SMS or email."
               : isGuide
               ? "Send your suburb, preferred timing and four clear door photos. We will reply by SMS or email with the next step."
               : "Contact Adelaide's smart lock specialists for a clean, reliable retrofit."}

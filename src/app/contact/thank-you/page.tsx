@@ -26,7 +26,7 @@ export default async function ThankYouPage({ searchParams }: {
   {
     number: "01",
     title: "We review the details",
-    detail: isCameraKit ? "We review the equipment package and any coverage requirements you shared." : "We review the door, current lock, requested service and any photos you supplied.",
+    detail: isCameraKit ? "We review the package name, quantity and product enquiry you shared." : "We review the door, current lock, requested service and any photos you supplied.",
   },
   {
     number: "02",
