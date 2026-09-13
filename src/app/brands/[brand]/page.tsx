@@ -11,6 +11,8 @@ import { getOptionalPrice } from "@/lib/productPricing";
 
 interface BrandPageProps { params: Promise<{ brand: string }> }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return smartLockBrandPages.map((brand) => ({ brand: brand.slug }));
 }

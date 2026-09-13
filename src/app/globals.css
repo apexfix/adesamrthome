@@ -288,6 +288,8 @@ body:has(.site-header[data-menu-open="true"]) .mobile-contact-dock { display: no
   .hero-caption { min-height: 72px; }
 }
 .mobile-contact-dock { bottom: max(10px, env(safe-area-inset-bottom)); }
+/* Recovery pages provide their own destinations, including without scripts. */
+body:has([data-not-found]) :is(.mobile-contact-dock, .mobile-contact-spacer) { display: none; }
 .mobile-contact-dock[data-primary-visible="true"] { display: none; }
 .mobile-contact-dock[data-primary-visible="false"] { animation: contact-dock-in 220ms ease-out; }
 @media (max-width: 767px) {

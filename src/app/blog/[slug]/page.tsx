@@ -68,6 +68,8 @@ function plainText(value: string) {
     .trim();
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }

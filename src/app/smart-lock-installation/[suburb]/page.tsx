@@ -298,6 +298,8 @@ const steps = [
   ["04", "Install, test and set up", "The lock is fitted and tested, with basic user or app setup where supported."],
 ] as const;
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return serviceAreas.map((area) => ({ suburb: area.slug }));
 }

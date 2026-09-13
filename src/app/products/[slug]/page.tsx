@@ -64,6 +64,9 @@ function getCameraAttribute(product: Product, name: string) {
   return attribute ? getAttributeValues(attribute)[0] || "" : "";
 }
 
+// All published slugs are bundled locally; reject unknown paths before streaming.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return localProducts.map((product) => ({ slug: product.slug }));
 }

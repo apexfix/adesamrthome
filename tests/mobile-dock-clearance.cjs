@@ -51,7 +51,7 @@
         await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
         await dock.waitFor({ state: 'visible' });
         await dock.getByRole('link').first().focus();
-        assert.ok(await dock.isVisible(), 'Dock must not hide its own focused link');
+        assert.ok(await dock.isVisible(), JSON.stringify({ engine, mode, width, message: 'Dock must not hide its own focused link', state: await dock.evaluate(node => ({ active: document.activeElement?.outerHTML, display: getComputedStyle(node).display, primaryVisible: node.dataset.primaryVisible, formActive: node.dataset.formActive, scrollY, notFound: Boolean(document.querySelector('[data-not-found]')) })) }));
         await page.screenshot({ path: `${out}/${engine}-${mode}-${width}.png` });
         assert.deepEqual(errors, []);
         await page.close();
