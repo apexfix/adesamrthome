@@ -32,6 +32,7 @@ const api = require('@/lib/api');
 let fixture;
 api.getProduct = async () => fixture;
 const { ProductCard } = require('@/components/ProductCard');
+const { getProductStock } = require('@/lib/productStock');
 const { default: ProductPage, generateMetadata } = require('@/app/products/[slug]/page');
 
 (async () => {
@@ -70,11 +71,19 @@ const { default: ProductPage, generateMetadata } = require('@/app/products/[slug
       service_options: [{ name: 'Compact locks', price: '20010', description: 'Compact' }, { name: 'Standard 6068', price: '35099', description: 'Full size' }], current: '200.10' },
     { name: 'service-unknown', kind: 'service', prices: undefined, installed_price: undefined,
       service_options: [{ name: 'Compact smart lock / small lock body', price: '', description: 'Compact' }, { name: 'Full-size smart lock / standard 6068 mortise', price: '0', description: 'Full size' }], current: null },
+    { name: 'stock-available', in_stock: true, prices: { price: '55900' }, current: '559' },
+    { name: 'stock-unavailable', in_stock: false, prices: { price: '55900' }, current: '559' },
+    { name: 'stock-unknown', in_stock: undefined, prices: { price: '55900' }, current: '559' },
+    { name: 'image-missing-long-title', images: [], title: 'SmartLockWithAnUnusuallyLongUnbrokenModelIdentifierAndExtendedProductDescription',
+      in_stock: false, prices: { price: '55930', regular_price: '69999' }, current: '559.30' },
+    { name: 'service-stock-ignored', kind: 'service', in_stock: false, prices: { price: '20000' }, current: '200',
+      service_options: [{ name: 'Compact locks', price: '20000', description: 'Compact' }] },
   ];
   const output = 'output/product-pricing-verification';
   fs.mkdirSync(output, { recursive: true });
   for (const test of cases) {
-    fixture = { ...base, ...test, name: base.name };
+    fixture = { ...base, ...test, name: test.title || base.name };
+    if (test.name.startsWith('stock-') || test.title || test.name === 'service-stock-ignored') fixture.installed_price = undefined;
     const props = { params: Promise.resolve({ slug: fixture.slug }) };
     const html = renderToStaticMarkup(await ProductPage(props));
     const card = renderToStaticMarkup(React.createElement(ProductCard, { product: fixture }));
@@ -83,6 +92,17 @@ const { default: ProductPage, generateMetadata } = require('@/app/products/[slug
     const entity = schema.find(s => s['@type'] === (fixture.kind === 'service' ? 'Service' : 'Product'));
     assert.ok(entity, test.name);
     const label = priceLabel(test.current);
+    const stock = getProductStock(fixture);
+    assert.equal(stock?.label ?? null, fixture.kind !== 'service' && typeof fixture.in_stock === 'boolean'
+      ? fixture.in_stock ? 'In stock' : 'Out of stock' : null);
+    assert.equal(card.includes('data-product-stock'), Boolean(stock));
+    if (stock) assert.ok(card.includes(stock.label) && html.includes(stock.label));
+    if (fixture.kind !== 'service') assert.equal(entity.offers?.availability, test.current ? stock?.schema : undefined);
+    assert.doesNotMatch(card, /<button\b/);
+    if (fixture.images?.length === 0) {
+      assert.ok(card.includes('Image unavailable'));
+      assert.doesNotMatch(html, /placeholder\.jpg/);
+    }
     assert.ok(card.includes(label), `${test.name}: card price`);
     assert.ok(html.includes(label), `${test.name}: detail price`);
     if (fixture.kind === 'service') {

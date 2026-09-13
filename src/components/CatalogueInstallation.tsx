@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { GalleryImage } from "@/components/GalleryImage";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/types";
@@ -9,7 +9,7 @@ export function CatalogueInstallation({ product }: { product: Product }) {
   return (
     <div data-installation-listing className={`grid gap-5 border-y border-zinc-800 py-6 lg:items-center ${photo ? "grid-cols-[80px_1fr] sm:grid-cols-[140px_1fr] lg:grid-cols-[160px_1fr_1fr]" : "lg:grid-cols-2"}`}>
       {photo && <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md bg-zinc-950 sm:aspect-[4/3]">
-        <Image src={photo.src} alt={photo.alt || product.name} fill sizes="(max-width: 639px) 80px, 160px" className="object-contain" />
+        <GalleryImage key={photo.src} photo={{ src: photo.src, alt: photo.alt || product.name }} sizes="(max-width: 639px) 80px, 160px" className="object-contain" />
       </div>}
       <div className="min-w-0">
         <h3 className="text-xl font-bold leading-7 text-white"><Link prefetch={false} href={`/products/${product.slug}`} className="hover:text-[#d9b98f]">{product.name}</Link></h3>

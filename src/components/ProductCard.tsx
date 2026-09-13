@@ -1,9 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import type { Product } from "@/types";
 import { isSecurityCameraKit } from "@/lib/productType";
 import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
+import { GalleryImage } from "@/components/GalleryImage";
+import { getProductStock } from "@/lib/productStock";
 
 export function ProductCard({
   product,
@@ -25,60 +26,47 @@ export function ProductCard({
   const standardMortisePrice = getOptionalPrice(product, serviceOptions[1]?.price);
   const priceIncludesInstallation = product.price_includes_installation !== false;
 
-  // 处理图片和分类
-  const displayImage = product.images?.[0]?.src || "/placeholder.jpg";
+  const stock = getProductStock(product);
+  const displayImage = product.images?.[0]?.src || "";
   const displayCategory = isService
     ? "Installation Service"
-    : product.categories?.[0]?.name || "Smart Lock";
+    : product.categories?.[0]?.name || (isCameraKit ? "Security Camera Kit" : "Smart Lock");
 
   return (
     <Link 
       href={`/products/${product.slug || product.id}`}
       prefetch={prefetch}
-      className="liquid-glass-soft motion-card group relative flex flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/60"
+      className="product-card liquid-glass-soft motion-card group relative flex min-w-0 flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/60"
     >
       {/* 1. Image Section */}
-      <div className="aspect-square relative overflow-hidden bg-zinc-950">
-        <Image 
-          src={displayImage} 
-          alt={product.name || "Smart Lock"}
-          fill
-          loading={priority ? "eager" : "lazy"}
+      <div className="product-card-media aspect-square relative overflow-hidden bg-zinc-950">
+        <GalleryImage
+          key={displayImage}
+          photo={{ src: displayImage, alt: product.images?.[0]?.alt || product.name }}
+          eager={priority}
+          highPriority={priority}
           className="object-contain p-3"
           sizes={imageSizes}
         />
-        
-        {/* Sale Badge - 如果打折则显示 */}
-        {isOnSale && (
-          <div className="absolute top-4 right-4 bg-red-700 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest z-10">
-            Sale
-          </div>
-        )}
-
-        {/* Installation Badge */}
-        <div className="liquid-glass absolute left-3 top-3 z-10 flex max-w-[calc(100%-24px)] items-center gap-1.5 rounded-md border px-3 py-2">
-          <ShieldCheck className="w-3 h-3 text-[#c5a47e]" />
-          <span className="text-xs font-semibold text-white">
-            {isService
-              ? "Installation Only"
-              : isCameraKit
-                ? "2-Camera PoE Kit"
-              : priceIncludesInstallation
-                ? "Standard Install Included"
-                : "Installation Available"}
-          </span>
-        </div>
       </div>
 
       {/* 2. Content Section */}
       <div data-glass-highlight className="p-6 flex flex-col flex-1">
         <div className="flex-1 mb-6">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e] opacity-90">
-            {displayCategory}
-          </p>
+          <div data-product-badges className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <p className="break-words text-xs font-bold uppercase text-[#c5a47e] opacity-90">
+              {displayCategory}
+            </p>
+            {isOnSale && <span className="bg-red-700 px-2 py-1 text-xs font-bold text-white">Sale</span>}
+          </div>
           <h3 className="break-words text-lg font-bold leading-7 text-white transition-colors group-hover:text-[#c5a47e] md:text-xl">
             {product.name}
           </h3>
+          <p data-product-scope className="mt-3 flex items-start gap-1.5 text-xs font-semibold leading-5 text-zinc-300">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#c5a47e]" aria-hidden="true" />
+            <span>{isService ? "Installation Only" : isCameraKit ? "2-Camera PoE Kit" : priceIncludesInstallation ? "Standard Install Included" : "Installation Available"}</span>
+          </p>
+          {stock && <p data-product-stock className={`mt-3 text-sm font-semibold ${product.in_stock ? "text-emerald-400" : "text-amber-300"}`}>{stock.label}</p>}
         </div>
 
         {/* 3. Price and Action */}
@@ -97,7 +85,7 @@ export function ProductCard({
             </p>
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
               {/* 现价 */}
-              <p className="text-2xl font-black text-[#c5a47e]">
+              <p className="break-words text-2xl font-black text-[#c5a47e]">
                 {priceLabel(currentPrice)}
               </p>
               {/* 原价（仅在打折时显示） */}

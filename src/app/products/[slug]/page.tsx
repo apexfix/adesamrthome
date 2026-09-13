@@ -28,6 +28,7 @@ import type { Product, ProductAttribute, ProductImage } from "@/types";
 import { getSmartLockBrandUrl } from "@/lib/brandData";
 import { isSecurityCameraKit } from "@/lib/productType";
 import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
+import { getProductStock } from "@/lib/productStock";
 
 interface ProductPageProps {
   params: Promise<{
@@ -245,6 +246,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const isService = product.kind === "service";
   const isCameraKit = isSecurityCameraKit(product);
   const serviceOptions = product.service_options || [];
+  const stock = getProductStock(product);
   const hasSeparateInstallationPrice =
     product.price_includes_installation === false && installedPrice !== null;
   const hasReplacementWarranty = replacementWarrantySlugs.has(product.slug);
@@ -256,9 +258,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     : isCameraKit ? "/products/security-camera-kits" : "/products";
   const collectionName = isService ? "Installation Only" : isCameraKit ? "Security Camera Kits" : "Smart Locks";
   
-  const galleryImages = product.images && product.images.length > 0 
-    ? product.images 
-    : [{ src: "/placeholder.jpg", alt: product.name }];
+  const galleryImages = product.images || [];
   const detailImages = product.detail_images || [];
   const installationPhotos = installationPhotosBySlug[slug] || [];
   const productUrl = `${siteUrl}/products/${product.slug}`;
@@ -299,7 +299,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       url: productUrl,
       priceCurrency: product.prices?.currency_code || "AUD",
       price: currentPrice,
-      availability: product.in_stock === true ? "https://schema.org/InStock" : undefined,
+      availability: stock?.schema,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": `${siteUrl}/#business` },
       areaServed: {
@@ -555,11 +555,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="product-actions mt-4 flex flex-col gap-3">
-              <p className="text-sm text-emerald-400">
+              <p className={`text-sm ${stock ? product.in_stock ? "text-emerald-400" : "text-amber-300" : "text-zinc-300"}`}>
                 {isService
                   ? "Send photos before booking"
+                  : stock ? stock.label
                   : isCameraKit
-                    ? (product.in_stock ? "In stock now" : "Enquire about availability")
+                    ? "Enquire about availability"
                     : "Ask for current availability"}
               </p>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -693,7 +694,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
                 Product details
               </p>
-              <h2 className="mt-3 text-3xl font-black md:text-5xl">
+              <h2 className="mt-3 text-3xl font-black [overflow-wrap:anywhere] md:text-5xl">
                 Explore the <span className="text-[#c5a47e]">{product.name}</span>
               </h2>
             </div>
