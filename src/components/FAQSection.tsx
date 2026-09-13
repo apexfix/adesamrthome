@@ -1,8 +1,5 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { HelpCircle, Minus, Plus } from "lucide-react";
+import { HelpCircle, Plus } from "lucide-react";
 import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const faqs = [
@@ -74,7 +71,6 @@ const faqs = [
 ];
 
 export function FAQSection({ includeCameras = false }: { includeCameras?: boolean }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const displayedFaqs = includeCameras ? [faqs[0], faqs[8], faqs[9], ...cameraKitFaqs.slice(0, 4)] : faqs;
 
   const faqSchema = {
@@ -113,40 +109,15 @@ export function FAQSection({ includeCameras = false }: { includeCameras?: boolea
         </div>
 
         <div className="mt-10 divide-y divide-zinc-800 border-y border-zinc-800">
-          {displayedFaqs.map((faq, index) => {
-            const isOpen = activeIndex === index;
-
-            return (
-              <div
-                key={faq.question}
-                className={isOpen ? "bg-white/[0.035]" : "transition-colors hover:bg-white/[0.02]"}
-              >
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${index}`}
-                  onClick={() => setActiveIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 py-6 text-left"
-                >
-                  <span className="text-base font-semibold text-white md:text-lg">
-                    {faq.question}
-                  </span>
-
-                  <span className="glass-control flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-[#d9b98f]" aria-hidden="true">
-                    {isOpen ? (
-                      <Minus className="h-4 w-4" />
-                    ) : (
-                      <Plus className="h-4 w-4" />
-                    )}
-                  </span>
-                </button>
-
-                  <div id={`faq-answer-${index}`} hidden={!isOpen} className="max-w-4xl pb-6 pr-12">
-                    <p className="leading-7 text-zinc-400">{faq.answer}</p>
-                  </div>
-              </div>
-            );
-          })}
+          {displayedFaqs.map((faq, index) => (
+            <details key={faq.question} data-faq open={index === 0} className="group open:bg-white/[0.035]">
+              <summary className="flex min-h-16 w-full cursor-pointer list-none items-center justify-between gap-6 py-6 text-left">
+                <span className="text-base font-semibold text-white md:text-lg">{faq.question}</span>
+                <span className="glass-control flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-[#d9b98f]" aria-hidden="true"><Plus className="h-4 w-4 transition-transform group-open:rotate-45" /></span>
+              </summary>
+              <div className="max-w-4xl pb-6 pr-12"><p className="leading-7 text-zinc-400">{faq.answer}</p></div>
+            </details>
+          ))}
         </div>
 
         <div className="mt-12 grid gap-7 border-l-2 border-[#c5a47e] pl-6 md:grid-cols-[1fr_auto] md:items-center md:pl-8">

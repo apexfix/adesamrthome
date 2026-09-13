@@ -132,7 +132,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
           <ul className="space-y-4">{brand.highlights.map((item) => <li key={item} className="flex gap-3 text-zinc-300"><Check className="mt-1 h-5 w-5 shrink-0 text-[#d9b98f]" /><span>{item}</span></li>)}</ul>
         </section>
 
-        <section className="mt-16 max-w-4xl"><p className="text-xs font-bold uppercase text-[#d9b98f]">Common questions</p><h2 className="mt-3 text-3xl font-black">{brand.name} Smart Lock FAQ</h2><div className="mt-8 divide-y divide-zinc-800 border-y border-zinc-800">{brand.faqs.map((item) => <details key={item.question} className="group py-5"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold"><span>{item.question}</span><ChevronDown className="h-5 w-5 shrink-0 text-[#d9b98f] transition-transform group-open:rotate-180" aria-hidden="true" /></summary><p className="mt-3 leading-7 text-zinc-400">{item.answer}</p></details>)}</div></section>
+        <section className="mt-16 max-w-4xl"><p className="text-xs font-bold uppercase text-[#d9b98f]">Common questions</p><h2 className="mt-3 text-3xl font-black">{brand.name} Smart Lock FAQ</h2><div className="mt-8 divide-y divide-zinc-800 border-y border-zinc-800">{brand.faqs.map((item) => <details key={item.question} data-faq className="group py-5"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold"><span>{item.question}</span><ChevronDown className="h-5 w-5 shrink-0 text-[#d9b98f] transition-transform group-open:rotate-180" aria-hidden="true" /></summary><p className="mt-3 leading-7 text-zinc-400">{item.answer}</p></details>)}</div></section>
       </div>
     </main>
   );

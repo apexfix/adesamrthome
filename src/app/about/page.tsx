@@ -148,8 +148,8 @@ export default function AboutPage() {
           <h2 className="mt-3 text-3xl font-black md:text-5xl">A Clear Path From Door Check to Handover</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {process.map((item, index) => (
-              <article key={item.title} className="border-t border-zinc-700 pt-6">
-                <p className="text-xs font-bold text-[#d9b98f]">0{index + 1}</p>
+              <article key={item.title} data-process-step className="border-t border-zinc-700 pt-6">
+                <p data-step-number className="text-xs font-bold text-[#d9b98f]">0{index + 1}</p>
                 <h3 className="mt-3 text-xl font-bold">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-zinc-400">{item.detail}</p>
               </article>

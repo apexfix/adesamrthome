@@ -199,7 +199,7 @@ export default function SecurityCameraKitsPage() {
           </h2>
           <div className="mt-8 divide-y divide-zinc-800 border-y border-zinc-800">
             {cameraKitFaqs.map((item) => (
-              <details key={item.question} className="group py-6">
+              <details key={item.question} data-faq className="group py-6">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold text-white marker:content-none">
                   <span>{item.question}</span>
                   <ChevronDown className="h-5 w-5 shrink-0 text-[#c5a47e] transition-transform group-open:rotate-180" aria-hidden="true" />

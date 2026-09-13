@@ -462,11 +462,12 @@ export default function InstallationOnlyPage() {
             {steps.map((step, index) => (
               <article
                 key={step.number}
+                data-process-step
                 className={`py-8 md:px-7 ${
                   index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <p className="text-sm font-black text-[#d9b98f]">{step.number}</p>
+                <p data-step-number className="text-sm font-black text-[#d9b98f]">{step.number}</p>
                 <h3 className="mt-5 text-lg font-bold">{step.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{step.detail}</p>
               </article>
@@ -496,7 +497,7 @@ export default function InstallationOnlyPage() {
 
           <div className="mt-10 border-y border-slate-200">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
                   <ChevronDown className="h-5 w-5 shrink-0 text-[#8a6b48] transition-transform group-open:rotate-180" aria-hidden="true" />

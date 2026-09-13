@@ -97,6 +97,9 @@ body:has(.image-lightbox[open]) .mobile-contact-dock { display: none; }
 .site-footer summary { min-height: 44px; padding: 10px 0; cursor: pointer; color: #d4d4d8; font-weight: 600; }
 .site-footer summary:focus-visible { outline: 2px solid #d9b98f; outline-offset: 4px; }
 .site-footer details[open] > summary { color: #d9b98f; }
+[data-step-motion] [data-step-number] { transition: color 220ms ease, text-shadow 220ms ease; }
+[data-step-motion="ready"] [data-step-number] { color: #a1a1aa; }
+[data-step-motion="active"] [data-step-number] { color: #d9b98f; text-shadow: 0 0 12px rgb(217 185 143 / 25%); }
 @media (min-width: 768px) {
   .product-gallery-main { max-height: 460px; }
 }

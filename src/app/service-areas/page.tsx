@@ -293,7 +293,7 @@ export default function ServiceAreasPage() {
           </div>
           <div className="mt-10 border-y border-slate-200">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
                   <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">+</span>

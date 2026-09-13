@@ -597,8 +597,8 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
           </div>
           <ol className="mt-12 grid gap-px bg-zinc-800 md:grid-cols-4">
             {steps.map(([number, title, detailText]) => (
-              <li key={number} className="bg-black p-6 md:p-8">
-                <span className="text-sm font-black text-[#d9b98f]">{number}</span>
+              <li key={number} data-process-step className="bg-black p-6 md:p-8">
+                <span data-step-number className="text-sm font-black text-[#d9b98f]">{number}</span>
                 <h3 className="mt-5 text-lg font-black">{title}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{detailText}</p>
               </li>
@@ -648,7 +648,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
           </div>
           <div className="mt-10 border-y border-slate-200">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
                   <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">+</span>

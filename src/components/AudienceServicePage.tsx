@@ -330,11 +330,12 @@ export function AudienceServicePage({
             {process.map((item, index) => (
               <article
                 key={item.title}
+                data-process-step
                 className={`py-8 md:px-7 ${
                   index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <p className="text-sm font-black text-[#d9b98f]">{String(index + 1).padStart(2, "0")}</p>
+                <p data-step-number className="text-sm font-black text-[#d9b98f]">{String(index + 1).padStart(2, "0")}</p>
                 <h3 className="mt-5 text-lg font-bold">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{item.detail}</p>
               </article>
@@ -378,7 +379,7 @@ export function AudienceServicePage({
 
           <div className="mt-10 border-y border-slate-200">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
                   <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">

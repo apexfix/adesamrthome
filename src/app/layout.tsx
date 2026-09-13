@@ -5,6 +5,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileContactBar } from "@/components/MobileContactBar";
 import { SiteAnalytics } from "@/components/SiteAnalytics";
+import { DisclosureMotion } from "@/components/DisclosureMotion";
+import { ProcessStepMotion } from "@/components/ProcessStepMotion";
 import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
 import type { ProductNavigationRoutes } from "@/lib/navigation";
@@ -206,6 +208,8 @@ export default function RootLayout({
         <Footer />
         <MobileContactBar />
         <SiteAnalytics />
+        <DisclosureMotion />
+        <ProcessStepMotion />
       </body>
     </html>
   );

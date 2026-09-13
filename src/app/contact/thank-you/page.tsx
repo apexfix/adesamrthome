@@ -66,11 +66,12 @@ export default async function ThankYouPage({ searchParams }: {
             {nextSteps.map((step, index) => (
               <article
                 key={step.number}
+                data-process-step
                 className={`py-7 md:px-7 ${
                   index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <p className="text-sm font-black text-[#d9b98f]">{step.number}</p>
+                <p data-step-number className="text-sm font-black text-[#d9b98f]">{step.number}</p>
                 <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{step.detail}</p>
               </article>
