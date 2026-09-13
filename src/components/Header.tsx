@@ -20,6 +20,12 @@ const productLinks = [
   { name: "Security Camera Kits", href: "/products/security-camera-kits" },
   { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
 ];
+const primaryLinks = [
+  { name: "Smart Locks", href: "/products?category=smart-lock" },
+  { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
+  { name: "CCTV Kits", href: "/products/security-camera-kits" },
+];
+const moreLinks = [productLinks[0], productLinks[2], ...navLinks.filter(link => link.href !== "/gallery")];
 
 export function Header() {
   const pathname = usePathname();
@@ -74,26 +80,26 @@ export function Header() {
           </span>
         </Link>
         <nav aria-label="Main navigation" className="desktop-navigation items-center gap-1">
-          <Link href="/" className="header-link" aria-current={pathname === "/" ? "page" : undefined}>Home</Link>
+          {primaryLinks.map(link => (
+            <Link key={link.href} href={link.href} onClick={closeMenus} className="header-link whitespace-nowrap" aria-current={pathname === link.href ? "page" : undefined}>{link.name}</Link>
+          ))}
+          <Link href="/gallery" className="header-link" aria-current={pathname === "/gallery" ? "page" : undefined}>Gallery</Link>
           <div className="relative" onBlur={(event) => {
             if (!event.currentTarget.contains(event.relatedTarget)) setProductsOpen(false);
           }}>
             <button ref={productsButton} type="button" className="header-link flex items-center gap-2" aria-expanded={productsOpen} aria-controls="product-navigation" onClick={() => setProductsOpen(!productsOpen)}>
-              Products <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+              <span>More</span><ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
             </button>
             {productsOpen && (
-              <div id="product-navigation" className="liquid-glass absolute left-0 top-[calc(100%+16px)] w-64 rounded-lg border p-2">
-                {productLinks.map((link) => (
+              <div id="product-navigation" className="liquid-glass absolute right-0 top-[calc(100%+16px)] w-64 rounded-lg border p-2">
+                {moreLinks.map((link) => (
                   <Link key={link.href} href={link.href} onClick={closeMenus} className="flex min-h-12 items-center justify-between gap-3 rounded-md px-3 text-sm text-white/90 hover:bg-white/10">
-                    {link.name}<ArrowUpRight className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
+                    <span>{link.name}</span><ArrowUpRight className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
                   </Link>
                 ))}
               </div>
             )}
           </div>
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="header-link" aria-current={pathname.startsWith(link.href) ? "page" : undefined}>{link.name}</Link>
-          ))}
         </nav>
         <a href={smsHref} className="header-text-button glass-control hidden min-h-11 items-center gap-2 rounded-md border px-4 text-sm font-semibold sm:inline-flex">
           <MessageSquareText className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span>Text us</span>

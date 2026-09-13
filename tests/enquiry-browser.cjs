@@ -17,21 +17,28 @@
       });
       let responseMode = 'success';
       const posts = [];
-      await context.route('**/*', async route => {
-        const url = new URL(route.request().url());
-        if (url.origin !== new URL(base).origin) return route.abort();
-        if (url.pathname === '/api/contact') {
-          posts.push(route.request().postData() || '');
-          return route.fulfill({ status: responseMode === 'fail' ? 500 : 200,
-            contentType: 'application/json', body: JSON.stringify(responseMode === 'fail'
+      await context.exposeBinding('__mockEnquiry', async (_source, body) => {
+          posts.push(body);
+          return { status: responseMode === 'fail' ? 500 : 200,
+            body: JSON.stringify(responseMode === 'fail'
               ? { message: 'Simulated delivery failure' }
-              : responseMode === 'malformed' ? {} : { success: true, leadId: 'LOCAL-TEST' }) });
-        }
-        return route.continue();
+              : responseMode === 'malformed' ? {} : { success: true, leadId: 'LOCAL-TEST' }) };
+      });
+      await context.addInitScript(() => {
+        const originalFetch = window.fetch.bind(window);
+        window.fetch = async (input, init) => {
+          const url = new URL(input instanceof Request ? input.url : input, location.href);
+          if (url.pathname === '/api/contact') {
+            const result = await window.__mockEnquiry(await new Response(init.body).text());
+            return new Response(result.body, { status: result.status, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.origin !== location.origin) throw new Error('External fetch blocked in local test');
+          return originalFetch(input, init);
+        };
       });
       const page = await context.newPage();
       const pageErrors = [];
-      page.on('pageerror', e => pageErrors.push(e.message));
+      page.on('pageerror', e => pageErrors.push(`${page.url()}: ${e.message}`));
       const open = async suffix => {
         await page.waitForLoadState('networkidle');
         await page.goto(base + suffix, { waitUntil: 'networkidle' });
@@ -83,11 +90,14 @@
       await page.locator('[name=phone]').fill('0400000000');
       await submit.click();
       await page.waitForURL('**/contact/thank-you?service=installation-only');
+      await page.waitForLoadState('networkidle');
       for (const width of [360, 390, 430, 768, 1440]) {
-        await page.setViewportSize({ width, height: 900 });
         for (const service of ['supply-install', 'security-camera-kit']) {
-          await open(`/contact?service=${service}`);
-          const metrics = await page.evaluate(() => ({
+          const layoutPage = await context.newPage();
+          layoutPage.on('pageerror', e => pageErrors.push(`${layoutPage.url()}: ${e.message}`));
+          await layoutPage.setViewportSize({ width, height: 900 });
+          await layoutPage.goto(`${base}/contact?service=${service}`, { waitUntil: 'networkidle' });
+          const metrics = await layoutPage.evaluate(() => ({
             overflow: document.documentElement.scrollWidth > innerWidth,
             inputSize: getComputedStyle(document.querySelector('input[name=name]')).fontSize,
             buttons: [...document.querySelectorAll('form fieldset button')].map(b => ({ clipped: b.scrollWidth > b.clientWidth, height: b.getBoundingClientRect().height }))
@@ -97,8 +107,9 @@
           assert.ok(metrics.buttons.every(b => !b.clipped && b.height >= 44));
           results.push({ engine, width, service, ...metrics });
           if ([390, 1440].includes(width)) {
-            await page.screenshot({ path: `output/enquiry-verification/${engine}-${service}-${width}.png` });
+            await layoutPage.screenshot({ path: `output/enquiry-verification/${engine}-${service}-${width}.png` });
           }
+          await layoutPage.close();
         }
       }
       await open('/');

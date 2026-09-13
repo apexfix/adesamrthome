@@ -17,7 +17,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: { absolute: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home" },
+  title: { absolute: "Smart Lock Supply & Installation Adelaide | ADE Smart Home" },
   description:
     "Adelaide smart lock installation and Dahua CCTV camera kits. Installed locks from $699, installation-only from $200 and a 2-camera PoE kit for $443.",
   alternates: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home",
+    title: "Smart Lock Supply & Installation Adelaide | ADE Smart Home",
     description:
       "Adelaide smart lock installers offering installed-price products, installation-only service and practical Dahua security camera kits.",
     url: siteUrl,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Locks & Security Camera Kits Adelaide | ADE Smart Home",
+    title: "Smart Lock Supply & Installation Adelaide | ADE Smart Home",
     description:
       "Smart lock supply and installation, installation-only services and Dahua CCTV camera kits for Adelaide homes and small businesses.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],

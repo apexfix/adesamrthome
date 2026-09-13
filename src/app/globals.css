@@ -132,7 +132,7 @@ html { scroll-padding-top: 112px; }
 /* A separate backdrop lets the dropdown blur the page beyond the header. */
 .header-surface::before { content: ""; position: absolute; inset: -1px; z-index: -1; pointer-events: none; border: 1px solid rgba(255,255,255,0.24); border-radius: inherit; }
 .site-header[data-scrolled="true"] .header-surface::before { background-color: rgba(18,20,22,0.83); }
-.header-link { min-height: 44px; padding: 12px 14px; border-radius: 6px; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.82); }
+.header-link { min-height: 48px; padding: 12px 14px; border-radius: 6px; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.82); }
 .header-link:hover, .header-link[aria-current="page"], .header-link[aria-expanded="true"] { background: rgba(255,255,255,0.09); color: #f0d7b9; }
 .desktop-navigation { display: flex; }
 .mobile-menu-button, .mobile-navigation { display: none; }
@@ -141,6 +141,7 @@ html { scroll-padding-top: 112px; }
 .skip-link:focus { top: 0; z-index: 1; }
 .home-hero { min-height: 620px; height: min(820px, 86svh); }
 .mobile-contact-dock { bottom: max(10px, env(safe-area-inset-bottom)); }
+body:has(.quote-section :is(input, select, textarea):focus) .mobile-contact-dock { display: none; }
 .quote-section :is(input:not([type="checkbox"]):not([type="file"]), select, textarea) { font-size: 16px; border-radius: 6px; letter-spacing: 0; }
 .quote-section label, .quote-section legend { letter-spacing: 0; }
 @media (max-width: 1099px) {

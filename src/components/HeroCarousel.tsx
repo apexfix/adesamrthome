@@ -11,17 +11,18 @@ export function HeroCarousel() {
         <div className="w-full max-w-5xl">
           <p className="mb-4 text-sm font-bold text-[#e5c59f] sm:text-base">ADE SMART HOME · ADELAIDE</p>
           <h1 className="max-w-5xl text-3xl font-bold leading-[1.08] text-white min-[375px]:text-4xl sm:text-6xl lg:text-7xl">
-            Smart Locks &amp;<span className="block text-[#e5c59f]">Security Camera Kits</span>
+            Smart Lock Supply &amp;<span className="block text-[#e5c59f]">Installation in Adelaide</span>
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-100 sm:text-xl sm:leading-8">
-            Smarter entry. A clearer view of home. Explore installed smart locks,
-            installation-only services and Dahua CCTV camera kits in Adelaide.
+            Choose a lock supplied and installed by ADE Smart Home, or have a compatible
+            lock you already own fitted. We also supply Dahua CCTV camera kits.
           </p>
           <div className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
-            <Link href="#smart-locks" className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-4 text-sm font-bold text-black transition-colors hover:bg-white sm:min-h-14 sm:px-7 sm:text-base"><LockKeyhole className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Smart locks</span></Link>
-            <Link href="/products/security-camera-kits" className="liquid-glass flex min-h-12 items-center justify-center gap-2 rounded-md border px-4 text-sm font-bold text-white hover:border-white sm:min-h-14 sm:px-7 sm:text-base"><Cctv className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Camera kits</span></Link>
+            <Link href="/contact?service=supply-install#quote" className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-3 py-3 text-sm font-bold text-black transition-colors hover:bg-white sm:min-h-14 sm:px-7 sm:text-base"><Check className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Free Door Check</span></Link>
+            <Link href="#smart-locks" className="liquid-glass flex min-h-12 items-center justify-center gap-2 rounded-md border px-3 py-3 text-sm font-bold text-white hover:border-white sm:min-h-14 sm:px-7 sm:text-base"><LockKeyhole className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Browse Smart Locks</span></Link>
           </div>
-          <Link href="/smart-lock-installation-only-adelaide" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white hover:text-[#e5c59f]"><Wrench className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Already have a smart lock? We fit it.</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link>
+          <Link href="/products/security-camera-kits" className="mt-3 inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-white hover:text-[#e5c59f]"><Cctv className="h-4 w-4 shrink-0" aria-hidden="true" /><span>View Camera Kits</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link>
+          <div><Link href="/smart-lock-installation-only-adelaide" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-white hover:text-[#e5c59f]"><Wrench className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Already have a smart lock? We fit it.</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link></div>
           <div className="mt-8 hidden flex-wrap gap-x-7 gap-y-3 border-t border-white/25 pt-6 text-sm text-zinc-100 sm:flex">
             {["Adelaide local support", "Clear product & installation prices", "SMS & email enquiries"].map(item => <span key={item} className="inline-flex items-center gap-2"><Check className="h-4 w-4 text-[#e5c59f]" aria-hidden="true" />{item}</span>)}
           </div>
