@@ -22,6 +22,7 @@ Local preview only, 14 September 2026. No deployment or real enquiry was sent.
 - `tests/contact-errors-browser.cjs`: four affected-field/error-separation flows passed.
 - `tests/enquiry-dark-browser.cjs`: 72 layouts/state checks passed; screenshots regenerated and Chrome failure screenshot inspected. Element captures may include fixed-header overlays from screenshot scrolling; geometry checks are separate.
 - Production build and scoped ESLint passed.
+- Follow-up high-contrast regression: 12 cases passed (six Chrome forced-palette cases, six WebKit media-only cases). Site inventory: 58 pages, 206 internal links, 123 local images, no reported issues.
 - Evidence: `output/enquiry-delivery/results.json`, `output/enquiry-dark/`, `output/enquiry-verification/results.json`.
 
 ## Limits
