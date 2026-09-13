@@ -498,7 +498,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
           {/* 左侧：图片展示 */}
           <div className="product-media relative min-w-0">
-            <ProductGallery images={galleryImages} square={isCameraKit || detailImages.length > 0} />
+            <ProductGallery key={product.slug} images={galleryImages} square={isCameraKit || detailImages.length > 0} />
             {isOnSale && (
               <div className="absolute right-5 top-5 z-20 bg-red-700 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-white">
                 Special Offer
@@ -732,7 +732,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </section>
         )}
 
-        <InstallationPhotoStrip photos={installationPhotos} />
+        <InstallationPhotoStrip key={product.slug} photos={installationPhotos} />
 
         {/* 【新增】：关联安装案例区域 */}
         {relatedStories.length > 0 && (

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Camera, MapPin, X, ZoomIn } from "lucide-react";
+import { ArrowRight, Camera, MapPin, ZoomIn } from "lucide-react";
+import { GalleryImage } from "@/components/GalleryImage";
+import { ImageLightbox } from "@/components/ImageLightbox";
 import { siteUrl } from "@/lib/seoData";
 import { installationProjects as projects } from "@/lib/installationProjects";
 
@@ -35,22 +36,8 @@ const breadcrumbSchema = {
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<(typeof projects)[number] | null>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const photoTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const filteredProjects = filter === "All" ? projects : projects.filter(project => project.category === filter);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!selectedProject || !dialog) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    dialog.showModal();
-    return () => {
-      dialog.close();
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [selectedProject]);
 
   return (
     <main className="min-h-screen bg-zinc-950 pb-16 pt-28 md:pb-24 md:pt-32">
@@ -84,8 +71,8 @@ export default function GalleryPage() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredProjects.map((project, index) => (
             <article key={project.id} className="liquid-glass-soft flex min-w-0 flex-col overflow-hidden rounded-md border">
-              <button type="button" onClick={event => { photoTriggerRef.current = event.currentTarget; setSelectedProject(project); }} aria-label={`View full photo: ${project.title}`} className="group relative block aspect-[4/5] w-full overflow-hidden bg-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#c5a47e]">
-                <Image src={project.image} alt={`${project.title}: ${project.description}`} fill sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1279px) 46vw, 460px" className="object-contain" loading={index === 0 ? "eager" : "lazy"} />
+              <button type="button" onClick={event => { event.currentTarget.focus({ preventScroll: true }); setSelectedIndex(index); }} aria-label={`View full photo: ${project.title}`} className="group relative block aspect-[4/5] w-full overflow-hidden bg-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#c5a47e]">
+                <GalleryImage key={project.image} photo={{ src: project.image, alt: `${project.title}: ${project.description}` }} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1279px) 46vw, 460px" className="object-contain" eager={index === 0} />
                 <span title="View full photo" className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-md border border-white/30 bg-black/75 text-white group-hover:bg-black"><ZoomIn className="h-5 w-5" aria-hidden="true" /></span>
               </button>
               <div className="flex flex-1 flex-col p-5 md:p-6">
@@ -113,16 +100,7 @@ export default function GalleryPage() {
         </section>
       </div>
 
-      <dialog ref={dialogRef} onClose={() => { setSelectedProject(null); photoTriggerRef.current?.focus({ preventScroll: true }); }} aria-labelledby="installation-photo-title" className="fixed inset-0 m-auto max-h-[94dvh] w-[calc(100%-24px)] max-w-5xl overflow-auto rounded-md border border-zinc-700 bg-zinc-950 p-4 text-white shadow-2xl backdrop:bg-black/85 md:p-6">
-        {selectedProject && <>
-          <div className="mb-4 flex items-start justify-between gap-4">
-            <h2 id="installation-photo-title" className="text-lg font-semibold md:text-xl">{selectedProject.title}</h2>
-            <button type="button" onClick={() => dialogRef.current?.close()} aria-label="Close photo" title="Close photo" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-zinc-600 hover:bg-zinc-800"><X className="h-5 w-5" aria-hidden="true" /></button>
-          </div>
-          <div className="relative h-[62dvh] w-full"><Image src={selectedProject.image} alt={selectedProject.description} fill sizes="(max-width: 1024px) 90vw, 980px" className="object-contain" /></div>
-          <p className="mt-4 text-sm leading-6 text-zinc-300">{selectedProject.description}</p>
-        </>}
-      </dialog>
+      {selectedIndex !== null && <ImageLightbox photos={filteredProjects.map(project => ({ src: project.image, alt: `${project.title}: ${project.description}` }))} index={selectedIndex} onIndexChange={setSelectedIndex} onClose={() => setSelectedIndex(null)} label="Installation gallery preview" />}
     </main>
   );
 }

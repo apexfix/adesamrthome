@@ -1,210 +1,67 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { shouldReduceVisualEffects } from "@/lib/visualEffects";
+import { useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { GalleryImage, type GalleryPhoto } from "@/components/GalleryImage";
+import { ImageLightbox } from "@/components/ImageLightbox";
+import { useGalleryScroller } from "@/components/useGalleryScroller";
 
-interface InstallationPhoto {
-  src: string;
-  alt: string;
-}
-
-export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[] }) {
-  const [selectedPhoto, setSelectedPhoto] = useState<InstallationPhoto | null>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const dragState = useRef({ active: false, moved: false, startX: 0, scrollLeft: 0 });
-
-  const scrollPhotos = (direction: "left" | "right") => {
-    const scroller = scrollerRef.current;
-
-    if (!scroller) {
-      return;
-    }
-
-    scroller.scrollBy({
-      left: direction === "left" ? -320 : 320,
-      behavior: shouldReduceVisualEffects() ? "instant" : "smooth",
-    });
+export function InstallationPhotoStrip({ photos }: { photos: GalleryPhoto[] }) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const { scrollerRef, edges, scroll } = useGalleryScroller(photos.length);
+  const drag = useRef({ active: false, moved: false, startX: 0, scrollLeft: 0 });
+  const finishDrag = () => {
+    drag.current.active = false;
+    if (scrollerRef.current) scrollerRef.current.dataset.dragging = "false";
   };
+  if (!photos.length) return null;
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const scroller = scrollerRef.current;
-
-    if (!scroller) {
-      return;
-    }
-
-    dragState.current = {
-      active: true,
-      moved: false,
-      startX: event.clientX,
-      scrollLeft: scroller.scrollLeft,
-    };
-    // Keep clicks on the photo button while drag events still bubble to the scroller.
-    const photoButton = event.target instanceof Element ? event.target.closest("button") : null;
-    (photoButton || scroller).setPointerCapture(event.pointerId);
-  };
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const scroller = scrollerRef.current;
-
-    if (!scroller || !dragState.current.active) {
-      return;
-    }
-
-    const distance = event.clientX - dragState.current.startX;
-
-    if (Math.abs(distance) > 6) {
-      dragState.current.moved = true;
-    }
-
-    scroller.scrollLeft = dragState.current.scrollLeft - distance;
-  };
-
-  const handlePointerUp = () => {
-    dragState.current.active = false;
-  };
-
-  const handlePhotoClick = (photo: InstallationPhoto) => {
-    if (dragState.current.moved) {
-      dragState.current.moved = false;
-      return;
-    }
-
-    setSelectedPhoto(photo);
-  };
-
-  useEffect(() => {
-    if (!selectedPhoto) {
-      return;
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedPhoto(null);
-      }
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [selectedPhoto]);
-
-  if (photos.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <section className="mt-24 border-t border-zinc-800 pt-20">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
-          <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-              Real Installations
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Adelaide On-Door Photos
-            </h2>
-          </div>
-          <p className="text-zinc-500 max-w-xl text-sm leading-relaxed">
-            Real front doors, real retrofits, and real finish quality from local Adelaide installations.
-          </p>
+  return <>
+    <section className="mt-24 border-t border-zinc-800 pt-20">
+      <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="mb-3 text-xs font-bold uppercase text-[#c5a47e]">Real Installations</p>
+          <h2 className="text-3xl font-bold text-white md:text-4xl">Adelaide On-Door Photos</h2>
         </div>
-
-        <div className="flex justify-end gap-3 mb-5">
-          <button
-            type="button"
-            onClick={() => scrollPhotos("left")}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/70 text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
-            aria-label="Scroll installation photos left"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollPhotos("right")}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/70 text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
-            aria-label="Scroll installation photos right"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+        <p className="max-w-xl text-sm leading-relaxed text-zinc-500">Real front doors, real retrofits, and real finish quality from local Adelaide installations.</p>
+      </div>
+      <div className="mb-5 flex justify-end gap-3">
+        <button type="button" className="gallery-scroll-button" onClick={() => scroll("left")} disabled={!edges.left} aria-label="Scroll installation photos left" title="Previous installation photos"><ChevronLeft aria-hidden="true" /></button>
+        <button type="button" className="gallery-scroll-button" onClick={() => scroll("right")} disabled={!edges.right} aria-label="Scroll installation photos right" title="Next installation photos"><ChevronRight aria-hidden="true" /></button>
+      </div>
+      <div ref={scrollerRef} className="installation-photo-scroller gallery-scroller no-scrollbar -mx-4 cursor-grab select-none overflow-x-auto px-4 pb-2 active:cursor-grabbing"
+        onPointerDown={event => {
+          const node = scrollerRef.current;
+          if (!node || event.pointerType !== "mouse" || event.button !== 0) return;
+          drag.current = { active: true, moved: false, startX: event.clientX, scrollLeft: node.scrollLeft };
+          node.dataset.dragging = "true";
+          const target = event.target instanceof Element ? event.target.closest("button") : null;
+          (target || node).setPointerCapture(event.pointerId);
+        }}
+        onPointerMove={event => {
+          const node = scrollerRef.current;
+          if (!node || !drag.current.active) return;
+          const distance = event.clientX - drag.current.startX;
+          if (Math.abs(distance) > 6) { drag.current.moved = true; event.preventDefault(); }
+          if (drag.current.moved) node.scrollLeft = drag.current.scrollLeft - distance;
+        }}
+        onPointerUp={finishDrag} onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}>
+        <div className="flex gap-4">
+          {photos.map((photo, index) => <button key={photo.src} type="button"
+            onClick={event => {
+              if (event.detail !== 0 && drag.current.moved) { drag.current.moved = false; return; }
+              drag.current.moved = false;
+              event.currentTarget.focus({ preventScroll: true });
+              setSelectedIndex(index);
+            }}
+            className="gallery-snap-item liquid-glass-soft group relative aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-md border text-left md:w-[260px]"
+            aria-label={`Open photo: ${photo.alt}`}>
+            <GalleryImage key={photo.src} photo={photo} className="object-cover" sizes="260px" />
+            <span className="gallery-zoom-icon" aria-hidden="true"><ZoomIn size={20} /></span>
+          </button>)}
         </div>
-
-        <div
-          ref={scrollerRef}
-          className="-mx-4 overflow-x-auto px-4 pb-2 no-scrollbar cursor-grab active:cursor-grabbing select-none touch-pan-x"
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-        >
-          <div className="flex gap-4">
-            {photos.map((photo) => (
-              <button
-                key={photo.src}
-                type="button"
-                onClick={() => handlePhotoClick(photo)}
-                className="liquid-glass-soft group relative aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-md border text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e] md:w-[260px]"
-                aria-label={`Open photo: ${photo.alt}`}
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="260px"
-                />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-3 pt-10 text-xs font-bold uppercase tracking-[0.1em] text-white/80 opacity-0 transition-opacity group-hover:opacity-100">
-                  View Photo
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {selectedPhoto && (
-        <div
-          className="installation-photo-dialog fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Installation photo preview"
-        >
-          <button
-            type="button"
-            onClick={() => setSelectedPhoto(null)}
-            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/70 text-white transition-colors hover:bg-white hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a47e]"
-            aria-label="Close photo preview"
-          >
-            <X className="h-5 w-5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSelectedPhoto(null)}
-            className="absolute inset-0 cursor-zoom-out"
-            aria-label="Close photo preview"
-          />
-
-          <div className="relative mx-auto flex h-full max-h-screen w-full max-w-6xl items-center justify-center p-4 md:p-8 pointer-events-none">
-            <div className="relative h-full max-h-[88vh] w-full">
-              <Image
-                src={selectedPhoto.src}
-                alt={selectedPhoto.alt}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+      </div>
+    </section>
+    {selectedIndex !== null && <ImageLightbox photos={photos} index={selectedIndex} onIndexChange={setSelectedIndex} onClose={() => setSelectedIndex(null)} label="Installation photo preview" />}
+  </>;
 }
