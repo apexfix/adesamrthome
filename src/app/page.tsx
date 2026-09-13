@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
+import { RevealGroup } from "@/components/RevealGroup";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
@@ -134,11 +135,11 @@ export default async function Home() {
               Browse smart locks <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {featuredLocks.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
+          </RevealGroup>
           <div className="mt-10 flex justify-center">
             <Link
               href="/products"

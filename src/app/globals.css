@@ -183,7 +183,16 @@ html { scroll-padding-top: 112px; }
   transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 .glass-control:hover { background-color: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.5); }
-.glass-control:active { transform: translateY(1px); }
+.motion-card { transition: translate 220ms ease, scale 140ms ease, border-color 220ms ease; }
+.motion-card:active { scale: .98; }
+:is(.hero-primary-cta, .hero-browse-cta, [data-product-enquiry], button[type="submit"], a.glass-control, button.glass-control) { transition: scale 140ms ease, border-color 220ms ease, background-color 220ms ease; }
+:is(.hero-primary-cta, .hero-browse-cta, [data-product-enquiry], button[type="submit"], a.glass-control, button.glass-control):active:not(:disabled) { scale: .98; }
+[data-glass-highlight] { position: relative; isolation: isolate; }
+[data-glass-highlight]::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; background: linear-gradient(115deg, transparent 30%, rgb(217 185 143 / 12%) 50%, transparent 70%); background-size: 220% 100%; background-position: var(--shine-x, 50%) 0; transition: background-position 160ms ease, opacity 160ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .motion-card:hover { translate: 0 -4px; }
+  [data-highlight-active="true"]::before { opacity: 1; }
+}
 .site-header { position: fixed; z-index: 80; top: 16px; left: 0; right: 0; width: calc(100% - 40px); max-width: 1420px; min-height: 72px; margin: 0 auto; animation: header-enter 320ms ease-out; }
 @keyframes header-enter { from { transform: translateY(-6px); } to { transform: translateY(0); } }
 .site-header[data-entered="true"] { animation: none; }
@@ -346,6 +355,8 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
   }
   .glass-control { background: #303236; box-shadow: none; }
   .glass-control:active { transform: none; }
+  .motion-card, .hero-primary-cta, .hero-browse-cta, [data-product-enquiry], button[type="submit"], a.glass-control, button.glass-control { translate: none !important; scale: none !important; }
+  [data-glass-highlight]::before { display: none; }
   .installation-photo-dialog { background: #09090b; }
 }
 
@@ -366,5 +377,7 @@ html[data-visual-effects="reduced"] {
   .liquid-glass-light { background: #ffffff; box-shadow: none; }
   .glass-control { background: #303236; box-shadow: none; }
   .glass-control:active { transform: none; }
+  .motion-card, .hero-primary-cta, .hero-browse-cta, [data-product-enquiry], button[type="submit"], a.glass-control, button.glass-control { translate: none !important; scale: none !important; }
+  [data-glass-highlight]::before { display: none; }
   .installation-photo-dialog { background: #09090b; }
 }

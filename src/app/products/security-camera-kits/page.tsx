@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronDown, ChevronRight, MessageSquareText } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
+import { RevealGroup } from "@/components/RevealGroup";
 import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
 import { businessInfo, siteUrl } from "@/lib/seoData";
@@ -136,11 +137,11 @@ export default function SecurityCameraKitsPage() {
           <h2 id="available-kits" className="mb-8 text-2xl font-bold">
             Available <span className="text-[#c5a47e]">Packages</span>
           </h2>
-          <div className="grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2">
+          <RevealGroup className="grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2">
             {cameraKits.map((product, index) => (
               <ProductCard key={product.id} product={product} priority={index === 0} imageSizes="(max-width: 639px) 100vw, (max-width: 1100px) 50vw, 500px" />
             ))}
-          </div>
+          </RevealGroup>
         </section>
 
         <section className="mt-14 max-w-5xl" aria-labelledby="compare-kits">

@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
+import { RevealGroup } from "@/components/RevealGroup";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
@@ -328,11 +329,11 @@ export default async function ProductsPage(props: {
 
         {/* 产品网格展示 */}
         {displayedProducts.length > 0 ? (
-          <div className={isCameraKitsPage ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
+          <RevealGroup className={isCameraKitsPage ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
+          </RevealGroup>
         ) : (
           <div className="text-center py-32 text-zinc-500 border border-zinc-900 rounded-md bg-zinc-900/50 max-w-3xl mx-auto">
             <p className="text-xl">No products found in this category.</p>

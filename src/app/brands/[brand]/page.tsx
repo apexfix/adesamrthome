@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Camera, Check, ChevronDown, ChevronRight, MessageSquareText } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
+import { RevealGroup } from "@/components/RevealGroup";
 import { getProducts } from "@/lib/api";
 import { getSmartLockBrand, isProductFromBrand, smartLockBrandPages } from "@/lib/brandData";
 import { businessInfo, siteUrl } from "@/lib/seoData";
@@ -109,7 +110,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
             <div><p className="text-xs font-bold uppercase text-[#d9b98f]">Current range</p><h2 id="models-heading" className="mt-2 text-3xl font-black">{singleProduct ? `${brand.name} Smart Lock` : `Compare ${brand.name} Models`}</h2></div>
             <p className="text-sm text-zinc-400">{products.length} {products.length === 1 ? "model" : "models"} listed</p>
           </div>
-          <div className={singleProduct ? "grid items-start gap-10 lg:grid-cols-2 lg:gap-16" : "grid gap-7 sm:grid-cols-2 lg:grid-cols-3"}>
+          <RevealGroup className={singleProduct ? "grid items-start gap-10 lg:grid-cols-2 lg:gap-16" : "grid gap-7 sm:grid-cols-2 lg:grid-cols-3"}>
             {products.map((product,index) => <ProductCard key={product.id} product={product} priority={index === 0} imageSizes={singleProduct ? "(max-width: 1023px) 100vw, 580px" : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 390px"} />)}
             {singleProduct && lockOnlyPrice !== null && installedPrice !== null && (
               <div className="py-3 lg:py-8">
@@ -124,7 +125,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
                 <p className="mt-6 text-base leading-7 text-zinc-400">Already own a compatible lock? <Link href="/smart-lock-installation-only-adelaide" className="text-[#d9b98f] underline underline-offset-4">See installation-only prices</Link>.</p>
               </div>
             )}
-          </div>
+          </RevealGroup>
         </section>
 
         <section className="mt-20 grid gap-10 border-y border-zinc-800 py-12 lg:grid-cols-[1.1fr_0.9fr]">

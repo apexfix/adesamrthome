@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RevealGroup } from "@/components/RevealGroup";
 import { ArrowRight, Cctv, MapPin, PackageCheck, Wrench } from "lucide-react";
 
 const pathways = [
@@ -48,7 +49,7 @@ export function ServicePathways() {
           </p>
         </div>
 
-        <div className="grid border-y border-zinc-800 lg:grid-cols-3">
+        <RevealGroup className="grid border-y border-zinc-800 lg:grid-cols-3">
           {pathways.map((pathway, index) => {
             const Icon = pathway.icon;
 
@@ -79,7 +80,7 @@ export function ServicePathways() {
               </article>
             );
           })}
-        </div>
+        </RevealGroup>
 
         <Link
           href="/service-areas"

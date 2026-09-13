@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RevealGroup } from "@/components/RevealGroup";
 import { ArrowRight, Building2, HardHat, Home, Users } from "lucide-react";
 
 const audiences = [
@@ -43,7 +44,7 @@ export function AudiencePathways() {
           Start with the route that matches your project.
         </p>
 
-        <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2 lg:grid-cols-4">
+        <RevealGroup className="mt-12 grid border-y border-zinc-800 md:grid-cols-2 lg:grid-cols-4">
           {audiences.map(({ icon: Icon, title, detail, href }, index) => (
             <Link
               key={href}
@@ -62,7 +63,7 @@ export function AudiencePathways() {
               </span>
             </Link>
           ))}
-        </div>
+        </RevealGroup>
       </div>
     </section>
   );

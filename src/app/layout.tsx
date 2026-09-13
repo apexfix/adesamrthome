@@ -7,6 +7,7 @@ import { MobileContactBar } from "@/components/MobileContactBar";
 import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { DisclosureMotion } from "@/components/DisclosureMotion";
 import { ProcessStepMotion } from "@/components/ProcessStepMotion";
+import { GlassHighlight } from "@/components/GlassHighlight";
 import { localProducts } from "@/lib/localProducts";
 import { isSecurityCameraKit } from "@/lib/productType";
 import type { ProductNavigationRoutes } from "@/lib/navigation";
@@ -210,6 +211,7 @@ export default function RootLayout({
         <SiteAnalytics />
         <DisclosureMotion />
         <ProcessStepMotion />
+        <GlassHighlight />
       </body>
     </html>
   );

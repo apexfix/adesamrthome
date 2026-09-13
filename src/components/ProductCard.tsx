@@ -46,7 +46,7 @@ export function ProductCard({
   return (
     <Link 
       href={`/products/${product.slug || product.id}`}
-      className="liquid-glass-soft group relative flex flex-col overflow-hidden rounded-md border transition-colors duration-300 hover:border-[#c5a47e]/60"
+      className="liquid-glass-soft motion-card group relative flex flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/60"
     >
       {/* 1. Image Section */}
       <div className="aspect-square relative overflow-hidden bg-zinc-950">
@@ -55,7 +55,7 @@ export function ProductCard({
           alt={product.name || "Smart Lock"}
           fill
           loading={priority ? "eager" : "lazy"}
-          className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+          className="object-contain p-3"
           sizes={imageSizes}
         />
         
@@ -82,7 +82,7 @@ export function ProductCard({
       </div>
 
       {/* 2. Content Section */}
-      <div className="p-6 flex flex-col flex-1">
+      <div data-glass-highlight className="p-6 flex flex-col flex-1">
         <div className="flex-1 mb-6">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-[#c5a47e] opacity-90">
             {displayCategory}
