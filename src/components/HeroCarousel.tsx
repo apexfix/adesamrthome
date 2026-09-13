@@ -5,25 +5,25 @@ import type { HeroSlide } from "@/lib/heroCarousel";
 
 const slides: HeroSlide[] = [
   {
-    id: "supply-install", title: "Smart locks, supplied & installed.",
-    description: "Local product advice and installation.",
-    href: "/contact?service=supply-install#quote",
-    src: "/img/hero/kaadas-product-composition-v1.webp",
-    alt: "Product composition of Kaadas K70 SE front and rear smart lock panels",
+    id: "v5max", title: "Lockin V5 MAX",
+    description: "A$1,350 with standard installation.",
+    href: "/products/lockin-v5-max-smart-lock",
+    src: "/img/hero/lockin-v5max-composition-v1.webp",
+    alt: "Lockin V5 MAX black smart lock product composition",
   },
   {
-    id: "installation-only", title: "Already have a smart lock?",
-    description: "We fit compatible locks you already own.",
-    href: "/contact?service=installation-only#quote",
-    src: "/img/installations/auslock-old-door-adelaide/auslock-smart-lock-side-view.jpg",
-    alt: "Open timber door showing a fitted Auslock smart lock and mortise cutout",
+    id: "x9", title: "Lockin X9",
+    description: "A$699 with standard installation.",
+    href: "/products/lockin-x9-smart-lock",
+    src: "/img/hero/lockin-x9-composition-v1.webp",
+    alt: "Lockin X9 black smart lock front and rear product composition",
   },
   {
-    id: "camera-kits", title: "CCTV camera kits.",
-    description: "Equipment supply only.",
-    href: "/products/security-camera-kits",
-    src: "/img/hero/cctv-equipment-composition-v1.webp",
-    alt: "Product composition of two Dahua turret cameras and one recorder",
+    id: "installation-only", title: "Smart lock installation only",
+    description: "6068 locks A$350; compact locks A$200.",
+    href: "/products/smart-lock-installation-only-service",
+    src: "/img/hero/installation-only-user-poster-v1.webp",
+    alt: "ADE Smart Home installation-only service poster: A$350 for a customer-supplied full-size smart lock",
   },
 ];
 

@@ -156,16 +156,29 @@ html { scroll-padding-top: 112px; }
 }
 .glass-control:hover { background-color: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.5); }
 .glass-control:active { transform: translateY(1px); }
-.site-header { position: fixed; z-index: 80; top: 16px; left: 0; right: 0; width: calc(100% - 40px); max-width: 1420px; margin: 0 auto; }
-.header-surface { position: relative; z-index: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; }
+.site-header { position: fixed; z-index: 80; top: 16px; left: 0; right: 0; width: calc(100% - 40px); max-width: 1420px; min-height: 72px; margin: 0 auto; animation: header-enter 320ms ease-out; }
+@keyframes header-enter { from { transform: translateY(-6px); } to { transform: translateY(0); } }
+.site-header[data-entered="true"] { animation: none; }
+.header-surface { position: relative; z-index: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; padding: 11px 18px; border: 1px solid transparent; border-radius: 8px; transition: min-height 220ms ease, padding 220ms ease; }
+.site-header[data-scrolled="true"] .header-surface { min-height: 64px; padding-top: 7px; padding-bottom: 7px; }
 /* A separate backdrop lets the dropdown blur the page beyond the header. */
 .header-surface::before { content: ""; position: absolute; inset: -1px; z-index: -1; pointer-events: none; border: 1px solid rgba(255,255,255,0.24); border-radius: inherit; }
 .site-header[data-scrolled="true"] .header-surface::before { background-color: rgba(18,20,22,0.83); }
-.header-link { min-height: 48px; padding: 12px 14px; border-radius: 6px; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.82); }
-.header-link:hover, .header-link[aria-current="page"], .header-link[aria-expanded="true"] { background: rgba(255,255,255,0.09); color: #f0d7b9; }
-.desktop-navigation { display: flex; }
+.header-link { position: relative; z-index: 1; min-height: 48px; padding: 12px 14px; border-radius: 6px; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.82); }
+.header-link:hover, .header-link[aria-expanded="true"] { background: rgba(255,255,255,0.09); color: #f0d7b9; }
+.header-link[data-nav-active="true"] { background: #e5c59f; color: #111113; }
+.desktop-navigation[data-indicator-ready="true"] .header-link[data-nav-active="true"] { background: transparent; }
+.desktop-navigation { position: relative; isolation: isolate; display: flex; }
+.header-active-indicator { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; visibility: hidden; border-radius: 6px; background: #e5c59f; }
+.desktop-navigation[data-indicator-ready="true"] .header-active-indicator { visibility: visible; transition: transform 220ms cubic-bezier(.2,.8,.2,1), width 220ms ease, height 220ms ease; }
+.secondary-header-link[aria-current], .mobile-navigation a[aria-current] { background: #e5c59f; color: #111113; }
+.secondary-header-link[aria-current] svg, .mobile-navigation a[aria-current] svg { color: currentColor; }
+#product-navigation { max-height: calc(100dvh - 108px - env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; }
+.liquid-glass:where(.mobile-navigation, #product-navigation) { background-color: rgba(18,20,22,0.96); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); }
 .mobile-menu-button, .mobile-navigation { display: none; }
-.mobile-navigation { max-height: calc(100dvh - 112px); }
+.mobile-navigation { max-height: calc(100dvh - 112px - env(safe-area-inset-bottom)); overscroll-behavior: contain; }
+.mobile-navigation a { min-height: 48px; flex-shrink: 0; }
+body:has(.site-header[data-menu-open="true"]) .mobile-contact-dock { display: none; }
 .skip-link { position: absolute; top: -100px; padding: 12px 20px; background: white; color: black; }
 .skip-link:focus { top: 0; z-index: 1; }
 .home-hero { background: #09090b; }
@@ -273,8 +286,8 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
   .header-text-button { margin-left: auto; }
 }
 @media (max-width: 639px) {
-  .site-header { top: 8px; width: calc(100% - 24px); }
-  .header-surface { min-height: 68px; padding: 8px 10px; gap: 10px; }
+  .site-header { top: 8px; width: calc(100% - 24px); min-height: 68px; }
+  .header-surface { min-height: 68px; padding: 9px 10px; gap: 10px; }
   .home-hero { height: auto; min-height: 0; }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

@@ -5,6 +5,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileContactBar } from "@/components/MobileContactBar";
 import { SiteAnalytics } from "@/components/SiteAnalytics";
+import { localProducts } from "@/lib/localProducts";
+import { isSecurityCameraKit } from "@/lib/productType";
+import type { ProductNavigationRoutes } from "@/lib/navigation";
 import {
   businessInfo,
   coreServices,
@@ -177,6 +180,11 @@ const websiteSchema = {
   },
 };
 
+const productNavigation: ProductNavigationRoutes = Object.fromEntries(localProducts.map(product => [
+  `/products/${product.slug}`,
+  product.slug === "smart-lock-installation-only-service" ? "installation" : isSecurityCameraKit(product) ? "cctv" : "locks",
+]));
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -193,7 +201,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        <Header />
+        <Header productNavigation={productNavigation} />
         <div id="site-content" tabIndex={-1}>{children}</div>
         <Footer />
         <MobileContactBar />

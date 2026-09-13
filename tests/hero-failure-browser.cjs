@@ -16,8 +16,8 @@
         try {
           await page.route('**/_next/image?*', async route => {
             const src = new URL(route.request().url()).searchParams.get('url') ?? '';
-            if (scenario === 'slow' && src.includes('auslock-smart-lock-side-view.jpg')) await hold;
-            if (['broken', 'fallback-broken'].includes(scenario) && (src.includes('auslock-smart-lock-side-view.jpg') || scenario === 'fallback-broken' && src.includes('hero1-optimized.avif'))) {
+            if (scenario === 'slow' && src.includes('lockin-x9-composition-v1.webp')) await hold;
+            if (['broken', 'fallback-broken'].includes(scenario) && (src.includes('lockin-x9-composition-v1.webp') || scenario === 'fallback-broken' && src.includes('hero1-optimized.avif'))) {
               await route.fulfill({ status: 404, body: 'Synthetic unavailable image' });
             } else await route.continue();
           });
@@ -32,11 +32,11 @@
             if (scenario === 'slow') {
               assert.equal(await page.locator('.hero-carousel').getAttribute('data-index'), '0');
               assert.equal(await page.locator('.hero-carousel').getAttribute('data-pending'), '1');
-              assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), '/contact?service=supply-install#quote');
+              assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), '/products/lockin-v5-max-smart-lock');
               release();
             }
             await page.waitForFunction(() => document.querySelector('.hero-carousel').dataset.index === '1');
-            assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), '/contact?service=installation-only#quote');
+            assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), '/products/lockin-x9-smart-lock');
             if (scenario === 'broken') {
               const fallback = page.locator('.hero-slide[data-active="true"] img');
               assert.equal(await fallback.getAttribute('alt'), 'Modern home exterior');

@@ -1,5 +1,7 @@
 # Homepage carousel preview
 
+Historical first-batch report. The subsequent explicit user request changes the rotating content to V5MAX, X9 and installation only; see `navigation-motion-preview-20260913.md` for current selection and verification. The interaction implementation described below is retained.
+
 ## Scope and release boundary
 
 Implements the adopted black/gold package's three-service homepage carousel (M04) and a scoped mobile contact-dock improvement (M11). This is local preview work, not a production deployment or completion of the entire package.

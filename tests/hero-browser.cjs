@@ -26,7 +26,10 @@
           assert.deepEqual(await page.locator('.hero-intro').boundingBox(), fixed);
           assert.equal(await page.locator('h1').count(), 1);
           assert.equal(await page.locator('.hero-primary-cta').getAttribute('href'), '/contact?service=supply-install#quote');
-          assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), ['/contact?service=supply-install#quote', '/contact?service=installation-only#quote', '/products/security-camera-kits'][index]);
+          assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), ['/products/lockin-v5-max-smart-lock', '/products/lockin-x9-smart-lock', '/products/smart-lock-installation-only-service'][index]);
+          assert.equal(await page.locator('.hero-slide-link').innerText(), ['Lockin V5 MAX', 'Lockin X9', 'Smart lock installation only'][index]);
+          assert.equal(await page.locator('.hero-caption p').innerText(), ['A$1,350 with standard installation.', 'A$699 with standard installation.', '6068 locks A$350; compact locks A$200.'][index]);
+          assert.equal(await page.locator('.hero-media img').evaluateAll(images => images.some(image => /kaadas|cctv/i.test(image.src))), false);
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
           for (const button of await hero.locator('button').all()) {
             const box = await button.boundingBox();
