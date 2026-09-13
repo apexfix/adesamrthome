@@ -17,7 +17,7 @@ function SlideImage({ slide, index, active, onReady }: { slide: HeroSlide; index
       {!fallbackFailed && <Image
         src={failed ? fallbackImage : slide.src} alt={failed ? "Modern home exterior" : slide.alt}
         fill sizes="(min-width: 1024px) 55vw, 100vw" quality={75}
-        priority={index === 0} fetchPriority={index === 0 ? "high" : "low"} loading={index === 0 ? undefined : "eager"}
+        preload={index === 0} fetchPriority={index === 0 ? undefined : "low"} loading={index === 0 ? undefined : "eager"}
         className="hero-slide-image" onLoad={() => onReady(index)}
         onError={() => { if (failed || slide.src === fallbackImage) { setFallbackFailed(true); onReady(index); } else setFailed(true); }}
       />}
@@ -73,7 +73,7 @@ export function HeroMediaCarousel({ slides, children }: { slides: HeroSlide[]; c
           if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) dispatch({ type: dx < 0 ? "next" : "previous" });
         }}>
         {slides.length ? slides.map((slide, index) => (
-          (index === 0 || state.ready[0] || state.pending === index) && <SlideImage key={slide.id} slide={slide} index={index} active={index === state.index} onReady={ready} />
+          (index === 0 || state.ready[index] || state.ready[index - 1] || state.pending === index) && <SlideImage key={slide.id} slide={slide} index={index} active={index === state.index} onReady={ready} />
         )) : <SlideImage slide={{ id: "fallback", title: "Smart security for Adelaide", description: "", href: "/contact#quote", src: fallbackImage, alt: "Modern home exterior" }} index={0} active onReady={ready} />}
       </div>
       <div className="hero-media-footer">
