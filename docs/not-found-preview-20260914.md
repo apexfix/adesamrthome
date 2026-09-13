@@ -26,3 +26,5 @@ The diagnostic rerun passed all 72 route checks and 18 focus layouts without an 
 Runtime error and global error recovery are separate from missing URLs. Their failure injection, retry behavior and no-JS/blocked-script behavior remain open. The product page still has a catch-and-notFound branch for unexpected data failures and needs separate error-contract verification. Current data access is local, not a failing external service.
 
 No ranking improvement, Google re-crawl, physical screen-reader/keyboard coverage or full error-state acceptance is claimed.
+
+Follow-up, 14 September: the product source-error contract and normal-script route/global recovery have now been tested and updated separately. See `recovery-preview-20260914.md`; actual framework recovery without scripts remains open.

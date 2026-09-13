@@ -231,12 +231,7 @@ const replacementWarrantySlugs = new Set([
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  let product = null;
-  try {
-    product = await getProduct(slug);
-  } catch (error) {
-    console.error("Failed to fetch product", error);
-  }
+  const product = await getProduct(slug);
 
   if (!product) {
     notFound();
