@@ -19,11 +19,11 @@ const slides: HeroSlide[] = [
     alt: "Lockin X9 black smart lock front and rear product composition",
   },
   {
-    id: "installation-only", title: "Smart lock installation only",
-    description: "6068 locks A$350; compact locks A$200.",
-    href: "/products/smart-lock-installation-only-service",
-    src: "/img/hero/installation-only-user-poster-v1.webp",
-    alt: "ADE Smart Home installation-only service poster: A$350 for a customer-supplied full-size smart lock",
+    id: "dahua-5mp", title: "Dahua 5MP Camera Kit",
+    description: "A$443 equipment package. Two cameras and one recorder.",
+    href: "/products/dahua-5mp-2-camera-poe-security-kit",
+    src: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png",
+    alt: "Dahua 5MP CCTV equipment package: two cameras and one four-channel PoE recorder, A$443",
   },
 ];
 
