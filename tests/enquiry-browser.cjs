@@ -62,13 +62,13 @@
       await page.locator('[name=product]').fill('private-sentinel@example.invalid');
       responseMode = 'fail';
       await submit.click();
-      await page.waitForFunction(() => document.querySelector('form [role=alert]')?.textContent.includes('Simulated delivery failure'));
+      await page.waitForFunction(() => document.querySelector('form [role=alert]')?.textContent.includes('Delivery is unconfirmed'));
       assert.equal(await page.locator('[name=email]').inputValue(), 'local-test@example.invalid');
       assert.equal(await submit.isEnabled(), true);
       assert.ok(!posts[0].includes('name="photos"'));
       responseMode = 'malformed';
       await submit.click();
-      await page.waitForFunction(() => document.querySelector('form [role=alert]')?.textContent.includes('We could not send'));
+      await page.waitForFunction(() => document.querySelector('form [role=alert]')?.textContent.includes('Delivery is unconfirmed'));
       assert.ok(!page.url().includes('thank-you'));
       responseMode = 'success';
       await submit.click();

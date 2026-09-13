@@ -65,7 +65,7 @@ const fs = require('node:fs/promises');
           await phone.fill('');
           await email.fill('person@example.invalid');
           await submit.click();
-          await page.getByText('Local server error', { exact: false }).waitFor();
+          await page.getByText('Delivery is unconfirmed.', { exact: false }).waitFor();
           assert.equal(posts, 1);
           assert.notEqual(await email.getAttribute('aria-invalid'), 'true');
           assert.notEqual(await phone.getAttribute('aria-invalid'), 'true');

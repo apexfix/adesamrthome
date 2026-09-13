@@ -19,6 +19,7 @@ import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 import { checkEnquiryPhotoMetadata } from "@/lib/enquiryPhotoMetadata";
 import { EnquiryPhotoPreview } from "@/components/EnquiryPhotoPreview";
+import { readEnquiryResponse, uncertainDeliveryMessage } from "@/lib/enquiryDelivery";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
@@ -145,6 +146,7 @@ export function ContactForm({
   const [contactValidationAttempt, setContactValidationAttempt] = useState(0);
   const photoSelectionRef = useRef(0);
   const submittingRef = useRef(false);
+  const deliveryRequestRef = useRef<{ controller: AbortController; timer: number } | null>(null);
   const formStartedRef = useRef(false);
   const completedRef = useRef(false);
   const abandonmentTrackedRef = useRef(false);
@@ -160,6 +162,7 @@ export function ContactForm({
   const [photos, setPhotos] = useState<File[]>([]);
   const [isPreparingPhotos, setIsPreparingPhotos] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeliveryUncertain, setIsDeliveryUncertain] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
   const isCameraKitEnquiry = formData.service === "security-camera-kit";
@@ -172,6 +175,14 @@ export function ContactForm({
   });
 
   useEffect(() => () => { photoSelectionRef.current += 1; }, []);
+  useEffect(() => () => {
+    const request = deliveryRequestRef.current;
+    deliveryRequestRef.current = null;
+    if (request) {
+      window.clearTimeout(request.timer);
+      request.controller.abort();
+    }
+  }, []);
 
   useEffect(() => {
     const field = pendingContactFocus.current;
@@ -241,6 +252,7 @@ export function ContactForm({
     setPhotoError("");
     setErrorMessage("");
     setContactValidationAttempt(0);
+    setIsDeliveryUncertain(false);
     trackEvent("form_service_selected", {
       form_name: "website_enquiry",
       service,
@@ -257,6 +269,11 @@ export function ContactForm({
       setContactValidationAttempt(current => current + 1);
       return;
     }
+    if (!navigator.onLine) {
+      setErrorMessage("You're offline. Reconnect to send your enquiry, or contact us by SMS.");
+      setIsDeliveryUncertain(false);
+      return;
+    }
 
     trackFormStart();
     trackEvent("form_submit_attempt", {
@@ -268,6 +285,15 @@ export function ContactForm({
     setIsSubmitting(true);
     submittingRef.current = true;
     setErrorMessage("");
+    setIsDeliveryUncertain(false);
+    const request = { controller: new AbortController(), timer: 0 };
+    deliveryRequestRef.current = request;
+    let timedOut = false;
+    let failure: { message: string; uncertain: boolean } | null = null;
+    request.timer = window.setTimeout(() => {
+      timedOut = true;
+      request.controller.abort();
+    }, 30_000);
 
     try {
       const payload = new FormData();
@@ -278,15 +304,15 @@ export function ContactForm({
       const response = await fetch("/api/contact", {
         method: "POST",
         body: payload,
+        signal: request.controller.signal,
       });
-      const result = (await response.json().catch(() => null)) as
-        | { success?: boolean; message?: string; leadId?: string }
-        | null;
-
-      if (!response.ok || result?.success !== true || !result.leadId) {
-        throw new Error(
-          result?.message || "We could not send your request. Please text or email us instead.",
-        );
+      const body: unknown = await response.json().catch(() => null);
+      if (deliveryRequestRef.current !== request) return;
+      if (request.controller.signal.aborted) throw new Error("Request interrupted");
+      const result = readEnquiryResponse(response.status, body);
+      if ("message" in result) {
+        failure = result;
+        throw new Error(result.message);
       }
 
       completedRef.current = true;
@@ -298,7 +324,7 @@ export function ContactForm({
             product: analyticsProductId(formData.product),
             photoCount: isCameraKitEnquiry ? 0 : photos.length,
             preferredTiming: formData.preferredTiming,
-            leadId: result?.leadId,
+            leadId: result.leadId,
           }),
         );
       } catch {
@@ -315,19 +341,20 @@ export function ContactForm({
         photo_count: photos.length,
       });
       router.push(`/contact/thank-you?service=${encodeURIComponent(formData.service)}`);
-    } catch (error) {
+    } catch {
+      if (deliveryRequestRef.current !== request) return;
       trackEvent("form_submit_error", {
         form_name: "website_enquiry",
         service: formData.service,
         photo_count: photos.length,
       });
-      setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "We could not send your request. Please text or email us instead.",
-      );
+      setErrorMessage(failure?.message ?? `${timedOut ? "The request timed out. " : ""}${uncertainDeliveryMessage}`);
+      setIsDeliveryUncertain(failure?.uncertain ?? true);
       setIsSubmitting(false);
       submittingRef.current = false;
+    } finally {
+      window.clearTimeout(request.timer);
+      if (deliveryRequestRef.current === request) deliveryRequestRef.current = null;
     }
   };
 
@@ -776,12 +803,17 @@ export function ContactForm({
                 disabled={isSubmitting || isPreparingPhotos || Boolean(photoLimitError)}
                 className="enquiry-submit flex min-h-14 w-full items-center justify-center gap-3 rounded-md px-5 py-3 text-base font-bold"
               >
-                {isSubmitting
+                <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)] items-center text-center">
+                <span aria-hidden="true" className="invisible col-start-1 row-start-1">Request an installation quote</span>
+                <span className="col-start-1 row-start-1">{isSubmitting
                   ? "Sending…"
+                  : isDeliveryUncertain
+                    ? "Send another copy"
                   : isCameraKitEnquiry
                     ? "Request product enquiry"
-                    : "Request an installation quote"}
-                {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
+                    : "Request an installation quote"}</span>
+                </span>
+                <Send className={`h-4 w-4 shrink-0 ${isSubmitting ? "invisible" : ""}`} aria-hidden="true" />
               </button>
               <p className="enquiry-muted text-center text-sm leading-6">
                 <span>{isCameraKitEnquiry ? "No payment required. We confirm package contents and pricing before you order." : "No payment required. We confirm scope and pricing before booking."}</span>{" "}By submitting,

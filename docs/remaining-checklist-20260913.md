@@ -55,6 +55,10 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | V5 MAX external gallery dependency | SELF-HOSTED IN PREVIEW | All 18 existing source images copied byte-for-byte with hashes/provenance, stable order/IDs and descriptive alternatives. 72 gallery and four no-JS/failure navigation checks passed across both engines, plus all original/optimized HTTP images. See v5-local-images batch. Production outage behavior, source-artwork rights and factual feature review are not certified. |
 | Production release | NOT AUTHORIZED BY CURRENT CHECKLIST | Requires further authorization; release the reviewed batches together and perform an operator-only real enquiry test. |
 
+## Enquiry Delivery Follow-up
+
+Chapter 20 delivery states are implemented in scoped local preview: 30-second deadline, offline/413/429 handling, explicit uncertain-delivery recovery, strict success reference and stable sending/retry geometry. Eight cross-engine grouped browser flows, 20 response contracts, 21 API checks, 22 enquiry checks, four contact-error flows and 72 dark-form checks passed. See `enquiry-delivery-preview-20260914.md`. This does not provide durable acceptance or server idempotency; those configuration boundaries above remain open.
+
 ## Current Usage Boundary
 
 User instructed autonomous continuation until account usage leaves 10% remaining (13 September 2026). Check live usage periodically and before starting another substantial batch; stop work and preserve state at or below 10% remaining in any available applicable usage window. Do not consume a reset, change the goal objective, mark unfinished work complete, or treat this user-requested stop as a technical blocker.

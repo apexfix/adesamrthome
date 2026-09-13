@@ -357,7 +357,7 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
   .enquiry-photo-caption { grid-column: 1 / -1; grid-row: 2; }
   .enquiry-photo-row .enquiry-remove { grid-column: 3; grid-row: 1; }
 }
-.enquiry-submit { background: #d9b98f; color: #111113; }
+.enquiry-submit { background: #d9b98f; color: #111113; padding-inline: 12px; gap: 8px; }
 .enquiry-submit:hover { background: #e5c59f; }
 .enquiry-panel button:disabled { background: #303036; color: #b8b8c0; cursor: not-allowed; }
 .enquiry-panel button[type="submit"]:disabled { cursor: wait; }

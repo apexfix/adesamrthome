@@ -99,7 +99,7 @@ const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + .05) / (Math.
         assert.equal(await page.locator('.enquiry-submit').isDisabled(), true);
         assert.equal(await page.locator('.enquiry-service').first().isDisabled(), true);
         release();
-        await page.getByText('Local test: message was not sent.', { exact: false }).waitFor();
+        await page.getByText('Delivery is unconfirmed.', { exact: false }).waitFor();
         assert.equal(await page.locator('[name=email]').inputValue(), 'test@example.invalid');
         assert.equal(posts, 1);
         await page.locator('.enquiry-panel').screenshot({ path: `${out}/${engine}-error.png` });
