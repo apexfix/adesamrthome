@@ -393,16 +393,16 @@ export function ContactForm({
           </p>
         </div>}
 
-        <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
-          <aside className="order-2 self-start border-t border-white/15 py-6 lg:order-1 lg:border-t-0 lg:py-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-12">
+          <aside className="order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
               <a
                 href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? `Hi ADE Smart Home, I am interested in ${formData.product || "a Dahua security camera kit"}.` : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
                 className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
-                <MessageSquareText className="h-5 w-5" aria-hidden="true" />
-                Text 0431060390
+                <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span className="min-w-0">Text {businessInfo.phone}</span>
               </a>
               <a
                 href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
@@ -440,21 +440,21 @@ export function ContactForm({
                 href="/blog/smart-lock-door-compatibility-check"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#c5a47e] hover:text-white"
               >
-                View door measurement guide
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <span className="min-w-0">View door measurement guide</span>
+                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
             </div>}
           </aside>
 
-          <div className="liquid-glass-light relative order-1 rounded-lg border p-5 md:p-9 lg:order-2">
-            <h3 className="break-words text-2xl font-black tracking-tight text-slate-950">
+          <div className="enquiry-panel relative order-1 min-w-0 rounded-lg border p-5 md:p-9 lg:order-2">
+            <h3 className="break-words text-2xl font-bold text-white">
               {formData.product
                 ? `Ask about ${formData.product}`
                 : isCameraKitEnquiry
                   ? "Request a security camera quote"
                   : "Request an installation quote"}
             </h3>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="enquiry-muted mt-3 text-base leading-7">
               {isCameraKitEnquiry
                 ? "Leave your name, suburb and mobile or email. We will confirm the equipment and availability before you order."
                 : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
@@ -467,20 +467,16 @@ export function ContactForm({
               className="mt-7 space-y-5 [&_input]:text-base [&_select]:text-base [&_textarea]:text-base"
             >
               <fieldset disabled={isSubmitting}>
-                <legend className="mb-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <legend className="mb-2 enquiry-label">
                   Service needed
                 </legend>
-                <div className="grid grid-cols-2 gap-px bg-slate-300 p-px [&>button:last-child]:col-span-2">
+                <div className="enquiry-services grid grid-cols-2 gap-px overflow-hidden rounded-md border [&>button:last-child]:col-span-2">
                   {serviceOptions.map((option) => (
                     <button
                       key={option.value}
                       type="button"
                       onClick={() => handleServiceSelection(option.value)}
-                      className={`min-h-12 px-3 py-2 text-sm font-bold transition-colors ${
-                        formData.service === option.value
-                          ? "bg-slate-950 text-white"
-                          : "bg-white text-slate-700 hover:bg-slate-100"
-                      }`}
+                      className="enquiry-service min-h-12 px-3 py-3 text-sm font-semibold"
                       aria-pressed={formData.service === option.value}
                     >
                       {option.label}
@@ -490,7 +486,7 @@ export function ContactForm({
               </fieldset>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Name
                   <input
                     name="name"
@@ -498,11 +494,11 @@ export function ContactForm({
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                     placeholder="Your name"
                   />
                 </label>
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Mobile
                   <input
                     name="phone"
@@ -512,14 +508,14 @@ export function ContactForm({
                     autoComplete="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                     placeholder="04xx xxx xxx"
                   />
                 </label>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Suburb / postcode
                   <input
                     name="suburb"
@@ -527,11 +523,11 @@ export function ContactForm({
                     required
                     value={formData.suburb}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                     placeholder="e.g. Norwood 5067"
                   />
                 </label>
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Email
                   <input
                     name="email"
@@ -539,33 +535,33 @@ export function ContactForm({
                     autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                     placeholder="email@example.com"
                   />
                 </label>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Property type <span className="font-normal normal-case">optional</span>
                   <select
                     name="propertyType"
                     value={formData.propertyType}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                   >
                     {propertyOptions.map((option) => (
                       <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                   </select>
                 </label>
-                <label className="space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
+                <label className="space-y-2 enquiry-label">
                   Preferred timing <span className="font-normal normal-case">optional</span>
                   <select
                     name="preferredTiming"
                     value={formData.preferredTiming}
                     onChange={handleChange}
-                    className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                    className="enquiry-input h-12 w-full px-4 font-normal"
                   >
                     {timingOptions.map((option) => (
                       <option key={option.value} value={option.value}>{option.label}</option>
@@ -574,14 +570,14 @@ export function ContactForm({
                 </label>
               </div>
 
-              <label className="block space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
-                {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="font-normal normal-case text-slate-600">optional</span>
+              <label className="block space-y-2 enquiry-label">
+                {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="enquiry-muted font-normal">optional</span>
                 <input
                   name="product"
                   list="smart-lock-models"
                   value={formData.product}
                   onChange={handleChange}
-                  className="h-12 w-full border border-slate-300 bg-slate-50 px-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  className="enquiry-input h-12 w-full px-4 font-normal"
                   placeholder={isCameraKitEnquiry ? "e.g. Dahua 6MP Smart Dual Light kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
                 />
                 <datalist id="smart-lock-models">
@@ -608,12 +604,12 @@ export function ContactForm({
               </label>
 
               {!isCameraKitEnquiry && <fieldset>
-                <legend className="text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
-                  Door photos <span className="font-normal normal-case text-slate-600">recommended for a more accurate quote</span>
+                <legend className="enquiry-label">
+                  Door photos <span className="enquiry-muted font-normal">recommended for a more accurate quote</span>
                 </legend>
-                <div className="mt-3 flex items-center justify-between gap-4 border-y border-slate-200 py-3">
-                  <p className="text-sm text-slate-700">Outside, inside, door edge and frame</p>
-                  <p className="text-xs font-bold text-[#7a5a38]" aria-live="polite">
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-y border-zinc-700 py-3">
+                  <p className="enquiry-muted text-sm">Outside, inside, door edge and frame</p>
+                  <p className="text-sm font-semibold text-[#d9b98f]" aria-live="polite">
                     {photos.length} of {MAX_PHOTOS} added
                   </p>
                 </div>
@@ -621,9 +617,9 @@ export function ContactForm({
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isSubmitting || isPreparingPhotos || photos.length >= MAX_PHOTOS}
-                  className="mt-3 flex min-h-20 w-full items-center justify-center gap-3 border border-dashed border-slate-400 bg-slate-50 px-4 text-sm font-bold text-slate-700 transition-colors hover:border-[#9c7953] hover:bg-[#f8f3ec] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="enquiry-upload mt-3 flex min-h-20 w-full items-center justify-center gap-3 rounded-md border border-dashed px-4 py-3 text-base font-semibold"
                 >
-                  <ImagePlus className="h-5 w-5 text-[#8a6b48]" aria-hidden="true" />
+                  <ImagePlus className="h-5 w-5 shrink-0 text-[#d9b98f]" aria-hidden="true" />
                   {isPreparingPhotos
                     ? "Preparing photos…"
                     : photos.length >= MAX_PHOTOS
@@ -642,25 +638,25 @@ export function ContactForm({
                   disabled={isPreparingPhotos || isSubmitting}
                   className="sr-only"
                 />
-                <p className="mt-2 text-xs leading-5 text-slate-500">
+                <p className="enquiry-muted mt-3 text-sm leading-6">
                   Send what you have; more photos can be added later by SMS or email.
                   Up to four JPEG, PNG or WebP images. Large photos are resized before sending.
                 </p>
                 {photos.length === MAX_PHOTOS && (
-                  <p role="status" className="mt-3 border-l-4 border-emerald-600 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-900">
+                  <p role="status" className="enquiry-success mt-3 border-l-4 px-3 py-3 text-sm font-semibold">
                     Four photos added. This gives us a better starting point for the door check.
                   </p>
                 )}
                 {photos.length > 0 && (
-                  <ul className="mt-3 divide-y divide-slate-200 border-y border-slate-200">
+                  <ul className="mt-3 divide-y divide-zinc-700 border-y border-zinc-700">
                     {photos.map((photo, index) => (
-                      <li key={`${photo.name}-${photo.lastModified}-${index}`} className="flex min-h-11 items-center justify-between gap-3 py-2 text-xs text-slate-600">
+                      <li key={`${photo.name}-${photo.lastModified}-${index}`} className="enquiry-muted flex min-h-12 items-center justify-between gap-3 py-2 text-sm">
                         <span className="min-w-0 truncate">{index + 1}. {photo.name} · {formatFileSize(photo.size)}</span>
                         <button
                           type="button"
                           disabled={isSubmitting}
                           onClick={() => setPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))}
-                          className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-black"
+                          className="enquiry-remove inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md"
                           aria-label={`Remove ${photo.name}`}
                         >
                           <X className="h-4 w-4" aria-hidden="true" />
@@ -669,23 +665,23 @@ export function ContactForm({
                     ))}
                   </ul>
                 )}
-                {photoError && <p className="mt-2 text-sm text-red-700">{photoError}</p>}
+                {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm">{photoError}</p>}
               </fieldset>}
 
-              <label className="block space-y-2 text-xs font-bold uppercase tracking-[0.1em] text-slate-600">
-                Anything else? <span className="font-normal normal-case text-slate-600">optional</span>
+              <label className="block space-y-2 enquiry-label">
+                Anything else? <span className="enquiry-muted font-normal">optional</span>
                 <textarea
                   name="message"
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full resize-none border border-slate-300 bg-slate-50 p-4 text-sm font-normal normal-case text-slate-950 outline-none transition-colors focus:border-[#9c7953]"
+                  className="enquiry-input w-full resize-y p-4 font-normal"
                   placeholder={isCameraKitEnquiry ? "Enter the package name, quantity or a question about listed product specifications." : "Tell us about the existing lock, security screen, building access or any special requirements."}
                 />
               </label>
 
               {errorMessage && (
-                <p role="alert" className="border-l-4 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <p role="alert" className="enquiry-error border-l-4 px-4 py-3 text-base leading-6">
                   {errorMessage} Text 0431060390 or email us if the problem continues.
                 </p>
               )}
@@ -693,7 +689,7 @@ export function ContactForm({
               <button
                 type="submit"
                 disabled={isSubmitting || isPreparingPhotos}
-                className="flex min-h-14 w-full items-center justify-center gap-3 rounded-md bg-black px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#c5a47e] hover:text-black disabled:cursor-wait disabled:opacity-60"
+                className="enquiry-submit flex min-h-14 w-full items-center justify-center gap-3 rounded-md px-5 py-3 text-base font-bold"
               >
                 {isSubmitting
                   ? "Sending…"
@@ -702,10 +698,10 @@ export function ContactForm({
                     : "Request an installation quote"}
                 {!isSubmitting && <Send className="h-4 w-4" aria-hidden="true" />}
               </button>
-              <p className="text-center text-xs text-slate-500">
+              <p className="enquiry-muted text-center text-sm leading-6">
                 <span>{isCameraKitEnquiry ? "No payment required. We confirm package contents and pricing before you order." : "No payment required. We confirm scope and pricing before booking."}</span>{" "}By submitting,
                 you agree that we may use these details and photos to respond to your enquiry. See our{" "}
-                <Link href="/privacy-policy" className="font-semibold text-[#8a6b48] underline underline-offset-2 hover:text-black">
+                <Link href="/privacy-policy" className="font-semibold text-[#d9b98f] underline underline-offset-4 hover:text-white">
                   Privacy Policy
                 </Link>
                 .
