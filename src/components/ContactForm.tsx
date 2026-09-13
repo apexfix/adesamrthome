@@ -15,6 +15,7 @@ import {
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
 import { analyticsProductId, contactValidationError, serviceOptions } from "@/lib/enquiry";
+import { ContactCopyButton } from "@/components/ContactCopyButton";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
@@ -402,20 +403,26 @@ export function ContactForm({
           <aside className="order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
             <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
             <div className="mt-6 space-y-3">
+              <div className="flex items-center gap-2">
               <a
                 href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? `Hi ADE Smart Home, I am interested in ${formData.product || "a Dahua security camera kit"}.` : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
-                className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+                className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
                 <span className="min-w-0">Text {businessInfo.phone}</span>
               </a>
+              <ContactCopyButton value={businessInfo.phone} label="Phone number" />
+              </div>
+              <div className="flex items-center gap-2">
               <a
                 href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
-                className="flex min-h-14 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+                className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <span aria-hidden="true">{isCameraKitEnquiry ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>
-                <span>{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}</span>
+                <span className="min-w-0">{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}<span className="mt-1 block text-sm font-normal">{businessInfo.email}</span></span>
               </a>
+              <ContactCopyButton value={businessInfo.email} label="Email address" />
+              </div>
             </div>
 
             {isCameraKitEnquiry ? (

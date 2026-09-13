@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MessageSquareText, Mail, MapPin, Facebook, Instagram, Link2 } from "lucide-react";
 import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
 import { VisualEffectsControl } from "@/components/VisualEffectsControl";
+import { ContactCopyButton } from "@/components/ContactCopyButton";
 
 const serviceLinks = [
   ["/smart-lock-supply-installation-adelaide", "Lock + Installation Packages"],
@@ -76,17 +77,19 @@ export function Footer() {
           <section aria-labelledby="footer-contact" className="min-w-0 lg:order-last">
             <h2 id="footer-contact">Contact Us</h2>
             <ul className="space-y-2">
-              <li>
-                <a href={textSmsHref} className="gap-3">
+              <li className="flex items-center gap-2">
+                <a href={textSmsHref} className="min-w-0 flex-1 gap-3">
                   <MessageSquareText className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
                   <span><span className="block font-semibold text-zinc-200">Text / SMS</span>{businessInfo.phone}</span>
                 </a>
+                <ContactCopyButton value={businessInfo.phone} label="Phone number" />
               </li>
-              <li>
-                <a href={`mailto:${businessInfo.email}`} className="gap-3">
+              <li className="flex items-center gap-2">
+                <a href={`mailto:${businessInfo.email}`} className="min-w-0 flex-1 gap-3">
                   <Mail className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
                   <span className="min-w-0 break-words"><span className="block font-semibold text-zinc-200">Email</span>{businessInfo.email}</span>
                 </a>
+                <ContactCopyButton value={businessInfo.email} label="Email address" />
               </li>
               <li className="flex items-center gap-3 py-2">
                 <MapPin className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
