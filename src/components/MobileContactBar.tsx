@@ -44,7 +44,7 @@ export function MobileContactBar() {
 
   return (
     <>
-      <div className="h-24 md:hidden" aria-hidden="true" />
+      <div className="mobile-contact-spacer h-24 bg-zinc-950 md:hidden" aria-hidden="true" />
       <nav aria-label="Quick contact" className="liquid-glass mobile-contact-dock fixed inset-x-3 z-[70] grid grid-cols-[1fr_1.3fr_44px] items-center gap-1 rounded-lg border p-2 md:hidden">
         <a
           href={smsHref}

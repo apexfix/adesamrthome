@@ -188,22 +188,49 @@ body:has(.quote-section :is(input, select, textarea):focus) .mobile-contact-dock
   .liquid-glass, .header-surface::before { background: #202224; }
   .liquid-glass-light { background: #fff; }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
-}
-@media (prefers-reduced-transparency: reduce) {
+/* System preferences also work before hydration and with JavaScript disabled. */
+@media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  img { scale: none !important; }
   .liquid-glass,
   .header-surface::before,
+  .site-header[data-scrolled="true"] .header-surface::before,
   .liquid-glass-soft {
     background: #18181b;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    box-shadow: none;
   }
-
   .liquid-glass-light {
     background: #ffffff;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    box-shadow: none;
   }
-  .glass-control { background: #303236; }
+  .glass-control { background: #303236; box-shadow: none; }
+  .glass-control:active { transform: none; }
+  .installation-photo-dialog { background: #09090b; }
+}
+
+html[data-visual-effects="reduced"] {
+  &, *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  img { scale: none !important; }
+  .liquid-glass,
+  .header-surface::before,
+  .site-header[data-scrolled="true"] .header-surface::before,
+  .liquid-glass-soft { background: #18181b; box-shadow: none; }
+  .liquid-glass-light { background: #ffffff; box-shadow: none; }
+  .glass-control { background: #303236; box-shadow: none; }
+  .glass-control:active { transform: none; }
+  .installation-photo-dialog { background: #09090b; }
 }

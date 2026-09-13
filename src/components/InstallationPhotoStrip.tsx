@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { shouldReduceVisualEffects } from "@/lib/visualEffects";
 
 interface InstallationPhoto {
   src: string;
@@ -23,7 +24,7 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
 
     scroller.scrollBy({
       left: direction === "left" ? -320 : 320,
-      behavior: "smooth",
+      behavior: shouldReduceVisualEffects() ? "instant" : "smooth",
     });
   };
 
@@ -169,7 +170,7 @@ export function InstallationPhotoStrip({ photos }: { photos: InstallationPhoto[]
 
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm"
+          className="installation-photo-dialog fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="Installation photo preview"

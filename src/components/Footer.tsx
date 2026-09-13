@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageSquareText, Mail, MapPin, Facebook, Instagram, Link2 } from "lucide-react";
 import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
+import { VisualEffectsControl } from "@/components/VisualEffectsControl";
 
 const serviceLinks = [
   ["/smart-lock-supply-installation-adelaide", "Lock + Installation Packages"],
@@ -127,7 +128,8 @@ export function Footer() {
           </details>
         </nav>
 
-        <div className="mt-4 flex flex-col gap-2 border-t border-zinc-800 pt-4 text-xs md:flex-row md:items-center md:justify-between">
+        <div className="mt-4 border-t border-zinc-800 pt-3"><VisualEffectsControl /></div>
+        <div className="mt-2 flex flex-col gap-2 text-xs md:flex-row md:items-center md:justify-between">
           <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
           <div className="flex flex-wrap gap-x-5">
             <Link href="/privacy-policy">Privacy Policy</Link>
