@@ -13,7 +13,7 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Installer-page draft copy | Rewritten in preview | Do not merge competing pages without query/conversion/backlink evidence. |
 | Homepage routing and direct service navigation | Implemented in current preview | See navigation batch evidence. |
 | Mobile focus / fixed contact dock | Implemented in preview | Real iPhone keyboard, text enlargement and screen-reader testing remain open. |
-| Uploaded image contents | OPEN | Decode with a supported image library, limit decoded pixels, reject malformed data and normalize attachments. MIME/size checks alone are not deep verification. Avoid hand-rolled image parsing. |
+| Uploaded image contents | IMPLEMENTED IN PREVIEW | Real decoding and JPEG normalization via sharp, strict format/size/pixel checks, metadata removal and animated WebP rejection tested. See photo-validation batch. Not antivirus or distributed abuse protection. |
 | Durable enquiry acceptance | DESIGN REQUIRED | A Vercel function's local file or memory is not reliable storage. Select an approved durable store and retention/access policy before implementation. |
 | Retry and idempotency | DEPENDS ON DURABLE STORE | Persist a stable request key and accepted enquiry; deduplicate across requests/instances. Do not treat the existing button guard as server-level deduplication. |
 | Anti-spam | OPEN | Use validated limits and an approved persistent counter/challenge approach. Do not invent a reliable distributed limit using process memory. |

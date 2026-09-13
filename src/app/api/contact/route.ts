@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { randomUUID } from "node:crypto";
 import { contactValidationError, isEnquiryService, serviceLabels } from "@/lib/enquiry";
+import { PhotoValidationError, prepareEnquiryPhoto } from "@/lib/enquiryPhotos";
 
 export const runtime = "nodejs";
 
@@ -57,11 +58,6 @@ function escapeHtml(value: string): string {
   });
 }
 
-function safeFileName(fileName: string, index: number): string {
-  const cleaned = fileName.replace(/[^a-zA-Z0-9._-]+/g, "-").slice(0, 100);
-  return cleaned || `door-photo-${index + 1}.jpg`;
-}
-
 function parseAttribution(value: unknown): Record<string, unknown> {
   if (value && typeof value === "object") return value as Record<string, unknown>;
   if (typeof value !== "string" || !value) return {};
@@ -99,7 +95,7 @@ export async function POST(request: Request) {
       });
       photoFiles = formData
         .getAll("photos")
-        .filter((entry): entry is File => entry instanceof File && entry.size > 0);
+        .filter((entry): entry is File => entry instanceof File);
     } else {
       const body: unknown = await request.json();
       payload = body && typeof body === "object" ? body as Record<string, unknown> : {};
@@ -160,7 +156,7 @@ export async function POST(request: Request) {
       photoFiles.length > MAX_PHOTO_COUNT ||
       totalPhotoBytes > MAX_TOTAL_PHOTO_BYTES ||
       photoFiles.some(
-        (photo) => photo.size > MAX_PHOTO_BYTES || !allowedPhotoTypes.has(photo.type),
+        (photo) => !photo.size || photo.size > MAX_PHOTO_BYTES || !allowedPhotoTypes.has(photo.type),
       )
     ) {
       return NextResponse.json(
@@ -168,6 +164,18 @@ export async function POST(request: Request) {
           success: false,
           message: "Please upload up to four JPEG, PNG or WebP photos. Each photo must be under 1 MB.",
         },
+        { status: 400 },
+      );
+    }
+
+    // Bound concurrent decoding per request; no mail is attempted unless all photos pass.
+    const attachments = [];
+    for (let index = 0; index < photoFiles.length; index += 1) {
+      attachments.push(await prepareEnquiryPhoto(photoFiles[index], index));
+    }
+    if (attachments.reduce((bytes, attachment) => bytes + attachment.content.length, 0) > MAX_TOTAL_PHOTO_BYTES) {
+      return NextResponse.json(
+        { success: false, message: "These photos are too large to send together. Please remove a photo and try again." },
         { status: 400 },
       );
     }
@@ -187,13 +195,6 @@ export async function POST(request: Request) {
         pass: smtpAppPassword,
       },
     });
-    const attachments = await Promise.all(
-      photoFiles.map(async (photo, index) => ({
-        filename: safeFileName(photo.name, index),
-        content: Buffer.from(await photo.arrayBuffer()),
-        contentType: photo.type,
-      })),
-    );
     const serviceLabel = serviceLabels[service] || service;
     const propertyLabel = propertyLabels[propertyType] || "Not specified";
     const timingLabel = timingLabels[preferredTiming] || "Not specified";
@@ -307,6 +308,9 @@ ${message || "No additional details provided."}
       acknowledgementSent,
     });
   } catch (error) {
+    if (error instanceof PhotoValidationError) {
+      return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    }
     console.error("Failed to send enquiry email:", error);
     return NextResponse.json(
       { success: false, message: "Failed to send your enquiry" },
