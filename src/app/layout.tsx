@@ -118,14 +118,11 @@ const localBusinessSchema = {
         },
       },
       {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Product",
-          name: "Dahua Security Camera Kits Adelaide",
-          url: `${siteUrl}/products/security-camera-kits`,
-          description:
-            "PoE security camera and network video recorder packages for Adelaide homes and small businesses.",
-        },
+        "@type": "OfferCatalog",
+        name: "Dahua Security Camera Kits Adelaide",
+        url: `${siteUrl}/products/security-camera-kits`,
+        description:
+          "PoE security camera and network video recorder packages for Adelaide homes and small businesses.",
       },
       {
         "@type": "Offer",

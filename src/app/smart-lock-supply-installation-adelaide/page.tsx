@@ -239,9 +239,11 @@ export default function SupplyInstallationPage() {
     return {
       ...offer,
       itemOffered: {
-        "@type": "Product",
-        "@id": `${productUrl}#product`,
-        name: item.name,
+        "@type": "Service",
+        "@id": `${productUrl}#installation-package`,
+        name: `${item.name} supply and installation`,
+        serviceType: "Smart lock supply and standard installation",
+        provider: { "@id": `${siteUrl}/#business` },
         description: `${item.name} Adelaide package with the smart lock and standard installation. ${item.inclusionText}.`,
         image: `${siteUrl}${item.image}`,
         brand: {

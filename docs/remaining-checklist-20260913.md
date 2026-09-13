@@ -21,7 +21,7 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | CCTV policy and inclusions | OWNER FACTS REQUIRED | Do not add installation, cabling, disk, tax, delivery or warranty promises. Resolve wording before publishing new claims. |
 | Product detail first-screen hierarchy | IMPLEMENTED IN PREVIEW | All ten product pages now use a shared heading/media/price/enquiry hierarchy. Both engines at five widths pass; prices, scopes and prefill retained. See product-layout batch. Real-device accessibility and field performance remain unverified. |
 | Footer simplification | IMPLEMENTED IN PREVIEW | SMS/email precede navigation on mobile; secondary links use native disclosure lists. All previous footer destinations retained and tested. No pages deleted or redirected. |
-| Whole-site final URL/schema inventory | RELEASE CHECK | Regenerate after all approved changes. Local checks are not Google validation. |
+| Whole-site final URL/schema inventory | PREVIEW INVENTORY PASSED | 57 sitemap URLs plus the noindex receipt page, 198 internal links and 105 local SEO image URLs checked. Corrected shared category Product markup and installed-package entity identity. Re-run after further changes and before release; not Google validation. See site-inventory batch. |
 | Performance | UNVERIFIED | Collect reproducible lab data and distinguish it from CrUX real-user p75. No invented scores or ranking gains. |
 | Production release | NOT AUTHORIZED BY CURRENT CHECKLIST | Requires further authorization; release the reviewed batches together and perform an operator-only real enquiry test. |
 
@@ -30,3 +30,7 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 Before adding storage, specify the provider/project, access control, retention and deletion policy, attachment handling and expected costs. Store only fields needed to respond. Never write customer details into analytics or public artifacts. A proposed flow is: validate -> atomically persist request key and enquiry -> dispatch/retry operator email -> track delivery state -> return the existing accepted reference on retries. Customer acknowledgement failure must not erase a successfully accepted lead. This is a proposal, not implemented behavior.
 
 Conflicting older preferences remain resolved conservatively: keep installation-only first in the product grid, and do not restore the large home camera showcase.
+
+## New reference package
+
+The black/gold liquid-glass v4 package was received during the next inventory round. Its full Markdown was read and source references compared to the current preview. See `black-gold-package-intake-20260913.md`. It is reference material, not release authorization or evidence that the included 116 integration cases passed on this website. Do not overwrite already completed preview work with its older baseline examples.
