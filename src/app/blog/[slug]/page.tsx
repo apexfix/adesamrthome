@@ -4,10 +4,13 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import { Calendar, MapPin, ChevronRight, BookOpen, ShieldCheck, UserRound } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/seoData";
+import { ArticleShare } from "@/components/ArticleShare";
+import { ArticleImage } from "@/components/ArticleImage";
+import { GalleryImage } from "@/components/GalleryImage";
+import { RevealGroup } from "@/components/RevealGroup";
 
 type PostData = {
   title?: string;
@@ -193,9 +196,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <span className="flex items-center gap-1"><UserRound className="w-4 h-4" /> {author}</span>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-bold mb-8 leading-[1.15]">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-[1.15] [overflow-wrap:anywhere]">
           {data.title}
         </h1>
+
+        <ArticleShare key={articleUrl} url={articleUrl} title={data.title || "ADE Smart Home article"} />
 
         <div className="mb-10 flex items-start gap-4 border-y border-zinc-800 py-6">
           {isGuide ? <BookOpen className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" /> : <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" />}
@@ -210,7 +215,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 ? "Use this guide to prepare useful photos and measurements. Final suitability depends on the exact lock model, door, frame and site conditions."
                 : isGuide
                 ? "Compare access features, installed prices and door requirements before choosing your smart lock."
-                : "This project was completed by the ADE team. All images represent actual field work in South Australia."}
+                : "Explore the lock model, installation photos and door-fit considerations for this project."}
             </p>
           </div>
         </div>
@@ -224,13 +229,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 void node;
                 if (typeof props.src !== "string") return null;
                 return (
-                  <Image
+                  <ArticleImage
+                    key={props.src}
                     src={props.src}
-                    alt={props.alt || "ADE Smart Home installation in Adelaide"}
-                    width={1400}
-                    height={900}
-                    sizes="(max-width: 767px) calc(100vw - 40px), 704px"
-                    className="my-10 h-auto w-full rounded-md border border-zinc-800"
+                    alt={props.alt || "ADE Smart Home article image"}
                   />
                 );
               }
@@ -253,33 +255,33 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 View all stories
               </Link>
             </div>
-            <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <RevealGroup className="mt-8 grid gap-6 md:grid-cols-3">
               {relatedPosts.map((relatedPost) => (
                 <Link
                   key={relatedPost.slug}
                   href={`/blog/${relatedPost.slug}`}
-                  className="group overflow-hidden rounded-md border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-[#c5a47e]/60"
+                  prefetch={false}
+                  className="article-card liquid-glass-soft motion-card group flex min-w-0 flex-col overflow-hidden rounded-md border hover:border-[#c5a47e]/60"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
-                    <Image
-                      src={relatedPost.coverImage || "/img/og/ade-smart-home-adelaide.jpg"}
-                      alt={relatedPost.title || "ADE Smart Home Adelaide installation story"}
-                      fill
+                    <GalleryImage
+                      key={relatedPost.coverImage || relatedPost.slug}
+                      photo={{ src: relatedPost.coverImage || "", alt: relatedPost.title || "ADE Smart Home article" }}
                       sizes="(max-width: 767px) 100vw, 260px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-contain"
                     />
                   </div>
-                  <div className="p-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-                      {relatedPost.category || "Smart Lock Guide"}
+                  <div data-glass-highlight className="flex-1 p-5">
+                    <p className="text-xs font-bold uppercase text-[#c5a47e]">
+                      {relatedPost.category || "Article"}
                     </p>
-                    <h3 className="mt-2 line-clamp-3 text-base font-bold leading-6 text-white group-hover:text-[#c5a47e]">
+                    <h3 className="mt-2 text-base font-bold leading-6 text-white [overflow-wrap:anywhere] group-hover:text-[#c5a47e]">
                       {relatedPost.title}
                     </h3>
                   </div>
                 </Link>
               ))}
-            </div>
+            </RevealGroup>
           </section>
         )}
 
