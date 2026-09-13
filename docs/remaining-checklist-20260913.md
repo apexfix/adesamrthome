@@ -13,6 +13,8 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Installer-page draft copy | Rewritten in preview | Do not merge competing pages without query/conversion/backlink evidence. |
 | Homepage routing and direct service navigation | Implemented in current preview | See navigation batch evidence. |
 | Mobile focus / fixed contact dock | Implemented in preview | Real iPhone keyboard, text enlargement and screen-reader testing remain open. |
+| Three-service homepage carousel (M04) | IMPLEMENTED IN PREVIEW | Fixed H1/quote link, seven-second rotation, persistent pause, slow/error fallback and reduced-effects support. See hero-carousel batch; not the full twelve-motion specification. |
+| Primary CTA-aware mobile dock (M11) | IMPLEMENTED IN SCOPED PREVIEW | Home/product primary-CTA visibility and form-exit click protection tested. Other service-page selectors and real phone keyboard remain open. |
 | Uploaded image contents | IMPLEMENTED IN PREVIEW | Real decoding and JPEG normalization via sharp, strict format/size/pixel checks, metadata removal and animated WebP rejection tested. See photo-validation batch. Not antivirus or distributed abuse protection. |
 | Durable enquiry acceptance | STORAGE CONFIGURATION REQUIRED | This round found no database dependency, adapter or configured local storage credentials; only `.env.example` is present. Do not assume this proves anything about production secrets. A Vercel function's local file or memory is not reliable storage. Select an approved durable store and retention/access policy before implementation; continue independent checklist items meanwhile. |
 | Retry and idempotency | DEPENDS ON DURABLE STORE | Persist a stable request key and accepted enquiry; deduplicate across requests/instances. Do not treat the existing button guard as server-level deduplication. |
@@ -35,3 +37,5 @@ Conflicting older preferences remain resolved conservatively: keep installation-
 ## New reference package
 
 The black/gold liquid-glass v4 package was received during the next inventory round. Its full Markdown was read and source references compared to the current preview. See `black-gold-package-intake-20260913.md`. It is reference material, not release authorization or evidence that the included 116 integration cases passed on this website. Do not overwrite already completed preview work with its older baseline examples.
+
+The user subsequently instructed us to continue following the document and authorized asking for missing assets or generating high-resolution imagery. The document is now the implementation specification within the existing business and release boundaries. The homepage carousel batch is recorded in `hero-carousel-preview-20260913.md`; its asset provenance is in `hero-assets-20260913.md`. Other motions, durable storage and final whole-site acceptance remain open.

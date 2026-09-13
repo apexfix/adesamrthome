@@ -61,7 +61,7 @@
             assert.equal(await checkbox.count(), 0);
             assert.equal(await page.locator('.header-surface').evaluate(n => getComputedStyle(n, '::before').backgroundColor), 'rgb(24, 24, 27)');
             assert.equal(await page.locator('.header-surface').evaluate(n => getComputedStyle(n, '::before').backdropFilter || getComputedStyle(n, '::before').webkitBackdropFilter), 'none');
-            assert.equal(await page.getByRole('link', { name: 'Free Door Check', exact: true }).getAttribute('href'), '/contact?service=supply-install#quote');
+            assert.equal(await page.getByRole('region', { name: 'Smart security services' }).getByRole('link', { name: 'Get a Quote', exact: true }).getAttribute('href'), '/contact?service=supply-install#quote');
           } else if (scenario === 'system') {
             await expectMode(page, true);
             assert.ok(await checkbox.isChecked());

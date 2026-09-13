@@ -52,13 +52,15 @@
         });
         if (width < 768) {
           const dock = page.getByRole('navigation', { name: 'Quick contact' });
+          await dock.waitFor({ state: 'visible' });
           assert.ok(await dock.isVisible());
           await page.locator('form input[name=name]').focus();
           assert.equal(await dock.isVisible(), false);
           await page.locator('form input[name=name]').evaluate(n => n.blur());
+          await dock.waitFor({ state: 'visible' });
           assert.ok(await dock.isVisible());
         }
-        await page.getByRole('link', { name: 'Free Door Check', exact: true }).click();
+        await page.getByRole('region', { name: 'Smart security services' }).getByRole('link', { name: 'Get a Quote', exact: true }).click();
         await page.waitForURL('**/contact?service=supply-install#quote');
         await page.locator('form').waitFor();
         assert.equal(await page.getByRole('button', { name: 'Supply & install', exact: true }).getAttribute('aria-pressed'), 'true');

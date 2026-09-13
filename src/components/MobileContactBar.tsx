@@ -5,9 +5,52 @@ import { Camera, Cctv, Mail, MessageSquareText, Tag } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { businessInfo } from "@/lib/seoData";
 import { trackEvent } from "@/lib/analytics";
+import { useEffect, useState } from "react";
 
 export function MobileContactBar() {
   const pathname = usePathname();
+  const [visiblePrimaryPath, setVisiblePrimaryPath] = useState<string | null>(null);
+  const [dockFocused, setDockFocused] = useState(false);
+  const [formActive, setFormActive] = useState(false);
+  useEffect(() => {
+    let pointerDown = false;
+    let releaseTimer: ReturnType<typeof setTimeout> | undefined;
+    const inForm = () => Boolean(document.activeElement?.closest('.quote-section'));
+    const release = () => {
+      clearTimeout(releaseTimer);
+      if (pointerDown) return;
+      // Let a click that leaves the form finish before the fixed bar can appear.
+      releaseTimer = setTimeout(() => setFormActive(inForm()), 120);
+    };
+    const focus = () => {
+      if (inForm()) { clearTimeout(releaseTimer); setFormActive(true); }
+      else release();
+    };
+    const press = () => { pointerDown = true; };
+    const lift = () => { pointerDown = false; release(); };
+    document.addEventListener('focusin', focus);
+    document.addEventListener('focusout', release);
+    document.addEventListener('pointerdown', press, true);
+    document.addEventListener('pointerup', lift, true);
+    document.addEventListener('pointercancel', lift, true);
+    window.addEventListener('blur', lift);
+    return () => {
+      clearTimeout(releaseTimer);
+      document.removeEventListener('focusin', focus);
+      document.removeEventListener('focusout', release);
+      document.removeEventListener('pointerdown', press, true);
+      document.removeEventListener('pointerup', lift, true);
+      document.removeEventListener('pointercancel', lift, true);
+      window.removeEventListener('blur', lift);
+    };
+  }, []);
+  useEffect(() => {
+    const primary = document.querySelector('[data-primary-quote], .product-purchase a[href^="/contact"]');
+    if (!primary) return;
+    const observer = new IntersectionObserver(([entry]) => setVisiblePrimaryPath(entry.isIntersecting ? pathname : null), { threshold: 0 });
+    observer.observe(primary);
+    return () => observer.disconnect();
+  }, [pathname]);
   // The enquiry page already provides contact links; keep its form unobstructed.
   if (pathname === "/contact") return null;
   const isCameraPage =
@@ -45,7 +88,10 @@ export function MobileContactBar() {
   return (
     <>
       <div className="mobile-contact-spacer h-24 bg-zinc-950 md:hidden" aria-hidden="true" />
-      <nav aria-label="Quick contact" className="liquid-glass mobile-contact-dock fixed inset-x-3 z-[70] grid grid-cols-[1fr_1.3fr_44px] items-center gap-1 rounded-lg border p-2 md:hidden">
+      <nav aria-label="Quick contact" data-primary-visible={visiblePrimaryPath === pathname && !dockFocused} data-form-active={formActive}
+        onFocusCapture={() => setDockFocused(true)}
+        onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDockFocused(false); }}
+        className="liquid-glass mobile-contact-dock fixed inset-x-3 z-[70] grid grid-cols-[1fr_1.3fr_44px] items-center gap-1 rounded-lg border p-2 md:hidden">
         <a
           href={smsHref}
           onClick={onSmsClick}

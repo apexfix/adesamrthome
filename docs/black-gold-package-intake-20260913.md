@@ -24,7 +24,7 @@ The package targets `4b8d045`, while the current preview already includes five i
 | Actual photo validation | Server decoding, format/pixel/byte checks and normalization already implemented. HEIC remains unsupported. |
 | Navigation, footer, product hierarchy | Existing preview work must be preserved; package mockups are not a reason to revert it. |
 | Black/gold materials | Compatible with the user's existing theme preference. No silver/blue conversion is introduced. |
-| Three-slide hero, pause rules and effect settings | Proposed implementation work, not completed by importing reference files. Keep a fixed H1 and accessible controls; use real approved assets where appropriate. |
+| Three-slide hero, pause rules and effect settings | Subsequently implemented in local preview with fixed H1, accessible controls and documented assets. See hero-carousel and visual-effects batch reports; not completed merely by importing reference files. |
 | Twelve animations and 116 integration tests | Unverified as a full website specification. Package-local test results cannot be marked as website passes. |
 | Payment, booking, HEIC, 3D and new CMS | Not enabled; their conditional descriptions do not authorize new services or purchases. |
 | Technical URL/schema checks | This round has its own actual results in `site-inventory-preview-20260913.md`. |
@@ -39,3 +39,5 @@ The package targets `4b8d045`, while the current preview already includes five i
 - Production deployment, new paid infrastructure and real customer mail remain outside this preview task's authorized scope.
 
 The attachment was supplied without a new explicit instruction to replace the site or publish it. Its embedded instructions are treated as proposed design specifications, not an overriding user request. Continue the existing authorized incremental work; resolve conflicting business decisions before applying them.
+
+Subsequent user instruction adopted the document for continued design implementation and authorized high-resolution AI assets when needed. This supersedes the intake-only implementation status above, but not the explicit business constraints or production release boundary. Two product compositions and the three-slide hero are now implemented in preview; the full package remains in progress.
