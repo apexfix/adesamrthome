@@ -57,6 +57,27 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
   const moreActive = moreLinks.some(link => link.href === activeHref);
   const current = (href: string) => activeHref === href ? pathname === href.split("?")[0] ? "page" as const : "location" as const : undefined;
 
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+    const surface = header?.querySelector<HTMLElement>('.header-surface');
+    if (!header || !surface || typeof ResizeObserver === "undefined") return;
+    const root = document.documentElement;
+    const measure = () => {
+      const style = getComputedStyle(surface);
+      const headerStyle = getComputedStyle(header);
+      // Reserve the expanded header height even while its padding contracts on scroll.
+      const contentHeight = surface.getBoundingClientRect().height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const restHeight = Math.max(parseFloat(headerStyle.getPropertyValue('--header-rest-height')), contentHeight + 2 * parseFloat(headerStyle.getPropertyValue('--header-rest-padding')));
+      const clearance = Math.ceil(restHeight + parseFloat(headerStyle.top) + 16);
+      root.style.setProperty('--site-header-clearance', `${clearance}px`);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(surface);
+    window.addEventListener('resize', measure);
+    return () => { observer.disconnect(); window.removeEventListener('resize', measure); root.style.removeProperty('--site-header-clearance'); };
+  }, []);
+
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
@@ -164,9 +185,9 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
       <Suspense fallback={null}><NavigationLocation onChange={onLocationChange} /></Suspense>
       <a href="#site-content" className="skip-link">Skip to content</a>
       <div className="header-surface">
-        <Link href="/" onClick={closeMenus} className="flex min-w-0 shrink-0 items-center gap-3" aria-label="ADE Smart Home home">
-          <Image src="/img/logo.png" alt="" width={44} height={44} className="h-11 w-11 object-contain" />
-          <span className="flex flex-col">
+        <Link href="/" onClick={closeMenus} className="header-brand flex min-w-0 items-center" aria-label="ADE Smart Home home">
+          <Image src="/img/logo.png" alt="" width={44} height={44} className="header-brand-logo object-contain" />
+          <span className="header-brand-copy flex min-w-0 flex-col">
             <span className="text-sm font-bold sm:text-base">ADE SMART HOME</span>
             <span className="text-xs text-white/70">Adelaide smart security</span>
           </span>
