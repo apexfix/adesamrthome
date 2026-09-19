@@ -3,10 +3,10 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const ts = require('typescript');
 function load(file, dependencies = {}) {
-  const module = { exports: {} };
+  const sandboxModule = { exports: {} };
   vm.runInNewContext(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText,
-    { module, exports: module.exports, require: name => dependencies[name] });
-  return module.exports;
+    { module: sandboxModule, exports: sandboxModule.exports, require: name => dependencies[name] });
+  return sandboxModule.exports;
 }
 const enquiry = load('src/lib/enquiry.ts');
 const delivery = load('src/lib/enquiryDelivery.ts');

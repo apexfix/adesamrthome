@@ -67,7 +67,7 @@ export default async function BrandsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <nav aria-label="Breadcrumb" className="text-xs font-bold uppercase text-zinc-500">
+        <nav aria-label="Breadcrumb" className="text-xs font-bold uppercase text-zinc-400">
           <Link href="/" className="hover:text-white">Home</Link> / Brands
         </nav>
         <header className="max-w-4xl py-10 md:py-14">

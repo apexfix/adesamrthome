@@ -1,7 +1,7 @@
 import { MAX_PHOTO_PIXELS, PHOTO_MIME_TYPES } from "./enquiryPhotoLimits";
+import { checkStaticPhotoHeader, MAX_PHOTO_HEADER_BYTES } from "./enquiryPhotoHeader";
 
 const MAX_SOURCE_BYTES = 20_000_000;
-const MAX_HEADER_BYTES = 262_144;
 
 export async function checkEnquiryPhotoMetadata(file: File) {
   if (!PHOTO_MIME_TYPES.includes(file.type) || !file.size) {
@@ -12,9 +12,11 @@ export async function checkEnquiryPhotoMetadata(file: File) {
   }
   // Bound header reads before any browser image decoder is given the file.
   let metadata;
+  let header = new Uint8Array(0);
   try {
     const { imageDimensionsFromData } = await import("image-dimensions");
-    metadata = imageDimensionsFromData(new Uint8Array(await file.slice(0, MAX_HEADER_BYTES).arrayBuffer()));
+    header = new Uint8Array(await file.slice(0, MAX_PHOTO_HEADER_BYTES).arrayBuffer());
+    metadata = imageDimensionsFromData(header);
   } catch {
     metadata = undefined;
   }
@@ -24,5 +26,6 @@ export async function checkEnquiryPhotoMetadata(file: File) {
   if (metadata.width * metadata.height > MAX_PHOTO_PIXELS) {
     throw new Error("This photo exceeds 25 megapixels. Please crop it or choose a lower-resolution image.");
   }
+  checkStaticPhotoHeader(header, file.type, file.size);
   return metadata;
 }

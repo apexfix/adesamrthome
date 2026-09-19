@@ -23,7 +23,7 @@ export function InstallationPhotoStrip({ photos }: { photos: GalleryPhoto[] }) {
           <p className="mb-3 text-xs font-bold uppercase text-[#c5a47e]">Real Installations</p>
           <h2 className="text-3xl font-bold text-white md:text-4xl">Adelaide On-Door Photos</h2>
         </div>
-        <p className="max-w-xl text-sm leading-relaxed text-zinc-500">Real front doors, real retrofits, and real finish quality from local Adelaide installations.</p>
+        <p className="max-w-xl text-sm leading-relaxed text-zinc-400">Real front doors, real retrofits, and real finish quality from local Adelaide installations.</p>
       </div>
       <div className="mb-5 flex justify-end gap-3">
         <button type="button" className="gallery-scroll-button" onClick={() => scroll("left")} disabled={!edges.left} aria-label="Scroll installation photos left" title="Previous installation photos"><ChevronLeft aria-hidden="true" /></button>

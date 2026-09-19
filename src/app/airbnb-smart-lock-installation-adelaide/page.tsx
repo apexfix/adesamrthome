@@ -198,7 +198,7 @@ export default function AirbnbSmartLockInstallationPage() {
   };
 
   return (
-    <main className="bg-white text-slate-950">
+    <main className="bg-black text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -271,83 +271,83 @@ export default function AirbnbSmartLockInstallationPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Access that fits operations
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">
               Less time coordinating keys between stays
             </h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               The right lock depends on the door, guest-access process and people who need to
               enter between bookings. We check those details before installation, rather than
               treating every property the same.
             </p>
           </div>
 
-          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2 lg:grid-cols-4">
             {useCases.map(({ icon: Icon, title, detail }, index) => (
               <article
                 key={title}
                 className={`py-8 md:px-7 ${
-                  index > 0 ? "border-t border-slate-200 md:border-l md:border-t-0" : ""
+                  index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <Icon className="h-7 w-7 text-[#9c7953]" strokeWidth={1.6} aria-hidden="true" />
+                <Icon className="h-7 w-7 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
                 <h3 className="mt-5 text-lg font-bold">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{detail}</p>
+                <p className="mt-3 text-sm leading-6 text-zinc-300">{detail}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16 md:py-24">
+      <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 md:grid-cols-2 md:items-center lg:px-12">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Two service routes
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">
               Use our lock, or supply your own
             </h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               We can recommend and supply a suitable smart lock, or install a compatible lock
               that you have already purchased. Either route starts with the door and access
               requirements, not just the product photo.
             </p>
 
-            <div className="mt-9 border-y border-slate-200">
-              <div className="grid gap-4 border-b border-slate-200 py-6 sm:grid-cols-[auto_1fr_auto] sm:items-center">
-                <ShieldCheck className="h-7 w-7 text-[#9c7953]" aria-hidden="true" />
+            <div className="mt-9 border-y border-zinc-800">
+              <div className="grid gap-4 border-b border-zinc-800 py-6 sm:grid-cols-[auto_1fr_auto] sm:items-center">
+                <ShieldCheck className="h-7 w-7 text-[#d9b98f]" aria-hidden="true" />
                 <div>
                   <h3 className="font-bold">Supply and installation</h3>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                  <p className="mt-1 text-sm leading-6 text-zinc-300">
                     A compatible lock, standard installation and local support in one quoted
                     package.
                   </p>
                 </div>
                 <Link
                   href="/smart-lock-supply-installation-adelaide"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#8a6b48] hover:text-black"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[#d9b98f] hover:text-white"
                 >
                   View packages
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </div>
               <div className="grid gap-4 py-6 sm:grid-cols-[auto_1fr_auto] sm:items-center">
-                <Wrench className="h-7 w-7 text-[#9c7953]" aria-hidden="true" />
+                <Wrench className="h-7 w-7 text-[#d9b98f]" aria-hidden="true" />
                 <div>
                   <h3 className="font-bold">Installation only</h3>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                  <p className="mt-1 text-sm leading-6 text-zinc-300">
                     We check and install compatible customer-supplied smart locks.
                   </p>
                 </div>
                 <Link
                   href="/smart-lock-installation-only-adelaide"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#8a6b48] hover:text-black"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[#d9b98f] hover:text-white"
                 >
                   Check my lock
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -419,20 +419,20 @@ export default function AirbnbSmartLockInstallationPage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="text-center">
-            <Users className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+            <Users className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
             <h2 className="mt-4 text-3xl font-black md:text-5xl">Short-stay smart lock FAQ</h2>
           </div>
 
-          <div className="mt-10 border-y border-slate-200">
+          <div className="mt-10 border-y border-zinc-800">
             {faqs.map((faq) => (
-              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">
+                  <span className="text-xl font-normal text-[#d9b98f] transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
-                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-zinc-300">{faq.answer}</p>
               </details>
             ))}
           </div>

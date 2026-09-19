@@ -155,7 +155,7 @@ html { scroll-padding-top: 112px; }
 
 .liquid-glass,
 .header-surface::before {
-  background: linear-gradient(135deg, rgba(255,255,255,0.13), rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.08)), rgba(18,20,22,0.67);
+  background: linear-gradient(135deg, rgba(255,255,255,0.13), rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.08)), rgba(18,20,22,0.83);
   border-color: rgba(255, 255, 255, 0.24);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
@@ -390,6 +390,15 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-input:autofill { background: #202024; color: #fff; }
 .enquiry-input:-webkit-autofill { -webkit-text-fill-color: #fff; -webkit-box-shadow: 0 0 0 1000px #202024 inset; caret-color: #e5c59f; }
 @media (forced-colors: active) {
+  .header-active-indicator { display: none; }
+  .header-link[data-nav-active="true"], .secondary-header-link[aria-current],
+  .mobile-navigation a[aria-current], nav[aria-label="Product categories"] a[aria-current],
+  .hero-indicator[aria-pressed="true"], .product-thumbnails button[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -4px;
+  }
+  .hero-icon-button, .hero-indicator { border: 1px solid ButtonText; }
+  .product-thumbnails button { opacity: 1; }
   [data-enquiry-service-fields][data-enhanced="true"], .enquiry-received-icon { animation: none; }
   .enquiry-input:-webkit-autofill { -webkit-text-fill-color: FieldText; -webkit-box-shadow: none; }
   .enquiry-service { border: 3px solid ButtonText; }
@@ -409,7 +418,8 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
   .home-hero { height: auto; min-height: 0; }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .liquid-glass, .header-surface::before { background: #202224; }
+  .liquid-glass, .header-surface::before,
+  .site-header[data-scrolled="true"] .header-surface::before { background: #202224; }
 }
 /* System preferences also work before hydration and with JavaScript disabled. */
 @media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {

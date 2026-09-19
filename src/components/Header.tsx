@@ -60,7 +60,7 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
   useLayoutEffect(() => {
     const header = headerRef.current;
     const surface = header?.querySelector<HTMLElement>('.header-surface');
-    if (!header || !surface || typeof ResizeObserver === "undefined") return;
+    if (!header || !surface) return;
     const root = document.documentElement;
     const measure = () => {
       const style = getComputedStyle(surface);
@@ -72,10 +72,10 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
       root.style.setProperty('--site-header-clearance', `${clearance}px`);
     };
     measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(surface);
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(surface);
     window.addEventListener('resize', measure);
-    return () => { observer.disconnect(); window.removeEventListener('resize', measure); root.style.removeProperty('--site-header-clearance'); };
+    return () => { observer?.disconnect(); window.removeEventListener('resize', measure); root.style.removeProperty('--site-header-clearance'); };
   }, []);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
     if (!header) return;
     let cancelled = false;
     const finish = () => { if (!cancelled) header.dataset.entered = "true"; };
-    const entry = header.getAnimations().find(animation => (animation as CSSAnimation).animationName === "header-enter");
+    const entry = header.getAnimations?.().find(animation => (animation as CSSAnimation).animationName === "header-enter");
     if (entry) entry.finished.then(finish, finish);
     else finish();
     return () => { cancelled = true; };

@@ -92,7 +92,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
     <main className="min-h-screen bg-zinc-950 pb-24 pt-32 text-white">
       {[breadcrumb, collection, faq].map((data, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />)}
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase text-zinc-500">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase text-zinc-400">
           <Link href="/" className="hover:text-white">Home</Link><ChevronRight className="h-3 w-3" />
           <Link href="/brands" className="hover:text-white">Brands</Link><ChevronRight className="h-3 w-3" />
           <span className="text-[#d9b98f]">{brand.name}</span>

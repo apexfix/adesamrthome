@@ -98,21 +98,21 @@ export default async function ContactPage({
           <div>
             <ShieldCheck className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Careful Product Advice</h2>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">
               We confirm the selected product, package contents and next steps before an order or booking.
             </p>
           </div>
           <div>
             <Clock className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Clear Next Steps</h2>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">
               We explain what details are needed and confirm availability before booking or purchase.
             </p>
           </div>
           <div>
             <MessageSquareText className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Message-Friendly Support</h2>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">
               Text 0431060390 or email us about smart locks, installation-only jobs or security camera kits.
             </p>
           </div>

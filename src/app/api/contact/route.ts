@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { contactValidationError, isEnquiryService, serviceLabels } from "@/lib/enquiry";
 import { PhotoValidationError, prepareEnquiryPhoto } from "@/lib/enquiryPhotos";
 import { MAX_TOTAL_PHOTO_BYTES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
+import { EnquiryRequestError, readBoundedEnquiryRequest } from "@/lib/enquiryRequest";
 
 export const runtime = "nodejs";
 
@@ -69,12 +70,13 @@ function parseAttribution(value: unknown): Record<string, unknown> {
 
 export async function POST(request: Request) {
   try {
-    const contentType = request.headers.get("content-type") || "";
+    const boundedRequest = await readBoundedEnquiryRequest(request);
+    const contentType = boundedRequest.headers.get("content-type") || "";
     let payload: Record<string, unknown> = {};
     let photoFiles: File[] = [];
 
     if (contentType.includes("multipart/form-data")) {
-      const formData = await request.formData();
+      const formData = await boundedRequest.formData().catch(() => { throw new EnquiryRequestError("The enquiry could not be read. Please try again.", 400); });
       [
         "name",
         "phone",
@@ -94,7 +96,7 @@ export async function POST(request: Request) {
         .getAll("photos")
         .filter((entry): entry is File => entry instanceof File);
     } else {
-      const body: unknown = await request.json();
+      const body: unknown = await boundedRequest.json().catch(() => { throw new EnquiryRequestError("The enquiry could not be read. Please try again.", 400); });
       payload = body && typeof body === "object" ? body as Record<string, unknown> : {};
     }
 
@@ -287,8 +289,8 @@ ${message || "No additional details provided."}
           html: receiptParagraphs.map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join(""),
         });
         acknowledgementSent = true;
-      } catch (customerReplyError) {
-        console.warn("Customer acknowledgement email could not be sent:", customerReplyError);
+      } catch {
+        console.warn("Customer acknowledgement email could not be sent.");
       }
     }
 
@@ -299,10 +301,13 @@ ${message || "No additional details provided."}
       acknowledgementSent,
     });
   } catch (error) {
+    if (error instanceof EnquiryRequestError) {
+      return NextResponse.json({ success: false, message: error.message }, { status: error.status });
+    }
     if (error instanceof PhotoValidationError) {
       return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
-    console.error("Failed to send enquiry email:", error);
+    console.error("Failed to send enquiry email.");
     return NextResponse.json(
       { success: false, message: "Failed to send your enquiry" },
       { status: 500 },

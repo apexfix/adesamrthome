@@ -54,7 +54,7 @@ const fs = require('node:fs/promises');
       });
       try {
         await page.goto('http://localhost:6650/contact',{waitUntil:'networkidle'});
-        const aside=page.locator('.quote-section aside');
+        const aside=page.locator('.quote-section .enquiry-contact-options');
         const phone=aside.getByRole('button',{name:'Copy phone number',exact:true});
         const email=aside.getByRole('button',{name:'Copy email address',exact:true});
         const phoneStatus=phone.locator('..').getByRole('status');

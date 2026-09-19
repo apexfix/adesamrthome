@@ -20,17 +20,21 @@ const setup = async () => {
   const analytics=load('src/lib/analytics.ts',{'./enquiry':enquiry});
   const sharp=requireModule('sharp');
   const photoLimits=load('src/lib/enquiryPhotoLimits.ts');
-  const photos=load('src/lib/enquiryPhotos.ts',{sharp,'./enquiryPhotoLimits':photoLimits});
-  function handler({fail=false}={}){
+  const photoHeader=load('src/lib/enquiryPhotoHeader.ts');
+  const enquiryRequest=load('src/lib/enquiryRequest.ts',{'./enquiryPhotoLimits':photoLimits});
+  const photos=load('src/lib/enquiryPhotos.ts',{sharp,'./enquiryPhotoLimits':photoLimits,'./enquiryPhotoHeader':photoHeader});
+  function handler({fail=false,failAcknowledgement=false}={}){
     const messages=[];
+    const logs=[];
     const api=load('src/app/api/contact/route.ts',{
       '@/lib/enquiry':enquiry,
       '@/lib/enquiryPhotos':photos,
       '@/lib/enquiryPhotoLimits':photoLimits,
+      '@/lib/enquiryRequest':enquiryRequest,
       'next/server':{NextResponse:{json:(value,init)=>Response.json(value,init)}},
-      nodemailer:{createTransport:()=>({sendMail:async message=>{if(fail)throw new Error('Synthetic failure');messages.push(message);return{accepted:[message.to]};}})},
-    },{process:{env:{SMTP_USER:'test@example.test',SMTP_APP_PASSWORD:'test-only',CONTACT_TO_EMAIL:'owner@example.test'}}});
-    return {api,messages};
+      nodemailer:{createTransport:()=>({sendMail:async message=>{if(fail || (failAcknowledgement && messages.length))throw new Error('PRIVATE: test@example.test SMTP-PASSWORD-TEST');messages.push(message);return{accepted:[message.to]};}})},
+    },{process:{env:{SMTP_USER:'test@example.test',SMTP_APP_PASSWORD:'test-only',CONTACT_TO_EMAIL:'owner@example.test'}},console:{warn:(...args)=>logs.push(args),error:(...args)=>logs.push(args)}});
+    return {api,messages,logs};
   }
   return {enquiry,analytics,handler,photos,sharp,photoLimits};
 };
@@ -75,6 +79,26 @@ const setup = async () => {
    }
  });
  test('SMTP failure remains failure, not success',async()=>{const{api}=handler({fail:true});const r=await submit(api);assert.equal(r.status,500);assert.equal((await r.json()).success,false);});
+ test('SMTP errors never place raw provider errors or contact details in logs',async()=>{
+   for(const options of [{fail:true},{failAcknowledgement:true}]){
+     const{api,messages,logs}=handler(options);const response=await submit(api);const body=await response.json();
+     assert.equal(response.status,options.fail?500:200);assert.equal(messages.length,options.fail?0:1);
+     assert.equal(body.success,!options.fail);if(!options.fail)assert.equal(body.acknowledgementSent,false);
+     assert.equal(logs.length,1);assert.doesNotMatch(JSON.stringify(logs),/PRIVATE|test@example|SMTP-PASSWORD/);
+   }
+ });
+ test('request byte limit is enforced without Content-Length and before mail',async()=>{
+   const{api,messages}=handler();
+   const body=JSON.stringify({...sample,message:'x'.repeat(4000000)});
+   const response=await api.POST(new Request('http://test.invalid/api/contact',{method:'POST',headers:{'content-type':'application/json'},body}));
+   assert.equal(response.status,413);assert.equal((await response.json()).success,false);assert.equal(messages.length,0);
+ });
+ test('malformed JSON or multipart yields a readable 400 without logging payloads',async()=>{
+   for(const [type,body] of [['application/json','{PRIVATE'],['multipart/form-data; boundary=test','PRIVATE']]){
+     const{api,messages,logs}=handler();const response=await api.POST(new Request('http://test.invalid/api/contact',{method:'POST',headers:{'content-type':type},body}));
+     assert.equal(response.status,400);assert.equal(messages.length,0);assert.deepEqual(logs,[]);
+   }
+ });
  test('JPEG, PNG and WebP decode and become bounded JPEG attachments',async()=>{
    for(const format of ['jpeg','png','webp']){
      const input=await sharp({create:{width:40,height:60,channels:3,background:'#2468ac'}}).toFormat(format).toBuffer();
@@ -135,6 +159,15 @@ const setup = async () => {
    const bytes=await sharp(data,{raw:{width:10,height:20,channels:3,pageHeight:10}}).webp({loop:0,delay:[100,100]}).toBuffer();
    assert.equal((await sharp(bytes).metadata()).pages,2);
    await assert.rejects(photos.prepareEnquiryPhoto(new File([bytes],'animated.webp',{type:'image/webp'}),0),/non-animated/);
+ });
+ test('animated PNG and WebP cannot bypass preflight by submitting directly',async()=>{
+   const {apng,webp}=await require('./fixtures/photo-animation.cjs').animationFixtures();
+   for(const [bytes,type]of [[apng,'image/png'],[webp,'image/webp']]){
+     const {api,messages}=handler();
+     const response=await submit(api,{service:'installation-only'},[new File([bytes],'animation',{type})]);
+     assert.equal(response.status,400);assert.equal(messages.length,0);
+     assert.match((await response.json()).message,/non-animated/);
+   }
  });
  test('large dimensions are resized proportionally and transparent backgrounds become white',async()=>{
    const bytes=await sharp({create:{width:3200,height:2000,channels:4,background:{r:0,g:0,b:0,alpha:0}}}).png().toBuffer();

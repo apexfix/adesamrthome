@@ -233,7 +233,7 @@ export default function InstallationOnlyPage() {
   };
 
   return (
-    <main className="bg-white text-slate-950">
+    <main className="bg-black text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -309,36 +309,36 @@ export default function InstallationOnlyPage() {
         </div>
       </section>
 
-      <section id="installation-prices" className="scroll-mt-28 border-b border-slate-200 py-14 md:py-20">
+      <section id="installation-prices" className="scroll-mt-28 border-b border-zinc-800 py-14 md:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Clear standard pricing
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">
               Smart lock installation prices in Adelaide
             </h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               Choose the installation type that matches your lock body. We confirm the correct
               option from your lock model and door photos before arranging the appointment.
             </p>
           </div>
 
-          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2">
+          <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2">
             {installationOptions.map((option, index) => (
               <article
                 key={option.name}
                 className={`py-9 md:px-10 ${
-                  index > 0 ? "border-t border-slate-200 md:border-l md:border-t-0" : ""
+                  index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">
                   Installation only
                 </p>
                 <h3 className="mt-3 text-2xl font-black">{option.name}</h3>
-                <p className="mt-5 text-5xl font-black text-slate-950">A${option.price}</p>
-                <p className="mt-4 text-sm leading-6 text-slate-600">{option.description}</p>
-                <ul className="mt-6 space-y-3 text-sm text-slate-700">
+                <p className="mt-5 text-5xl font-black text-white">A${option.price}</p>
+                <p className="mt-4 text-sm leading-6 text-zinc-300">{option.description}</p>
+                <ul className="mt-6 space-y-3 text-sm text-zinc-300">
                   {option.points.map((point) => (
                     <li key={point} className="flex items-start gap-3">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
@@ -350,14 +350,14 @@ export default function InstallationOnlyPage() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col gap-4 text-sm leading-6 text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-8 flex flex-col gap-4 text-sm leading-6 text-zinc-300 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-3xl">
               Prices cover standard installation. Extra parts, repairs, custom metalwork or
               non-standard door preparation are explained and quoted before booking.
             </p>
             <Link
               href="/products/smart-lock-installation-only-service"
-              className="inline-flex shrink-0 items-center gap-2 font-bold text-[#8a6b48] hover:text-black"
+              className="inline-flex shrink-0 items-center gap-2 font-bold text-[#d9b98f] hover:text-white"
             >
               View installation service
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -366,40 +366,40 @@ export default function InstallationOnlyPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Before we quote
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">
               Four things help us check the job properly
             </h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               A smart lock can look suitable online but still be incompatible with the door,
               existing lock body or frame clearance. These details let us assess it before
               anyone travels to site.
             </p>
           </div>
 
-          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2 lg:grid-cols-4">
             {requirements.map(({ icon: Icon, title, detail }, index) => (
               <article
                 key={title}
                 className={`py-8 md:px-7 ${
-                  index > 0 ? "border-t border-slate-200 md:border-l md:border-t-0" : ""
+                  index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
                 }`}
               >
-                <Icon className="h-7 w-7 text-[#9c7953]" strokeWidth={1.6} aria-hidden="true" />
+                <Icon className="h-7 w-7 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
                 <h3 className="mt-5 text-lg font-bold">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{detail}</p>
+                <p className="mt-3 text-sm leading-6 text-zinc-300">{detail}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16 md:py-24">
+      <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
           <div className="relative aspect-[4/5] w-full min-w-0 overflow-hidden bg-slate-200">
             <Image
@@ -412,19 +412,19 @@ export default function InstallationOnlyPage() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Compatibility first
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">
               We install the right lock for the right door
             </h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               We can assess many fingerprint, keypad, push-pull, mortise, video and imported
               smart locks. Suitability depends on the complete lock body, not only the front
               panel shown in the product listing.
             </p>
 
-            <ul className="mt-7 space-y-4 text-sm leading-6 text-slate-700">
+            <ul className="mt-7 space-y-4 text-sm leading-6 text-zinc-300">
               {[
                 "Timber and many aluminium entry doors",
                 "Replacement of suitable existing digital locks",
@@ -440,7 +440,7 @@ export default function InstallationOnlyPage() {
 
             <Link
               href="/blog/smart-lock-door-compatibility-check"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#8a6b48] hover:text-black"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#d9b98f] hover:text-white"
             >
               View the full door compatibility guide
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -491,18 +491,18 @@ export default function InstallationOnlyPage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="text-center">
-            <Wrench className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+            <Wrench className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
             <h2 className="mt-4 text-3xl font-black md:text-5xl">Installation-only FAQ</h2>
           </div>
 
-          <div className="mt-10 border-y border-slate-200">
+          <div className="mt-10 border-y border-zinc-800">
             {faqs.map((faq) => (
-              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <ChevronDown className="h-5 w-5 shrink-0 text-[#8a6b48] transition-transform group-open:rotate-180" aria-hidden="true" />
+                  <ChevronDown className="h-5 w-5 shrink-0 text-[#d9b98f] transition-transform group-open:rotate-180" aria-hidden="true" />
                 </summary>
-                <p className="max-w-3xl pb-6 pr-5 text-base leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-5 text-base leading-7 text-zinc-300">{faq.answer}</p>
               </details>
             ))}
           </div>

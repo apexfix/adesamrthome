@@ -76,19 +76,19 @@ export default function ChineseLandingPage() {
   };
 
   return (
-    <main lang="zh-CN" className="min-h-screen bg-white">
+    <main lang="zh-CN" className="min-h-screen bg-black text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(chineseServiceSchema) }}
       />
 
       <section className="bg-neutral-950 text-white">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-300">
+        <div className="mx-auto max-w-6xl px-6 pb-20 pt-[calc(var(--site-header-clearance,120px)+32px)] md:pb-28">
+          <p className="mb-4 text-sm font-semibold text-[#d9b98f]">
             ADE Smart Home · Adelaide Local Installer
           </p>
 
-          <h1 className="max-w-4xl text-4xl font-bold tracking-tight md:text-6xl">
+          <h1 className="max-w-4xl text-4xl font-bold md:text-6xl">
             阿德莱德智能锁安装
           </h1>
 
@@ -100,13 +100,13 @@ export default function ChineseLandingPage() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="rounded-full bg-white px-6 py-3 text-center font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#d9b98f] px-6 py-3 text-center font-semibold text-black transition-colors hover:bg-white"
             >
               发送门的照片，免费评估
             </Link>
             <a
               href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20need%20a%20smart%20lock%20estimate.`}
-              className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-zinc-600 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-zinc-800"
             >
               短信咨询 {businessInfo.phone}
             </a>
@@ -116,46 +116,46 @@ export default function ChineseLandingPage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-10 md:grid-cols-3">
-          <div className="rounded-3xl border border-neutral-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-neutral-950">
+          <div className="border-t border-zinc-800 pt-8">
+            <h2 className="text-xl font-bold text-white">
               智能锁安装
             </h2>
-            <p className="mt-4 leading-7 text-neutral-700">
+            <p className="mt-4 leading-7 text-zinc-300">
               安装指纹锁、密码锁、人脸识别智能锁、可视智能锁和 App 控制智能门锁。安装前可先看门型，判断是否适合安装。
             </p>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-neutral-950">
+          <div className="border-t border-zinc-800 pt-8">
+            <h2 className="text-xl font-bold text-white">
               客户自购智能锁安装
             </h2>
-            <p className="mt-4 leading-7 text-neutral-700">
+            <p className="mt-4 leading-7 text-zinc-300">
               已经购买智能锁也可以联系我们。请发送智能锁型号，以及门的正面、背面、侧边和门框照片，我们确认兼容性和安装范围后再报价。
             </p>
           </div>
 
-          <div className="rounded-3xl border border-neutral-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-neutral-950">
+          <div className="border-t border-zinc-800 pt-8">
+            <h2 className="text-xl font-bold text-white">
               本地售后支持
             </h2>
-            <p className="mt-4 leading-7 text-neutral-700">
+            <p className="mt-4 leading-7 text-zinc-300">
               提供阿德莱德本地售后支持，包括 App 设置、用户添加、密码设置、基础故障排查和使用指导。
             </p>
           </div>
         </div>
       </section>
 
-      <section className="bg-neutral-50">
+      <section className="border-y border-zinc-800 bg-zinc-950">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <div className="max-w-3xl">
-            <h2 className="text-3xl font-bold text-neutral-950">
+            <h2 className="text-3xl font-bold text-white">
               为什么安装前一定要先看门型？
             </h2>
-            <p className="mt-5 leading-8 text-neutral-700">
+            <p className="mt-5 leading-8 text-zinc-300">
               智能锁不是所有门都能直接安装。不同门的厚度、原锁体位置、门框距离、开孔大小和锁舌结构都会影响安装效果。
               如果没有提前检查，可能会出现锁体不匹配、门框间隙不足、锁舌无法正常弹出、外观不平整等问题。
             </p>
-            <p className="mt-5 leading-8 text-neutral-700">
+            <p className="mt-5 leading-8 text-zinc-300">
               所以我们建议客户先发送门的正面照片、原锁照片、门侧边照片和门框照片。我们会先判断是否适合安装，再推荐合适的智能锁型号和安装方案。
             </p>
           </div>
@@ -165,10 +165,10 @@ export default function ChineseLandingPage() {
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-10 md:grid-cols-[1fr_1fr]">
           <div>
-            <h2 className="text-3xl font-bold text-neutral-950">
+            <h2 className="text-3xl font-bold text-white">
               支持的常见品牌
             </h2>
-            <ul className="mt-6 grid gap-3 text-neutral-700 sm:grid-cols-2">
+            <ul className="mt-6 grid gap-x-6 text-zinc-300 sm:grid-cols-2">
               {[
                 "Philips 飞利浦智能锁",
                 "EZVIZ 萤石智能锁",
@@ -179,7 +179,7 @@ export default function ChineseLandingPage() {
                 "Kaadas 凯迪仕",
                 "部分中国进口智能锁",
               ].map((item) => (
-                <li key={item} className="rounded-2xl bg-neutral-50 px-4 py-3">
+                <li key={item} className="border-b border-zinc-800 py-3">
                   {item}
                 </li>
               ))}
@@ -187,10 +187,10 @@ export default function ChineseLandingPage() {
           </div>
 
           <div>
-            <h2 className="text-3xl font-bold text-neutral-950">
+            <h2 className="text-3xl font-bold text-white">
               服务区域
             </h2>
-            <p className="mt-5 leading-8 text-neutral-700">
+            <p className="mt-5 leading-8 text-zinc-300">
               我们主要服务阿德莱德及周边区域，包括市区、东区、西区、南区、北区和东北区。
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -198,7 +198,7 @@ export default function ChineseLandingPage() {
                 <Link
                   key={area.slug}
                   href={`/smart-lock-installation/${area.slug}`}
-                  className="rounded-2xl border border-neutral-200 px-4 py-3 text-neutral-800 transition hover:border-neutral-950"
+                  className="flex min-h-12 items-center rounded-md border border-zinc-700 px-4 py-3 text-zinc-200 transition-colors hover:border-[#d9b98f] hover:text-[#d9b98f]"
                 >
                   {area.name}
                 </Link>
@@ -221,13 +221,13 @@ export default function ChineseLandingPage() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="rounded-full bg-white px-6 py-3 text-center font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#d9b98f] px-6 py-3 text-center font-semibold text-black transition-colors hover:bg-white"
             >
               获取免费报价
             </Link>
             <a
               href={`mailto:${businessInfo.email}`}
-              className="rounded-full border border-white px-6 py-3 text-center font-semibold text-white transition hover:bg-white hover:text-neutral-950"
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-zinc-600 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-zinc-800"
             >
               邮件发送照片
             </a>

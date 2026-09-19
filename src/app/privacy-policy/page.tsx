@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
             This policy explains how we handle personal information when you visit our website,
             request a smart lock quote, or contact us about an installation.
           </p>
-          <p className="mt-4 text-sm text-zinc-500">Last updated: 30 August 2026</p>
+          <p className="mt-4 text-sm text-zinc-400">Last updated: 30 August 2026</p>
         </div>
       </header>
 
@@ -143,7 +143,7 @@ export default function PrivacyPolicyPage() {
               Text 0431060390
             </a>
           </div>
-          <p className="mt-6 text-xs leading-5 text-zinc-600">
+          <p className="mt-6 text-xs leading-5 text-zinc-400">
             ADE Smart Home provides mobile smart lock services across Adelaide, South Australia.
           </p>
           <Link

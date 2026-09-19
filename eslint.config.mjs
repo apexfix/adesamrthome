@@ -5,13 +5,18 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    files: ["**/*.cjs", "tests/fixtures/recovery-next/postcss.config.js"],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
-    ".next/**",
+    "**/.next/**",
+    "output/**",
     "out/**",
     "build/**",
-    "next-env.d.ts",
+    "**/next-env.d.ts",
   ]),
 ]);
 

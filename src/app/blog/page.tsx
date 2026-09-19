@@ -166,7 +166,7 @@ export default function BlogListPage() {
                 </div>
                 
                 <div data-glass-highlight className="flex flex-1 flex-col p-5 md:p-7">
-                  <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">
+                  <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.1em] text-zinc-400">
                     {post.date && <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" aria-hidden="true" /><time dateTime={post.date}>{post.date}</time></span>}
                     {post.suburb && <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" aria-hidden="true" />{post.suburb}</span>}
                   </div>
@@ -184,7 +184,7 @@ export default function BlogListPage() {
           </RevealGroup>
         ) : (
           <div className="rounded-md border border-dashed border-zinc-800 py-24 text-center">
-            <p className="text-zinc-500">Our latest project stories are being prepared...</p>
+            <p className="text-zinc-400">Our latest project stories are being prepared...</p>
           </div>
         )}
       </div>

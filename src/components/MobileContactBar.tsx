@@ -22,9 +22,10 @@ export function MobileContactBar() {
       if (height > 0) root.style.setProperty('--mobile-contact-height', `${Math.ceil(height)}px`);
     };
     measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(dock);
-    return () => { observer.disconnect(); root.style.removeProperty('--mobile-contact-height'); };
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(dock);
+    window.addEventListener('resize', measure);
+    return () => { observer?.disconnect(); window.removeEventListener('resize', measure); root.style.removeProperty('--mobile-contact-height'); };
   }, [pathname]);
   useEffect(() => {
     let pointerDown = false;
@@ -60,7 +61,7 @@ export function MobileContactBar() {
   }, []);
   useEffect(() => {
     const primary = document.querySelector('[data-primary-quote], .product-purchase a[href^="/contact"]');
-    if (!primary) return;
+    if (!primary || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver(([entry]) => setVisiblePrimaryPath(entry.isIntersecting ? pathname : null), { threshold: 0 });
     observer.observe(primary);
     return () => observer.disconnect();

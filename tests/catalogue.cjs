@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports -- Isolated CommonJS loader for the actual TS server page. */
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');

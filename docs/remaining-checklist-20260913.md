@@ -82,3 +82,25 @@ Conflicting older preferences remain resolved conservatively: keep installation-
 The black/gold liquid-glass v4 package was received during the next inventory round. Its full Markdown was read and source references compared to the current preview. See `black-gold-package-intake-20260913.md`. It is reference material, not release authorization or evidence that the included 116 integration cases passed on this website. Do not overwrite already completed preview work with its older baseline examples.
 
 The user subsequently instructed us to continue following the document and authorized asking for missing assets or generating high-resolution imagery. The document is now the implementation specification within the existing business and release boundaries. The homepage carousel batch is recorded in `hero-carousel-preview-20260913.md`; its asset provenance is in `hero-assets-20260913.md`. Other motions, durable storage and final whole-site acceptance remain open.
+
+## 20 September Local Close-out
+
+The user requested continuous completion, without quota polling. The following newer evidence supersedes the matching local gaps in earlier rows, but does not convert emulated or mocked tests into production acceptance. Full report: `final-local-hardening-20260920.md`. Remaining release decisions: `release-readiness-20260920.md`.
+
+| Topic | Latest disposition |
+| --- | --- |
+| Remaining white service/audience/suburb/Chinese surfaces (OPT-006) | Unified with black/gold in seven source templates; existing copy, prices, URLs, metadata and imagery preserved. Seven AST checks and 56 theme layouts pass. Product-photo backgrounds are intentionally retained. |
+| Automated page accessibility | Final 232 Chrome/WebKit scans have zero violations/page errors. Automatically undecidable contrast remains on every scan; this is not full accessibility certification. |
+| Whole-site enlarged root font | 464 layouts pass after final theme changes. Actual browser/OS zoom and physical device checks remain open. |
+| Bright-background glass / unavailable filters | Twelve scoped brand-text compositing and authored no-filter fallback cases pass. Scrolled opaque fallback corrected. |
+| Non-form forced-color states | Current menu/category/carousel/thumbnail states have explicit outlines/borders. Eight scoped cases pass; native high-contrast systems still need verification. |
+| Missing browser APIs and cleanup | Four observer/animation fallback flows and twelve route loops pass. Carousel manual controls remain usable; tracked listeners, detached observer targets and validation timeout do not accumulate. Not a full heap-leak certification. |
+| Photo animation and orientation gaps | PNG/WebP header preflight now runs before client decoding and server normalization. 36 browser cases/two mixed batches, 21 header cases, 14 metadata cases and 26 API/contract cases pass. Physical pickers/low-memory behavior remain open. |
+| Upload body and private mail logs | 4,000,000-byte streamed total body cap; eleven boundary checks including missing/understated Content-Length pass. Malformed body errors are recoverable; raw SMTP exception objects are not logged. Distributed anti-spam still depends on approved infrastructure. |
+| Build and regression gates | Build/lint pass. Fifteen contract suites and sixteen browser suites pass; final theme-only follow-up passes five more suites including the full reflow/SEO inventory and enquiry checks. |
+| Final local SEO inventory | 58 pages, 206 internal links, 123 local SEO image URLs, zero recorded issues. Google/live indexing not tested. |
+| Homepage motion script containers | Four deduplicated component-entry chunks total 36,491 bytes gzip, including non-motion/shared application code. Conservative container bound, not all-JS size or isolated incremental delta. |
+| Current local load baseline | Eighteen final-build load runs; home LCP medians 1200ms mobile/1168ms desktop, small measured home CLS. Warm local image cache, no interactions/INP or production comparison; full protocol/ranges in the new hardening report. |
+| Local rollback | 393 archived source/asset blobs verified against checkpoint 96b4708, with documented Windows text line-ending conversion; clean isolated Webpack build and 16 old/current key-page checks pass. Actual production/CDN/cache rollback is separate. |
+
+Still not complete: approved durable storage, server idempotency/distributed abuse controls, real delivery and tracking, actual no-JS framework runtime-error recovery, native-device/assistive-technology acceptance, unresolved business/media facts and explicit release authorization. No silent deployment, real enquiry, customer message, paid infrastructure or account mutation was performed. Conditional options stay off rather than being invented to extend the task. The supplied 116-case integration matrix must not be labelled fully passed.

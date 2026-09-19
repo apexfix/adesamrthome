@@ -152,7 +152,7 @@ export default function ServiceAreasPage() {
   };
 
   return (
-    <main className="bg-white text-slate-950">
+    <main className="bg-black text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -196,52 +196,52 @@ export default function ServiceAreasPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Metropolitan coverage</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Metropolitan coverage</p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">One local service across Adelaide</h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               We work across central, eastern, western, northern, southern and coastal Adelaide.
               Your suburb does not need to appear below: send your postcode and door photos and we
               will confirm availability, compatibility and any location-dependent cost before booking.
             </p>
           </div>
-          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2">
+          <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2">
             {zones.map((zone, index) => (
               <article
                 key={zone.name}
-                className={`py-8 md:px-8 ${index % 2 === 1 ? "border-t border-slate-200 md:border-l md:border-t-0" : ""} ${index > 1 ? "border-t border-slate-200" : ""}`}
+                className={`py-8 md:px-8 ${index % 2 === 1 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""} ${index > 1 ? "border-t border-zinc-800" : ""}`}
               >
-                <MapPin className="h-6 w-6 text-[#9c7953]" strokeWidth={1.7} aria-hidden="true" />
+                <MapPin className="h-6 w-6 text-[#d9b98f]" strokeWidth={1.7} aria-hidden="true" />
                 <h3 className="mt-4 text-xl font-black">{zone.name}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{zone.detail}</p>
-                <p className="mt-4 text-sm font-semibold leading-6 text-slate-800">{zone.areas}</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-300">{zone.detail}</p>
+                <p className="mt-4 text-sm font-semibold leading-6 text-zinc-200">{zone.areas}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f5f1eb] py-16 md:py-24">
+      <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Common service suburbs</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Common service suburbs</p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Explore local installation information</h2>
-            <p className="mt-5 text-base leading-7 text-slate-700">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               These pages explain common door and property types in frequently serviced Adelaide
               areas. Nearby suburbs shown on each page are also welcome to request a door check.
             </p>
           </div>
-          <div className="mt-12 grid gap-px bg-[#d7c6af] sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-px bg-zinc-800 sm:grid-cols-2 lg:grid-cols-3">
             {serviceAreas.map((area) => (
-              <article key={area.slug} className="flex min-w-0 flex-col bg-[#f5f1eb] p-6 md:p-8">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">Adelaide service area</p>
+              <article key={area.slug} className="flex min-w-0 flex-col bg-zinc-950 p-6 md:p-8">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">Adelaide service area</p>
                 <h3 className="mt-3 text-2xl font-black">{area.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-700">Also near {area.nearby}.</p>
+                <p className="mt-3 text-sm leading-6 text-zinc-300">Also near {area.nearby}.</p>
                 <Link
                   href={`/smart-lock-installation/${area.slug}`}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-950 hover:text-[#8a6b48]"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-white hover:text-[#d9b98f]"
                 >
                   View {area.name} service details
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -285,44 +285,44 @@ export default function ServiceAreasPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="text-center">
-            <Check className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+            <Check className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
             <h2 className="mt-4 text-3xl font-black md:text-5xl">Adelaide service area FAQ</h2>
           </div>
-          <div className="mt-10 border-y border-slate-200">
+          <div className="mt-10 border-y border-zinc-800">
             {faqs.map((faq) => (
-              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">+</span>
+                  <span className="text-xl font-normal text-[#d9b98f] transition-transform group-open:rotate-45">+</span>
                 </summary>
-                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-zinc-300">{faq.answer}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f5f1eb] py-16 md:py-20">
+      <section className="bg-zinc-950 py-16 md:py-20">
         <div className="mx-auto max-w-5xl px-5 text-center sm:px-8">
-          <MapPin className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+          <MapPin className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
           <h2 className="mt-4 text-3xl font-black md:text-5xl">Not sure whether we cover your suburb?</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-700">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-zinc-300">
             Send your postcode, exact lock model and clear door photos. We will confirm service
             availability and the likely installation scope before arranging a booking.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <a
               href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like to check service availability for my suburb.")}`}
-              className="inline-flex min-h-12 items-center justify-center gap-2 bg-slate-950 px-6 text-sm font-bold text-white hover:bg-[#8a6b48]"
+              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#d9b98f] px-6 text-sm font-bold text-black hover:bg-white"
             >
               <MessageSquareText className="h-4 w-4" aria-hidden="true" /> Text Us
             </a>
             <a
               href={`mailto:${businessInfo.email}?subject=${encodeURIComponent("Adelaide smart lock service area enquiry")}`}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-slate-950 px-6 text-sm font-bold text-slate-950 hover:bg-white"
+              className="inline-flex min-h-12 items-center justify-center gap-2 border border-zinc-600 px-6 text-sm font-bold text-white hover:bg-zinc-800"
             >
               <Mail className="h-4 w-4" aria-hidden="true" /> Email Door Photos
             </a>

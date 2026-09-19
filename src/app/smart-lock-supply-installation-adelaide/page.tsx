@@ -322,7 +322,7 @@ export default function SupplyInstallationPage() {
   };
 
   return (
-    <main className="bg-white text-slate-950">
+    <main className="bg-black text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -412,23 +412,23 @@ export default function SupplyInstallationPage() {
         </div>
       </section>
 
-      <section id="packages" className="scroll-mt-24 border-b border-slate-200 py-16 md:py-24">
+      <section id="packages" className="scroll-mt-24 border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Installed-price range
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Choose the level that fits your home</h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               Every displayed package price includes the selected smart lock and standard Adelaide
               installation. It is not an installation-only fee. Warranty and support terms are
               shown by model, and any non-standard modification is explained and quoted first.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-px bg-zinc-800 md:grid-cols-2 lg:grid-cols-3">
             {packages.map((item) => (
-              <article key={item.name} className="flex min-w-0 flex-col bg-white">
+              <article key={item.name} className="flex min-w-0 flex-col bg-black">
                 <div className="relative aspect-[4/5] overflow-hidden bg-slate-100">
                   <Image
                     src={item.image}
@@ -440,21 +440,21 @@ export default function SupplyInstallationPage() {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a6b48]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d9b98f]">
                     {item.label}
                   </p>
                   <h3 className="mt-2 text-xl font-black">{item.name}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{item.bestFor}</p>
-                  <p className="mt-5 text-3xl font-black text-slate-950">
+                  <p className="mt-1 text-sm text-zinc-300">{item.bestFor}</p>
+                  <p className="mt-5 text-3xl font-black text-white">
                     ${item.price}
-                    <span className="ml-2 text-xs font-semibold uppercase text-slate-500">
+                    <span className="ml-2 text-xs font-semibold uppercase text-zinc-400">
                       all-inclusive
                     </span>
                   </p>
-                  <p className="mt-2 text-xs font-medium leading-5 text-slate-600">
+                  <p className="mt-2 text-xs font-medium leading-5 text-zinc-300">
                     {item.inclusionText}
                   </p>
-                  <ul className="mt-5 space-y-2 text-sm text-slate-700">
+                  <ul className="mt-5 space-y-2 text-sm text-zinc-300">
                     {item.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
@@ -464,7 +464,7 @@ export default function SupplyInstallationPage() {
                   </ul>
                   <Link
                     href={`/products/${item.slug}`}
-                    className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 border border-slate-950 px-4 text-sm font-bold transition-colors hover:bg-slate-950 hover:text-white"
+                    className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 border border-zinc-600 px-4 text-sm font-bold transition-colors hover:bg-zinc-800 hover:text-white"
                   >
                     View {item.name}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -476,27 +476,27 @@ export default function SupplyInstallationPage() {
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16 md:py-24">
+      <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Start with your priority
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">A simpler way to compare</h2>
           </div>
 
-          <div className="mt-12 grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="mt-12 grid gap-px bg-zinc-800 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {priorities.map(({ icon: Icon, title, choice, detail }) => (
               <article
                 key={title}
-                className="bg-slate-50 px-5 py-8 md:px-7"
+                className="bg-zinc-950 px-5 py-8 md:px-7"
               >
-                <Icon className="h-7 w-7 text-[#9c7953]" strokeWidth={1.6} aria-hidden="true" />
-                <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">
+                <Icon className="h-7 w-7 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
+                <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">
                   {title}
                 </p>
                 <h3 className="mt-3 text-lg font-black">{choice}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{detail}</p>
+                <p className="mt-3 text-sm leading-6 text-zinc-300">{detail}</p>
               </article>
             ))}
           </div>
@@ -505,17 +505,17 @@ export default function SupplyInstallationPage() {
 
       <section
         id="installation-only"
-        className="scroll-mt-24 border-y border-slate-200 bg-[#f5f1eb] py-16 md:py-24"
+        className="scroll-mt-24 border-y border-zinc-800 bg-zinc-950 py-16 md:py-24"
       >
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[1.1fr_0.9fr] md:items-center lg:px-12">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Installation only
             </p>
             <h2 className="mt-3 max-w-3xl text-3xl font-black md:text-5xl">
               Already bought a smart lock? We can install it.
             </h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-300">
               Bought a Lockin, Philips, Aqara, Yale, Eufy or another smart lock elsewhere? Send
               the exact model listing and clear photos of your door. Small smart lock installation
               is $200 and large smart lock installation is $350, subject to a compatibility check.
@@ -524,14 +524,14 @@ export default function SupplyInstallationPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/smart-lock-installation-only-adelaide"
-                className="inline-flex min-h-12 items-center justify-center gap-2 bg-slate-950 px-6 text-sm font-bold text-white transition-colors hover:bg-[#9c7953]"
+                className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#d9b98f] px-6 text-sm font-bold text-black transition-colors hover:bg-white"
               >
                 Request Installation Only
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <a
                 href={`sms:${businessInfo.phoneInternational}?body=Hi%20ADE%20Smart%20Home%2C%20I%20would%20like%20an%20installation-only%20quote.`}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-slate-950 px-6 text-sm font-bold text-slate-950 transition-colors hover:bg-white"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-zinc-600 px-6 text-sm font-bold text-white transition-colors hover:bg-zinc-800"
               >
                 <MessageSquareText className="h-4 w-4" aria-hidden="true" />
                 Text us
@@ -539,7 +539,7 @@ export default function SupplyInstallationPage() {
             </div>
           </div>
 
-          <div className="grid gap-px bg-[#d7c6af] sm:grid-cols-2">
+          <div className="grid gap-px bg-zinc-800 sm:grid-cols-2">
             {[
               [
                 "Your lock, your choice",
@@ -558,10 +558,10 @@ export default function SupplyInstallationPage() {
                 "Small locks are $200; large locks are $350 after the compatibility review.",
               ],
             ].map(([title, detail]) => (
-              <article key={title} className="bg-[#f5f1eb] p-6">
-                <Check className="h-6 w-6 text-[#8a6b48]" aria-hidden="true" />
-                <h3 className="mt-4 font-black text-slate-950">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-700">{detail}</p>
+              <article key={title} className="bg-zinc-950 p-6">
+                <Check className="h-6 w-6 text-[#d9b98f]" aria-hidden="true" />
+                <h3 className="mt-4 font-black text-white">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-zinc-300">{detail}</p>
               </article>
             ))}
           </div>
@@ -616,16 +616,16 @@ export default function SupplyInstallationPage() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">
               Free compatibility check
             </p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Send the door before choosing the lock</h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               The best model depends on your door thickness, current lock position, door frame
               clearance and any security screen. Photos let us recommend an option that can be
               installed neatly and operate correctly.
             </p>
-            <ul className="mt-7 space-y-4 text-sm leading-6 text-slate-700">
+            <ul className="mt-7 space-y-4 text-sm leading-6 text-zinc-300">
               {[
                 "Front and inside face of the door",
                 "Current lock and handle position",
@@ -640,7 +640,7 @@ export default function SupplyInstallationPage() {
             </ul>
             <Link
               href="#quote"
-              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 bg-slate-950 px-6 text-sm font-bold text-white hover:bg-[#9c7953]"
+              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 bg-[#d9b98f] px-6 text-sm font-bold text-black hover:bg-white"
             >
               Send Door Details
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -649,23 +649,23 @@ export default function SupplyInstallationPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-16 md:py-24">
+      <section className="border-t border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="text-center">
-            <ShieldCheck className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+            <ShieldCheck className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
             <h2 className="mt-4 text-3xl font-black md:text-5xl">Supply and installation FAQ</h2>
           </div>
 
-          <div className="mt-10 border-y border-slate-200">
+          <div className="mt-10 border-y border-zinc-800">
             {faqs.map((faq) => (
-              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">
+                  <span className="text-xl font-normal text-[#d9b98f] transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
-                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-zinc-300">{faq.answer}</p>
               </details>
             ))}
           </div>
@@ -673,7 +673,7 @@ export default function SupplyInstallationPage() {
           <div className="mt-10 text-center">
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#8a6b48] hover:text-black"
+              className="inline-flex items-center gap-2 text-sm font-bold text-[#d9b98f] hover:text-white"
             >
               View every available smart lock
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

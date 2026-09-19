@@ -93,7 +93,7 @@ export default function AboutPage() {
       ))}
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-bold uppercase text-zinc-500">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-bold uppercase text-zinc-400">
           <Link href="/" className="hover:text-white">Home</Link>
           <ChevronRight className="h-3 w-3" aria-hidden="true" />
           <span className="text-[#d9b98f]">About</span>

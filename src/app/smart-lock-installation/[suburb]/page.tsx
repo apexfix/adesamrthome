@@ -451,7 +451,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
   };
 
   return (
-    <main className="bg-white text-slate-950">
+    <main className="bg-black text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -502,38 +502,38 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Two service routes</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Two service routes</p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">Choose what you need in {area.name}</h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">
+            <p className="mt-5 text-base leading-7 text-zinc-300">
               You can choose a complete supplied package or ask us to install a compatible smart
               lock bought elsewhere. We confirm the door, model and scope before booking.
             </p>
           </div>
-          <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2">
+          <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2">
             <article className="py-9 md:py-12 md:pr-10">
-              <PackageCheck className="h-8 w-8 text-[#9c7953]" strokeWidth={1.6} aria-hidden="true" />
-              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">From $699</p>
+              <PackageCheck className="h-8 w-8 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
+              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">From $699</p>
               <h3 className="mt-3 text-2xl font-black">Smart lock supplied and installed</h3>
-              <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">
+              <p className="mt-4 max-w-xl text-base leading-7 text-zinc-300">
                 Compare installed-price packages. The displayed package price includes the selected
                 lock and standard Adelaide installation, with warranty terms shown by model.
               </p>
-              <Link href="/smart-lock-supply-installation-adelaide" className="mt-6 inline-flex items-center gap-2 text-sm font-bold hover:text-[#8a6b48]">
+              <Link href="/smart-lock-supply-installation-adelaide" className="mt-6 inline-flex items-center gap-2 text-sm font-bold hover:text-[#d9b98f]">
                 Compare installed packages <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </article>
-            <article className="border-t border-slate-200 py-9 md:border-l md:border-t-0 md:py-12 md:pl-10">
-              <Wrench className="h-8 w-8 text-[#9c7953]" strokeWidth={1.6} aria-hidden="true" />
-              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#8a6b48]">From $200</p>
+            <article className="border-t border-zinc-800 py-9 md:border-l md:border-t-0 md:py-12 md:pl-10">
+              <Wrench className="h-8 w-8 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
+              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">From $200</p>
               <h3 className="mt-3 text-2xl font-black">Install a lock you already own</h3>
-              <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">
+              <p className="mt-4 max-w-xl text-base leading-7 text-zinc-300">
                 Compatible compact smart lock installation is $200. Full-size smart lock installation
                 with a standard 6068 mortise is $350. The customer supplies the lock.
               </p>
-              <Link href="/smart-lock-installation-only-adelaide" className="mt-6 inline-flex items-center gap-2 text-sm font-bold hover:text-[#8a6b48]">
+              <Link href="/smart-lock-installation-only-adelaide" className="mt-6 inline-flex items-center gap-2 text-sm font-bold hover:text-[#d9b98f]">
                 View installation-only pricing <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </article>
@@ -541,25 +541,25 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-[#f5f1eb] py-16 md:py-24">
+      <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-200 lg:min-h-[460px]">
             <Image src={detail.image} alt={enhancement.imageAlt} fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover" />
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Local door assessment</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Local door assessment</p>
             <h2 className="mt-3 text-3xl font-black md:text-5xl">The door decides what will fit</h2>
-            <p className="mt-5 text-base leading-7 text-slate-700">{detail.doorFocus}</p>
-            <p className="mt-4 text-base leading-7 text-slate-700">{detail.propertyFocus}</p>
-            <div className="mt-8 grid gap-px bg-[#d7c6af] sm:grid-cols-2">
+            <p className="mt-5 text-base leading-7 text-zinc-300">{detail.doorFocus}</p>
+            <p className="mt-4 text-base leading-7 text-zinc-300">{detail.propertyFocus}</p>
+            <div className="mt-8 grid gap-px bg-zinc-800 sm:grid-cols-2">
               {[
                 { icon: DoorOpen, text: "Both faces and the edge of the door" },
                 { icon: Camera, text: "Current lock and handle position" },
                 { icon: ShieldCheck, text: "Frame and security-screen clearance" },
                 { icon: MapPin, text: `Suburb or postcode near ${area.name}` },
               ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-start gap-3 bg-[#f5f1eb] p-5">
-                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#8a6b48]" aria-hidden="true" />
+                <div key={text} className="flex items-start gap-3 bg-zinc-950 p-5">
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#d9b98f]" aria-hidden="true" />
                   <span className="text-sm font-semibold leading-6">{text}</span>
                 </div>
               ))}
@@ -568,22 +568,22 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white py-16 md:py-24">
+      <section className="border-b border-zinc-800 bg-black py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="grid gap-10 md:grid-cols-[0.72fr_1.28fr] md:gap-16">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Before you book</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Before you book</p>
               <h2 className="mt-3 text-3xl font-black md:text-5xl">Planning an installation in {area.name}</h2>
-              <p className="mt-5 text-base leading-7 text-slate-600">
+              <p className="mt-5 text-base leading-7 text-zinc-300">
                 A few local property and door details can change the most suitable installation route.
                 Include these points with your photos so the first quote is more accurate.
               </p>
             </div>
-            <ol className="border-y border-slate-200">
+            <ol className="border-y border-zinc-800">
               {enhancement.planningPoints.map((point, index) => (
-                <li key={point} className="grid grid-cols-[44px_1fr] gap-4 border-b border-slate-200 py-6 last:border-b-0">
-                  <span className="text-sm font-black text-[#9c7953]">0{index + 1}</span>
-                  <p className="text-base leading-7 text-slate-700">{point}</p>
+                <li key={point} className="grid grid-cols-[44px_1fr] gap-4 border-b border-zinc-800 py-6 last:border-b-0">
+                  <span className="text-sm font-black text-[#d9b98f]">0{index + 1}</span>
+                  <p className="text-base leading-7 text-zinc-300">{point}</p>
                 </li>
               ))}
             </ol>
@@ -609,30 +609,30 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 py-16 md:py-24">
+      <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8a6b48]">Nearby coverage</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">Nearby coverage</p>
               <h2 className="mt-3 text-3xl font-black md:text-5xl">Around {area.name}</h2>
-              <p className="mt-5 text-base leading-7 text-slate-600">
+              <p className="mt-5 text-base leading-7 text-zinc-300">
                 Nearby areas include {area.nearby}. The links show other common service
                 areas; your suburb does not need to be listed to request a compatibility check.
               </p>
-              <Link href="/service-areas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#8a6b48] hover:text-black">
+              <Link href="/service-areas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#d9b98f] hover:text-white">
                 View all Adelaide service areas <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-            <div className="border-y border-slate-200">
+            <div className="border-y border-zinc-800">
               {relatedAreas.map((relatedArea) => (
                 <Link
                   key={relatedArea.slug}
                   href={`/smart-lock-installation/${relatedArea.slug}`}
-                  className="flex min-h-20 items-center justify-between gap-4 border-b border-slate-200 py-5 last:border-b-0 hover:text-[#8a6b48]"
+                  className="flex min-h-20 items-center justify-between gap-4 border-b border-zinc-800 py-5 last:border-b-0 hover:text-[#d9b98f]"
                 >
                   <span>
                     <span className="block font-black">Smart lock installation in {relatedArea.name}</span>
-                    <span className="mt-1 block text-sm text-slate-600">Near {relatedArea.nearby}</span>
+                    <span className="mt-1 block text-sm text-zinc-300">Near {relatedArea.nearby}</span>
                   </span>
                   <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
                 </Link>
@@ -645,17 +645,17 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="text-center">
-            <ShieldCheck className="mx-auto h-8 w-8 text-[#9c7953]" aria-hidden="true" />
+            <ShieldCheck className="mx-auto h-8 w-8 text-[#d9b98f]" aria-hidden="true" />
             <h2 className="mt-4 text-3xl font-black md:text-5xl">{area.name} smart lock FAQ</h2>
           </div>
-          <div className="mt-10 border-y border-slate-200">
+          <div className="mt-10 border-y border-zinc-800">
             {faqs.map((faq) => (
-              <details key={faq.question} data-faq className="group border-b border-slate-200 last:border-b-0">
+              <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
                   {faq.question}
-                  <span className="text-xl font-normal text-[#8a6b48] transition-transform group-open:rotate-45">+</span>
+                  <span className="text-xl font-normal text-[#d9b98f] transition-transform group-open:rotate-45">+</span>
                 </summary>
-                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-zinc-300">{faq.answer}</p>
               </details>
             ))}
           </div>

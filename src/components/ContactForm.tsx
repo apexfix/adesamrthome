@@ -137,6 +137,7 @@ export function ContactForm({
   initialService,
   initialProduct,
 }: ContactFormProps = {}) {
+  const SectionHeading = compact ? "h2" : "h3";
   const enhanced = useSyncExternalStore(subscribeToHydration, clientSnapshot, serverSnapshot);
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -155,6 +156,7 @@ export function ContactForm({
   const completedRef = useRef(false);
   const abandonmentTrackedRef = useRef(false);
   const validationErrorTrackedRef = useRef(false);
+  const validationResetTimerRef = useRef<number | null>(null);
   const selectedService =
     serviceOptions.find((option) => option.value === initialService)?.value ??
     initialFormData.service;
@@ -183,6 +185,7 @@ export function ContactForm({
     if (confirmedLeadId) receiptRef.current?.focus();
   }, [confirmedLeadId]);
   useEffect(() => () => {
+    if (validationResetTimerRef.current !== null) window.clearTimeout(validationResetTimerRef.current);
     const request = deliveryRequestRef.current;
     deliveryRequestRef.current = null;
     if (request) {
@@ -466,7 +469,8 @@ export function ContactForm({
       photo_count: photos.length,
     });
 
-    window.setTimeout(() => {
+    validationResetTimerRef.current = window.setTimeout(() => {
+      validationResetTimerRef.current = null;
       validationErrorTrackedRef.current = false;
     }, 1000);
   };
@@ -514,8 +518,8 @@ export function ContactForm({
         </div>}
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-12">
-          <aside className="order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
-            <h3 className="text-xl font-bold text-white">Prefer to message us directly?</h3>
+          <div className="enquiry-contact-options order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
+            <SectionHeading className="text-xl font-bold text-white">Prefer to message us directly?</SectionHeading>
             <div className="mt-6 space-y-3">
               <div className="flex items-center gap-2">
               <a
@@ -570,16 +574,16 @@ export function ContactForm({
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
             </div>}
-          </aside>
+          </div>
 
           <div className="enquiry-panel relative order-1 min-w-0 rounded-lg border p-5 md:p-9 lg:order-2">
-            <h3 className="break-words text-2xl font-bold text-white">
+            <SectionHeading className="break-words text-2xl font-bold text-white">
               {formData.product
                 ? `Ask about ${formData.product}`
                 : isCameraKitEnquiry
                   ? "Request a security camera quote"
                   : "Request an installation quote"}
-            </h3>
+            </SectionHeading>
             <p id={contactHintId} className="enquiry-muted mt-3 text-base leading-7">
               {isCameraKitEnquiry
                 ? "Leave your name, suburb and mobile or email. We will confirm the equipment and availability before you order."

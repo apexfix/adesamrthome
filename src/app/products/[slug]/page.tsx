@@ -539,7 +539,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     {priceLabel(currentPrice, currencySymbol)}
                   </span>
                   {isOnSale && (
-                    <span className="text-xl text-zinc-600 line-through decoration-zinc-700 font-medium">
+                    <span className="text-xl text-zinc-400 line-through decoration-zinc-400 font-medium">
                       {currencySymbol}{regularPrice}
                     </span>
                   )}
@@ -627,7 +627,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               )}
               {!isService && !isCameraKit && (
-                <p className="text-xs leading-6 text-zinc-500">
+                <p className="text-xs leading-6 text-zinc-400">
                   Supplied installation packages are brought to the confirmed Adelaide appointment;
                   we do not offer separate postal shipping. See our{" "}
                   <Link
@@ -665,7 +665,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                   return (
                     <div key={`${attr.name}-${attr.id || index}`} className="border-b border-zinc-900 pb-4">
-                      <dt className="mb-1 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">{attr.name}</dt>
+                      <dt className="mb-1 text-xs font-bold uppercase tracking-[0.12em] text-zinc-400">{attr.name}</dt>
                       <dd className="break-words text-base leading-7 text-white font-medium">{values.join(", ")}</dd>
                     </div>
                   );
@@ -723,7 +723,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
                   Installation <span className="text-[#c5a47e]">Gallery</span>
                 </h2>
-                <p className="text-zinc-500 font-light leading-relaxed">
+                <p className="text-zinc-400 font-light leading-relaxed">
                   {hasBrandSpecificStories
                     ? `Real results from Adelaide homes. See how ${brandName} looks when professionally installed by our team.`
                     : "See recent Adelaide smart-lock installation work. Exact models and door compatibility vary by property."}

@@ -98,7 +98,7 @@ export default function SecurityCameraKitsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-        <nav className="mb-10 flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
+        <nav aria-label="Breadcrumb" className="mb-10 flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-400">
           <Link href="/" className="hover:text-white">Home</Link>
           <ChevronRight className="h-3 w-3" aria-hidden="true" />
           <Link href="/products" className="hover:text-white">Products</Link>

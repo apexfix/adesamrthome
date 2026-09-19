@@ -4,14 +4,15 @@ const vm = require('node:vm');
 const ts = require('typescript');
 const sharp = require('sharp');
 function load(file, dependencies) {
-  const module = { exports: {} };
+  const sandboxModule = { exports: {} };
   const code = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
-  vm.runInNewContext(code, { module, exports: module.exports, Uint8Array, require: name => dependencies[name] ?? require(name) });
-  return module.exports;
+  vm.runInNewContext(code, { module: sandboxModule, exports: sandboxModule.exports, Uint8Array, require: name => dependencies[name] ?? require(name) });
+  return sandboxModule.exports;
 }
 (async () => {
   const limits = load('src/lib/enquiryPhotoLimits.ts', {});
-  const { checkEnquiryPhotoMetadata: check } = load('src/lib/enquiryPhotoMetadata.ts', { './enquiryPhotoLimits': limits });
+  const header = load('src/lib/enquiryPhotoHeader.ts', {});
+  const { checkEnquiryPhotoMetadata: check } = load('src/lib/enquiryPhotoMetadata.ts', { './enquiryPhotoLimits': limits, './enquiryPhotoHeader': header });
   let checks = 0;
   for (const format of ['jpeg','png','webp']) {
     const bytes = await sharp({create:{width:80,height:40,channels:3,background:'#406090'}}).toFormat(format).toBuffer();

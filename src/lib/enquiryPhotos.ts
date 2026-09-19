@@ -1,5 +1,6 @@
 import sharp from "sharp";
 import { MAX_PHOTO_BYTES, MAX_PHOTO_PIXELS } from "./enquiryPhotoLimits";
+import { checkStaticPhotoHeader, MAX_PHOTO_HEADER_BYTES } from "./enquiryPhotoHeader";
 
 const mimeFormats: Record<string, string> = {
   "image/jpeg": "jpeg",
@@ -16,6 +17,7 @@ export async function prepareEnquiryPhoto(photo: File, index: number) {
       throw new PhotoValidationError(errorMessage);
     }
     const input = Buffer.from(await photo.arrayBuffer());
+    checkStaticPhotoHeader(input.subarray(0, MAX_PHOTO_HEADER_BYTES), photo.type, photo.size);
     const image = sharp(input, { failOn: "warning", limitInputPixels: MAX_PHOTO_PIXELS });
     const metadata = await image.metadata();
     if (

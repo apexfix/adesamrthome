@@ -30,6 +30,7 @@ export function HeroMediaCarousel({ slides, children }: { slides: HeroSlide[]; c
   const [state, dispatch] = useReducer(reduceCarousel, slides.length, initialCarousel);
   const preference = useSyncExternalStore(subscribeToVisualEffects, getVisualEffectsSnapshot, getServerVisualEffectsSnapshot);
   const reduced = preference !== "standard";
+  const visibilitySupported = typeof IntersectionObserver !== "undefined";
   const playing = canAutoPlay(state, reduced);
   const rootRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -39,6 +40,7 @@ export function HeroMediaCarousel({ slides, children }: { slides: HeroSlide[]; c
     const syncVisibility = () => dispatch({ type: "visible", value: !document.hidden });
     syncVisibility();
     document.addEventListener("visibilitychange", syncVisibility);
+    if (typeof IntersectionObserver === "undefined") return () => document.removeEventListener("visibilitychange", syncVisibility);
     const observer = new IntersectionObserver(([entry]) => dispatch({ type: "inViewport", value: entry.isIntersecting && entry.intersectionRatio >= 0.25 }), { threshold: [0, 0.25] });
     if (rootRef.current) observer.observe(rootRef.current);
     return () => { document.removeEventListener("visibilitychange", syncVisibility); observer.disconnect(); };
@@ -85,8 +87,8 @@ export function HeroMediaCarousel({ slides, children }: { slides: HeroSlide[]; c
         </div>
         {slides.length > 1 && <div className="hero-controls-slot">{preference !== null && <div className="hero-controls liquid-glass" role="group" aria-label="Slideshow controls">
           <button type="button" data-playback-control className="hero-icon-button" aria-label={playing ? "Pause slideshow" : "Play slideshow"}
-            title={reduced ? "Slideshow paused by reduced visual effects" : playing ? "Pause slideshow" : "Play slideshow"}
-            disabled={reduced} onClick={() => dispatch({ type: playing ? "pause" : "play" })}>
+            title={!visibilitySupported ? "Automatic slideshow unavailable; use the slide controls" : reduced ? "Slideshow paused by reduced visual effects" : playing ? "Pause slideshow" : "Play slideshow"}
+            disabled={reduced || !visibilitySupported} onClick={() => dispatch({ type: playing ? "pause" : "play" })}>
             {playing ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
           </button>
           <div className="hero-indicators" role="group" aria-label="Choose a service slide">
