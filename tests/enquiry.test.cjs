@@ -95,6 +95,36 @@ const setup = async () => {
    const bytes=await sharp({create:{width:5001,height:5000,channels:3,background:'#ffffff'}}).png().toBuffer();
    assert(bytes.length<1000000);const{api,messages}=handler();assert.equal((await submit(api,{service:'supply-install'},[new File([bytes],'large.png',{type:'image/png'})])).status,400);assert.equal(messages.length,0);
  });
+ test('all eight EXIF orientations preserve corner placement and strip identifying metadata',async()=>{
+   const width=120,height=80;
+   const colors=[[240,20,20],[20,220,20],[20,20,240],[230,220,20]];
+   const raw=Buffer.alloc(width*height*3);
+   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+     const color=colors[(y>=height/2?2:0)+(x>=width/2?1:0)];
+     for(let c=0;c<3;c++)raw[(y*width+x)*3+c]=color[c];
+   }
+   const corners=[[0,1,2,3],[1,0,3,2],[3,2,1,0],[2,3,0,1],[0,2,1,3],[2,0,3,1],[3,1,2,0],[1,3,0,2]];
+   for(let orientation=1;orientation<=8;orientation++){
+     const source=await sharp(raw,{raw:{width,height,channels:3}}).withMetadata({orientation}).withExifMerge({IFD0:{Artist:'PRIVATE-PHOTO-OWNER',ImageDescription:'PRIVATE-PHOTO-LOCATION'}}).jpeg({quality:95}).toBuffer();
+     assert.equal((await sharp(source).metadata()).orientation,orientation);
+     assert.ok((await sharp(source).metadata()).exif);
+     for(const marker of ['PRIVATE-PHOTO-OWNER','PRIVATE-PHOTO-LOCATION'])assert.equal(source.includes(Buffer.from(marker)),true);
+     const {api,messages}=handler();
+     assert.equal((await submit(api,{service:'installation-only'},[new File([source],'private-location.jpg',{type:'image/jpeg'})])).status,200);
+     const attachment=messages[0].attachments[0];
+     assert.equal(attachment.filename,'door-photo-1.jpg');
+     const metadata=await sharp(attachment.content).metadata();
+     assert.equal(metadata.width,orientation>=5?height:width);
+     assert.equal(metadata.height,orientation>=5?width:height);
+     for(const key of ['exif','icc','iptc','xmp','orientation'])assert.equal(metadata[key],undefined,`orientation ${orientation}: ${key}`);
+     for(const marker of ['PRIVATE-PHOTO-OWNER','PRIVATE-PHOTO-LOCATION'])assert.equal(attachment.content.includes(Buffer.from(marker)),false);
+     const {data,info}=await sharp(attachment.content).raw().toBuffer({resolveWithObject:true});
+     for(const [i,[fx,fy]]of [[.25,.25],[.75,.25],[.25,.75],[.75,.75]].entries()){
+       const offset=(Math.floor(info.height*fy)*info.width+Math.floor(info.width*fx))*info.channels;
+       colors[corners[orientation-1][i]].forEach((expected,c)=>assert.ok(Math.abs(data[offset+c]-expected)<35,`orientation ${orientation}, corner ${i}, channel ${c}`));
+     }
+   }
+ });
  test('normalization strips metadata and trailing bytes, applies orientation, and does not crop',async()=>{
    const bytes=await sharp({create:{width:30,height:60,channels:3,background:'#2468ac'}}).withMetadata({orientation:6}).jpeg().toBuffer();
    const result=await photos.prepareEnquiryPhoto(new File([Buffer.concat([bytes,Buffer.from('PRIVATE-TRAILING-MARKER')])],'private-name.jpg',{type:'image/jpeg'}),0);

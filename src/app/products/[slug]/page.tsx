@@ -510,7 +510,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-[#c5a47e]">
                     Two-camera equipment package
                   </p>
-                  <p className={`break-words font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-5xl"}`}>
+                  <p className={`min-w-0 [overflow-wrap:anywhere] font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-4xl sm:text-5xl"}`}>
                     {priceLabel(currentPrice, currencySymbol)}
                   </p>
                 </div>
@@ -535,7 +535,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               ) : (
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                  <span className={`break-words font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-5xl"}`}>
+                  <span className={`min-w-0 [overflow-wrap:anywhere] font-black text-[#c5a47e] ${currentPrice === null ? "text-2xl" : "text-4xl sm:text-5xl"}`}>
                     {priceLabel(currentPrice, currencySymbol)}
                   </span>
                   {isOnSale && (

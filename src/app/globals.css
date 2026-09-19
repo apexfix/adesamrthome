@@ -22,6 +22,12 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Let enlarged text determine line breaks, not a grid track's minimum width. */
+#site-content { overflow-wrap: anywhere; }
+#site-content :where(.grid) > * { min-width: 0; }
+#site-content :where(a, button) { max-width: 100%; }
+#site-content :where(nav[aria-label="Breadcrumb"]) { flex-wrap: wrap; }
+
 .product-description {
   color: #b8b8c0;
   font-size: 1rem;
@@ -341,6 +347,17 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-service[aria-pressed="true"] { background: #d9b98f; color: #111113; }
 .enquiry-service:focus-visible { position: relative; z-index: 1; outline-offset: -3px !important; outline-color: #fff !important; }
 .enquiry-service[aria-pressed="true"]:focus-visible { outline-color: #111113 !important; }
+/* Feedback never hides fields or delays their interaction. Reduction rules below cancel it live. */
+[data-enquiry-service-fields][data-enhanced="true"] { animation: enquiry-fields-in 180ms ease-out; }
+.enquiry-received-icon { animation: enquiry-received-in 300ms ease-out; transform-origin: center; }
+@keyframes enquiry-fields-in {
+  from { transform: translateY(2px); }
+  to { transform: none; }
+}
+@keyframes enquiry-received-in {
+  from { transform: scale(.85); }
+  to { transform: none; }
+}
 .enquiry-upload { background: #202024; border-color: #71717a; color: #e4e4e7; }
 .enquiry-upload:hover { background: #303036; border-color: #d9b98f; }
 .enquiry-remove { color: #e4e4e7; }
@@ -373,6 +390,7 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-input:autofill { background: #202024; color: #fff; }
 .enquiry-input:-webkit-autofill { -webkit-text-fill-color: #fff; -webkit-box-shadow: 0 0 0 1000px #202024 inset; caret-color: #e5c59f; }
 @media (forced-colors: active) {
+  [data-enquiry-service-fields][data-enhanced="true"], .enquiry-received-icon { animation: none; }
   .enquiry-input:-webkit-autofill { -webkit-text-fill-color: FieldText; -webkit-box-shadow: none; }
   .enquiry-service { border: 3px solid ButtonText; }
   .enquiry-service[aria-pressed="true"] { border-color: Highlight; border-style: double; }

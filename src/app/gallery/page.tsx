@@ -62,7 +62,7 @@ export default async function GalleryPage({ searchParams }: GalleryPageProps) {
             <label className="grid max-w-full gap-2 text-sm font-semibold text-zinc-300">
               Lock model
               <span className="relative block max-w-full">
-                <select name="model" defaultValue={model || ""} className="min-h-12 w-full min-w-40 max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
+                <select name="model" defaultValue={model || ""} className="min-h-12 w-full min-w-[min(10rem,100%)] max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
                   <option value="">All models</option>
                   {models.map(option => <option key={option} value={option}>{option}</option>)}
                 </select>
@@ -72,7 +72,7 @@ export default async function GalleryPage({ searchParams }: GalleryPageProps) {
             {(suburbs.length > 1 || suburb) && <label className="grid max-w-full gap-2 text-sm font-semibold text-zinc-300">
               Area
               <span className="relative block max-w-full">
-                <select name="suburb" defaultValue={suburb || ""} className="min-h-12 w-full min-w-40 max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
+                <select name="suburb" defaultValue={suburb || ""} className="min-h-12 w-full min-w-[min(10rem,100%)] max-w-full appearance-none rounded-md border border-zinc-600 bg-zinc-900 py-2 pl-3 pr-10 text-base text-white [color-scheme:dark]">
                   <option value="">All areas</option>
                   {suburbs.map(option => <option key={option} value={option}>{option}</option>)}
                 </select>

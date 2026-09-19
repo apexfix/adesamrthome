@@ -605,7 +605,7 @@ export default function SupplyInstallationPage() {
 
       <section className="py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
-          <div className="relative aspect-[4/5] min-h-[440px] overflow-hidden bg-slate-100">
+          <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100 lg:min-h-[440px]">
             <Image
               src="/img/smart-lock-door-measurement-requirements.png"
               alt="Door photos and measurements for choosing a supplied smart lock"

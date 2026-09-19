@@ -476,7 +476,7 @@ export function ContactForm({
     return (
       <section id="quote" className="quote-section border-y border-zinc-800 bg-zinc-950 px-5 py-12 text-white md:px-8 md:py-16">
         <div ref={receiptRef} data-enquiry-receipt role="status" tabIndex={-1} className="mx-auto max-w-3xl wrap-anywhere focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#d9b98f]">
-          <CheckCircle2 className="mb-5 h-10 w-10 text-emerald-400" aria-hidden="true" />
+          <CheckCircle2 className="enquiry-received-icon mb-5 h-10 w-10 text-emerald-400" aria-hidden="true" />
           <h2 className="text-2xl font-bold leading-tight md:text-3xl">Your enquiry has been received.</h2>
           <p className="mt-5 text-base leading-relaxed text-zinc-300">No need to send it again. Please keep your reference number:</p>
           <p className="mt-3 text-xl font-bold leading-relaxed text-[#d9b98f]">{confirmedLeadId}</p>
@@ -718,6 +718,7 @@ export function ContactForm({
                 </label>
               </div>
 
+              <div key={formData.service} data-enquiry-service-fields data-enhanced={enhanced} className="space-y-5">
               <label className="block space-y-2 enquiry-label">
                 {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="enquiry-muted font-normal">optional</span>
                 <input
@@ -818,6 +819,8 @@ export function ContactForm({
                 {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm [overflow-wrap:anywhere]">{photoError}</p>}
                 {photoLimitError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm">{photoLimitError}</p>}
               </fieldset>}
+
+              </div>
 
               <label className="block space-y-2 enquiry-label">
                 Anything else? <span className="enquiry-muted font-normal">optional</span>

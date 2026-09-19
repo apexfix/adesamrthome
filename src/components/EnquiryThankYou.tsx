@@ -34,7 +34,7 @@ export function EnquiryThankYou() {
   return (
     <div data-enquiry-thank-you className="mx-auto max-w-5xl px-5 pb-14 pt-6 text-white wrap-anywhere sm:px-8 md:pb-20">
       <section className="border-b border-zinc-800 pb-9" aria-live="polite">
-        <CheckCircle2 className="mb-6 h-12 w-12 text-emerald-400" aria-hidden="true" />
+        <CheckCircle2 className="enquiry-received-icon mb-6 h-12 w-12 text-emerald-400" aria-hidden="true" />
         <p className="text-sm font-bold text-[#d9b98f]">Enquiry received</p>
         <h1 className="mt-4 text-3xl font-bold leading-tight md:text-5xl">Thank You. We Have Your Details.</h1>
         <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300">{details.intro}</p>

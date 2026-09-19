@@ -356,7 +356,7 @@ export default function AirbnbSmartLockInstallationPage() {
             </div>
           </div>
 
-          <div className="relative aspect-[4/5] min-h-[440px] overflow-hidden bg-slate-200">
+          <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-200 lg:min-h-[440px]">
             <Image
               src="/img/products/lockin-x9/real-install-04.jpg"
               alt="Smart lock installed for guest access at an Adelaide property"

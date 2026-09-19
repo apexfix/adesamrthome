@@ -543,7 +543,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
 
       <section className="bg-[#f5f1eb] py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.9fr_1.1fr] md:items-center lg:px-12">
-          <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden bg-zinc-200">
+          <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-200 lg:min-h-[460px]">
             <Image src={detail.image} alt={enhancement.imageAlt} fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover" />
           </div>
           <div>
