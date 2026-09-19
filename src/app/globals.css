@@ -341,7 +341,8 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-input:hover { border-color: #a1a1aa; }
 .enquiry-input:focus { border-color: #e5c59f; }
 .enquiry-panel :is(input, select, textarea, button, a):focus-visible { outline: 2px solid #e5c59f; outline-offset: 3px; }
-.enquiry-services { background: #71717a; border-color: #71717a; }
+.enquiry-services { background: #71717a; border-color: #71717a; grid-template-columns: repeat(auto-fit, minmax(min(100%, max(10rem, 45%)), 1fr)); }
+.enquiry-services > button:last-child { grid-column: 1 / -1; }
 .enquiry-service { background: #202024; color: #e4e4e7; overflow-wrap: anywhere; }
 .enquiry-service:hover { background: #303036; }
 .enquiry-service[aria-pressed="true"] { background: #d9b98f; color: #111113; }
@@ -377,6 +378,7 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .enquiry-submit { background: #d9b98f; color: #111113; padding-inline: 12px; gap: 8px; }
 .enquiry-submit:hover { background: #e5c59f; }
 .enquiry-panel button:disabled { background: #303036; color: #b8b8c0; cursor: not-allowed; }
+.enquiry-panel .enquiry-service[aria-pressed="true"]:disabled { background: #d9b98f; color: #111113; }
 .enquiry-panel button[type="submit"]:disabled { cursor: wait; }
 .enquiry-error { background: #32191b; border-color: #f87171; color: #fecaca; overflow-wrap: anywhere; }
 .enquiry-success { background: #112d24; border-color: #6ee7b7; color: #a7f3d0; }
@@ -389,7 +391,10 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 .contact-copy:is(:hover, :focus-within) .contact-copy-tooltip { visibility: visible; }
 .enquiry-input:autofill { background: #202024; color: #fff; }
 .enquiry-input:-webkit-autofill { -webkit-text-fill-color: #fff; -webkit-box-shadow: 0 0 0 1000px #202024 inset; caret-color: #e5c59f; }
+.selection-indicator { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; visibility: hidden; border: 2px solid #f0d7b8; border-radius: 6px; }
+.selection-indicator[data-ready="true"] { visibility: visible; transition: transform 220ms cubic-bezier(.2,.8,.2,1), width 220ms ease, height 220ms ease; }
 @media (forced-colors: active) {
+  .selection-indicator { display: none; }
   .header-active-indicator { display: none; }
   .header-link[data-nav-active="true"], .secondary-header-link[aria-current],
   .mobile-navigation a[aria-current], nav[aria-label="Product categories"] a[aria-current],

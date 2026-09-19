@@ -17,22 +17,27 @@ const setup = async () => {
     return loadedModule.exports;
   };
   const enquiry=load('src/lib/enquiry.ts');
+  const delivery=load('src/lib/enquiryDelivery.ts');
+  const receipt=load('src/lib/enquiryReceipt.ts',{'./enquiry':enquiry,'./enquiryDelivery':delivery});
+  const seoData=load('src/lib/seoData.ts');
   const analytics=load('src/lib/analytics.ts',{'./enquiry':enquiry});
   const sharp=requireModule('sharp');
   const photoLimits=load('src/lib/enquiryPhotoLimits.ts');
   const photoHeader=load('src/lib/enquiryPhotoHeader.ts');
   const enquiryRequest=load('src/lib/enquiryRequest.ts',{'./enquiryPhotoLimits':photoLimits});
   const photos=load('src/lib/enquiryPhotos.ts',{sharp,'./enquiryPhotoLimits':photoLimits,'./enquiryPhotoHeader':photoHeader});
-  function handler({fail=false,failAcknowledgement=false}={}){
+  function handler({fail=false,failAcknowledgement=false,rejectOperator=false,rejectAcknowledgement=false}={}){
     const messages=[];
     const logs=[];
     const api=load('src/app/api/contact/route.ts',{
       '@/lib/enquiry':enquiry,
+      '@/lib/enquiryReceipt':receipt,
+      '@/lib/seoData':seoData,
       '@/lib/enquiryPhotos':photos,
       '@/lib/enquiryPhotoLimits':photoLimits,
       '@/lib/enquiryRequest':enquiryRequest,
       'next/server':{NextResponse:{json:(value,init)=>Response.json(value,init)}},
-      nodemailer:{createTransport:()=>({sendMail:async message=>{if(fail || (failAcknowledgement && messages.length))throw new Error('PRIVATE: test@example.test SMTP-PASSWORD-TEST');messages.push(message);return{accepted:[message.to]};}})},
+      nodemailer:{createTransport:()=>({sendMail:async message=>{if(fail || (failAcknowledgement && messages.length))throw new Error('PRIVATE: test@example.test SMTP-PASSWORD-TEST');const rejected=messages.length?rejectAcknowledgement:rejectOperator;messages.push(message);return{accepted:rejected?[]:[message.to],rejected:rejected?[message.to]:[]};}})},
     },{process:{env:{SMTP_USER:'test@example.test',SMTP_APP_PASSWORD:'test-only',CONTACT_TO_EMAIL:'owner@example.test'}},console:{warn:(...args)=>logs.push(args),error:(...args)=>logs.push(args)}});
     return {api,messages,logs};
   }
@@ -58,8 +63,49 @@ const setup = async () => {
    assert.equal(enquiry.contactValidationIssue('0431060390',''),null);
  });
  test('camera minimal email enquiry is accepted and has equipment-only receipt',async()=>{const{api,messages}=handler();const r=await submit(api);assert.equal(r.status,200);assert((await r.json()).leadId);assert.equal(messages.length,2);assert.match(messages[1].subject,/camera equipment/);assert.doesNotMatch(messages[1].text,/door|24 hours|48 hours/i);assert.match(messages[0].text,/Preferred equipment package/);});
+ test('each service receives its own acknowledgement rather than a generic lock receipt',async()=>{
+   const expected={
+     'supply-install':/preferred lock, door details/,
+     'installation-only':/model you have purchased/,
+     'security-camera-kit':/package name, quantity/,
+     'portfolio-project':/properties, quantities/,
+     'not-sure':/clarify suitable product or service options/,
+   };
+   for(const[service,copy]of Object.entries(expected)){
+     const{api,messages}=handler();const response=await submit(api,{service});const receipt=await response.json();
+     assert.equal(response.status,200);assert.equal(receipt.acknowledgementSent,true);assert.equal(messages.length,2);
+     assert.match(messages[1].text,copy,service);assert.match(messages[1].html,copy,service);
+     assert.ok(messages[1].subject.includes(receipt.leadId));assert.ok(messages[1].text.includes(receipt.leadId));
+     assert.match(messages[1].text,/0431060390/);assert.match(messages[1].text,/https:\/\/www\.adesmarthome\.com\.au\//);
+     assert.doesNotMatch(messages[1].text,/24 hours|48 hours|guaranteed|licensed/i);
+     if(service==='security-camera-kit')assert.doesNotMatch(messages[1].text,/door|installation|coverage|position/i);
+   }
+ });
  test('mobile-only installation enquiry is accepted with no customer email',async()=>{const{api,messages}=handler();assert.equal((await submit(api,{service:'installation-only',product:'Customer-supplied lock',phone:'0431060390',email:''})).status,200);assert.equal(messages.length,1);});
  test('optional selections may be empty but not invalid',async()=>{const{api}=handler();assert.equal((await submit(api,{propertyType:'',preferredTiming:''})).status,200);assert.equal((await submit(api,{propertyType:'invented'})).status,400);});
+ test('all five services accept every displayed optional property and timing combination',async()=>{
+   let checked=0;
+   for(const service of enquiry.serviceOptions)for(const property of enquiry.propertyOptions)for(const timing of enquiry.timingOptions){
+     const{api,messages}=handler();
+     const response=await submit(api,{service:service.value,propertyType:property.value,preferredTiming:timing.value});
+     assert.equal(response.status,200,`${service.value}/${property.value}/${timing.value}`);
+     assert.ok(messages[0].text.includes(`Property type: ${property.value?property.label:'Not specified'}`));
+     assert.ok(messages[0].text.includes(`Preferred timing: ${timing.value?timing.label:'Not specified'}`));
+     checked++;
+   }
+   assert.equal(checked,150);
+ });
+ test('unknown optional values never send mail',async()=>{
+   for(const field of ['propertyType','preferredTiming'])for(const value of ['invented','constructor','__proto__']){
+     const{api,messages}=handler();assert.equal((await submit(api,{[field]:value})).status,400);assert.equal(messages.length,0);
+   }
+ });
+ test('all services support phone-only contact without attempting an acknowledgement',async()=>{
+   for(const service of enquiry.serviceOptions){
+     const{api,messages}=handler();const response=await submit(api,{service:service.value,email:'',phone:'0431060390'});
+     assert.equal(response.status,200);assert.equal((await response.json()).acknowledgementSent,false);assert.equal(messages.length,1);
+   }
+ });
  test('missing contact, missing name and invalid service are rejected',async()=>{const{api,messages}=handler();for(const fields of [{email:''},{name:''},{service:'invalid'}])assert.equal((await submit(api,fields)).status,400);assert.equal(messages.length,0);});
  test('camera requests cannot silently include stale door photos',async()=>{const{api,messages}=handler();assert.equal((await submit(api,{},[new File(['test'],'test.jpg',{type:'image/jpeg'})])).status,400);assert.equal(messages.length,0);});
  test('photo limits still apply to locks',async()=>{const{api,messages}=handler();const f=new File(['test'],'test.jpg',{type:'image/jpeg'});assert.equal((await submit(api,{service:'supply-install'},[f,f,f,f,f])).status,400);assert.equal((await submit(api,{service:'supply-install'},[new File([new Uint8Array(1000001)],'large.jpg',{type:'image/jpeg'})])).status,400);assert.equal(messages.length,0);});
@@ -79,6 +125,18 @@ const setup = async () => {
    }
  });
  test('SMTP failure remains failure, not success',async()=>{const{api}=handler({fail:true});const r=await submit(api);assert.equal(r.status,500);assert.equal((await r.json()).success,false);});
+ test('an SMTP response without an accepted operator recipient cannot report success or send a receipt',async()=>{
+   const{api,messages,logs}=handler({rejectOperator:true});const response=await submit(api);const body=await response.json();
+   assert.equal(response.status,500);assert.equal(body.success,false);assert.equal(body.leadId,undefined);
+   assert.equal(messages.length,1);assert.equal(logs.length,1);assert.doesNotMatch(JSON.stringify(logs),/test@example|owner@example/);
+ });
+ test('a rejected customer receipt does not discard the accepted operator enquiry',async()=>{
+   for(const service of enquiry.serviceOptions){
+     const{api,messages,logs}=handler({rejectAcknowledgement:true});const response=await submit(api,{service:service.value});const body=await response.json();
+     assert.equal(response.status,200);assert.equal(body.success,true);assert.equal(body.acknowledgementSent,false);
+     assert.ok(body.leadId);assert.equal(messages.length,2);assert.equal(logs.length,1);
+   }
+ });
  test('SMTP errors never place raw provider errors or contact details in logs',async()=>{
    for(const options of [{fail:true},{failAcknowledgement:true}]){
      const{api,messages,logs}=handler(options);const response=await submit(api);const body=await response.json();

@@ -1,42 +1,14 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { randomUUID } from "node:crypto";
-import { contactValidationError, isEnquiryService, serviceLabels } from "@/lib/enquiry";
+import { contactValidationError, isEnquiryService, propertyOptions, serviceLabels, timingOptions } from "@/lib/enquiry";
+import { enquiryReceiptDetails } from "@/lib/enquiryReceipt";
+import { businessInfo, siteUrl } from "@/lib/seoData";
 import { PhotoValidationError, prepareEnquiryPhoto } from "@/lib/enquiryPhotos";
 import { MAX_TOTAL_PHOTO_BYTES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 import { EnquiryRequestError, readBoundedEnquiryRequest } from "@/lib/enquiryRequest";
 
 export const runtime = "nodejs";
-
-const allowedPropertyTypes = new Set([
-  "house",
-  "apartment",
-  "airbnb-rental",
-  "new-build",
-  "commercial-other",
-]);
-const allowedTimings = new Set([
-  "as-soon-as-possible",
-  "within-one-week",
-  "within-two-to-four-weeks",
-  "flexible",
-]);
-
-
-const propertyLabels: Record<string, string> = {
-  house: "House",
-  apartment: "Apartment",
-  "airbnb-rental": "Airbnb / rental",
-  "new-build": "New build",
-  "commercial-other": "Commercial / other",
-};
-
-const timingLabels: Record<string, string> = {
-  "as-soon-as-possible": "As soon as possible",
-  "within-one-week": "Within 1 week",
-  "within-two-to-four-weeks": "Within 2–4 weeks",
-  flexible: "Flexible / researching",
-};
 
 function readField(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -130,8 +102,8 @@ export async function POST(request: Request) {
       !name ||
       !suburb ||
       !isEnquiryService(service) ||
-      (propertyType && !allowedPropertyTypes.has(propertyType)) ||
-      (preferredTiming && !allowedTimings.has(preferredTiming)) ||
+      !propertyOptions.some(option => option.value === propertyType) ||
+      !timingOptions.some(option => option.value === preferredTiming) ||
       contactError
     ) {
       return NextResponse.json(
@@ -175,7 +147,7 @@ export async function POST(request: Request) {
 
     const smtpUser = process.env.SMTP_USER;
     const smtpAppPassword = process.env.SMTP_APP_PASSWORD;
-    const contactEmail = process.env.CONTACT_TO_EMAIL || "info@adesmarthome.com.au";
+    const contactEmail = process.env.CONTACT_TO_EMAIL || businessInfo.email;
 
     if (!smtpUser || !smtpAppPassword) {
       throw new Error("Email delivery is not configured.");
@@ -183,18 +155,21 @@ export async function POST(request: Request) {
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
       auth: {
         user: smtpUser,
         pass: smtpAppPassword,
       },
     });
     const serviceLabel = serviceLabels[service] || service;
-    const propertyLabel = propertyLabels[propertyType] || "Not specified";
-    const timingLabel = timingLabels[preferredTiming] || "Not specified";
+    const propertyLabel = propertyOptions.find(option => option.value && option.value === propertyType)?.label || "Not specified";
+    const timingLabel = timingOptions.find(option => option.value && option.value === preferredTiming)?.label || "Not specified";
     const receivedAt = new Date();
     const leadId = `ADE-${receivedAt.toISOString().slice(0, 10).replace(/-/g, "")}-${randomUUID().slice(0, 8).toUpperCase()}`;
 
-    await transporter.sendMail({
+    const operatorDelivery = await transporter.sendMail({
       from: `"ADE Smart Home Website" <${smtpUser}>`,
       to: contactEmail,
       ...(email ? { replyTo: email } : {}),
@@ -262,25 +237,26 @@ ${message || "No additional details provided."}
       `,
     });
 
+    if (!operatorDelivery.accepted?.length) {
+      throw new Error("The enquiry email was not accepted.");
+    }
+
     let acknowledgementSent = false;
 
     if (email) {
-      const enquiryName = isCameraKit ? "camera equipment" : "smart lock";
+      const enquiryName = serviceLabel.toLowerCase().replace(/ enquiry$/, "");
+      const receipt = enquiryReceiptDetails(service);
       const receiptParagraphs = [
         `Hi ${name},`,
         `Thank you for contacting ADE Smart Home. We have received your ${enquiryName} enquiry. Your reference is ${leadId}.`,
-        isCameraKit
-          ? "We will review your preferred equipment package and confirm availability, package contents and pricing before you order."
-          : "We will review your requested service and any door photos, then confirm compatibility, installation scope and pricing before booking.",
-        "We will contact you by SMS or email if we need any further details.",
-        isCameraKit
-          ? "You can reply with the equipment model, package name or quantity required."
-          : "You can reply with more photos of the outside, inside, door edge and frame, or send them later by SMS.",
-        "Text 0431060390 or reply to this email to add details.",
-        "ADE Smart Home\nhttps://www.adesmarthome.com.au/",
+        receipt.intro,
+        receipt.review,
+        receipt.next,
+        `Text ${businessInfo.phone} or reply to this email to add details.`,
+        `${businessInfo.name}\n${siteUrl}/`,
       ];
       try {
-        await transporter.sendMail({
+        const acknowledgementDelivery = await transporter.sendMail({
           from: `"ADE Smart Home" <${smtpUser}>`,
           to: email,
           replyTo: contactEmail,
@@ -288,6 +264,9 @@ ${message || "No additional details provided."}
           text: receiptParagraphs.join("\n\n"),
           html: receiptParagraphs.map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join(""),
         });
+        if (!acknowledgementDelivery.accepted?.length) {
+          throw new Error("The acknowledgement email was not accepted.");
+        }
         acknowledgementSent = true;
       } catch {
         console.warn("Customer acknowledgement email could not be sent.");

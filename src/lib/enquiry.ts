@@ -1,3 +1,20 @@
+export const propertyOptions = [
+  { value: "", label: "Select property type" },
+  { value: "house", label: "House" },
+  { value: "apartment", label: "Apartment" },
+  { value: "airbnb-rental", label: "Airbnb / rental" },
+  { value: "new-build", label: "New build" },
+  { value: "commercial-other", label: "Commercial / other" },
+] as const;
+
+export const timingOptions = [
+  { value: "", label: "Select preferred timing" },
+  { value: "as-soon-as-possible", label: "As soon as possible" },
+  { value: "within-one-week", label: "Within 1 week" },
+  { value: "within-two-to-four-weeks", label: "Within 2\u20134 weeks" },
+  { value: "flexible", label: "Flexible / researching" },
+] as const;
+
 export const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
   { value: "installation-only", label: "Installation only" },

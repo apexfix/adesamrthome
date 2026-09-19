@@ -3,11 +3,12 @@ const fs = require('node:fs');
 const { spawnSync } = require('node:child_process');
 const groups = {
   contracts: ['enquiry.test', 'enquiry-request', 'enquiry-receipt', 'enquiry-delivery', 'lead-conversion', 'photo-metadata', 'photo-header', 'catalogue', 'gallery-filters', 'product-pricing', 'product-error-contract', 'story-ssr', 'navigation-state.test', 'hero-state.test', 'camera-content-scope'],
-  browser: ['observer-fallback-browser', 'lifecycle-browser', 'glass-contrast-browser', 'site-forced-colors', 'photo-preview-browser', 'photo-batch-browser', 'photo-total-browser', 'photo-safety-browser', 'enquiry-browser', 'contact-copy-browser', 'enquiry-motion-browser', 'enquiry-confirmation-hydration', 'hero-interaction-browser', 'mobile-dock-layout', 'header-text-resize', 'site-inventory'],
+  browser: ['observer-fallback-browser', 'lifecycle-browser', 'glass-contrast-browser', 'site-forced-colors', 'selection-indicator-browser', 'photo-preview-browser', 'photo-batch-browser', 'photo-total-browser', 'photo-safety-browser', 'enquiry-browser', 'contact-copy-browser', 'enquiry-motion-browser', 'enquiry-confirmation-hydration', 'hero-interaction-browser', 'mobile-dock-layout', 'header-text-resize', 'site-inventory'],
   acceptance: ['service-theme-content', 'service-theme-browser', 'site-text-resize-browser', 'site-inventory', 'enquiry-browser'],
+  followup: ['lifecycle-browser', 'enquiry-browser', 'enquiry-motion-browser', 'enquiry-confirmation-hydration', 'mobile-dock-layout', 'site-inventory'],
 };
 const group = process.argv[2] || 'contracts';
-assert.ok(groups[group], 'Choose contracts, browser or acceptance');
+assert.ok(groups[group], 'Choose contracts, browser, acceptance or followup');
 fs.mkdirSync('output/final-regressions', { recursive: true });
 const results = [];
 for (const name of groups[group]) {

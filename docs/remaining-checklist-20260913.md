@@ -104,3 +104,9 @@ The user requested continuous completion, without quota polling. The following n
 | Local rollback | 393 archived source/asset blobs verified against checkpoint 96b4708, with documented Windows text line-ending conversion; clean isolated Webpack build and 16 old/current key-page checks pass. Actual production/CDN/cache rollback is separate. |
 
 Still not complete: approved durable storage, server idempotency/distributed abuse controls, real delivery and tracking, actual no-JS framework runtime-error recovery, native-device/assistive-technology acceptance, unresolved business/media facts and explicit release authorization. No silent deployment, real enquiry, customer message, paid infrastructure or account mutation was performed. Conditional options stay off rather than being invented to extend the task. The supplied 116-case integration matrix must not be labelled fully passed.
+
+## Continued Independent Work, 20 September
+
+See `continued-completion-20260920.md`. A further actual gap was found in the API: browser receipts were service-specific, but acknowledgement emails were not. Both now use the same five-service copy. Browser/API property and timing definitions are shared; 150 combinations and all five phone-only paths pass. The 32 API tests also cover SMTP recipient acceptance and preserve success when only the customer acknowledgement fails. This supersedes earlier receipt/enumeration evidence, not the durable-delivery gate.
+
+Category/service selection motion is now covered by a shared decorative moving outline, with static/no-script/missing-observer and reduced-effects fallbacks. Rem-aware service rows avoid fragmented words at large text sizes. Forty cross-engine cases and visual review pass. Native-device acceptance and actual framework-error no-JS recovery remain open; the healthy-page cases must not be conflated with server-failure recovery.

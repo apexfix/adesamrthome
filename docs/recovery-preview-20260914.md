@@ -22,3 +22,5 @@ Screenshots and detailed JSON evidence are in `output/recovery` and `output/reco
 ## Remaining boundaries
 
 Actual Next server failure delivery without scripts is unresolved. Physical assistive technology, browser translation interference, production failures/telemetry and full-site acceptance remain unverified. No new error-reporting service or sensitive error logging was introduced. Release still requires authorization.
+
+20 September source follow-up: the installed Next 16.1.1 `getErrorRSCPayload` creates a production `__next_error__` seed with an empty body and supplies the global error component separately for the client router. This explains why changing only the visible recovery component does not address the existing no-JS fixture failure. No framework/vendor patch or false-success fallback was made. Healthy-page no-JS category/control checks in `continued-completion-20260920.md` do not supersede the runtime-failure result above.

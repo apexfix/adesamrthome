@@ -15,34 +15,18 @@ import {
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
 import { businessInfo } from "@/lib/seoData";
-import { analyticsProductId, contactValidationIssue, serviceOptions } from "@/lib/enquiry";
+import { analyticsProductId, contactValidationIssue, propertyOptions, serviceOptions, timingOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
 import { checkEnquiryPhotoMetadata } from "@/lib/enquiryPhotoMetadata";
 import { EnquiryPhotoPreview } from "@/components/EnquiryPhotoPreview";
 import { readEnquiryResponse, uncertainDeliveryMessage } from "@/lib/enquiryDelivery";
 import { ENQUIRY_RECEIPT_KEY, enquiryReceiptDetails } from "@/lib/enquiryReceipt";
+import { SelectionIndicator } from "@/components/SelectionIndicator";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
 const serverSnapshot = () => false;
-
-const propertyOptions = [
-  { value: "", label: "Select property type" },
-  { value: "house", label: "House" },
-  { value: "apartment", label: "Apartment" },
-  { value: "airbnb-rental", label: "Airbnb / rental" },
-  { value: "new-build", label: "New build" },
-  { value: "commercial-other", label: "Commercial / other" },
-] as const;
-
-const timingOptions = [
-  { value: "", label: "Select preferred timing" },
-  { value: "as-soon-as-possible", label: "As soon as possible" },
-  { value: "within-one-week", label: "Within 1 week" },
-  { value: "within-two-to-four-weeks", label: "Within 2–4 weeks" },
-  { value: "flexible", label: "Flexible / researching" },
-] as const;
 
 const photoChecklist = [
   { title: "Outside face", detail: "Show the full door and outside lock." },
@@ -615,7 +599,8 @@ export function ContactForm({
                 <legend className="mb-2 enquiry-label">
                   Service needed
                 </legend>
-                <div className="enquiry-services grid grid-cols-2 gap-px overflow-hidden rounded-md border [&>button:last-child]:col-span-2">
+                <div className="enquiry-services relative grid gap-px overflow-hidden rounded-md border">
+                  <SelectionIndicator activeKey={formData.service} />
                   {serviceOptions.map((option) => (
                     <button
                       key={option.value}

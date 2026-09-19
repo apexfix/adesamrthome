@@ -35,6 +35,8 @@ Questions about release/test-mail permission and an existing database/CRM were s
 
 Conditional features in OPT-032 through OPT-045 remain off unless separately approved. Do not build payments, booking, new languages, chat, comparison tools or paid services merely to make the checklist longer. Prohibited effects and invented marketing claims remain excluded.
 
+Continued local work after this gate was written is recorded in `continued-completion-20260920.md`: actual API acknowledgements now share the five-service browser receipt copy, all optional-field combinations have handler tests, mail recipient acceptance is checked, and responsive category/service selection feedback is implemented. These fixes do not replace the durable-storage, real-delivery, native-device or release gates above. Healthy-page no-JS tests do not resolve the separate actual server-failure no-JS limitation.
+
 ## Recovery Procedure
 
 1. Keep the current preview checkpoint and its static assets together. This batch changes no database schema, product IDs, public URLs, service enum values or receipt-storage key.

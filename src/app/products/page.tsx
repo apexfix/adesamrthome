@@ -2,6 +2,7 @@ import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/ProductCard";
 import { RevealGroup } from "@/components/RevealGroup";
 import { CatalogueInstallation } from "@/components/CatalogueInstallation";
+import { SelectionIndicator } from "@/components/SelectionIndicator";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
@@ -87,7 +88,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Adelaide smart security</p>
           <h1 className="mb-5 mt-3 break-words text-4xl font-extrabold text-white md:text-5xl">{title}</h1>
           {!filtered && <p className="max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">Smart locks, installation-only services and CCTV kits in Adelaide.</p>}
-          <nav aria-label="Product categories" className="mt-6 flex flex-wrap gap-2">
+          <nav aria-label="Product categories" className="relative mt-6 flex flex-wrap gap-2">
+            <SelectionIndicator activeKey={`${category?.slug || "all"}:${brand?.slug || "all"}`} />
             <Link href="/products" aria-current={!filtered ? "page" : undefined} className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold ${!filtered ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "glass-control text-zinc-200 hover:text-white"}`}>All Products</Link>
             {categories.map(item => <Link key={item.id} href={catalogueHref(item.id, brand?.slug)} aria-current={category?.slug === item.id ? "page" : undefined} className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold ${category?.slug === item.id ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "glass-control text-zinc-200 hover:text-white"}`}>{item.name}</Link>)}
           </nav>
