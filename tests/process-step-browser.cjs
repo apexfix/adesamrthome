@@ -11,6 +11,10 @@
     try {
       for (const width of [390, 1440]) {
         const page = await browser.newPage({ viewport: { width, height: 900 } });
+        const errors = [];
+        page.on('pageerror', error => errors.push(`${page.url()}: ${error.message}`));
+        await page.route('**/*', route => new URL(route.request().url()).origin === 'http://localhost:6650' ? route.continue() : route.abort());
+        await page.addInitScript(() => sessionStorage.setItem('ade-enquiry-receipt-v1', JSON.stringify({ leadId: 'LOCAL-STEPS', service: 'installation-only' })));
         try {
           for (const route of routes) {
             await page.goto('http://localhost:6650' + route, { waitUntil: 'networkidle' });
@@ -39,10 +43,25 @@
           await page.getByRole('link', { name: 'ADE Smart Home home' }).click();
           await page.waitForURL('http://localhost:6650/');
           assert.ok(await page.evaluate(() => window.__oldSteps.every(node => !node.hasAttribute('data-step-motion'))));
+          await page.evaluate(() => {
+            const step = document.createElement('article');
+            step.id = 'local-late-step';
+            step.dataset.processStep = '';
+            step.textContent = 'Local dynamic step fixture';
+            document.getElementById('site-content').appendChild(step);
+            window.__lateStep = step;
+          });
+          await page.locator('#local-late-step').scrollIntoViewIfNeeded();
+          await page.waitForFunction(() => window.__lateStep.dataset.stepMotion === 'active');
+          await page.evaluate(() => window.__lateStep.remove());
+          await page.waitForFunction(() => !window.__lateStep.hasAttribute('data-step-motion'));
+          assert.deepEqual(errors, []);
+          results.push({ engine, width, lateInsertion: true, removalCleanup: true, passed: true });
         } finally { await page.close(); }
       }
       for (const javaScriptEnabled of [false, true]) {
         const page = await browser.newPage({ viewport: { width: 390, height: 844 }, javaScriptEnabled, reducedMotion: 'reduce' });
+        await page.route('**/*', route => new URL(route.request().url()).origin === 'http://localhost:6650' ? route.continue() : route.abort());
         try {
           await page.goto('http://localhost:6650/about', { waitUntil: 'networkidle' });
           const steps = page.locator('[data-process-step]');

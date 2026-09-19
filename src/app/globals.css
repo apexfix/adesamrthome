@@ -297,7 +297,7 @@ body:has(.site-header[data-menu-open="true"]) .mobile-contact-dock { display: no
 .mobile-contact-dock a:focus-visible { outline: 2px solid #d9b98f; outline-offset: 2px; }
 .mobile-contact-spacer { height: var(--mobile-contact-clearance); }
 /* Recovery pages provide their own destinations, including without scripts. */
-body:has(:is([data-not-found], [data-page-recovery])) :is(.mobile-contact-dock, .mobile-contact-spacer) { display: none; }
+body:has(:is([data-not-found], [data-page-recovery], [data-enquiry-thank-you], [data-enquiry-receipt])) :is(.mobile-contact-dock, .mobile-contact-spacer) { display: none; }
 .mobile-contact-dock[data-primary-visible="true"]:not(:focus-within) { display: none; }
 .mobile-contact-dock[data-primary-visible="false"] { animation: contact-dock-in 220ms ease-out; }
 @media (max-width: 767px) {

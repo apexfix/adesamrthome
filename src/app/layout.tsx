@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -205,7 +205,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <Header productNavigation={productNavigation} />
-        <div id="site-content" tabIndex={-1}>{children}</div>
+        <div id="site-content" tabIndex={-1}>
+          {/* Keep streamed route reconciliation separate from claiming this DOM wrapper. */}
+          <Fragment key="route-content">{children}</Fragment>
+        </div>
         <Footer />
         <MobileContactBar />
         <SiteAnalytics />

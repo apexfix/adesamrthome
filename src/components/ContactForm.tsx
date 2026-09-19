@@ -21,6 +21,7 @@ import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BY
 import { checkEnquiryPhotoMetadata } from "@/lib/enquiryPhotoMetadata";
 import { EnquiryPhotoPreview } from "@/components/EnquiryPhotoPreview";
 import { readEnquiryResponse, uncertainDeliveryMessage } from "@/lib/enquiryDelivery";
+import { ENQUIRY_RECEIPT_KEY, enquiryReceiptDetails } from "@/lib/enquiryReceipt";
 
 const subscribeToHydration = () => () => {};
 const clientSnapshot = () => true;
@@ -325,6 +326,7 @@ export function ContactForm({
       acceptedLeadId = result.leadId;
       completedRef.current = true;
       try {
+        sessionStorage.setItem(ENQUIRY_RECEIPT_KEY, JSON.stringify({ leadId: result.leadId, service: formData.service }));
         sessionStorage.setItem(
           "ade_completed_lead",
           JSON.stringify({
@@ -478,7 +480,7 @@ export function ContactForm({
           <h2 className="text-2xl font-bold leading-tight md:text-3xl">Your enquiry has been received.</h2>
           <p className="mt-5 text-base leading-relaxed text-zinc-300">No need to send it again. Please keep your reference number:</p>
           <p className="mt-3 text-xl font-bold leading-relaxed text-[#d9b98f]">{confirmedLeadId}</p>
-          <p className="mt-5 text-base leading-relaxed text-zinc-300">{isCameraKitEnquiry ? "We will review your equipment enquiry and reply by SMS or email." : "We will review your requirements and reply by SMS or email."}</p>
+          <p className="mt-5 text-base leading-relaxed text-zinc-300">{enquiryReceiptDetails(formData.service).intro}</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(referenceMessage)}`} className="inline-flex min-h-12 items-center gap-3 border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
               <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add details by SMS</span>
