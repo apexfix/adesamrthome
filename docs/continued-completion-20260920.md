@@ -25,7 +25,7 @@ Local preview only. This follows checkpoint `660a406` after the owner asked that
 
 ## Still not completed
 
-Durable storage, cross-instance idempotency and distributed abuse controls still require the approved infrastructure and data policy described in `release-readiness-20260920.md`. The existing design/release questions have not been answered; no production provider or project was invented.
+Subsequent owner decision, 20 September: email delivery is sufficient. A database, CRM, durable outbox and cross-instance idempotency are excluded from the current release, not implemented or passed. The existing handler already uses email; retain uncertainty recovery and do not promise exactly-once delivery or inbox receipt from SMTP acceptance alone. Deployed abuse safeguards still need review. Release and real test-mail permission remain separate, as recorded in `release-readiness-20260920.md`; no production provider or project was invented.
 
 The actual Next 16.1.1 server-error response without JavaScript remains unresolved. Source inspection of installed `getErrorRSCPayload` in `node_modules/next/dist/server/app-render/app-render.js` shows the production `__next_error__` seed has an empty body, while the custom global error component is supplied separately for the client router. Editing the visible component alone cannot make that seed contain native recovery links. No vendor patch, false HTTP 200, production-only proxy assumption or synthetic pass was introduced. The earlier failing no-JS runtime fixture remains a failure; it was not rerun or relabelled by this session's healthy-page checks.
 

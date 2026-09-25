@@ -1,6 +1,6 @@
 # Remaining implementation checklist
 
-This is an implementation ledger, not a claim that SEO work or ranking improvements are complete. Updated 19 September 2026.
+This is an implementation ledger, not a claim that SEO work or ranking improvements are complete. Updated 20 September 2026. The owner's email-only enquiry decision below supersedes historical storage-related blockers.
 
 | Item | Status | Next action / boundary |
 | --- | --- | --- |
@@ -36,8 +36,8 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Partial photo batch failure (PHOTO-13/14) | FIXED IN SCOPED PREVIEW | Successful files survive another file's preparation failure; per-file feedback, stable pending controls and stale-result invalidation. Four cross-engine grouped flows plus existing photo/API and enquiry regressions pass. See photo-batch-preview-20260914.md. Total-byte follow-up is below; client pixel edges, full photo matrix and physical pickers remain open. |
 | Prepared photo byte limits (PHOTO-04/06) | SHARED POLICY VERIFIED IN SCOPED PREVIEW | Client/API share count/type/individual/combined byte limits. Invalid totals show before submission, removal recovers, exact 3,500,000 bytes passes and one extra byte fails. Six browser cases, 20 API/contract tests and existing batch/enquiry/dark-form checks pass. See photo-limits-preview-20260914.md. Not full pixel/memory or physical-device coverage. |
 | Private photo previews and pre-decode dimensions (PHOTO-02/10/11/12) | IMPLEMENTED IN SCOPED PREVIEW | Bounded local thumbnails, partial/failure states and URL lifecycle; capped header read, 20MB original/25MP checks before decoder URLs, sequential preparation and proportional resizing. Four browser flows and 14 metadata checks plus regressions pass; parser loads only on selection. See photo-preview-20260914.md. Animation preflight, adversarial memory behavior, all orientations and physical low-memory/phone acceptance remain open. |
-| Durable enquiry acceptance | STORAGE CONFIGURATION REQUIRED | This round found no database dependency, adapter or configured local storage credentials; only `.env.example` is present. Do not assume this proves anything about production secrets. A Vercel function's local file or memory is not reliable storage. Select an approved durable store and retention/access policy before implementation; continue independent checklist items meanwhile. |
-| Retry and idempotency | DEPENDS ON DURABLE STORE | Persist a stable request key and accepted enquiry; deduplicate across requests/instances. Do not treat the existing button guard as server-level deduplication. |
+| Durable enquiry acceptance | EXCLUDED BY OWNER SCOPE, 20 SEPTEMBER | Owner chose email only, with no database or CRM required for this release. Existing SMTP acceptance checks are not proof of inbox delivery or durable lead storage. |
+| Retry and idempotency | DURABLE RETRIES/DEDUPLICATION EXCLUDED BY OWNER SCOPE | Keep duplicate-submit guards, no automatic resend and explicit uncertain-delivery recovery. Cross-instance deduplication and an outbox are not implemented or claimed. |
 | Anti-spam | OPEN | Use validated limits and an approved persistent counter/challenge approach. Do not invent a reliable distributed limit using process memory. |
 | Browser conversion reliability | OPEN | Needs robust accepted-enquiry IDs and deduplication, including blocked storage/scripts. No button click should count as an accepted lead. |
 | CCTV policy and inclusions | OWNER FACTS REQUIRED | Do not add installation, cabling, disk, tax, delivery or warranty promises. Resolve wording before publishing new claims. |
@@ -57,11 +57,11 @@ This is an implementation ledger, not a claim that SEO work or ranking improveme
 | Whole-site final URL/schema inventory | PREVIEW INVENTORY PASSED | Latest 19 September check: 57 sitemap URLs plus the noindex receipt page, 206 internal links and 123 local SEO image URLs, zero issues. Corrected shared category Product markup and installed-package entity identity remain. Re-run after further changes and before release; not Google validation. See site-inventory and reflow-feedback batches. |
 | Performance (chapter 24) | LOCAL LAB BASELINE AND SEQUENTIAL HERO LOADING VERIFIED | Two 18-run Chrome batches with fixed mobile/desktop network/CPU settings and median/range recorded; first-image preload and sequential loading with manual bypass pass both engines. No consistent speed gain claimed. See performance-preview batch. Production cold-cache behavior, real-user p75/INP, whole-redesign motion JS budget and whole-site performance acceptance remain open. V5 asset migration is recorded separately below. |
 | V5 MAX external gallery dependency | SELF-HOSTED IN PREVIEW | All 18 existing source images copied byte-for-byte with hashes/provenance, stable order/IDs and descriptive alternatives. 72 gallery and four no-JS/failure navigation checks passed across both engines, plus all original/optimized HTTP images. See v5-local-images batch. Production outage behavior, source-artwork rights and factual feature review are not certified. |
-| Production release | NOT AUTHORIZED BY CURRENT CHECKLIST | Requires further authorization; release the reviewed batches together and perform an operator-only real enquiry test. |
+| Production release | AUTHORIZED BY OWNER, 25 SEPTEMBER | Publish the current reviewed changes and send one clearly labelled operator-only test enquiry. Actual deployment and receipt evidence is recorded separately in production-release-20260925.md; earlier permission blockers below are historical. |
 
 ## Enquiry Delivery Follow-up
 
-Chapter 20 delivery states are implemented in scoped local preview: 30-second deadline, offline/413/429 handling, explicit uncertain-delivery recovery, strict success reference and stable sending/retry geometry. Eight cross-engine grouped browser flows, 20 response contracts, 21 API checks, 22 enquiry checks, four contact-error flows and 72 dark-form checks passed. See `enquiry-delivery-preview-20260914.md`. This does not provide durable acceptance or server idempotency; those configuration boundaries above remain open.
+Chapter 20 delivery states are implemented in scoped local preview: 30-second deadline, offline/413/429 handling, explicit uncertain-delivery recovery, strict success reference and stable sending/retry geometry. Eight cross-engine grouped browser flows, 20 response contracts, 21 API checks, 22 enquiry checks, four contact-error flows and 72 dark-form checks passed. See `enquiry-delivery-preview-20260914.md`. This does not provide durable acceptance or server idempotency; both are excluded from this release by the subsequent email-only decision, not marked passed.
 
 ## Current Usage Boundary
 
@@ -71,9 +71,9 @@ Chapter 20 conversion context follow-up: missing/malformed lead references no lo
 
 The earlier quota instruction was honored on 14 September 2026. Latest instruction on 19 September supersedes quota polling; no remaining-usage checks are requested for this resumed work.
 
-## Durable enquiry design boundary
+## Deferred Durable Enquiry Option
 
-Before adding storage, specify the provider/project, access control, retention and deletion policy, attachment handling and expected costs. Store only fields needed to respond. Never write customer details into analytics or public artifacts. A proposed flow is: validate -> atomically persist request key and enquiry -> dispatch/retry operator email -> track delivery state -> return the existing accepted reference on retries. Customer acknowledgement failure must not erase a successfully accepted lead. This is a proposal, not implemented behavior.
+The owner chose email-only delivery on 20 September; do not implement a database, CRM or outbox for this release. If separately requested later, storage would need an approved provider/project, access control, retention/deletion policy, attachment handling and costs. Never write customer details into analytics or public artifacts. The earlier validate -> persist -> dispatch/retry proposal is deferred, not implemented behavior or a current prerequisite. Customer acknowledgement failure must not undo an operator email already accepted by SMTP.
 
 Conflicting older preferences remain resolved conservatively: keep installation-only first in the product catalogue (now an independent service section under chapter 13), and do not restore the large home camera showcase.
 
@@ -81,7 +81,7 @@ Conflicting older preferences remain resolved conservatively: keep installation-
 
 The black/gold liquid-glass v4 package was received during the next inventory round. Its full Markdown was read and source references compared to the current preview. See `black-gold-package-intake-20260913.md`. It is reference material, not release authorization or evidence that the included 116 integration cases passed on this website. Do not overwrite already completed preview work with its older baseline examples.
 
-The user subsequently instructed us to continue following the document and authorized asking for missing assets or generating high-resolution imagery. The document is now the implementation specification within the existing business and release boundaries. The homepage carousel batch is recorded in `hero-carousel-preview-20260913.md`; its asset provenance is in `hero-assets-20260913.md`. Other motions, durable storage and final whole-site acceptance remain open.
+The user subsequently instructed us to continue following the document and authorized asking for missing assets or generating high-resolution imagery. The document is now the implementation specification within the existing business and release boundaries. The homepage carousel batch is recorded in `hero-carousel-preview-20260913.md`; its asset provenance is in `hero-assets-20260913.md`. Later sections record subsequent motion and acceptance work. The 20 September email-only decision removes durable storage from this release scope.
 
 ## 20 September Local Close-out
 
@@ -103,10 +103,16 @@ The user requested continuous completion, without quota polling. The following n
 | Current local load baseline | Eighteen final-build load runs; home LCP medians 1200ms mobile/1168ms desktop, small measured home CLS. Warm local image cache, no interactions/INP or production comparison; full protocol/ranges in the new hardening report. |
 | Local rollback | 393 archived source/asset blobs verified against checkpoint 96b4708, with documented Windows text line-ending conversion; clean isolated Webpack build and 16 old/current key-page checks pass. Actual production/CDN/cache rollback is separate. |
 
-Still not complete: approved durable storage, server idempotency/distributed abuse controls, real delivery and tracking, actual no-JS framework runtime-error recovery, native-device/assistive-technology acceptance, unresolved business/media facts and explicit release authorization. No silent deployment, real enquiry, customer message, paid infrastructure or account mutation was performed. Conditional options stay off rather than being invented to extend the task. The supplied 116-case integration matrix must not be labelled fully passed.
+Still not complete: deployed abuse-control review, real delivery and tracking, actual no-JS framework runtime-error recovery, native-device/assistive-technology acceptance, unresolved business/media facts and explicit release authorization. Durable storage and cross-instance idempotency are now excluded by owner scope, not completed. No silent deployment, real enquiry, customer message, paid infrastructure or account mutation was performed. Conditional options stay off rather than being invented to extend the task. The supplied 116-case integration matrix must not be labelled fully passed.
 
 ## Continued Independent Work, 20 September
 
-See `continued-completion-20260920.md`. A further actual gap was found in the API: browser receipts were service-specific, but acknowledgement emails were not. Both now use the same five-service copy. Browser/API property and timing definitions are shared; 150 combinations and all five phone-only paths pass. The 32 API tests also cover SMTP recipient acceptance and preserve success when only the customer acknowledgement fails. This supersedes earlier receipt/enumeration evidence, not the durable-delivery gate.
+See `continued-completion-20260920.md`. A further actual gap was found in the API: browser receipts were service-specific, but acknowledgement emails were not. Both now use the same five-service copy. Browser/API property and timing definitions are shared; 150 combinations and all five phone-only paths pass. The 32 API tests also cover SMTP recipient acceptance and preserve success when only the customer acknowledgement fails. This supersedes earlier receipt/enumeration evidence, not actual inbox verification.
 
 Category/service selection motion is now covered by a shared decorative moving outline, with static/no-script/missing-observer and reduced-effects fallbacks. Rem-aware service rows avoid fragmented words at large text sizes. Forty cross-engine cases and visual review pass. Native-device acceptance and actual framework-error no-JS recovery remain open; the healthy-page cases must not be conflated with server-failure recovery.
+
+## Email-only Scope Decision, 20 September
+
+The owner confirmed that sending enquiries to email is sufficient. No database, CRM, durable retry queue or cross-instance deduplication is required for this release. Existing email submission already supports this choice; no mail provider or application behavior was changed for the scope update. The code/example recipient defaults to `info@adesmarthome.com.au`, with a server-side `CONTACT_TO_EMAIL` override; production configuration and inbox receipt remain unverified. Preserve failure/uncertainty messages, SMS/email fallback and validated request/photo limits. Do not automatically resend after a lost response or promise exactly-once delivery. This decision does not authorize a production release or real test enquiry.
+
+Scope-update verification: all 32 `tests/enquiry.test.cjs` API/contract tests and all 20 `tests/enquiry-delivery.cjs` response checks pass with mocked mail only. No real enquiry was sent. Only documentation changed; the existing application build remains unchanged.
