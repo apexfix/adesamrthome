@@ -108,11 +108,11 @@ export async function GET() {
   const staticPages = [
     xmlUrl(
       `${siteUrl}/`,
-      siteLastModified,
-      ["/img/hero1-optimized.avif", installationImages.x9, installationImages.s6Max, installationImages.v5Max],
+      "2026-09-25",
+      ["/img/hero/lockin-v5max-composition-v1.webp", "/img/hero/lockin-x9-composition-v1.webp", "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
       homeLanguages,
     ),
-    xmlUrl(`${siteUrl}/products`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
+    xmlUrl(`${siteUrl}/products`, "2026-09-25"),
     xmlUrl(`${siteUrl}/products/security-camera-kits`, siteLastModified, ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png", "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png"]),
     xmlUrl(`${siteUrl}/about`, siteLastModified, [installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),
@@ -129,19 +129,18 @@ export async function GET() {
     xmlUrl(`${siteUrl}/property-manager-smart-lock-installation-adelaide`, siteLastModified, [installationImages.s50m]),
     xmlUrl(`${siteUrl}/new-home-smart-lock-installation-adelaide`, siteLastModified, ["/img/products/lockin-v5-max/real-install-02.jpg"]),
     xmlUrl(`${siteUrl}/blog`, siteLastModified),
-    xmlUrl(`${siteUrl}/gallery`, "2026-09-13", installationProjects.map(project => project.image)),
-    xmlUrl(`${siteUrl}/contact`, siteLastModified),
+    xmlUrl(`${siteUrl}/gallery`, "2026-09-25", installationProjects.map(project => project.image)),
+    xmlUrl(`${siteUrl}/contact`, "2026-09-25"),
     xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
     xmlUrl(`${siteUrl}/delivery-and-returns`, siteLastModified),
-    xmlUrl(`${siteUrl}/zh`, siteLastModified, ["/img/hero1-optimized.avif", installationImages.x9], homeLanguages),
+    xmlUrl(`${siteUrl}/zh`, siteLastModified, [], homeLanguages),
   ].join("");
 
   const suburbPages = serviceAreas
-    .map((area, index) =>
+    .map((area) =>
       xmlUrl(
         `${siteUrl}/smart-lock-installation/${area.slug}`,
         siteLastModified,
-        [Object.values(installationImages)[index % Object.values(installationImages).length]],
       )
     )
     .join("");

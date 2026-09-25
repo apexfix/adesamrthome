@@ -4,12 +4,12 @@ import { ContactForm } from "@/components/ContactForm";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 const baseMetadata: Metadata = {
-  title: "Get a Smart Home Product Quote in Adelaide",
+  title: "Smart Lock Installation Quote Adelaide",
   description:
-    "Request a smart lock, installation-only or security camera kit quote from ADE Smart Home in Adelaide. We reply by SMS or email.",
+    "Get an Adelaide smart lock supply-and-install or installation-only quote. Already bought a lock? Send door photos to check fit. Replies by SMS or email.",
   alternates: { canonical: `${siteUrl}/contact` },
   openGraph: {
-    title: "Get a Quote | ADE Smart Home Adelaide",
+    title: "Smart Lock Installation Quote Adelaide | ADE Smart Home",
     description:
       "Request smart lock supply, installation-only service or a security camera equipment package in Adelaide.",
     url: `${siteUrl}/contact`,
@@ -20,7 +20,7 @@ const baseMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Get a Smart Home Product Quote in Adelaide",
+    title: "Smart Lock Installation Quote Adelaide",
     description:
       "Request smart lock, installation-only or security camera kit quotes in Adelaide. We reply by SMS or email.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
