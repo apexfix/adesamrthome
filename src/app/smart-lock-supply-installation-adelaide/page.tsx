@@ -15,6 +15,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { InstallationInclusions } from "@/components/InstallationInclusions";
 import {
   businessInfo,
   siteUrl,
@@ -475,6 +476,8 @@ export default function SupplyInstallationPage() {
           </div>
         </div>
       </section>
+
+      <InstallationInclusions />
 
       <section className="bg-zinc-950 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">

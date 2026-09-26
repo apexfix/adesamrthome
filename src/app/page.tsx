@@ -6,6 +6,7 @@ import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
 import { ServicePathways } from "@/components/ServicePathways";
+import { InstallationInclusions } from "@/components/InstallationInclusions";
 import { AudiencePathways } from "@/components/AudiencePathways";
 import StoryCarousel from "@/components/StoryCarousel"; 
 import path from "path";
@@ -114,6 +115,7 @@ export default async function Home() {
       </section>
 
       <ServicePathways />
+      <InstallationInclusions />
 
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
         <span id="smart-locks" className="block scroll-mt-28" />

@@ -11,6 +11,7 @@ import {
   Tag,
 } from "lucide-react";
 import { ProductGallery } from "@/components/ProductGallery";
+import { InstallationInclusions } from "@/components/InstallationInclusions";
 import { InstallationPhotoStrip } from "@/components/InstallationPhotoStrip";
 import StoryCarousel from "@/components/StoryCarousel"; // 导入案例轮播
 import Image from "next/image";
@@ -642,6 +643,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
         </section>
+
+        {!isCameraKit && <InstallationInclusions />}
 
         {/* 详细描述区 */}
         <nav aria-label="Product details" className="mb-10 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-800 py-3 text-sm font-semibold text-[#d9b98f]">

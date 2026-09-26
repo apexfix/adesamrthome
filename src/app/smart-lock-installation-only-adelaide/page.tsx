@@ -14,6 +14,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { InstallationInclusions } from "@/components/InstallationInclusions";
 import { businessInfo, siteUrl } from "@/lib/seoData";
 
 const pageUrl = `${siteUrl}/smart-lock-installation-only-adelaide`;
@@ -365,6 +366,8 @@ export default function InstallationOnlyPage() {
           </div>
         </div>
       </section>
+
+      <InstallationInclusions />
 
       <section className="border-b border-zinc-800 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
