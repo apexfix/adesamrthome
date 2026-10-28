@@ -111,6 +111,66 @@ const kaadasK70SeDetailImages = [
 
 export const localProducts = [
   {
+    id: 900011,
+    name: "Lockin Veno Pro Smart Lock",
+    slug: "lockin-veno-pro-smart-lock",
+    sku: "LOCKIN-VENO-PRO-BLK",
+    short_description:
+      "Palm-vein and fingerprint smart lock with a 2K video doorbell, 32GB local video storage and standard Adelaide installation included.",
+    description: `
+      <h2>Lockin Veno Pro - Smart Lock and Video Doorbell</h2>
+      <p>The Lockin Veno Pro brings keyless entry, a front-door camera and a video doorbell together in one compact black smart lock. The A$999 package includes the lock and standard Adelaide installation, subject to a free door compatibility check before booking.</p>
+      <h2>Everyday Access and Front-Door Awareness</h2>
+      <ul>
+        <li>Palm-vein and fingerprint recognition, plus PIN, NFC card, mobile app and physical-key access.</li>
+        <li>Integrated 2K camera and video doorbell for checking visitors at your door.</li>
+        <li>32GB local video storage without a required cloud subscription for local recordings.</li>
+        <li>IP65-rated exterior panel and rechargeable 5000mAh battery.</li>
+        <li>Matter over Thread support; smart-home integrations depend on a compatible setup.</li>
+      </ul>
+      <h2>Included Adelaide Installation</h2>
+      <p>We check your door, frame and existing lock before confirming the installation. Standard installation includes fitting the lock, setting up the mobile app where applicable and helping you enrol your access methods. Additional parts or non-standard door work are quoted before booking.</p>
+      <h2>Two Years of Local On-Site Repair</h2>
+      <p>For covered lock faults within two years of installation, ADE Smart Home provides free on-site repair in its Adelaide service area. Contact us with your order details if a fault develops so we can assess and arrange a visit. This local service is provided by ADE Smart Home and is separate from the manufacturer's warranty terms.</p>
+      <h2>Check Your Door Before Ordering</h2>
+      <p>Send clear photos of the outside and inside of your door, the door edge, existing lock, frame and any screen door. We will confirm whether Veno Pro is suitable before booking your installation.</p>
+      <p>Product features are based on the <a href="https://atsmartlock.com.au/products/veno-pro">Lockin Veno Pro product information</a>. Ask us about the A$999 installed package and your door's compatibility.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 2, name: "Lockin", slug: "lockin" },
+      { id: 3, name: "Smart Locks with Camera", slug: "smart-locks-with-camera" },
+    ],
+    tags: [
+      { id: 1, name: "Lockin", slug: "lockin" },
+      { id: 2, name: "Palm Vein", slug: "palm-vein" },
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+      { id: 6, name: "Video Doorbell", slug: "video-doorbell" },
+    ],
+    brands: [{ id: 1, name: "Lockin", slug: "lockin" }],
+    prices: {
+      price: "99900", regular_price: "99900", sale_price: "99900",
+      currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2,
+    },
+    price_includes_installation: true,
+    support_summary: "A$999 includes the lock and standard Adelaide installation. Covered lock faults receive free on-site repair for two years within our Adelaide service area. Door compatibility is checked before booking.",
+    images: [
+      { id: 901101, src: "/img/products/lockin-veno-pro/gallery/veno-pro-01.png", alt: "Black Lockin Veno Pro front and rear smart lock panels" },
+      { id: 901102, src: "/img/products/lockin-veno-pro/gallery/veno-pro-03.png", alt: "Exploded view of the Lockin Veno Pro camera and keypad assembly" },
+    ],
+    attributes: [
+      { id: 1, name: "Brand", options: ["Lockin"] },
+      { id: 2, name: "Model", options: ["Veno Pro"] },
+      { id: 3, name: "Access Methods", options: ["Palm vein", "Fingerprint", "PIN", "NFC card", "Mobile app", "Physical key"] },
+      { id: 4, name: "Camera", options: ["2K video", "Built-in doorbell"] },
+      { id: 5, name: "Storage", options: ["32GB local video storage"] },
+      { id: 6, name: "Connectivity", options: ["Matter over Thread", "Wi-Fi"] },
+      { id: 7, name: "Exterior Rating", options: ["IP65"] },
+      { id: 8, name: "Battery", options: ["5000mAh rechargeable"] },
+      { id: 9, name: "Included Service", options: ["Standard Adelaide installation", "Two years of free on-site repair for covered lock faults"] },
+    ],
+  },
+  {
     id: 900010,
     name: "Dahua 6MP Smart Dual Light 2-Camera PoE Kit",
     slug: "dahua-6mp-smart-dual-light-2-camera-poe-kit",

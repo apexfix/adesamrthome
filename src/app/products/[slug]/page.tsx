@@ -586,7 +586,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     ? `Two ${getCameraAttribute(product, "Camera Model")} cameras and one ${getCameraAttribute(product, "Recorder Model")} four-channel PoE recorder.`
                     : hasSeparateInstallationPrice
                       ? "Door compatibility is confirmed before booking. Non-standard installation work is quoted first if required."
-                      : hasReplacementWarranty
+                      : product.support_summary
+                        ? product.support_summary
+                        : hasReplacementWarranty
                         ? "Includes a 2-year local warranty. Covered lock faults are replaced after assessment under the warranty terms."
                         : "Product support and warranty terms are confirmed before booking."}
               </p>
