@@ -1,2 +1,2 @@
 'use client';
-export { default } from '../../../../src/app/error';
+export { default } from '../../../../src/app/(site)/error';

@@ -28,7 +28,7 @@ export function GalleryResults({ projects }: { projects: InstallationProject[] }
             <h2 className="mt-3 text-xl font-bold leading-7 text-white [overflow-wrap:anywhere]">{project.title}</h2>
             <p className="mt-3 text-base leading-7 text-zinc-400 [overflow-wrap:anywhere]">{project.description}</p>
             <div className="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-5">
-              <Link prefetch={false} href={`/products/${project.productSlug}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">View {project.category}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link>
+              <Link prefetch={false} href={`/products/${project.productSlug}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#d9b98f]">View {project.category}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Link>{" "}
               <Link prefetch={false} href={`/contact?service=supply-install&product=${encodeURIComponent(`Lockin ${project.category}`)}#quote`} className="inline-flex min-h-11 items-center text-sm font-semibold text-white underline decoration-zinc-600 underline-offset-4">Ask about this model</Link>
             </div>
           </div>

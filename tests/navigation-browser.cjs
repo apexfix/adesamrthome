@@ -60,8 +60,8 @@
           await dock.waitFor({ state: 'visible' });
           assert.ok(await dock.isVisible());
         }
-        await page.getByRole('region', { name: 'Smart security services' }).getByRole('link', { name: 'Get a Quote', exact: true }).click();
-        await page.waitForURL('**/contact?service=supply-install#quote');
+        await page.getByRole('region', { name: 'Smart security services' }).getByRole('link', { name: 'Get a quote', exact: true }).click();
+        await page.waitForURL('**/#quote');
         await page.locator('form').waitFor();
         assert.equal(await page.getByRole('button', { name: 'Supply & install', exact: true }).getAttribute('aria-pressed'), 'true');
         assert.deepEqual(errors, []);

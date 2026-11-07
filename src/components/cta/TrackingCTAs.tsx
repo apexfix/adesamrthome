@@ -115,7 +115,7 @@ function renderAction(item: typeof items[number]): JSX.Element {
       onClick={track}
     >
       <Icon className="h-4 w-4" aria-hidden="true" />
-      {item.text}
+      {item.text}{" "}
     </a>
   );
 }
@@ -138,12 +138,12 @@ export function TrackingCTAs({ context, className }: CTABlock) {
           >
             <item.icon className="h-4 w-4" aria-hidden="true" />
             {item.text}
-          </Link>
+          {" "}</Link>
         ))}
         {items
           .filter((item) => item.context === "hero")
           .map((item) => (
-            <span key={item.label} className="hidden sm:inline-flex">{renderAction(item)}</span>
+            <span key={item.label} className="hidden sm:inline-flex">{renderAction(item)}{" "}</span>
           ))}
       </div>
     );
@@ -154,7 +154,7 @@ export function TrackingCTAs({ context, className }: CTABlock) {
       {items
         .filter((item) => item.context === "products")
         .map((item) => (
-          <span key={item.label}>{renderAction(item)}</span>
+          <span key={item.label}>{renderAction(item)}{" "}</span>
         ))}
     </div>
   );

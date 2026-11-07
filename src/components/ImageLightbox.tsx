@@ -69,7 +69,7 @@ export function ImageLightbox({ photos, index, onIndexChange, onClose, label }: 
     <div className="image-lightbox-toolbar">
       <span aria-live="polite" aria-atomic="true">{photos.length ? activeIndex + 1 : 0} / {photos.length}</span>
       <div className="image-lightbox-actions">
-        <button type="button" aria-label={zoomed ? "Reset zoom" : "Zoom in"} title={zoomed ? "Reset zoom" : "Zoom in"} aria-pressed={zoomed} disabled={closing} onClick={() => setZoomed(value => !value)}>{zoomed ? <ZoomOut aria-hidden="true" /> : <ZoomIn aria-hidden="true" />}</button>
+        <button type="button" aria-label={zoomed ? "Reset zoom" : "Zoom in"} title={zoomed ? "Reset zoom" : "Zoom in"} aria-pressed={zoomed} disabled={closing} onClick={() => setZoomed(value => !value)}>{zoomed ? <ZoomOut aria-hidden="true" /> : <ZoomIn aria-hidden="true" />}</button>{" "}
         {photos.length > 1 && <>
           <button type="button" aria-label="Previous image" title="Previous image" disabled={closing} onClick={() => move(-1)}><ChevronLeft aria-hidden="true" /></button>
           <button type="button" aria-label="Next image" title="Next image" disabled={closing} onClick={() => move(1)}><ChevronRight aria-hidden="true" /></button>

@@ -72,7 +72,7 @@ export function ProductCard({
         {/* 3. Price and Action */}
         <div className="flex items-center justify-between">
           <div className="flex min-w-0 flex-col">
-            <p className="text-xs font-bold uppercase text-zinc-400">
+            <p className="text-sm font-semibold text-zinc-400">
               {!hasPrice
                 ? "Quote Required"
                 : isService
@@ -84,11 +84,11 @@ export function ProductCard({
                     : "Lock Only"}
             </p>
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              {/* 现价 */}
+              {/* Current price */}
               <p className="break-words text-2xl font-black text-[#c5a47e]">
                 {priceLabel(currentPrice)}
               </p>
-              {/* 原价（仅在打折时显示） */}
+              {/* Regular price, shown only during a sale */}
               {hasPrice && isOnSale && (
                 <p className="text-sm text-zinc-400 line-through decoration-zinc-500 font-medium">
                   ${regularPrice}

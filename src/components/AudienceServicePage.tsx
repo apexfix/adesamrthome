@@ -216,7 +216,7 @@ export function AudienceServicePage({
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-14 sm:px-8 md:pb-20 lg:px-12">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9b98f]">{eyebrow}</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
-            {title}
+            {title}{" "}
             <span className="block text-[#d9b98f]">{accentTitle}</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
@@ -230,7 +230,7 @@ export function AudienceServicePage({
             >
               {primaryCta}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </Link>{" "}
             <a
               href={smsHref}
               className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/60 bg-black/30 px-6 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black"
@@ -245,7 +245,7 @@ export function AudienceServicePage({
               <span key={item} className="inline-flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" aria-hidden="true" />
                 {item}
-              </span>
+              {" "}</span>
             ))}
           </div>
         </div>
@@ -362,9 +362,9 @@ export function AudienceServicePage({
                     className="h-4 w-4 text-[#d9b98f] transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
                   />
-                </span>
+                </span>{" "}
                 <span className="mt-2 block text-sm leading-6 text-zinc-300">{item.detail}</span>
-              </Link>
+              {" "}</Link>
             ))}
           </div>
         </div>
@@ -381,7 +381,7 @@ export function AudienceServicePage({
             {faqs.map((faq) => (
               <details key={faq.question} data-faq className="group border-b border-zinc-800 last:border-b-0">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left font-bold">
-                  {faq.question}
+                  {faq.question}{" "}
                   <span className="text-xl font-normal text-[#d9b98f] transition-transform group-open:rotate-45">
                     +
                   </span>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HelpCircle, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const faqs = [
@@ -70,7 +70,7 @@ const faqs = [
   },
 ];
 
-export function FAQSection({ includeCameras = false }: { includeCameras?: boolean }) {
+export function FAQSection({ includeCameras = false, quoteHref = "/contact#quote" }: { includeCameras?: boolean; quoteHref?: string }) {
   const displayedFaqs = includeCameras ? [faqs[0], faqs[8], faqs[9], ...cameraKitFaqs.slice(0, 4)] : faqs;
 
   const faqSchema = {
@@ -95,11 +95,7 @@ export function FAQSection({ includeCameras = false }: { includeCameras?: boolea
 
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <div className="max-w-3xl">
-          <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-            <HelpCircle className="h-5 w-5" aria-hidden="true" />
-            Before you book
-          </p>
-          <h2 className="mt-3 text-3xl font-bold md:text-5xl">
+          <h2 className="text-3xl font-bold md:text-5xl">
             {includeCameras ? "Smart locks & CCTV: your questions" : "Smart Lock Installation FAQ"}
           </h2>
 
@@ -112,15 +108,15 @@ export function FAQSection({ includeCameras = false }: { includeCameras?: boolea
           {displayedFaqs.map((faq, index) => (
             <details key={faq.question} data-faq open={index === 0} className="group open:bg-white/[0.035]">
               <summary className="flex min-h-16 w-full cursor-pointer list-none items-center justify-between gap-6 py-6 text-left">
-                <span className="text-base font-semibold text-white md:text-lg">{faq.question}</span>
+                <span className="text-base font-semibold text-white md:text-lg">{faq.question}</span>{" "}
                 <span className="glass-control flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-[#d9b98f]" aria-hidden="true"><Plus className="h-4 w-4 transition-transform group-open:rotate-45" /></span>
               </summary>
-              <div className="max-w-4xl pb-6 pr-12"><p className="leading-7 text-zinc-400">{faq.answer}</p></div>
+              <div className="max-w-[70ch] pb-6 pr-12"><p className="leading-7 text-zinc-400">{faq.answer}</p></div>
             </details>
           ))}
         </div>
 
-        <div className="mt-12 grid gap-7 border-l-2 border-[#c5a47e] pl-6 md:grid-cols-[1fr_auto] md:items-center md:pl-8">
+        <div className="mt-12 grid gap-7 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <h3 className="text-2xl font-bold">{includeCameras ? "Find the right setup for your property" : "Not sure if your door can fit a smart lock?"}</h3>
             <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
@@ -129,10 +125,10 @@ export function FAQSection({ includeCameras = false }: { includeCameras?: boolea
           </div>
           <div>
             <Link
-              href="/contact#quote"
-              className="inline-flex min-h-12 items-center bg-[#c5a47e] px-6 font-bold text-black transition-colors hover:bg-white"
+              href={quoteHref}
+              className="inline-flex min-h-12 items-center rounded-md bg-[#d9b98f] px-6 font-bold text-black transition-colors hover:bg-[#f0d7b9]"
             >
-              {includeCameras ? "Discuss your project" : "Send Door Photos for Free Check"}
+              {includeCameras ? "Get a quote" : "Send Door Photos for Free Check"}
             </Link>
           </div>
         </div>

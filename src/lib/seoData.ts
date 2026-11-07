@@ -5,13 +5,49 @@ export const deliveryAndReturnsUrl = `${siteUrl}/delivery-and-returns`;
 export const businessInfo = {
   name: "ADE Smart Home",
   phone: "0431060390",
+  /** Human-readable phone, used for visible text. */
+  phoneDisplay: "0431 060 390",
   phoneInternational: "+61431060390",
   email: "info@adesmarthome.com.au",
   addressLocality: "Adelaide",
   addressRegion: "SA",
   postalCode: "5000",
   country: "AU",
+  // TODO(owner): street address is not published yet. Add it here if you want it shown and in the schema.
+  streetAddress: "",
 };
+
+export const telHref = `tel:${businessInfo.phoneInternational}`;
+export const smsHref = (body?: string) =>
+  `sms:${businessInfo.phoneInternational}${body ? `?body=${encodeURIComponent(body)}` : ""}`;
+export const mailHref = (subject?: string) =>
+  `mailto:${businessInfo.email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
+
+/**
+ * Opening hours — edit here and every page, the footer and the JSON-LD schema update together.
+ * `days` uses schema.org day names; `opens`/`closes` are 24-hour HH:MM.
+ */
+export const BUSINESS_HOURS = {
+  label: "Mon–Sat 8am–6pm",
+  labelZh: "周一至周六 早 8 点到晚 6 点",
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  opens: "08:00",
+  closes: "18:00",
+};
+
+/** TODO(owner): fill in your 11-digit ABN, e.g. "12 345 678 901". It stays hidden on the site while empty. */
+export const BUSINESS_ABN = "";
+
+export const SERVICE_AREA_LABEL = "Adelaide metro";
+export const SERVICE_AREA_LABEL_ZH = "阿德莱德市区及周边";
+
+export const WARRANTY_SUMMARY =
+  "12-month workmanship warranty on every installation. Products are covered by the manufacturer’s warranty.";
+export const WARRANTY_SUMMARY_ZH = "安装工艺保修 12 个月；锁具本身按厂家保修。";
+
+/** Supply + install package price shown in the hero and schema. */
+export const PACKAGE_FROM_PRICE = 699;
+export const INSTALL_ONLY_PRICES = { compact: 200, mortise: 350 };
 
 export const socialProfiles = [
   "https://www.facebook.com/profile.php?id=61571291020457",
@@ -20,7 +56,7 @@ export const socialProfiles = [
   "https://www.xiaohongshu.com/user/profile/5dc514ea0000000001005c66",
 ];
 
-export const siteLastModified = "2026-09-12";
+export const siteLastModified = "2026-11-07";
 
 export const serviceAreas = [
   {

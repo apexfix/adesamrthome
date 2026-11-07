@@ -4,11 +4,11 @@ const { execFileSync } = require('node:child_process');
 const ts = require('typescript');
 const files = [
   'src/components/AudienceServicePage.tsx',
-  'src/app/airbnb-smart-lock-installation-adelaide/page.tsx',
-  'src/app/service-areas/page.tsx',
-  'src/app/smart-lock-installation-only-adelaide/page.tsx',
-  'src/app/smart-lock-supply-installation-adelaide/page.tsx',
-  'src/app/smart-lock-installation/[suburb]/page.tsx',
+  'src/app/(site)/airbnb-smart-lock-installation-adelaide/page.tsx',
+  'src/app/(site)/service-areas/page.tsx',
+  'src/app/(site)/smart-lock-installation-only-adelaide/page.tsx',
+  'src/app/(site)/smart-lock-supply-installation-adelaide/page.tsx',
+  'src/app/(site)/smart-lock-installation/[suburb]/page.tsx',
   'src/app/zh/page.tsx',
 ];
 function withoutClasses(file, source) {

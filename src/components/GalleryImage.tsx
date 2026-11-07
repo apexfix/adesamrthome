@@ -13,7 +13,7 @@ export function GalleryImage({ photo, sizes, className, eager = false, highPrior
   const [loaded, setLoaded] = useState(false);
   const [attempt, setAttempt] = useState(0);
   if (failed || !photo.src) return <span className="gallery-image-fallback">
-    <span role="img" aria-label={`${photo.alt || "Product image"}: image unavailable`}><ImageOff size={24} aria-hidden="true" /></span><span>Image unavailable</span>
+    <span role="img" aria-label={`${photo.alt || "Product image"}: image unavailable`}><ImageOff size={24} aria-hidden="true" /></span>{" "}<span>Image unavailable</span>{" "}
     {showStatus && photo.src && <button type="button" className="gallery-retry" title="Retry image" aria-label="Retry image" onClick={() => { setFailed(false); setLoaded(false); setAttempt(value => value + 1); }}><RotateCw size={20} aria-hidden="true" /></button>}
   </span>;
   return <>

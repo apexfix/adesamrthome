@@ -25,7 +25,7 @@
           assert.equal(await visibleImage.evaluate(img => getComputedStyle(img).objectFit), 'contain');
           assert.deepEqual(await page.locator('.hero-intro').boundingBox(), fixed);
           assert.equal(await page.locator('h1').count(), 1);
-          assert.equal(await page.locator('.hero-primary-cta').getAttribute('href'), '/contact?service=supply-install#quote');
+          assert.equal(await page.locator('.hero-primary-cta').getAttribute('href'), '#quote');
           assert.equal(await page.locator('.hero-slide-link').getAttribute('href'), ['/products/lockin-v5-max-smart-lock', '/products/lockin-x9-smart-lock', '/products/dahua-5mp-2-camera-poe-security-kit'][index]);
           assert.equal(await page.locator('.hero-slide-link').innerText(), ['Lockin V5 MAX', 'Lockin X9', 'Dahua 5MP Camera Kit'][index]);
           assert.equal(await page.locator('.hero-caption p').innerText(), ['A$1,350 with standard installation.', 'A$699 with standard installation.', 'A$443 equipment package. Two cameras and one recorder.'][index]);

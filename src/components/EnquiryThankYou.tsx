@@ -57,7 +57,7 @@ export function EnquiryThankYou() {
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(sms)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-md bg-[#d9b98f] px-4 py-3 text-base font-bold text-black">
           <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add Details by SMS</span>
-        </a>
+        </a>{" "}
         <a href={`mailto:${businessInfo.email}?subject=${encodeURIComponent(`Enquiry ${receipt.leadId}`)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-md border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
           <Mail className="h-5 w-5 shrink-0" aria-hidden="true" /><span>{photoFollowUp ? "Email More Door Photos" : "Email More Details"}</span>
         </a>
@@ -65,7 +65,7 @@ export function EnquiryThankYou() {
       <div className="mt-6 flex flex-wrap gap-x-7 gap-y-2 text-base">
         <Link href={isCameraKit ? "/products/security-camera-kits" : photoFollowUp ? "/blog/smart-lock-door-compatibility-check" : "/products"} className="inline-flex min-h-12 items-center gap-2 font-bold text-[#d9b98f]">
           <span>{isCameraKit ? "Browse camera equipment" : photoFollowUp ? "Check door photo requirements" : "Browse products and services"}</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-        </Link>
+        </Link>{" "}
         <Link href="/" className="inline-flex min-h-12 items-center font-bold text-zinc-300">Return home</Link>
       </div>
     </div>

@@ -32,7 +32,7 @@ let fixture;
 api.getProduct = async () => fixture;
 const { ProductCard } = require('@/components/ProductCard');
 const { getProductStock } = require('@/lib/productStock');
-const { default: ProductPage, generateMetadata } = require('@/app/products/[slug]/page');
+const { default: ProductPage, generateMetadata } = require('@/app/(site)/products/[slug]/page');
 
 (async () => {
   let checks = 0;

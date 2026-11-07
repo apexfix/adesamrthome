@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import ErrorPage from '../../src/app/error';
+import ErrorPage from '../../src/app/(site)/error';
 
 class Boundary extends Component {
   state = { failed: false };

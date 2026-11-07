@@ -16,7 +16,7 @@ const { localProducts } = require('@/lib/localProducts');
 const api = require('@/lib/api');
 let source = localProducts;
 api.getProducts = async () => { if (source instanceof Error) throw source; return source; };
-const { default: ProductsPage, generateMetadata } = require('@/app/products/page');
+const { default: ProductsPage, generateMetadata } = require('@/app/(site)/products/page');
 
 (async () => {
   const cases = [

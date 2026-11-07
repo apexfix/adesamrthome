@@ -1,26 +1,37 @@
-import { Star, Quote } from "lucide-react";
-import Link from "next/link";
+import { ExternalLink, Star } from "lucide-react";
 
+/** Google Business Profile links. GOOGLE_WRITE_REVIEW_URL opens the “write a review” box directly. */
+const GOOGLE_WRITE_REVIEW_URL = "https://g.page/r/Cak2vtUI0QLfEBM/review";
+/** Overall Google rating shown above the reviews. TODO(owner): update when the rating or review count changes. */
+const GOOGLE_RATING = { value: "5.0", count: 0 /* TODO(owner): number of Google reviews; 0 hides the count */ };
+
+// TODO(owner): fill each review date as shown on Google, ISO format, e.g. "2025-08-14". Empty dates are hidden.
 const reviews = [
   {
     id: 1,
     author: "Celia",
     rating: 5,
+    date: "",
     text: "I contacted Smartlock to install a smart lock for my new house. John was extremely patient in explaining the different models... the installation was done brilliantly. Unlike many tradies who leave a mess behind, John made sure everything was properly cleaned up.",
   },
   {
     id: 2,
-    author: "longxiang",
+    author: "Longxiang",
     rating: 5,
+    date: "",
     text: "John is incredibly professional and skilled. He installed a smart lock on our front door smoothly and without any issues... Even though additional cutting was required, John worked very carefully and cleanly. Just get John to do it properly.",
   },
   {
     id: 3,
     author: "Jingbo Zhou",
     rating: 5,
+    date: "",
     text: "Professional, punctual, and paid great attention to detail. John was also very friendly and took the time to clearly explain how the lock works. The whole process was smooth and stress-free. Highly recommend his service.",
   }
 ];
+
+const formatReviewDate = (iso: string) =>
+  new Intl.DateTimeFormat("en-AU", { month: "long", year: "numeric", timeZone: "Australia/Adelaide" }).format(new Date(iso));
 
 export function GoogleReviews() {
   return (
@@ -28,10 +39,7 @@ export function GoogleReviews() {
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="max-w-3xl">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-              Customer feedback
-            </p>
-            <h2 className="mt-3 text-3xl font-bold md:text-5xl">
+            <h2 className="text-3xl font-bold md:text-5xl">
               Trusted by Adelaide homeowners
             </h2>
             <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
@@ -39,15 +47,18 @@ export function GoogleReviews() {
               clear setup help and a clean finish.
             </p>
           </div>
-          <div className="flex items-center gap-3 border-l-2 border-[#c5a47e] pl-5">
-            <div>
-              <p className="text-sm font-bold text-white">Excellent on Google</p>
-              <div className="mt-2 flex gap-1">
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="text-4xl font-bold leading-none">{GOOGLE_RATING.value}</span>{" "}
+              <span className="flex gap-1" role="img" aria-label={`Rated ${GOOGLE_RATING.value} out of 5 on Google`}>
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="h-4 w-4 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
+                  <Star key={s} className="h-5 w-5 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
                 ))}
-              </div>
+              </span>
             </div>
+            <p className="mt-2 text-sm font-bold text-white">
+              Google rating{GOOGLE_RATING.count > 0 ? ` · ${GOOGLE_RATING.count} reviews` : ""}
+            </p>
           </div>
         </div>
 
@@ -59,10 +70,9 @@ export function GoogleReviews() {
                 index > 0 ? "border-t border-zinc-800 md:border-l md:border-t-0" : ""
               }`}
             >
-              <Quote className="absolute right-6 top-8 h-7 w-7 text-zinc-800" aria-hidden="true" />
               <div className="mb-7 flex items-center gap-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-white p-2.5">
-                  <svg viewBox="0 0 24 24" className="w-full h-full">
+                  <svg viewBox="0 0 24 24" className="w-full h-full" aria-hidden="true">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                     <path d="M5.84 14.09c-.22-.67-.35-1.39-.35-2.09s.13-1.42.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
@@ -70,40 +80,39 @@ export function GoogleReviews() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-bold text-white">{review.author}</p>
+                  <p className="font-bold text-white">{review.author}</p>{" "}
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="flex gap-0.5" role="img" aria-label={`Rated ${review.rating} out of 5`}>
+                      {Array.from({ length: review.rating }, (_, star) => (
+                        <Star key={star} className="h-3.5 w-3.5 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
+                      ))}
+                    </span>{" "}
+                    <span className="text-xs text-zinc-400">
+                      Google review{review.date && <>{" · "}<time dateTime={review.date}>{formatReviewDate(review.date)}</time></>}
+                    </span>
+                  </div>
                 </div>
               </div>
 
               <p className="flex-grow text-base leading-7 text-zinc-300">
                 &ldquo;{review.text}&rdquo;
               </p>
-
-              <div className="mt-7 flex gap-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} className="h-3.5 w-3.5 fill-[#c5a47e] text-[#c5a47e]" aria-hidden="true" />
-                ))}
-              </div>
             </article>
           ))}
         </div>
 
-        <div className="mt-10">
-          <Link
-            href="https://g.page/r/Cak2vtUI0QLfEBM/review"
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <a
+            href={GOOGLE_WRITE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-12 items-center justify-center border border-zinc-700 px-6 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+            className="glass-control inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-6 text-sm font-bold text-white hover:text-[#d9b98f]"
           >
-            Verified reviews on
-            <span className="ml-2 flex border-l border-zinc-700 pl-2">
-              <span className="text-[#4285F4]">G</span>
-              <span className="text-[#EA4335]">o</span>
-              <span className="text-[#FBBC05]">o</span>
-              <span className="text-[#4285F4]">g</span>
-              <span className="text-[#34A853]">l</span>
-              <span className="text-[#EA4335]">e</span>
-            </span>
-          </Link>
+            <Star className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
+            <span>Leave a review on Google</span>{" "}
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+          </a>{" "}
+          <p className="text-sm text-zinc-400">Had us install a lock? A short review helps other Adelaide families find us.</p>
         </div>
       </div>
     </section>

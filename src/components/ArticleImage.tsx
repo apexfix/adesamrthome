@@ -8,7 +8,7 @@ export function ArticleImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
   if (failed || !src) return (
     <span className="article-image-fallback my-10 flex aspect-[14/9] w-full flex-col items-center justify-center gap-3 rounded-md border border-zinc-700 bg-zinc-900 p-4 text-center text-sm text-zinc-300">
-      <span role="img" aria-label={`${alt}: image unavailable`}><ImageOff size={28} aria-hidden="true" /></span>
+      <span role="img" aria-label={`${alt}: image unavailable`}><ImageOff size={28} aria-hidden="true" /></span>{" "}
       <span>Image unavailable</span>
     </span>
   );

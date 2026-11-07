@@ -130,7 +130,7 @@ export async function GET() {
     xmlUrl(`${siteUrl}/new-home-smart-lock-installation-adelaide`, siteLastModified, ["/img/products/lockin-v5-max/real-install-02.jpg"]),
     xmlUrl(`${siteUrl}/blog`, siteLastModified),
     xmlUrl(`${siteUrl}/gallery`, "2026-09-25", installationProjects.map(project => project.image)),
-    xmlUrl(`${siteUrl}/contact`, "2026-09-25"),
+    xmlUrl(`${siteUrl}/contact`, siteLastModified),
     xmlUrl(`${siteUrl}/privacy-policy`, siteLastModified),
     xmlUrl(`${siteUrl}/delivery-and-returns`, siteLastModified),
     xmlUrl(`${siteUrl}/zh`, siteLastModified, [], homeLanguages),

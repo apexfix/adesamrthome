@@ -1,69 +1,65 @@
 import Link from "next/link";
-import { RevealGroup } from "@/components/RevealGroup";
-import { ArrowRight, Building2, HardHat, Home, Users } from "lucide-react";
+import { ArrowRight, HardHat, Home, KeyRound, Users } from "lucide-react";
 
 const audiences = [
   {
-    icon: Building2,
-    title: "Apartments",
-    detail: "Door hardware, building requirements and suitability checked before installation.",
-    href: "/apartment-smart-lock-installation-adelaide",
+    icon: Home,
+    title: "Homeowners",
+    detail: "Stop hiding spare keys. Fingerprint, PIN and app entry for your front door, fitted and set up in one visit.",
+    href: "/smart-lock-supply-installation-adelaide",
+  },
+  {
+    icon: KeyRound,
+    title: "Airbnb hosts",
+    detail: "Send guests and cleaners their own code, change it between stays and never meet anyone for a key handover.",
+    href: "/airbnb-smart-lock-installation-adelaide",
   },
   {
     icon: Users,
-    title: "Property Managers",
-    detail: "One-property pilots, repeatable door-photo checks and multi-property planning.",
+    title: "Property managers",
+    detail: "Start with one property, then roll the same lock and door-photo check out across your portfolio.",
     href: "/property-manager-smart-lock-installation-adelaide",
   },
   {
     icon: HardHat,
-    title: "New Homes",
-    detail: "Plan smart-lock compatibility before the door and hardware choices are finalised.",
+    title: "New home builders",
+    detail: "Plan the smart lock before doors and hardware are ordered, so it fits cleanly at handover.",
     href: "/new-home-smart-lock-installation-adelaide",
-  },
-  {
-    icon: Home,
-    title: "Airbnb & Rentals",
-    detail: "Guest and cleaner access for suitable short-stay and rental-property doors.",
-    href: "/airbnb-smart-lock-installation-adelaide",
   },
 ];
 
 export function AudiencePathways() {
   return (
-    <section className="border-y border-zinc-900 bg-black py-20 text-white md:py-24">
+    <section aria-labelledby="who-we-help" className="border-y border-zinc-900 bg-black py-12 text-white md:py-16">
       <div className="mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c5a47e]">
-          Choose your property type
-        </p>
-        <h2 className="mt-3 max-w-3xl text-3xl font-bold md:text-5xl">
-          Smart-lock planning for the door you actually have
-        </h2>
-        <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg">
-          Different properties have different access, approval and door-hardware requirements.
-          Start with the route that matches your project.
-        </p>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-14">
+          <div>
+            <h2 id="who-we-help" className="max-w-xl text-2xl font-bold leading-tight md:text-4xl">
+              Who we help
+            </h2>
+            <p className="mt-4 max-w-[52ch] text-base leading-7 text-zinc-400">
+              Most of our jobs are family homes, but rentals, short stays and new builds each need a
+              slightly different setup. Pick yours for the details.
+            </p>
+          </div>
 
-        <RevealGroup className="mt-12 grid border-y border-zinc-800 md:grid-cols-2 lg:grid-cols-4">
-          {audiences.map(({ icon: Icon, title, detail, href }, index) => (
-            <Link
-              key={href}
-              href={href}
-              className={`group border-zinc-800 py-8 transition-colors hover:bg-white/[0.035] md:px-7 ${index > 0 ? "border-t" : ""} ${index % 2 === 1 ? "md:border-l" : ""} ${index < 2 ? "md:border-t-0" : ""} ${index > 0 ? "lg:border-l lg:border-t-0" : ""}`}
-            >
-              <Icon className="h-7 w-7 text-[#c5a47e]" strokeWidth={1.6} aria-hidden="true" />
-              <h3 className="mt-5 text-lg font-bold">{title}</h3>
-              <p className="mt-3 min-h-16 text-base leading-6 text-zinc-400">{detail}</p>
-              <span className="mt-5 inline-flex items-center gap-2 text-base font-bold text-[#c5a47e]">
-                View service
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </span>
-            </Link>
-          ))}
-        </RevealGroup>
+          <ul className="grid border-t border-zinc-800 sm:grid-cols-2">
+            {audiences.map(({ icon: Icon, title, detail, href }) => (
+              <li key={href} className="border-b border-zinc-800 sm:odd:border-r sm:odd:pr-6 sm:even:pl-6">
+                <Link href={href} className="group flex items-start gap-4 py-5">
+                  <Icon className="mt-0.5 h-6 w-6 shrink-0 text-[#c5a47e]" strokeWidth={1.6} aria-hidden="true" />
+                  <span className="min-w-0">
+                    <span className="flex items-center gap-2 text-base font-bold transition-colors group-hover:text-[#d9b98f]">
+                      {title}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </span>{" "}
+                    <span className="mt-1 block text-sm leading-6 text-zinc-400">{detail}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

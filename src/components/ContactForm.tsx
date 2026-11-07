@@ -10,11 +10,12 @@ import {
   ImagePlus,
   Mail,
   MessageSquareText,
+  Phone,
   Send,
   X,
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
-import { businessInfo } from "@/lib/seoData";
+import { BUSINESS_HOURS, businessInfo, telHref } from "@/lib/seoData";
 import { analyticsProductId, contactValidationIssue, propertyOptions, serviceOptions, timingOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
@@ -472,7 +473,7 @@ export function ContactForm({
           <div className="mt-8 flex flex-wrap gap-4">
             <a href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(referenceMessage)}`} className="inline-flex min-h-12 items-center gap-3 border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
               <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add details by SMS</span>
-            </a>
+            </a>{" "}
             <a href={`mailto:${businessInfo.email}?subject=${encodeURIComponent(`Enquiry ${confirmedLeadId}`)}`} className="inline-flex min-h-12 items-center gap-3 border border-zinc-600 px-4 py-3 text-base font-bold text-[#d9b98f]">
               <Mail className="h-5 w-5 shrink-0" aria-hidden="true" /><span>Add details by email</span>
             </a>
@@ -486,11 +487,8 @@ export function ContactForm({
     <section id="quote" className={`quote-section border-y border-zinc-800 bg-zinc-950 ${compact ? "py-8 md:py-12" : "py-16 md:py-24"}`}>
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         {!compact && <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">
-            Fast Adelaide quote
-          </p>
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            {isCameraKitEnquiry ? "Camera Equipment Enquiry" : mixedServices ? "Product and Service Enquiries" : "Tell Us About Your Door"}
+            {isCameraKitEnquiry ? "Camera Equipment Enquiry" : mixedServices ? "Get a smart lock or CCTV quote" : "Tell Us About Your Door"}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
             {mixedServices
@@ -504,15 +502,26 @@ export function ContactForm({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-12">
           <div className="enquiry-contact-options order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
             <SectionHeading className="text-xl font-bold text-white">Prefer to message us directly?</SectionHeading>
+            <p className="mt-2 max-w-[48ch] text-sm leading-6 text-zinc-400">Call or text {businessInfo.phoneDisplay} ({BUSINESS_HOURS.label}), or email door photos any time.</p>
             <div className="mt-6 space-y-3">
+              <div className="flex items-center gap-2">
+              <a
+                href={telHref}
+                data-contact="phone"
+                className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
+              >
+                <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span className="min-w-0">Call {businessInfo.phoneDisplay}</span>
+              </a>
+              </div>
               <div className="flex items-center gap-2">
               <a
                 href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? `Hi ADE Smart Home, I am interested in ${formData.product || "a Dahua security camera kit"}.` : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
                 className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
-                <span className="min-w-0">Text {businessInfo.phone}</span>
-              </a>
+                <span className="min-w-0">Text {businessInfo.phoneDisplay}</span>
+              </a>{" "}
               <ContactCopyButton value={businessInfo.phone} label="Phone number" />
               </div>
               <div className="flex items-center gap-2">
@@ -520,9 +529,9 @@ export function ContactForm({
                 href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
                 className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
-                <span aria-hidden="true">{isCameraKitEnquiry ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>
-                <span className="min-w-0">{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}<span className="mt-1 block text-sm font-normal">{businessInfo.email}</span></span>
-              </a>
+                <span aria-hidden="true">{isCameraKitEnquiry ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>{" "}
+                <span className="min-w-0">{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}{" "}<span className="mt-1 block text-sm font-normal">{businessInfo.email}</span></span>
+              </a>{" "}
               <ContactCopyButton value={businessInfo.email} label="Email address" />
               </div>
             </div>
@@ -545,7 +554,7 @@ export function ContactForm({
               <ol className="mt-5 list-none space-y-4 text-sm leading-relaxed text-zinc-400">
                 {photoChecklist.map((photo, index) => (
                   <li key={photo.title}>
-                    <strong className="mr-2 text-[#c5a47e]">{index + 1}.</strong>
+                    <strong className="mr-2 text-[#c5a47e]">{index + 1}.</strong>{" "}
                     {photo.title}. {photo.detail}
                   </li>
                 ))}
@@ -554,7 +563,7 @@ export function ContactForm({
                 href="/blog/smart-lock-door-compatibility-check"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#c5a47e] hover:text-white"
               >
-                <span className="min-w-0">View door measurement guide</span>
+                <span className="min-w-0">View door measurement guide</span>{" "}
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
             </div>}
@@ -577,11 +586,11 @@ export function ContactForm({
               <div className="enquiry-direct mt-5 flex flex-wrap items-center gap-x-6 border-y border-[#3f3f46] py-1">
                 <a href={`sms:${businessInfo.phoneInternational}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
                   <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  <span>Enquire by SMS</span>
-                </a>
+                  <span>Text us</span>
+                </a>{" "}
                 <a href={`mailto:${businessInfo.email}`} className="flex min-h-12 items-center gap-3 text-[#d9b98f] underline underline-offset-4">
                   <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0">Enquire by email</span>
+                  <span className="min-w-0">Email us</span>
                 </a>
               </div>
 
@@ -610,8 +619,8 @@ export function ContactForm({
                       aria-pressed={formData.service === option.value}
                     >
                       {option.label}
-                    </button>
-                  ))}
+                    {" "}</button>
+                  )).flatMap(button => [button, " "])}
                 </div>
               </fieldset>
 
@@ -776,10 +785,10 @@ export function ContactForm({
                   disabled={isPreparingPhotos || isSubmitting}
                   className="sr-only"
                 />
-                <p className="enquiry-muted mt-3 text-sm leading-6">
+                <p className="enquiry-muted mt-3 max-w-[68ch] text-sm leading-6">
                   Send what you have; more photos can be added later by SMS or email.
-                  Up to four JPEG, PNG or WebP images. Large photos are resized before sending.
-                  {" "}Prepared photos can be up to 1 MB each and 3.5 MB combined.
+                  Up to four JPEG, PNG or WebP images. Large photos are resized before sending,
+                  to 1&nbsp;MB each and 3.5&nbsp;MB combined.
                 </p>
                 {photos.length === MAX_PHOTOS && !photoLimitError && (
                   <p role="status" className="enquiry-success mt-3 border-l-4 px-3 py-3 text-sm font-semibold">
@@ -825,7 +834,7 @@ export function ContactForm({
 
               {errorMessage && (
                 <p role="alert" className="enquiry-error border-l-4 px-4 py-3 text-base leading-6">
-                  {errorMessage} Text 0431060390 or email us if the problem continues.
+                  {errorMessage} Call or text {businessInfo.phoneDisplay}, or email us if the problem continues.
                 </p>
               )}
 
@@ -835,7 +844,6 @@ export function ContactForm({
                 className="enquiry-submit flex min-h-14 w-full items-center justify-center gap-3 rounded-md px-5 py-3 text-base font-bold"
               >
                 <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)] items-center text-center">
-                <span aria-hidden="true" className="invisible col-start-1 row-start-1">Request an installation quote</span>
                 <span className="col-start-1 row-start-1">{isSubmitting
                   ? "Sending…"
                   : isDeliveryUncertain
@@ -843,7 +851,7 @@ export function ContactForm({
                   : isCameraKitEnquiry
                     ? "Request product enquiry"
                     : "Request an installation quote"}</span>
-                </span>
+                </span>{" "}
                 <Send className={`h-4 w-4 shrink-0 ${isSubmitting ? "invisible" : ""}`} aria-hidden="true" />
               </button>
               <p className="enquiry-muted text-center text-sm leading-6">

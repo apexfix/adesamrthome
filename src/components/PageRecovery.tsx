@@ -30,7 +30,7 @@ export function PageRecovery() {
           <a href="/products" style={actionStyle}><span style={labelStyle}>Browse products</span><ArrowRight size={18} style={iconStyle} aria-hidden="true" /></a>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28, paddingTop: 20, borderTop: "1px solid #3f3f46" }}>
-          <a href={`sms:${businessInfo.phoneInternational}`} style={actionStyle}><MessageSquareText size={18} style={iconStyle} aria-hidden="true" /><span style={labelStyle}>Text {businessInfo.phone}</span></a>
+          <a href={`sms:${businessInfo.phoneInternational}`} style={actionStyle}><MessageSquareText size={18} style={iconStyle} aria-hidden="true" /><span style={labelStyle}>Text {businessInfo.phone}</span></a>{" "}
           <a href={`mailto:${businessInfo.email}`} style={actionStyle}><Mail size={18} style={iconStyle} aria-hidden="true" /><span style={labelStyle}>Email us</span></a>
         </div>
       </div>

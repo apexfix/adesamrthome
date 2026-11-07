@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Two root layouts (English (site) group and /zh) need a dedicated 404 document.
+  experimental: { globalNotFound: true },
   serverExternalPackages: ['nodemailer'],
   async redirects() {
     return [

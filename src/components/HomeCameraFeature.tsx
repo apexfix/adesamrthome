@@ -35,7 +35,7 @@ export function HomeCameraFeature({ product }: { product: Product }) {
             </dl>
             <div className="mt-7 flex flex-wrap items-end gap-x-4 gap-y-2"><p className="text-4xl font-bold">{priceLabel(price, "A$")}</p><p className="pb-1 text-sm text-zinc-600">Equipment package</p></div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href={`/products/${product.slug}`} className="inline-flex min-h-12 items-center gap-2 rounded-md bg-zinc-950 px-6 text-sm font-bold text-white">View kit details <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <Link href={`/products/${product.slug}`} className="inline-flex min-h-12 items-center gap-2 rounded-md bg-zinc-950 px-6 text-sm font-bold text-white">View kit details <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>{" "}
               <Link href={`/contact?service=security-camera-kit&product=${encodeURIComponent(product.name)}#quote`} className="inline-flex min-h-12 items-center rounded-md border border-zinc-400 px-6 text-sm font-bold">Enquire about this kit</Link>
             </div>
             <Link href="/blog/security-camera-kits-adelaide-buying-guide" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#755536]">Read the camera kit buying guide <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>

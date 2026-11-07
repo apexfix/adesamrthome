@@ -15,7 +15,7 @@ for (const ext of ['.ts', '.tsx']) Module._extensions[ext] = (module, filename) 
     module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true, target: ts.ScriptTarget.ES2020,
   } }).outputText, filename);
 };
-const ErrorPage = require('@/app/error').default;
+const ErrorPage = require('@/app/(site)/error').default;
 const GlobalError = require('@/app/global-error').default;
 const out = 'output/recovery';
 

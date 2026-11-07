@@ -19,7 +19,7 @@ for (const [file, name] of [['ProductGallery', 'ProductGallery'], ['Installation
 const api = require('@/lib/api');
 const { localProducts } = require('@/lib/localProducts');
 const { notFound } = require('next/navigation');
-const { default: ProductPage, generateMetadata } = require('@/app/products/[slug]/page');
+const { default: ProductPage, generateMetadata } = require('@/app/(site)/products/[slug]/page');
 const props = { params: Promise.resolve({ slug: 'lockin-v5-max-smart-lock' }) };
 
 (async () => {

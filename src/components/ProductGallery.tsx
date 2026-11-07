@@ -57,7 +57,7 @@ export function ProductGallery({ images, square = false }: ProductGalleryProps) 
                 sizes="80px"
                 className="object-contain p-2"
               />
-            </button>
+            {" "}</button>
           ))}
         </div>
         <button type="button" className="gallery-scroll-button" disabled={!edges.right} onClick={() => scroll("right")} aria-label="Scroll product images right" title="Next thumbnails"><ChevronRight aria-hidden="true" /></button>

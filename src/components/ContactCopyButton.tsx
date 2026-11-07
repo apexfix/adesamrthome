@@ -41,11 +41,12 @@ export function ContactCopyButton({ value, label }: { value: string; label: stri
 
   return (
     <span className="contact-copy">
+      {" "}
       <button type="button" onClick={copy} disabled={!enhanced || state === "pending"}
         className="contact-copy-button" aria-label={`Copy ${label.toLowerCase()}`} aria-busy={state === "pending"}>
         <Icon aria-hidden="true" className="h-5 w-5" />
-      </button>
-      <span className="contact-copy-tooltip" aria-hidden="true">{tooltip}</span>
+      </button>{" "}
+      <span className="contact-copy-tooltip" aria-hidden="true">{tooltip}</span>{" "}
       <span className="sr-only" role="status">{message}</span>
     </span>
   );

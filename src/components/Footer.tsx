@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MessageSquareText, Mail, MapPin, Facebook, Instagram, Link2 } from "lucide-react";
-import { businessInfo, serviceAreas, socialProfiles } from "@/lib/seoData";
+import { Facebook, Instagram, Link2 } from "lucide-react";
+import { BUSINESS_ABN, serviceAreas, socialProfiles } from "@/lib/seoData";
 import { VisualEffectsControl } from "@/components/VisualEffectsControl";
-import { ContactCopyButton } from "@/components/ContactCopyButton";
+import { BusinessDetails } from "@/components/BusinessDetails";
 
 const serviceLinks = [
   ["/smart-lock-supply-installation-adelaide", "Lock + Installation Packages"],
@@ -46,9 +46,9 @@ function FooterLinks({ links }: { links: string[][] }) {
   );
 }
 
-export function Footer() {
+export function Footer({ lang = "en" }: { lang?: "en" | "zh" }) {
   const currentYear = new Date().getFullYear();
-  const textSmsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a product quote.")}`;
+  const zh = lang === "zh";
 
   return (
     <footer className="site-footer border-t border-zinc-800 bg-zinc-950 text-zinc-400">
@@ -59,7 +59,7 @@ export function Footer() {
               <Image src="/img/logo.png" alt="ADE Smart Home Logo" fill sizes="160px" className="object-contain object-left" />
             </Link>
             <p className="mt-4 text-sm leading-6">
-              Adelaide smart security products, smart lock installation and practical local support for homes and small businesses.
+              {zh ? "阿德莱德本地智能锁供货和安装，装完现场教你用，售后找得到人。" : "Smart lock supply and installation across Adelaide metro, with setup on site and local after-sales support."}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {socialProfiles.map((href, index) => (
@@ -69,34 +69,15 @@ export function Footer() {
                   {index === 0 ? <Facebook className="h-4 w-4" aria-hidden="true" />
                     : index === 1 ? <Instagram className="h-4 w-4" aria-hidden="true" />
                     : <Link2 className="h-4 w-4" aria-hidden="true" />}
-                </a>
+                {" "}</a>
               ))}
             </div>
           </div>
 
           <section aria-labelledby="footer-contact" className="min-w-0 lg:order-last">
-            <h2 id="footer-contact">Contact Us</h2>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2">
-                <a href={textSmsHref} className="min-w-0 flex-1 gap-3">
-                  <MessageSquareText className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
-                  <span><span className="block font-semibold text-zinc-200">Text / SMS</span>{businessInfo.phone}</span>
-                </a>
-                <ContactCopyButton value={businessInfo.phone} label="Phone number" />
-              </li>
-              <li className="flex items-center gap-2">
-                <a href={`mailto:${businessInfo.email}`} className="min-w-0 flex-1 gap-3">
-                  <Mail className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
-                  <span className="min-w-0 break-words"><span className="block font-semibold text-zinc-200">Email</span>{businessInfo.email}</span>
-                </a>
-                <ContactCopyButton value={businessInfo.email} label="Email address" />
-              </li>
-              <li className="flex items-center gap-3 py-2">
-                <MapPin className="h-5 w-5 shrink-0 text-[#c5a47e]" aria-hidden="true" />
-                <span>Adelaide, South Australia</span>
-              </li>
-              <li><Link href="/contact#quote" className="font-semibold text-[#d9b98f]">Request a Quote</Link></li>
-            </ul>
+            <h2 id="footer-contact">{zh ? "联系我们" : "Contact Us"}</h2>
+            <BusinessDetails lang={lang} />
+            <Link href={zh ? "/zh#lianxi" : "/contact#quote"} className="mt-1 font-semibold text-[#d9b98f]">{zh ? "免费报价" : "Request a Quote"}</Link>
           </section>
 
           <nav aria-labelledby="footer-services">
@@ -111,7 +92,7 @@ export function Footer() {
           <nav aria-labelledby="footer-explore">
             <h2 id="footer-explore">Explore</h2>
             <FooterLinks links={exploreLinks} />
-            <Link href="/zh" lang="zh-CN">中文服务</Link>
+            {zh ? <Link href="/" hrefLang="en-AU" lang="en">English site</Link> : <Link href="/zh" hrefLang="zh-CN" lang="zh-CN">中文服务</Link>}
             <details className="mt-2 border-t border-zinc-800">
               <summary>More Links</summary>
               <FooterLinks links={moreLinks} />
@@ -133,9 +114,9 @@ export function Footer() {
 
         <div className="mt-4 border-t border-zinc-800 pt-3"><VisualEffectsControl /></div>
         <div className="mt-2 flex flex-col gap-2 text-xs md:flex-row md:items-center md:justify-between">
-          <p>© {currentYear} ADE Smart Home. All rights reserved.</p>
+          <p>© {currentYear} ADE Smart Home.{BUSINESS_ABN ? ` ABN ${BUSINESS_ABN}.` : ""} {zh ? "版权所有。" : "All rights reserved."}</p>
           <div className="flex flex-wrap gap-x-5">
-            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>{" "}
             <Link href="/delivery-and-returns">Delivery & Returns</Link>
           </div>
         </div>

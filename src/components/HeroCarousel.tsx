@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, LockKeyhole, Tag } from "lucide-react";
+import { ArrowRight, Check, Phone, Star, Tag } from "lucide-react";
+import { INSTALL_ONLY_PRICES, PACKAGE_FROM_PRICE, businessInfo, telHref } from "@/lib/seoData";
 import { HeroMediaCarousel } from "@/components/HeroMediaCarousel";
 import type { HeroSlide } from "@/lib/heroCarousel";
 
@@ -31,14 +32,26 @@ export function HeroCarousel() {
   return (
     <HeroMediaCarousel slides={slides}>
       <div className="hero-intro">
-        <p className="hero-brand">ADE SMART HOME</p>
-        <h1>Smart Lock Supply &amp;<span>Installation in Adelaide</span></h1>
-        <p className="hero-description">Choose a lock supplied and installed locally, or have a compatible lock you already own fitted. We also supply CCTV camera kits.</p>
+        <h1>Smart lock supply + install{" "}<span>in Adelaide, from ${PACKAGE_FROM_PRICE}</span></h1>
+        <p className="hero-description">One price covers the lock, professional fitting and setup. We pick a model that suits your door, install it, and show you how to use it before we leave.</p>
+        <ul className="hero-promises">
+          <li><Check size={16} aria-hidden="true" /><span>Free remote door check from your photos</span></li>
+          <li><Check size={16} aria-hidden="true" /><span>No deposit or upfront payment</span></li>
+          <li><Check size={16} aria-hidden="true" /><span>App, fingerprint and PIN set up with you on site</span></li>
+        </ul>
         <div className="hero-primary-actions">
-          <Link href="/contact?service=supply-install#quote" data-primary-quote className="hero-primary-cta"><Tag size={18} aria-hidden="true" /><span>Get a Quote</span></Link>
-          <Link href="#smart-locks" className="hero-browse-cta"><LockKeyhole size={18} aria-hidden="true" /><span>Browse Smart Locks</span></Link>
+          <Link href="#quote" data-primary-quote className="hero-primary-cta"><Tag size={18} aria-hidden="true" /><span>Get a free quote</span></Link>{" "}
+          <a href={telHref} data-contact="phone" className="hero-browse-cta"><Phone size={18} aria-hidden="true" /><span>Call {businessInfo.phoneDisplay}</span></a>
         </div>
-        <Link href="/smart-lock-installation-only-adelaide" className="hero-install-link">Installation-only service<ArrowRight size={16} aria-hidden="true" /></Link>
+        <div className="hero-secondary-links">
+          <Link href="#reviews" className="hero-trust">
+            <span className="flex gap-0.5 text-[#d9b98f]" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map(star => <Star key={star} size={14} className="fill-current" />)}
+            </span>{" "}
+            <span>5-star Google reviews</span>
+          </Link>{" "}
+          <Link href="/smart-lock-installation-only-adelaide" className="hero-install-link">Already have a lock? Installation only from ${INSTALL_ONLY_PRICES.compact}<ArrowRight size={16} aria-hidden="true" /></Link>
+        </div>
       </div>
     </HeroMediaCarousel>
   );

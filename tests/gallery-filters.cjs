@@ -14,7 +14,7 @@ for (const ext of ['.ts', '.tsx']) Module._extensions[ext] = (module, filename) 
 const source = require('@/lib/installationProjects');
 const real = source.installationProjects;
 const { selectGallery } = require('@/lib/galleryFilters');
-const { default: GalleryPage, generateMetadata } = require('@/app/gallery/page');
+const { default: GalleryPage, generateMetadata } = require('@/app/(site)/gallery/page');
 const output = 'output/gallery-filter-verification';
 fs.mkdirSync(output, { recursive: true });
 
