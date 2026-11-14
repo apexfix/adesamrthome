@@ -112,11 +112,11 @@ export async function GET() {
       ["/img/hero/lockin-v5max-composition-v1.webp", "/img/hero/lockin-x9-composition-v1.webp", "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
       homeLanguages,
     ),
-    xmlUrl(`${siteUrl}/products`, "2026-09-25"),
+    xmlUrl(`${siteUrl}/products`, "2026-10-28"),
     xmlUrl(`${siteUrl}/products/security-camera-kits`, siteLastModified, ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png", "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png"]),
     xmlUrl(`${siteUrl}/about`, siteLastModified, [installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),
-    xmlUrl(`${siteUrl}/brands/lockin`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
+    xmlUrl(`${siteUrl}/brands/lockin`, "2026-10-28", [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands/kaadas`, siteLastModified, ["/img/products/kaadas-k70-se/product/kaadas-k70-se-product-01.png"]),
     xmlUrl(`${siteUrl}/service-areas`, siteLastModified),
     xmlUrl(`${siteUrl}/smart-lock-supply-installation-adelaide`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
@@ -159,7 +159,7 @@ export async function GET() {
           ...(product.detail_images || []).map((image) => image.src),
         ];
 
-        return xmlUrl(`${siteUrl}/products/${slug}`, siteLastModified, productImages);
+        return xmlUrl(`${siteUrl}/products/${slug}`, product.last_modified || siteLastModified, productImages);
       })
       .join("");
   } catch (error) {

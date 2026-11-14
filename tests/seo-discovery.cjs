@@ -24,8 +24,11 @@
       assert.ok(homeHtml.includes(new URL(image).pathname), `Image absent from homepage: ${image}`);
       assert.equal((await page.request.head(base + new URL(image).pathname)).status(), 200);
     }
-    for (const route of ['/', '/products', '/gallery', '/contact']) {
+    for (const route of ['/', '/gallery', '/contact']) {
       assert.equal(entries.find(entry => entry.url === site + route).date, '2026-09-25');
+    }
+    for (const route of ['/products', '/brands/lockin', '/products/lockin-veno-pro-smart-lock']) {
+      assert.equal(entries.find(entry => entry.url === site + route).date, '2026-10-28');
     }
     assert.ok(!entries.flatMap(entry => entry.images).some(image => image.includes('hero1-optimized')));
     assert.ok(entries.filter(entry => entry.url.includes('/smart-lock-installation/')).every(entry => entry.images.length === 0));

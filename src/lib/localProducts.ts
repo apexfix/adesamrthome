@@ -114,6 +114,7 @@ export const localProducts = [
     id: 900011,
     name: "Lockin Veno Pro Smart Lock",
     slug: "lockin-veno-pro-smart-lock",
+    last_modified: "2026-10-28",
     sku: "LOCKIN-VENO-PRO-BLK",
     short_description:
       "Palm-vein and fingerprint smart lock with a 2K video doorbell, 32GB local video storage and standard Adelaide installation included.",

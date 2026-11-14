@@ -44,6 +44,7 @@ export interface Product {
   id: number | string;
   name: string;
   slug: string;
+  last_modified?: string;
   sku?: string;
   short_description?: string;
   description?: string;
