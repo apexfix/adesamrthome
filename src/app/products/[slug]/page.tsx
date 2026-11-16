@@ -107,7 +107,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? "Smart Lock Installation Prices Adelaide"
     : isCameraKit
       ? `Dahua ${cameraResolution} ${cameraResolution === "6MP" ? "Dual Light " : ""}2-Camera Kit Adelaide`
-    : `${product.name} Adelaide`;
+    : /\bAdelaide\b/i.test(product.name) ? product.name : `${product.name} Adelaide`;
 
   return {
     title: seoTitle,
