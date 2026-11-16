@@ -126,7 +126,7 @@ export const localProducts = [
       <p>We offer a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If your door needs extra parts or non-standard work, we will discuss this before booking.</p>
       <h2>Check Your Door</h2>
       <p>Send photos of both sides of the door, its edge, the existing lock, the frame and any screen door. We will check the layout before confirming this package.</p>
-      <p>Product information and manufacturer imagery: <a href="https://www.orvibo.com/en/product/mixpad_s2.html">ORVIBO S2 official product page</a>.</p>
+      <p><a href="/contact?service=supply-install&amp;product=ORVIBO%20S2#quote">Enquire about the ORVIBO S2 installed package</a>.</p>
     `,
     categories: [
       { id: 1, name: "SMART LOCK", slug: "smart-lock" },
@@ -168,7 +168,7 @@ export const localProducts = [
       <p>We provide a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If extra parts or non-standard door work are required, we will discuss this before booking.</p>
       <h2>Check Your Door</h2>
       <p>Send photos of both sides of your door, the edge, existing lock, frame and any screen door. We will confirm fit and installation requirements before booking.</p>
-      <p>Product information and manufacturer imagery: <a href="https://global.orvibo.com/en/product/c1/index.html">ORVIBO C1 official product page</a>.</p>
+      <p><a href="/contact?service=supply-install&amp;product=ORVIBO%20C1#quote">Enquire about the ORVIBO C1 installed package</a>.</p>
     `,
     categories: [
       { id: 1, name: "SMART LOCK", slug: "smart-lock" },
