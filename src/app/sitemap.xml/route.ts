@@ -112,7 +112,7 @@ export async function GET() {
       ["/img/hero/lockin-v5max-composition-v1.webp", "/img/hero/lockin-x9-composition-v1.webp", "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
       homeLanguages,
     ),
-    xmlUrl(`${siteUrl}/products`, "2026-10-28"),
+    xmlUrl(`${siteUrl}/products`, "2026-11-16"),
     xmlUrl(`${siteUrl}/products/security-camera-kits`, siteLastModified, ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png", "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png"]),
     xmlUrl(`${siteUrl}/about`, siteLastModified, [installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),

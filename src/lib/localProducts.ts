@@ -111,6 +111,82 @@ const kaadasK70SeDetailImages = [
 
 export const localProducts = [
   {
+    id: 900013,
+    name: "ORVIBO Smart Lock S2 with Adelaide Installation",
+    slug: "orvibo-s2-smart-lock-installation-adelaide",
+    last_modified: "2026-11-16",
+    sku: "ORVIBO-S2-INSTALLED",
+    short_description: "ORVIBO S2 smart lock with fingerprint, PIN and card access. A$599 includes the lock and standard installation in Adelaide, subject to a door compatibility check.",
+    description: `
+      <h2>ORVIBO S2 Smart Lock Installed in Adelaide</h2>
+      <p>Upgrade your front door with the ORVIBO S2's slim black panels and gold lever handles. The A$599 package includes the smart lock and standard Adelaide installation after we confirm your door is compatible.</p>
+      <h2>Access Options</h2>
+      <p>Use fingerprint, PIN, supported card, mobile app access or a mechanical backup key. Available app and remote features depend on the lock configuration and network setup.</p>
+      <h2>What Your Installation Includes</h2>
+      <p>We offer a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If your door needs extra parts or non-standard work, we will discuss this before booking.</p>
+      <h2>Check Your Door</h2>
+      <p>Send photos of both sides of the door, its edge, the existing lock, the frame and any screen door. We will check the layout before confirming this package.</p>
+      <p>Product information: <a href="https://www.orvibo.com/en/product/mixpad_s2_install.html">ORVIBO S2 official product page</a>.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 11, name: "ORVIBO", slug: "orvibo" },
+    ],
+    tags: [
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+      { id: 40, name: "Fingerprint", slug: "fingerprint" },
+    ],
+    brands: [{ id: 11, name: "ORVIBO", slug: "orvibo" }],
+    prices: { price: "59900", regular_price: "59900", sale_price: "59900", currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2 },
+    price_includes_installation: true,
+    support_summary: "A$599 includes the ORVIBO S2 and standard Adelaide installation, subject to a free door compatibility check.",
+    images: [{ id: 901301, src: "/img/products/orvibo-s2/orvibo-s2-hero.png", alt: "Illustration of ORVIBO S2 black smart lock panels with gold lever handles", width: 1254, height: 1254 }],
+    attributes: [
+      { id: 1, name: "Brand", options: ["ORVIBO"] },
+      { id: 2, name: "Model", options: ["S2"] },
+      { id: 3, name: "Access Methods", options: ["Fingerprint", "PIN", "Card", "Mobile app", "Mechanical key"] },
+      { id: 4, name: "Included Service", options: ["Standard Adelaide installation", "Free remote door compatibility check"] },
+    ],
+  },
+  {
+    id: 900012,
+    name: "ORVIBO Smart Lock C1 with Adelaide Installation",
+    slug: "orvibo-c1-smart-lock-installation-adelaide",
+    last_modified: "2026-11-16",
+    sku: "ORVIBO-C1-INSTALLED",
+    short_description: "ORVIBO C1 smart lock with fingerprint, PIN and card access. A$599 includes the lock and standard installation in Adelaide, subject to a door compatibility check.",
+    description: `
+      <h2>ORVIBO C1 Smart Lock Installed in Adelaide</h2>
+      <p>The ORVIBO C1 pairs a black touch keypad with a straight lever handle for everyday keyless entry. The A$599 package includes the lock and standard Adelaide installation, following a free remote door compatibility check.</p>
+      <h2>Ways to Unlock</h2>
+      <p>Choose fingerprint, PIN, supported card, mobile app access or the mechanical backup key. Phone NFC access depends on a compatible device and setup.</p>
+      <h2>What Your Installation Includes</h2>
+      <p>We provide a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If extra parts or non-standard door work are required, we will discuss this before booking.</p>
+      <h2>Check Your Door</h2>
+      <p>Send photos of both sides of your door, the edge, existing lock, frame and any screen door. We will confirm fit and installation requirements before booking.</p>
+      <p>Product information: <a href="https://global.orvibo.com/en/product/c1/index.html">ORVIBO C1 official product page</a>.</p>
+    `,
+    categories: [
+      { id: 1, name: "SMART LOCK", slug: "smart-lock" },
+      { id: 11, name: "ORVIBO", slug: "orvibo" },
+    ],
+    tags: [
+      { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
+      { id: 40, name: "Fingerprint", slug: "fingerprint" },
+    ],
+    brands: [{ id: 11, name: "ORVIBO", slug: "orvibo" }],
+    prices: { price: "59900", regular_price: "59900", sale_price: "59900", currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2 },
+    price_includes_installation: true,
+    support_summary: "A$599 includes the ORVIBO C1 and standard Adelaide installation, subject to a free door compatibility check.",
+    images: [{ id: 901201, src: "/img/products/orvibo-c1/orvibo-c1-hero.png", alt: "Illustration of ORVIBO C1 black smart lock with straight lever handle fitted to a dark door", width: 1254, height: 1254 }],
+    attributes: [
+      { id: 1, name: "Brand", options: ["ORVIBO"] },
+      { id: 2, name: "Model", options: ["C1"] },
+      { id: 3, name: "Access Methods", options: ["Fingerprint", "PIN", "Card", "Mobile app", "Mechanical key"] },
+      { id: 4, name: "Included Service", options: ["Standard Adelaide installation", "Free remote door compatibility check"] },
+    ],
+  },
+  {
     id: 900011,
     name: "Lockin Veno Pro Smart Lock",
     slug: "lockin-veno-pro-smart-lock",

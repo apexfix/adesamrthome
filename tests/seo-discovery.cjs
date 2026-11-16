@@ -27,8 +27,20 @@
     for (const route of ['/', '/gallery', '/contact']) {
       assert.equal(entries.find(entry => entry.url === site + route).date, '2026-09-25');
     }
-    for (const route of ['/products', '/brands/lockin', '/products/lockin-veno-pro-smart-lock']) {
+    for (const route of ['/brands/lockin', '/products/lockin-veno-pro-smart-lock']) {
       assert.equal(entries.find(entry => entry.url === site + route).date, '2026-10-28');
+    }
+    assert.equal(entries.find(entry => entry.url === `${site}/products`).date, '2026-11-16');
+    for (const slug of ['orvibo-c1-smart-lock-installation-adelaide', 'orvibo-s2-smart-lock-installation-adelaide']) {
+      const entry = entries.find(item => item.url === `${site}/products/${slug}`);
+      assert.equal(entry.date, '2026-11-16');
+      assert.equal(entry.images.length, 1);
+      assert.equal((await page.request.head(base + new URL(entry.images[0]).pathname)).status(), 200);
+      const product = await page.request.get(`${base}/products/${slug}`);
+      assert.equal(product.status(), 200);
+      const html = await product.text();
+      assert.ok(html.includes('599'));
+      assert.ok(html.includes('standard Adelaide installation'));
     }
     assert.ok(!entries.flatMap(entry => entry.images).some(image => image.includes('hero1-optimized')));
     assert.ok(entries.filter(entry => entry.url.includes('/smart-lock-installation/')).every(entry => entry.images.length === 0));
