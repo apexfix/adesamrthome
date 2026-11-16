@@ -126,7 +126,7 @@ export const localProducts = [
       <p>We offer a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If your door needs extra parts or non-standard work, we will discuss this before booking.</p>
       <h2>Check Your Door</h2>
       <p>Send photos of both sides of the door, its edge, the existing lock, the frame and any screen door. We will check the layout before confirming this package.</p>
-      <p>Product information: <a href="https://www.orvibo.com/en/product/mixpad_s2_install.html">ORVIBO S2 official product page</a>.</p>
+      <p>Product information and manufacturer imagery: <a href="https://www.orvibo.com/en/product/mixpad_s2.html">ORVIBO S2 official product page</a>.</p>
     `,
     categories: [
       { id: 1, name: "SMART LOCK", slug: "smart-lock" },
@@ -140,7 +140,11 @@ export const localProducts = [
     prices: { price: "59900", regular_price: "59900", sale_price: "59900", currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2 },
     price_includes_installation: true,
     support_summary: "A$599 includes the ORVIBO S2 and standard Adelaide installation, subject to a free door compatibility check.",
-    images: [{ id: 901301, src: "/img/products/orvibo-s2/orvibo-s2-hero.png", alt: "Illustration of ORVIBO S2 black smart lock panels with gold lever handles", width: 1254, height: 1254 }],
+    images: [
+      { id: 901301, src: "/img/products/orvibo-s2/orvibo-s2-hero.png", alt: "Illustration of ORVIBO S2 black smart lock panels with gold lever handles", width: 1254, height: 1254 },
+      { id: 901302, src: "/img/products/orvibo-s2/orvibo-s2-official-pair.png", alt: "Official ORVIBO S2 product image showing two black panels with gold handles" },
+      { id: 901303, src: "/img/products/orvibo-s2/orvibo-s2-official-detail.png", alt: "Official ORVIBO S2 close-up of the gold handle and touch keypad" },
+    ],
     attributes: [
       { id: 1, name: "Brand", options: ["ORVIBO"] },
       { id: 2, name: "Model", options: ["S2"] },
@@ -164,7 +168,7 @@ export const localProducts = [
       <p>We provide a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If extra parts or non-standard door work are required, we will discuss this before booking.</p>
       <h2>Check Your Door</h2>
       <p>Send photos of both sides of your door, the edge, existing lock, frame and any screen door. We will confirm fit and installation requirements before booking.</p>
-      <p>Product information: <a href="https://global.orvibo.com/en/product/c1/index.html">ORVIBO C1 official product page</a>.</p>
+      <p>Product information and manufacturer imagery: <a href="https://global.orvibo.com/en/product/c1/index.html">ORVIBO C1 official product page</a>.</p>
     `,
     categories: [
       { id: 1, name: "SMART LOCK", slug: "smart-lock" },
@@ -178,7 +182,11 @@ export const localProducts = [
     prices: { price: "59900", regular_price: "59900", sale_price: "59900", currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2 },
     price_includes_installation: true,
     support_summary: "A$599 includes the ORVIBO C1 and standard Adelaide installation, subject to a free door compatibility check.",
-    images: [{ id: 901201, src: "/img/products/orvibo-c1/orvibo-c1-hero.png", alt: "Illustration of ORVIBO C1 black smart lock with straight lever handle fitted to a dark door", width: 1254, height: 1254 }],
+    images: [
+      { id: 901201, src: "/img/products/orvibo-c1/orvibo-c1-hero.png", alt: "Illustration of ORVIBO C1 black smart lock with straight lever handle fitted to a dark door", width: 1254, height: 1254 },
+      { id: 901202, src: "/img/products/orvibo-c1/orvibo-c1-official-pair.png", alt: "Official ORVIBO C1 product image showing the front and rear black lock panels" },
+      { id: 901203, src: "/img/products/orvibo-c1/orvibo-c1-official-app.png", alt: "Official ORVIBO C1 product image showing the black lock and mobile app" },
+    ],
     attributes: [
       { id: 1, name: "Brand", options: ["ORVIBO"] },
       { id: 2, name: "Model", options: ["C1"] },

@@ -34,8 +34,10 @@
     for (const slug of ['orvibo-c1-smart-lock-installation-adelaide', 'orvibo-s2-smart-lock-installation-adelaide']) {
       const entry = entries.find(item => item.url === `${site}/products/${slug}`);
       assert.equal(entry.date, '2026-11-16');
-      assert.equal(entry.images.length, 1);
-      assert.equal((await page.request.head(base + new URL(entry.images[0]).pathname)).status(), 200);
+      assert.equal(entry.images.length, 3);
+      for (const image of entry.images) {
+        assert.equal((await page.request.head(base + new URL(image).pathname)).status(), 200);
+      }
       const product = await page.request.get(`${base}/products/${slug}`);
       assert.equal(product.status(), 200);
       const html = await product.text();
