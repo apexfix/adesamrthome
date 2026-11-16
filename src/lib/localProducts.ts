@@ -126,6 +126,14 @@ export const localProducts = [
       <p>We offer a free remote door compatibility check and smart lock consultation before booking. Standard installation includes fitting the lock with suitable tools, cleaning the work area, setting up the mobile app where applicable, and helping you register and test your PIN and fingerprint before we leave. If your door needs extra parts or non-standard work, we will discuss this before booking.</p>
       <h2>Check Your Door</h2>
       <p>Send photos of both sides of the door, its edge, the existing lock, the frame and any screen door. We will check the layout before confirming this package.</p>
+      <h2>See the S2 on a Door</h2>
+      <figure>
+        <video controls playsinline preload="none" poster="/img/products/orvibo-s2/orvibo-s2-video-poster.jpg" style="display:block;width:100%;border-radius:8px" aria-label="ORVIBO S2 door operation video">
+          <source src="/img/products/orvibo-s2/orvibo-s2-door-demo.mp4" type="video/mp4" />
+          Your browser does not support this video.
+        </video>
+        <figcaption>Supplied video showing the S2 on a timber entry door.</figcaption>
+      </figure>
       <p><a href="/contact?service=supply-install&amp;product=ORVIBO%20S2#quote">Enquire about the ORVIBO S2 installed package</a>.</p>
     `,
     categories: [
@@ -141,9 +149,12 @@ export const localProducts = [
     price_includes_installation: true,
     support_summary: "A$599 includes the ORVIBO S2 and standard Adelaide installation, subject to a free door compatibility check.",
     images: [
-      { id: 901301, src: "/img/products/orvibo-s2/orvibo-s2-hero.png", alt: "Illustration of ORVIBO S2 black smart lock panels with gold lever handles", width: 1254, height: 1254 },
+      { id: 901304, src: "/img/products/orvibo-s2/orvibo-s2-installed-close.jpg", alt: "ORVIBO S2 black smart lock with gold handle fitted to a timber door" },
+      { id: 901305, src: "/img/products/orvibo-s2/orvibo-s2-display-front.jpg", alt: "ORVIBO S2 smart lock with gold lever handle on a product display" },
+      { id: 901306, src: "/img/products/orvibo-s2/orvibo-s2-installed-wide.jpg", alt: "Timber front door with an ORVIBO S2 smart lock and gold handle" },
       { id: 901302, src: "/img/products/orvibo-s2/orvibo-s2-official-pair.png", alt: "Official ORVIBO S2 product image showing two black panels with gold handles" },
       { id: 901303, src: "/img/products/orvibo-s2/orvibo-s2-official-detail.png", alt: "Official ORVIBO S2 close-up of the gold handle and touch keypad" },
+      { id: 901301, src: "/img/products/orvibo-s2/orvibo-s2-hero.png", alt: "Illustration of ORVIBO S2 black smart lock panels with gold lever handles", width: 1254, height: 1254 },
     ],
     attributes: [
       { id: 1, name: "Brand", options: ["ORVIBO"] },
@@ -183,9 +194,14 @@ export const localProducts = [
     price_includes_installation: true,
     support_summary: "A$599 includes the ORVIBO C1 and standard Adelaide installation, subject to a free door compatibility check.",
     images: [
-      { id: 901201, src: "/img/products/orvibo-c1/orvibo-c1-hero.png", alt: "Illustration of ORVIBO C1 black smart lock with straight lever handle fitted to a dark door", width: 1254, height: 1254 },
+      { id: 901204, src: "/img/products/orvibo-c1/orvibo-c1-installed-close.jpg", alt: "ORVIBO C1 black smart lock installed on a timber entry door" },
+      { id: 901205, src: "/img/products/orvibo-c1/orvibo-c1-display-front.jpg", alt: "ORVIBO C1 black smart lock on a product display" },
+      { id: 901206, src: "/img/products/orvibo-c1/orvibo-c1-display-angle-1.jpg", alt: "Angled view of the ORVIBO C1 keypad, handle and mortise lock body" },
+      { id: 901207, src: "/img/products/orvibo-c1/orvibo-c1-display-angle-2.jpg", alt: "Second angled view of the ORVIBO C1 smart lock display" },
+      { id: 901208, src: "/img/products/orvibo-c1/orvibo-c1-installed-wide.jpg", alt: "Grey entry door with a black ORVIBO C1 smart lock" },
       { id: 901202, src: "/img/products/orvibo-c1/orvibo-c1-official-pair.png", alt: "Official ORVIBO C1 product image showing the front and rear black lock panels" },
       { id: 901203, src: "/img/products/orvibo-c1/orvibo-c1-official-app.png", alt: "Official ORVIBO C1 product image showing the black lock and mobile app" },
+      { id: 901201, src: "/img/products/orvibo-c1/orvibo-c1-hero.png", alt: "Illustration of ORVIBO C1 black smart lock with straight lever handle fitted to a dark door", width: 1254, height: 1254 },
     ],
     attributes: [
       { id: 1, name: "Brand", options: ["ORVIBO"] },

@@ -34,7 +34,7 @@
     for (const slug of ['orvibo-c1-smart-lock-installation-adelaide', 'orvibo-s2-smart-lock-installation-adelaide']) {
       const entry = entries.find(item => item.url === `${site}/products/${slug}`);
       assert.equal(entry.date, '2026-11-16');
-      assert.equal(entry.images.length, 3);
+      assert.equal(entry.images.length, slug.startsWith('orvibo-c1') ? 8 : 6);
       for (const image of entry.images) {
         assert.equal((await page.request.head(base + new URL(image).pathname)).status(), 200);
       }
@@ -43,6 +43,10 @@
       const html = await product.text();
       assert.ok(html.includes('599'));
       assert.ok(html.includes('standard Adelaide installation'));
+      if (slug.startsWith('orvibo-s2')) {
+        assert.ok(html.includes('orvibo-s2-door-demo.mp4'));
+        assert.equal((await page.request.head(`${base}/img/products/orvibo-s2/orvibo-s2-door-demo.mp4`)).status(), 200);
+      }
     }
     assert.ok(!entries.flatMap(entry => entry.images).some(image => image.includes('hero1-optimized')));
     assert.ok(entries.filter(entry => entry.url.includes('/smart-lock-installation/')).every(entry => entry.images.length === 0));
