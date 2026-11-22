@@ -189,6 +189,10 @@ html { scroll-padding-top: 112px; }
   [data-highlight-active="true"]::before { opacity: 1; }
 }
 .site-header { --header-rest-padding: 11px; --header-rest-height: 72px; position: fixed; z-index: 80; top: 16px; left: 0; right: 0; display: flex; flex-direction: column; width: calc(100% - 40px); max-width: 1420px; min-height: var(--header-rest-height); max-height: calc(100dvh - 32px - env(safe-area-inset-bottom)); margin: 0 auto; animation: header-enter 320ms ease-out; }
+.site-announcement { display: flex; min-height: 34px; align-items: center; justify-content: center; gap: 12px; padding: 5px 16px; background: #d9b98f; color: #181510; font-size: 13px; font-weight: 700; text-align: center; }
+.site-announcement a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.site-announcement a:hover { text-decoration-thickness: 2px; }
+.collection-card:hover .relative img { transform: scale(1.04); }
 .header-brand { flex-shrink: 1; gap: 12px; }
 .header-brand-logo { flex: 0 0 44px; width: 44px; height: 44px; }
 .header-brand-copy { overflow-wrap: anywhere; }
@@ -211,6 +215,9 @@ html { scroll-padding-top: 112px; }
 .secondary-header-link[aria-current], .mobile-navigation a[aria-current] { background: #e5c59f; color: #111113; }
 .secondary-header-link[aria-current] svg, .mobile-navigation a[aria-current] svg { color: currentColor; }
 #product-navigation { max-height: calc(100dvh - 108px - env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; }
+#product-navigation .secondary-header-link { color: #18181b; }
+#product-navigation .secondary-header-link:hover { background: #f4f3f0; color: #18181b; }
+#product-navigation .secondary-header-link[aria-current] { background: #ead5b6; color: #18181b; }
 .liquid-glass:where(.mobile-navigation, #product-navigation) { background-color: rgba(18,20,22,0.96); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); }
 .mobile-menu-button, .mobile-navigation { display: none; }
 .mobile-navigation { min-height: 0; max-height: calc(100dvh - 112px - env(safe-area-inset-bottom)); overscroll-behavior: contain; }
@@ -419,6 +426,7 @@ body:has(.quote-section:focus-within) .mobile-contact-dock,
 }
 @media (max-width: 639px) {
   .site-header { --header-rest-height: 68px; --header-rest-padding: 9px; top: 8px; width: calc(100% - 24px); max-height: calc(100dvh - 16px - env(safe-area-inset-bottom)); }
+  .site-announcement { font-size: 12px; gap: 5px; flex-wrap: wrap; }
   .header-surface { padding-inline: 10px; gap: 10px; }
   .home-hero { height: auto; min-height: 0; }
 }
