@@ -68,8 +68,7 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
       // Reserve the expanded header height even while its padding contracts on scroll.
       const contentHeight = surface.getBoundingClientRect().height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
       const restHeight = Math.max(parseFloat(headerStyle.getPropertyValue('--header-rest-height')), contentHeight + 2 * parseFloat(headerStyle.getPropertyValue('--header-rest-padding')));
-      const announcementHeight = header.querySelector<HTMLElement>('.site-announcement')?.getBoundingClientRect().height ?? 0;
-      const clearance = Math.ceil(restHeight + announcementHeight + parseFloat(headerStyle.top) + 16);
+      const clearance = Math.ceil(restHeight + parseFloat(headerStyle.top) + 16);
       root.style.setProperty('--site-header-clearance', `${clearance}px`);
     };
     measure();
@@ -185,10 +184,6 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
       }}>
       <Suspense fallback={null}><NavigationLocation onChange={onLocationChange} /></Suspense>
       <a href="#site-content" className="skip-link">Skip to content</a>
-      <div className="site-announcement">
-        <span>Adelaide smart lock supply &amp; installation</span>
-        <Link href="/contact?service=supply-install#quote" onClick={closeMenus}>Free door compatibility check</Link>
-      </div>
       <div className="header-surface">
         <Link href="/" onClick={closeMenus} className="header-brand flex min-w-0 items-center" aria-label="ADE Smart Home home">
           <Image src="/img/logo.png" alt="" width={44} height={44} className="header-brand-logo object-contain" />
@@ -199,7 +194,6 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
         </Link>
         <nav ref={navigationRef} aria-label="Main navigation" className="desktop-navigation items-center gap-1">
           <span ref={indicatorRef} className="header-active-indicator" aria-hidden="true" />
-          <Link href="/" onClick={closeMenus} className="header-link whitespace-nowrap" data-nav-active={activeHref === "/"} aria-current={current("/")}>Home</Link>
           {primaryLinks.map(link => (
             <Link key={link.href} href={link.href} onClick={closeMenus} className="header-link whitespace-nowrap" data-nav-active={activeHref === link.href} aria-current={current(link.href)}>{link.name}</Link>
           ))}
@@ -208,20 +202,13 @@ export function Header({ productNavigation }: { productNavigation: ProductNaviga
             if (!event.currentTarget.contains(event.relatedTarget)) setProductsOpen(false);
           }}>
             <button ref={productsButton} type="button" className="header-link flex items-center gap-2" data-nav-active={moreActive} aria-expanded={productsOpen} aria-controls="product-navigation" onClick={() => setProductsOpen(!productsOpen)}>
-              <span>Explore</span><ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+              <span>More</span><ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
             </button>
             {productsOpen && (
-              <div id="product-navigation" className="absolute right-0 top-[calc(100%+8px)] w-64 rounded-md border border-zinc-200 bg-white p-3 text-zinc-950 shadow-xl">
-                <p className="px-3 pb-1 text-xs font-bold uppercase tracking-[0.12em] text-[#8a683f]">Products &amp; guides</p>
-                {moreLinks.slice(0, 3).map((link) => (
+              <div id="product-navigation" className="liquid-glass absolute right-0 top-[calc(100%+16px)] w-64 rounded-lg border p-2">
+                {moreLinks.map((link) => (
                   <Link key={link.href} href={link.href} onClick={closeMenus} aria-current={current(link.href)} className="secondary-header-link flex min-h-12 items-center justify-between gap-3 rounded-md px-3 text-sm text-white/90 hover:bg-white/10">
-                    <span>{link.name}</span>
-                  </Link>
-                ))}
-                <p className="mt-2 border-t border-zinc-200 px-3 pb-1 pt-3 text-xs font-bold uppercase tracking-[0.12em] text-[#8a683f]">ADE Smart Home</p>
-                {moreLinks.slice(3).map((link) => (
-                  <Link key={link.href} href={link.href} onClick={closeMenus} aria-current={current(link.href)} className="secondary-header-link flex min-h-12 items-center rounded-md px-3 text-sm">
-                    {link.name}
+                    <span>{link.name}</span><ArrowUpRight className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />
                   </Link>
                 ))}
               </div>
