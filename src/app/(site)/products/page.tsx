@@ -14,19 +14,19 @@ import { catalogueHref, groupCatalogue, selectCatalogue, type CatalogueParams } 
 interface ProductsPageProps { searchParams?: Promise<CatalogueParams> }
 
 const baseMetadata: Metadata = {
-  title: "Smart Locks & Security Camera Kits Adelaide",
-  description: "Shop smart locks with Adelaide installation and Dahua security camera kits from ADE Smart Home.",
+  title: "Smart Locks Adelaide | Supply & Installation",
+  description: "Shop smart locks with Adelaide installation included, or book installation only, from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/products` },
   openGraph: {
-    title: "Smart Locks & Security Camera Kits Adelaide",
-    description: "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
+    title: "Smart Locks Adelaide | Supply & Installation",
+    description: "Compare smart locks and installation-only services in Adelaide.",
     url: `${siteUrl}/products`, siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "Smart locks available with Adelaide installation" }],
     locale: "en_AU", type: "website",
   },
   twitter: {
-    card: "summary_large_image", title: "Smart Locks & Security Camera Kits Adelaide",
-    description: "Compare smart locks, installation-only services and Dahua security camera equipment packages in Adelaide.",
+    card: "summary_large_image", title: "Smart Locks Adelaide | Supply & Installation",
+    description: "Compare smart locks and installation-only services in Adelaide.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -57,8 +57,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const collectionSchema = {
     "@context": "https://schema.org", "@type": "CollectionPage",
     "@id": `${siteUrl}/products#collection`, url: `${siteUrl}/products`,
-    name: "Smart Locks and Security Camera Kits Adelaide",
-    description: "Smart locks, installation-only service and security camera equipment packages from ADE Smart Home in Adelaide.",
+    name: "Smart Locks Adelaide",
+    description: "Smart locks and installation-only service from ADE Smart Home in Adelaide.",
     mainEntity: {
       "@type": "ItemList", numberOfItems: products.length,
       itemListElement: products.map((product, index) => ({
@@ -87,7 +87,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <header className="mb-8 border-b border-zinc-800 pb-8">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Adelaide smart security</p>
           <h1 className="mb-5 mt-3 break-words text-4xl font-extrabold text-white md:text-5xl">{title}</h1>
-          {!filtered && <p className="max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">Smart locks, installation-only services and CCTV kits in Adelaide.</p>}
+          {!filtered && <p className="max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">Smart locks and installation-only service in Adelaide.</p>}
           <nav aria-label="Product categories" className="relative mt-6 flex flex-wrap gap-2">
             <SelectionIndicator activeKey={`${category?.slug || "all"}:${brand?.slug || "all"}`} />
             <Link href="/products" aria-current={!filtered ? "page" : undefined} className={`inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-semibold ${!filtered ? "border-[#c5a47e] bg-[#c5a47e] text-black" : "glass-control text-zinc-200 hover:text-white"}`}>All Products</Link>{" "}
@@ -121,7 +121,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <h2 id={`catalogue-${group.id}`} className="text-2xl font-bold text-white">{group.name}</h2>
               <span className="text-sm text-zinc-400">{group.products.length} {group.id === "installation-service" ? "service" : group.products.length === 1 ? "product" : "products"}</span>
             </div>
-            {group.id === "installation-service" ? group.products.map(product => <CatalogueInstallation key={product.id} product={product} />) : <RevealGroup className={group.id === "security-camera-kits" ? "grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2" : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}>
+            {group.id === "installation-service" ? group.products.map(product => <CatalogueInstallation key={product.id} product={product} />) : <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {group.products.map(product => <ProductCard key={product.id} product={product} prefetch={false} />)}
             </RevealGroup>}
           </section>
@@ -137,8 +137,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         )}
         <nav aria-label="Product guides" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-zinc-800 pt-6 text-sm text-[#d9b98f]">
           <Link prefetch={false} href="/brands/lockin" className="inline-flex min-h-11 items-center underline underline-offset-4">Lockin range</Link>{" "}
-          <Link prefetch={false} href="/brands/kaadas" className="inline-flex min-h-11 items-center underline underline-offset-4">Kaadas range</Link>{" "}
-          <Link prefetch={false} href="/products/security-camera-kits" className="inline-flex min-h-11 items-center underline underline-offset-4">Compare camera kits</Link>
+          <Link prefetch={false} href="/brands/kaadas" className="inline-flex min-h-11 items-center underline underline-offset-4">Kaadas range</Link>
         </nav>
       </div>
     </main>

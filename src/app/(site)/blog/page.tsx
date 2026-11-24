@@ -9,14 +9,14 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "Smart Lock & CCTV Guides | Adelaide Projects",
+  title: "Smart Lock Guides | Adelaide Projects",
   description:
-    "Explore Adelaide smart lock projects, door compatibility advice and CCTV camera kit buying guides from ADE Smart Home.",
+    "Explore Adelaide smart lock projects, door compatibility advice and buying guides from ADE Smart Home.",
   alternates: { canonical: `${siteUrl}/blog` },
   openGraph: {
-    title: "Adelaide Smart Lock & CCTV Guides",
+    title: "Adelaide Smart Lock Guides",
     description:
-      "Real Adelaide installations, smart lock advice and practical PoE camera kit guidance from ADE Smart Home.",
+      "Real Adelaide installations and practical smart lock advice from ADE Smart Home.",
     url: `${siteUrl}/blog`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630, alt: "ADE Smart Home Adelaide installation guides and projects" }],
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Lock & CCTV Guides | Adelaide Projects",
+    title: "Smart Lock Guides | Adelaide Projects",
     description:
-      "Real Adelaide installations, smart lock advice and practical PoE camera kit guidance from ADE Smart Home.",
+      "Real Adelaide installations and practical smart lock advice from ADE Smart Home.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -130,16 +130,15 @@ export default function BlogListPage() {
         <div className="mb-14 max-w-4xl border-b border-zinc-800 pb-12">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#c5a47e]">Advice and real work</p>
           <h1 className="mb-6 mt-3 text-4xl font-bold md:text-6xl">
-            Smart Lock &amp; CCTV <span className="text-[#c5a47e]">Guides</span>
+            Smart Lock <span className="text-[#c5a47e]">Guides</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-zinc-400">
-            Door compatibility advice, security camera kit buying guides and real project notes for Adelaide homes and businesses.
+            Door compatibility advice, buying guides and real project notes for Adelaide homes.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#d9b98f]">
             <Link href="/blog/smart-lock-door-compatibility-check" className="inline-flex min-h-11 items-center">Door compatibility</Link>{" "}
             <Link href="/blog/lockin-x9-vs-s6-max-vs-v5-max-adelaide" className="inline-flex min-h-11 items-center gap-2">Compare smart locks <ChevronRight className="h-4 w-4" aria-hidden="true" /></Link>{" "}
-            <Link href="/blog/security-camera-kits-adelaide-buying-guide" className="inline-flex min-h-11 items-center gap-2">Camera kit guide <ChevronRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
         </div>
 
@@ -175,7 +174,7 @@ export default function BlogListPage() {
                   </h2>
                   {post.description && <p className="mb-6 line-clamp-3 text-base leading-7 text-zinc-400">{post.description}</p>}
                   <div className="pt-5 border-t border-zinc-800/50 mt-auto flex items-center text-[#c5a47e] text-sm font-bold">
-                    {post.contentType === "guide" || post.category === "Buyer Guide" || post.category === "CCTV Guide" ? "Read Guide" : "View Project Details"}
+                    {post.contentType === "guide" || post.category === "Buyer Guide" ? "Read Guide" : "View Project Details"}
                     <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>

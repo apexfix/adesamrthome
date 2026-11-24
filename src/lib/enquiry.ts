@@ -18,7 +18,6 @@ export const timingOptions = [
 export const serviceOptions = [
   { value: "supply-install", label: "Supply & install" },
   { value: "installation-only", label: "Installation only" },
-  { value: "security-camera-kit", label: "Security camera kit" },
   { value: "portfolio-project", label: "Property / project" },
   { value: "not-sure", label: "Not sure" },
 ] as const;
@@ -26,7 +25,6 @@ export const serviceOptions = [
 export const serviceLabels: Record<string, string> = {
   "supply-install": "Supply and installation",
   "installation-only": "Installation only",
-  "security-camera-kit": "Security camera equipment enquiry",
   "portfolio-project": "Property portfolio / building project",
   "not-sure": "Not sure / recommendation needed",
 };
@@ -67,8 +65,6 @@ const productAliases: Record<string, string[]> = {
   "lockin-ola-slim-smart-lock": ["Lockin OLA Slim", "Lockin OLA Slim Smart Lock", "Lockin OLA Slim (single-side fingerprint)"],
   "kaadas-k70-se-smart-lock": ["Kaadas K70 SE", "Kaadas K70 SE Smart Lock"],
   "smart-lock-installation-only-service": ["Smart Lock Installation Only Service", "Customer-supplied smart lock"],
-  "dahua-5mp-2-camera-poe-security-kit": ["Dahua 5MP 2-Camera PoE Security Kit"],
-  "dahua-6mp-smart-dual-light-2-camera-poe-kit": ["Dahua 6MP Smart Dual Light 2-Camera PoE Kit"],
 };
 
 export function analyticsProductId(value: unknown): string {

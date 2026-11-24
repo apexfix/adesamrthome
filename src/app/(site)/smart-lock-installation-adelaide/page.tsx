@@ -7,7 +7,7 @@ const pageUrl = `${siteUrl}/smart-lock-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Professional Smart Lock Installation Adelaide",
   description:
-    "Professional smart lock installation in Adelaide with door checks, supplied packages and installation-only service for compatible customer-supplied locks.",
+    "Smart lock and digital door lock installation in Adelaide by a local installer: door checks, supplied packages and installation-only service for locks you already own.",
   alternates: { canonical: pageUrl },
   openGraph: {
     title: "Smart Lock Installation Adelaide",
@@ -167,11 +167,6 @@ export default function SmartLockInstallationAdelaidePage() {
           href: "/smart-lock-installation-only-adelaide",
           label: "Installation-only support",
           detail: "Use your own lock with compatibility-first installation.",
-        },
-        {
-          href: "/digital-door-lock-adelaide",
-          label: "Digital door lock service",
-          detail: "A route focused on digital lock compatibility and setup.",
         },
       ]}
       faqTitle="Smart lock installation FAQ"

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Check, Phone, Star, Tag } from "lucide-react";
-import { INSTALL_ONLY_PRICES, PACKAGE_FROM_PRICE, businessInfo, telHref } from "@/lib/seoData";
+import { ArrowRight, Check, MessageSquareText, Star, Tag } from "lucide-react";
+import { INSTALL_ONLY_PRICES, PACKAGE_FROM_PRICE, businessInfo, smsHref } from "@/lib/seoData";
 import { HeroMediaCarousel } from "@/components/HeroMediaCarousel";
 import type { HeroSlide } from "@/lib/heroCarousel";
 
@@ -14,17 +14,10 @@ const slides: HeroSlide[] = [
   },
   {
     id: "x9", title: "Lockin X9",
-    description: "A$699 with standard installation.",
+    description: "A$599 with standard installation.",
     href: "/products/lockin-x9-smart-lock",
     src: "/img/hero/lockin-x9-composition-v1.webp",
     alt: "Lockin X9 black smart lock front and rear product composition",
-  },
-  {
-    id: "dahua-5mp", title: "Dahua 5MP Camera Kit",
-    description: "A$443 equipment package. Two cameras and one recorder.",
-    href: "/products/dahua-5mp-2-camera-poe-security-kit",
-    src: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png",
-    alt: "Dahua 5MP CCTV equipment package: two cameras and one four-channel PoE recorder, A$443",
   },
 ];
 
@@ -33,7 +26,7 @@ export function HeroCarousel() {
     <HeroMediaCarousel slides={slides}>
       <div className="hero-intro">
         <h1>Smart lock supply + install{" "}<span>in Adelaide, from ${PACKAGE_FROM_PRICE}</span></h1>
-        <p className="hero-description">One price covers the lock, professional fitting and setup. We pick a model that suits your door, install it, and show you how to use it before we leave.</p>
+        <p className="hero-description">One price covers the lock, professional fitting and setup. Already bought one? We fit the locks other installers turn down: imported models, odd lock bodies, doors with an old cut-out.</p>
         <ul className="hero-promises">
           <li><Check size={16} aria-hidden="true" /><span>Free remote door check from your photos</span></li>
           <li><Check size={16} aria-hidden="true" /><span>No deposit or upfront payment</span></li>
@@ -41,7 +34,7 @@ export function HeroCarousel() {
         </ul>
         <div className="hero-primary-actions">
           <Link href="#quote" data-primary-quote className="hero-primary-cta"><Tag size={18} aria-hidden="true" /><span>Get a free quote</span></Link>{" "}
-          <a href={telHref} data-contact="phone" className="hero-browse-cta"><Phone size={18} aria-hidden="true" /><span>Call {businessInfo.phoneDisplay}</span></a>
+          <a href={smsHref("Hi ADE Smart Home, I would like a smart lock quote.")} data-contact="sms" className="hero-browse-cta"><MessageSquareText size={18} aria-hidden="true" /><span>Text {businessInfo.phoneDisplay}</span></a>
         </div>
         <div className="hero-secondary-links">
           <Link href="#reviews" className="hero-trust">

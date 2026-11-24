@@ -8,17 +8,18 @@ import {
   ChevronRight,
   MessageSquareText,
   ShieldCheck,
+  UserRound,
   Wrench,
 } from "lucide-react";
-import { businessInfo, siteUrl } from "@/lib/seoData";
+import { BUSINESS_ABN, INSTALLER, businessInfo, siteUrl } from "@/lib/seoData";
 
 export const metadata: Metadata = {
-  title: "About ADE Smart Home | Adelaide Smart Lock Team",
+  title: "About Us | Adelaide Smart Lock Installer",
   description:
     "Meet ADE Smart Home: smart lock supply and installation in Adelaide, fitting for compatible customer-supplied locks, clear quotes and local after-sales support.",
   alternates: { canonical: `${siteUrl}/about` },
   openGraph: {
-    title: "About ADE Smart Home | Adelaide Smart Lock Team",
+    title: "About ADE Smart Home | Adelaide Smart Lock Installer",
     description:
       "See how ADE Smart Home checks, installs and supports smart locks across Adelaide.",
     url: `${siteUrl}/about`,
@@ -69,7 +70,20 @@ export default function AboutPage() {
     name: "About ADE Smart Home",
     description: metadata.description,
     mainEntity: { "@id": `${siteUrl}/#business` },
+    mentions: {
+      "@type": "Person",
+      name: INSTALLER.name,
+      jobTitle: INSTALLER.role,
+      worksFor: { "@id": `${siteUrl}/#business` },
+      ...(INSTALLER.photo ? { image: `${siteUrl}${INSTALLER.photo}` } : {}),
+    },
   };
+  const credentials = [
+    INSTALLER.experience,
+    INSTALLER.licence,
+    INSTALLER.insurance,
+    BUSINESS_ABN && `ABN ${BUSINESS_ABN}`,
+  ].filter(Boolean);
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -141,6 +155,31 @@ export default function AboutPage() {
               <p className="mt-2 text-sm leading-6 text-zinc-400">{label}</p>
             </div>
           ))}
+        </section>
+
+        <section aria-labelledby="installer-title" className="grid gap-8 border-b border-zinc-800 py-14 md:grid-cols-[auto_1fr] md:items-start">
+          <div className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-md border border-zinc-800 bg-zinc-900">
+            {INSTALLER.photo ? (
+              <Image src={INSTALLER.photo} alt={`${INSTALLER.name}, ${INSTALLER.role.toLowerCase()} at ADE Smart Home`} fill sizes="128px" className="object-cover" />
+            ) : (
+              <UserRound className="h-12 w-12 text-zinc-600" aria-hidden="true" />
+            )}
+          </div>
+          <div className="max-w-[68ch]">
+            <h2 id="installer-title" className="text-3xl font-black">Who installs your lock</h2>
+            <p className="mt-4 leading-8 text-zinc-300">
+              {INSTALLER.name} is the {INSTALLER.role.toLowerCase()} you will meet on the day: the same person who checks
+              your door photos, fits the lock, sets it up with you and cleans up afterwards. Customers mention{" "}
+              {INSTALLER.name} by name in our Google reviews for explaining the models patiently and leaving the doorway clean.
+            </p>
+            {credentials.length > 0 && (
+              <ul className="mt-6 space-y-2 text-sm text-zinc-300">
+                {credentials.map((item) => (
+                  <li key={item} className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#d9b98f]" aria-hidden="true" /><span>{item}</span></li>
+                ))}
+              </ul>
+            )}
+          </div>
         </section>
 
         <section className="py-20">

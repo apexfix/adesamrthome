@@ -23,7 +23,6 @@ export function EnquiryThankYou() {
   const receipt = parseEnquiryReceipt(raw);
   if (!receipt) return <EnquiryStatusFallback />;
   const details = enquiryReceiptDetails(receipt.service);
-  const isCameraKit = receipt.service === "security-camera-kit";
   const photoFollowUp = receipt.service === "supply-install" || receipt.service === "installation-only";
   const sms = `Hi ADE Smart Home, I would like to add details to enquiry ${receipt.leadId}.`;
   const steps = [
@@ -63,8 +62,8 @@ export function EnquiryThankYou() {
         </a>
       </div>
       <div className="mt-6 flex flex-wrap gap-x-7 gap-y-2 text-base">
-        <Link href={isCameraKit ? "/products/security-camera-kits" : photoFollowUp ? "/blog/smart-lock-door-compatibility-check" : "/products"} className="inline-flex min-h-12 items-center gap-2 font-bold text-[#d9b98f]">
-          <span>{isCameraKit ? "Browse camera equipment" : photoFollowUp ? "Check door photo requirements" : "Browse products and services"}</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <Link href={photoFollowUp ? "/blog/smart-lock-door-compatibility-check" : "/products"} className="inline-flex min-h-12 items-center gap-2 font-bold text-[#d9b98f]">
+          <span>{photoFollowUp ? "Check door photo requirements" : "Browse products and services"}</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
         </Link>{" "}
         <Link href="/" className="inline-flex min-h-12 items-center font-bold text-zinc-300">Return home</Link>
       </div>

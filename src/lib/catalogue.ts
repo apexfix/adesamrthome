@@ -1,5 +1,4 @@
 import type { Product } from "@/types";
-import { isSecurityCameraKit } from "@/lib/productType";
 
 export type CatalogueParams = Record<string, string | string[] | undefined>;
 type FilterOption = { name: string; slug: string };
@@ -19,8 +18,7 @@ function productBrands(product: Product, knownBrands: FilterOption[] = []): Filt
 export function groupCatalogue(products: Product[]) {
   return [
     { id: "installation-service", name: "Installation Only", products: products.filter(p => p.kind === "service") },
-    { id: "smart-lock", name: "Smart Locks", products: products.filter(p => p.kind !== "service" && !isSecurityCameraKit(p)) },
-    { id: "security-camera-kits", name: "Security Camera Kits", products: products.filter(p => p.kind !== "service" && isSecurityCameraKit(p)) },
+    { id: "smart-lock", name: "Smart Locks", products: products.filter(p => p.kind !== "service") },
   ];
 }
 
@@ -48,7 +46,7 @@ export function selectCatalogue(products: Product[], params: CatalogueParams) {
   const valid = category !== undefined && brand !== undefined;
   const filtered = valid ? products.filter(product => {
     const categoryMatches = !category || (category.slug === "smart-lock"
-      ? product.kind !== "service" && !isSecurityCameraKit(product)
+      ? product.kind !== "service"
       : (product.categories || []).some(item => item.slug === category.slug));
     return categoryMatches && (!brand || productBrands(product, brands).some(item => normalize(item.name) === normalize(brand.name)));
   }) : [];
@@ -56,7 +54,7 @@ export function selectCatalogue(products: Product[], params: CatalogueParams) {
   const ordered = groups.flatMap(group => group.products);
   const categoryName = groupCatalogue(products).find(group => group.id === category?.slug)?.name || category?.name;
   const type = ordered.length && ordered.every(p => p.kind === "service") ? "Installation Only"
-    : ordered.length && ordered.every(isSecurityCameraKit) ? "Security Camera Kits" : categoryName || "Smart Locks";
+    : categoryName || "Smart Locks";
   const title = brand ? `${brand.name} ${type}` : categoryName || "All Products";
   return { valid, category, brand, brands, groups, products: ordered, title, filtered: Boolean(category || brand) };
 }

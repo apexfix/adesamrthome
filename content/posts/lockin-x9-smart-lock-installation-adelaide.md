@@ -2,7 +2,7 @@
 title: "Lockin X9 Smart Lock Installation Adelaide: Real Door Examples"
 seoTitle: "Lockin X9 Smart Lock Installation Adelaide"
 date: "2026-09-11"
-description: "See real Lockin X9 installations on Adelaide doors, the compatibility checks that matter and what the A$699 supplied-and-installed package includes."
+description: "See real Lockin X9 installations on Adelaide doors, the compatibility checks that matter and what the A$599 supplied-and-installed package includes."
 coverImage: "/img/products/lockin-x9/real-install-02.jpg"
 category: "Lockin Installation"
 contentType: "project"
@@ -36,7 +36,7 @@ Our [smart lock door compatibility guide](/blog/smart-lock-door-compatibility-ch
 
 ## What the X9 Package Includes
 
-The current ADE Smart Home X9 package is **A$699**, including the lock and standard Adelaide installation after compatibility confirmation. It also includes the stated two-year local warranty. Covered lock faults are assessed and replaced under the warranty terms rather than repaired.
+The current ADE Smart Home X9 package is **A$599**, including the lock and standard Adelaide installation after compatibility confirmation. It also includes the stated two-year local warranty. Covered lock faults are assessed and replaced under the warranty terms rather than repaired.
 
 Extra parts, repairs to an existing door, extensive modification or non-standard metalwork are not hidden inside the standard package. If the door needs additional work, we explain the scope and quote it before the appointment is confirmed.
 

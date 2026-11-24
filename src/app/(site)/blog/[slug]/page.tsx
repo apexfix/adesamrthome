@@ -131,7 +131,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     ? new URL(data.coverImage, siteUrl).toString()
     : `${siteUrl}/img/og/ade-smart-home-adelaide.jpg`;
   const isGuide = data.contentType === "guide" || data.category === "Buyer Guide";
-  const isCameraGuide = data.category === "CCTV Guide";
   const isDoorGuide = slug === "smart-lock-door-compatibility-check";
   const location = data.suburb && !data.suburb.toLowerCase().includes("adelaide")
     ? `${data.suburb}, Adelaide` : data.suburb || "Adelaide";
@@ -154,7 +153,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     author: { "@type": "Organization", name: author, url: siteUrl },
     publisher: { "@id": `${siteUrl}/#business` },
     articleSection: data.category || "Smart Lock Installation",
-    about: isCameraGuide ? "Security camera equipment in Adelaide" : "Smart locks and installation in Adelaide",
+    about: "Smart locks and installation in Adelaide",
     inLanguage: "en-AU",
     spatialCoverage: { "@type": "Place", name: location },
   };
@@ -208,12 +207,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           {isGuide ? <BookOpen className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" /> : <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-[#c5a47e]" aria-hidden="true" />}
           <div>
             <p className="text-white font-bold text-sm mb-1 uppercase tracking-widest">
-              {isCameraGuide ? "CCTV Equipment Guide" : isDoorGuide ? "Door Compatibility Guide" : isGuide ? "Smart Lock Buying Guide" : "ADE Installation Project"}
+              {isDoorGuide ? "Door Compatibility Guide" : isGuide ? "Smart Lock Buying Guide" : "ADE Installation Project"}
             </p>
             <p className="text-zinc-400 text-base leading-7">
-              {isCameraGuide
-                ? "Compare listed camera models, package contents and recorder specifications. This is equipment information, not a site-specific security assessment."
-                : isDoorGuide
+              {isDoorGuide
                 ? "Use this guide to prepare useful photos and measurements. Final suitability depends on the exact lock model, door, frame and site conditions."
                 : isGuide
                 ? "Compare access features, installed prices and door requirements before choosing your smart lock."
@@ -289,17 +286,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
         <div className="mt-14 border-t border-zinc-700 py-10 text-center">
           <h3 className="text-2xl font-bold mb-4">
-            {isCameraGuide ? "Interested in a camera package?" : isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
+            {isGuide ? "Ready for a door check?" : "Need a similar upgrade?"}
           </h3>
           <p className="text-zinc-400 mb-7 max-w-lg mx-auto text-base leading-7">
-            {isCameraGuide
-              ? "Send the package name and quantity. We will confirm contents, availability and pricing by SMS or email."
-              : isGuide
+            {isGuide
               ? "Send your suburb, preferred timing and four clear door photos. We will reply by SMS or email with the next step."
               : "Contact Adelaide's smart lock specialists for a clean, reliable retrofit."}
           </p>
-          <Link href={isCameraGuide ? "/contact?service=security-camera-kit#quote" : "/contact#quote"} className="inline-flex min-h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
-            {isCameraGuide ? "Enquire About Camera Kits" : isGuide ? "Send Door Photos" : "Get a Free Quote"}
+          <Link href="/contact#quote" className="inline-flex min-h-14 items-center justify-center rounded-sm bg-[#c5a47e] px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-[#e8d0a9]">
+            {isGuide ? "Send Door Photos" : "Get a Free Quote"}
           </Link>
         </div>
       </div>

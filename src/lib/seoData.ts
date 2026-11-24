@@ -11,13 +11,14 @@ export const businessInfo = {
   email: "info@adesmarthome.com.au",
   addressLocality: "Adelaide",
   addressRegion: "SA",
-  postalCode: "5000",
+  // TODO(owner): only fill this in if it matches the address verified on your Google Business Profile.
+  postalCode: "",
   country: "AU",
   // TODO(owner): street address is not published yet. Add it here if you want it shown and in the schema.
   streetAddress: "",
 };
 
-export const telHref = `tel:${businessInfo.phoneInternational}`;
+// Text and email only: the business does not take phone calls, so there is deliberately no tel: link.
 export const smsHref = (body?: string) =>
   `sms:${businessInfo.phoneInternational}${body ? `?body=${encodeURIComponent(body)}` : ""}`;
 export const mailHref = (subject?: string) =>
@@ -38,6 +39,23 @@ export const BUSINESS_HOURS = {
 /** TODO(owner): fill in your 11-digit ABN, e.g. "12 345 678 901". It stays hidden on the site while empty. */
 export const BUSINESS_ABN = "";
 
+/**
+ * The person customers meet. Reviews on Google name him, so the site does too.
+ * TODO(owner): fill the empty fields; each one stays hidden on /about while empty.
+ */
+export const INSTALLER = {
+  name: "John",
+  role: "Smart lock installer",
+  /** Path under /public, e.g. "/img/about/john.jpg". */
+  photo: "",
+  /** e.g. "8 years fitting locks and door hardware in Adelaide". */
+  experience: "",
+  /** e.g. "SA licence no. ..." — only if one applies to your work. */
+  licence: "",
+  /** e.g. "$10M public liability insurance". */
+  insurance: "",
+};
+
 export const SERVICE_AREA_LABEL = "Adelaide metro";
 export const SERVICE_AREA_LABEL_ZH = "阿德莱德市区及周边";
 
@@ -46,8 +64,12 @@ export const WARRANTY_SUMMARY =
 export const WARRANTY_SUMMARY_ZH = "安装工艺保修 12 个月；锁具本身按厂家保修。";
 
 /** Supply + install package price shown in the hero and schema. */
-export const PACKAGE_FROM_PRICE = 699;
+export const PACKAGE_FROM_PRICE = 599;
 export const INSTALL_ONLY_PRICES = { compact: 200, mortise: 350 };
+
+/** Google Business Profile share link; used for the review section and the schema's hasMap/sameAs. */
+export const GOOGLE_BUSINESS_URL = "https://g.page/r/Cak2vtUI0QLfEBM";
+export const GOOGLE_REVIEW_URL = `${GOOGLE_BUSINESS_URL}/review`;
 
 export const socialProfiles = [
   "https://www.facebook.com/profile.php?id=61571291020457",
@@ -167,6 +189,4 @@ export const coreServices = [
   "Video smart lock installation",
   "Keypad lock installation",
   "Door compatibility check",
-  "Security camera equipment packages",
-  "Dahua PoE security camera kits",
 ];

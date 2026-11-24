@@ -83,7 +83,7 @@ export function HeroMediaCarousel({ slides, children }: { slides: HeroSlide[]; c
           <Link href={active?.href ?? "/contact#quote"} className="hero-slide-link">
             <span>{active?.title ?? "Smart security for Adelaide"}</span><ArrowRight size={18} aria-hidden="true" />
           </Link>
-          <p>{active?.description ?? "Smart locks, installation and camera equipment."}</p>
+          <p>{active?.description ?? "Smart locks and installation."}</p>
         </div>
         {slides.length > 1 && <div className="hero-controls-slot">{preference !== null && <div className="hero-controls liquid-glass" role="group" aria-label="Slideshow controls">
           <button type="button" data-playback-control className="hero-icon-button" aria-label={playing ? "Pause slideshow" : "Play slideshow"}

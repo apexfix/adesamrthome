@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { cameraKitFaqs } from "@/lib/cameraContent";
 
 const faqs = [
   {
@@ -51,7 +50,7 @@ const faqs = [
   {
     question: "How much does smart lock installation cost in Adelaide?",
     answer:
-      "For a compatible customer-supplied lock, standard installation is $200 for a compact smart lock or small lock body and $350 for a full-size smart lock using a standard 6068 mortise. Extra parts, repairs, unusual door preparation or non-standard work are quoted before booking. Supplied-and-installed lock packages start from $699.",
+      "For a compatible customer-supplied lock, standard installation is $200 for a compact smart lock or small lock body and $350 for a full-size smart lock using a standard 6068 mortise. Extra parts, repairs, unusual door preparation or non-standard work are quoted before booking. Supplied-and-installed lock packages start from $599.",
   },
   {
     question: "What happens if the smart lock battery dies?",
@@ -70,8 +69,8 @@ const faqs = [
   },
 ];
 
-export function FAQSection({ includeCameras = false, quoteHref = "/contact#quote" }: { includeCameras?: boolean; quoteHref?: string }) {
-  const displayedFaqs = includeCameras ? [faqs[0], faqs[8], faqs[9], ...cameraKitFaqs.slice(0, 4)] : faqs;
+export function FAQSection({ quoteHref = "/contact#quote" }: { quoteHref?: string }) {
+  const displayedFaqs = faqs;
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -96,11 +95,11 @@ export function FAQSection({ includeCameras = false, quoteHref = "/contact#quote
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         <div className="max-w-3xl">
           <h2 className="text-3xl font-bold md:text-5xl">
-            {includeCameras ? "Smart locks & CCTV: your questions" : "Smart Lock Installation FAQ"}
+            {"Smart Lock Installation FAQ"}
           </h2>
 
           <p className="mt-5 text-base leading-7 text-zinc-400 md:text-lg">
-            {includeCameras ? "Answers about installed smart locks, customer-supplied locks and PoE camera packages for Adelaide properties." : "Common questions about smart lock installation, door compatibility, imported smart locks, security screen doors and local Adelaide support."}
+            {"Common questions about smart lock installation, door compatibility, imported smart locks, security screen doors and local Adelaide support."}
           </p>
         </div>
 
@@ -118,9 +117,9 @@ export function FAQSection({ includeCameras = false, quoteHref = "/contact#quote
 
         <div className="mt-12 grid gap-7 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <h3 className="text-2xl font-bold">{includeCameras ? "Find the right setup for your property" : "Not sure if your door can fit a smart lock?"}</h3>
+            <h3 className="text-2xl font-bold">{"Not sure if your door can fit a smart lock?"}</h3>
             <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
-              {includeCameras ? "For smart locks, send your door details. For camera equipment, send the package name and quantity to confirm contents and pricing." : "Send photos of your door, current lock and frame. We will check the door type and recommend a suitable installation option."}
+              {"Send photos of your door, current lock and frame. We will check the door type and recommend a suitable installation option."}
             </p>
           </div>
           <div>
@@ -128,7 +127,7 @@ export function FAQSection({ includeCameras = false, quoteHref = "/contact#quote
               href={quoteHref}
               className="inline-flex min-h-12 items-center rounded-md bg-[#d9b98f] px-6 font-bold text-black transition-colors hover:bg-[#f0d7b9]"
             >
-              {includeCameras ? "Get a quote" : "Send Door Photos for Free Check"}
+              {"Send Door Photos for Free Check"}
             </Link>
           </div>
         </div>

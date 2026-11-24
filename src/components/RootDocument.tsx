@@ -8,10 +8,10 @@ import { DisclosureMotion } from "@/components/DisclosureMotion";
 import { ProcessStepMotion } from "@/components/ProcessStepMotion";
 import { GlassHighlight } from "@/components/GlassHighlight";
 import { localProducts } from "@/lib/localProducts";
-import { isSecurityCameraKit } from "@/lib/productType";
 import type { ProductNavigationRoutes } from "@/lib/navigation";
 import {
   BUSINESS_HOURS,
+  GOOGLE_BUSINESS_URL,
   INSTALL_ONLY_PRICES,
   PACKAGE_FROM_PRICE,
   SERVICE_AREA_LABEL,
@@ -48,7 +48,7 @@ export const localBusinessSchema = {
     ...(businessInfo.streetAddress ? { streetAddress: businessInfo.streetAddress } : {}),
     addressLocality: businessInfo.addressLocality,
     addressRegion: businessInfo.addressRegion,
-    postalCode: businessInfo.postalCode,
+    ...(businessInfo.postalCode ? { postalCode: businessInfo.postalCode } : {}),
     addressCountry: businessInfo.country,
   },
   areaServed: [
@@ -63,6 +63,16 @@ export const localBusinessSchema = {
       closes: BUSINESS_HOURS.closes,
     },
   ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    telephone: businessInfo.phoneInternational,
+    email: businessInfo.email,
+    availableLanguage: ["English", "Chinese"],
+    areaServed: "AU-SA",
+    description: "Text messages (SMS) and email only. We do not take phone calls.",
+  },
+  hasMap: GOOGLE_BUSINESS_URL,
   knowsAbout: coreServices,
   knowsLanguage: ["en-AU", "zh-CN"],
   makesOffer: [
@@ -89,7 +99,7 @@ export const localBusinessSchema = {
     },
   ],
   additionalProperty: [{ "@type": "PropertyValue", name: "Warranty", value: WARRANTY_SUMMARY }],
-  sameAs: socialProfiles,
+  sameAs: [GOOGLE_BUSINESS_URL, ...socialProfiles],
 };
 
 const websiteSchema = {
@@ -104,7 +114,7 @@ const websiteSchema = {
 
 const productNavigation: ProductNavigationRoutes = Object.fromEntries(localProducts.map(product => [
   `/products/${product.slug}`,
-  product.slug === "smart-lock-installation-only-service" ? "installation" : isSecurityCameraKit(product) ? "cctv" : "locks",
+  product.slug === "smart-lock-installation-only-service" ? "installation" : "locks",
 ]));
 
 /** The <html> shell for both root layouts: English routes in (site) and Chinese routes in /zh. */

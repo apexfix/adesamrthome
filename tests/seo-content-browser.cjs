@@ -5,7 +5,7 @@
   const base = 'http://localhost:6650';
   const out = 'output/seo-content-verification';
   await fs.mkdir(out, { recursive: true });
-  const paths = ['/', '/about', '/zh', '/smart-lock-installer-adelaide', '/smart-lock-supply-installation-adelaide', '/products/lockin-x9-smart-lock', '/products/lockin-v5-max-smart-lock', '/products/dahua-5mp-2-camera-poe-security-kit', '/products/dahua-6mp-smart-dual-light-2-camera-poe-kit', '/products/smart-lock-installation-only-service'];
+  const paths = ['/', '/about', '/zh', '/smart-lock-installation-adelaide', '/smart-lock-supply-installation-adelaide', '/products/lockin-x9-smart-lock', '/products/lockin-v5-max-smart-lock', '/products/dahua-5mp-2-camera-poe-security-kit', '/products/dahua-6mp-smart-dual-light-2-camera-poe-kit', '/products/smart-lock-installation-only-service'];
   const results = [];
   for (const [engine, type] of [['chromium', chromium], ['webkit', webkit]]) {
     const browser = await type.launch(engine === 'chromium' ? { channel: 'chrome' } : {});
@@ -68,11 +68,11 @@
             throw error;
           }
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${path} ${width}`);
-          if (['/about', '/smart-lock-installer-adelaide', '/zh'].includes(path)) {
+          if (['/about', '/smart-lock-installation-adelaide', '/zh'].includes(path)) {
             await page.screenshot({ path: `${out}/${engine}-${path.slice(1)}-${width}.png` });
           }
         }
-        if (path === '/smart-lock-installer-adelaide') {
+        if (path === '/smart-lock-installation-adelaide') {
           const image = page.locator('main img').first();
           assert.ok(await image.evaluate(n => n.complete && n.naturalWidth > 0));
           await page.getByRole('link', { name: 'Request an Installation Quote', exact: true }).first().click();

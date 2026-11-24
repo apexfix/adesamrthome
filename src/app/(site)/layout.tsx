@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | ADE Smart Home",
   },
   description:
-    "Smart lock supply and installation across Adelaide metro. Supply + install packages from $699, free remote door check, no deposit.",
+    "Smart lock supply and installation across Adelaide metro. Supply + install packages from $599, free remote door check, no deposit.",
   authors: [{ name: "ADE Smart Home" }],
   creator: "ADE Smart Home",
   publisher: "ADE Smart Home",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
-      "Smart lock supply + install packages from $699 across Adelaide metro. Free remote door check, no deposit, app and fingerprint setup on site.",
+      "Smart lock supply + install packages from $599 across Adelaide metro. Free remote door check, no deposit, app and fingerprint setup on site.",
     siteName: "ADE Smart Home",
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Lock Installation Adelaide | ADE Smart Home",
     description:
-      "Smart lock supply + install packages from $699 across Adelaide metro. Free remote door check and no deposit.",
+      "Smart lock supply + install packages from $599 across Adelaide metro. Free remote door check and no deposit.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
   robots: {

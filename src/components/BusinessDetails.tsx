@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, MessageSquareText, Phone, ShieldCheck } from "lucide-react";
+import { Clock, Mail, MapPin, MessageSquareText, ShieldCheck } from "lucide-react";
 import {
   BUSINESS_ABN,
   BUSINESS_HOURS,
@@ -9,14 +9,12 @@ import {
   businessInfo,
   mailHref,
   smsHref,
-  telHref,
 } from "@/lib/seoData";
 
 type Lang = "en" | "zh";
 
 const copy = {
   en: {
-    call: "Call",
     sms: "Text / SMS",
     email: "Email",
     area: "Service area",
@@ -28,7 +26,6 @@ const copy = {
     smsBody: "Hi ADE Smart Home, I would like a smart lock quote.",
   },
   zh: {
-    call: "打电话",
     sms: "发短信",
     email: "邮箱",
     area: "服务范围",
@@ -42,7 +39,7 @@ const copy = {
 };
 
 /**
- * Phone, SMS, email, service area, hours, warranty and ABN in one list.
+ * SMS, email, service area, hours, warranty and ABN in one list.
  * Values come from seoData so the footer, contact page and Chinese page never drift apart.
  */
 export function BusinessDetails({ lang = "en", className = "" }: { lang?: Lang; className?: string }) {
@@ -53,12 +50,6 @@ export function BusinessDetails({ lang = "en", className = "" }: { lang?: Lang; 
 
   return (
     <ul className={`space-y-1 text-sm leading-6 ${className}`}>
-      <li>
-        <a href={telHref} className={row} data-contact="phone">
-          <Phone className={icon} aria-hidden="true" />
-          <span><span className={label}>{t.call}</span> {businessInfo.phoneDisplay}</span>
-        </a>
-      </li>
       <li>
         <a href={smsHref(t.smsBody)} className={row}>
           <MessageSquareText className={icon} aria-hidden="true" />

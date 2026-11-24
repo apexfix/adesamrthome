@@ -6,6 +6,7 @@ import { GoogleReviews } from "@/components/GoogleReviews";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQSection } from "@/components/FAQSection";
 import { ServicePathways } from "@/components/ServicePathways";
+import { HardJobs } from "@/components/HardJobs";
 import { InstallationInclusions } from "@/components/InstallationInclusions";
 import { AudiencePathways } from "@/components/AudiencePathways";
 import StoryCarousel from "@/components/StoryCarousel"; 
@@ -21,7 +22,7 @@ import { ArrowRight } from "lucide-react";
 export const metadata: Metadata = {
   title: { absolute: "Smart Lock Supply & Installation Adelaide | ADE Smart Home" },
   description:
-    "Smart lock supply + install from $699 across Adelaide metro. Free remote door check, no deposit, app and fingerprint setup on site. Call 0431 060 390.",
+    "Smart lock supply + install from $599 across Adelaide metro. Free remote door check, no deposit, app and fingerprint setup on site. Text 0431 060 390.",
   alternates: {
     canonical: siteUrl,
     languages: {
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smart Lock Supply & Installation Adelaide | ADE Smart Home",
     description:
-      "Smart lock supply + install packages from $699 across Adelaide metro. Free remote door check and no deposit.",
+      "Smart lock supply + install packages from $599 across Adelaide metro. Free remote door check and no deposit.",
     url: siteUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Lock Supply & Installation Adelaide | ADE Smart Home",
     description:
-      "Smart lock supply and installation, installation-only services and Dahua CCTV camera kits for Adelaide homes and small businesses.",
+      "Smart lock supply and installation, and installation-only service for locks you already own, across Adelaide.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -113,8 +114,8 @@ export default async function Home() {
         <HeroCarousel />
       </section>
 
+      <HardJobs />
       <ServicePathways />
-      <AudiencePathways />
 
       <section id="products" className="scroll-mt-20 border-y border-zinc-900 bg-zinc-950 py-20 md:py-24">
         <span id="smart-locks" className="block scroll-mt-28" />
@@ -167,7 +168,8 @@ export default async function Home() {
       )}
       <GoogleReviews />
       <InstallationInclusions quoteHref="#quote" />
-      <FAQSection includeCameras quoteHref="#quote" />
+      <AudiencePathways />
+      <FAQSection quoteHref="#quote" />
       <ContactForm mixedServices />
     </main>
   );

@@ -8,13 +8,10 @@ import { BusinessDetails } from "@/components/BusinessDetails";
 const serviceLinks = [
   ["/smart-lock-supply-installation-adelaide", "Lock + Installation Packages"],
   ["/smart-lock-installation-only-adelaide", "Installation Only"],
-  ["/products/security-camera-kits", "Security Camera Kits"],
   ["/blog/smart-lock-door-compatibility-check", "Door Compatibility Check"],
 ];
 const specialistLinks = [
   ["/smart-lock-installation-adelaide", "Smart Lock Installation"],
-  ["/digital-door-lock-adelaide", "Digital Door Lock Services"],
-  ["/smart-lock-installer-adelaide", "Smart Lock Installer"],
   ["/airbnb-smart-lock-installation-adelaide", "Airbnb & Short-Stay Properties"],
   ["/apartment-smart-lock-installation-adelaide", "Apartments & Units"],
   ["/property-manager-smart-lock-installation-adelaide", "Property Managers"],

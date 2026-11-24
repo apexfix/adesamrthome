@@ -272,61 +272,6 @@ export const localProducts = [
     ],
   },
   {
-    id: 900010,
-    name: "Dahua 6MP Smart Dual Light 2-Camera PoE Kit",
-    slug: "dahua-6mp-smart-dual-light-2-camera-poe-kit",
-    sku: "DAHUA-2CAM-3667-4104",
-    short_description:
-      "Two Dahua 6MP Smart Dual Light cameras and a four-channel PoE recorder. A$590 equipment package for Adelaide homes and small businesses, with infrared and warm-light monitoring.",
-    description: `
-      <h2>Dahua 6MP Smart Dual Light Camera Kit - Adelaide</h2>
-      <p>Monitor the areas that matter to you with two Dahua 6MP turret cameras and a compact PoE recorder. This A$590 equipment package is a practical option for an entrance and driveway, side access or selected areas in a small shop or office.</p>
-      <h2>What Comes in the Package?</h2>
-      <ul>
-        <li><strong>2 x DH-IPC-HDW3667EM-S-IL-ANZ</strong> 6MP Smart Dual Light WizSense network cameras.</li>
-        <li><strong>1 x DHI-NVR4104HS-P-4KS2/L</strong> four-channel PoE network video recorder.</li>
-      </ul>
-      <h2>6MP Detail and Smart Dual Light</h2>
-      <p>The cameras capture up to 3288 x 1850 video. In Smart Dual Light mode, infrared supports night monitoring and the warm light can activate when a configured target is detected, enabling colour images of the event. Both illumination modes are rated up to 30 metres; useful detail depends on placement and lighting.</p>
-      <h2>Focus on People and Vehicles</h2>
-      <p>Camera-side SMD 4.0 and supported tripwire or intrusion rules help distinguish people and vehicles from other movement. A built-in microphone provides audio capture, while IP67-rated camera housings suit appropriately installed outdoor positions. These are camera capabilities; recorder event handling depends on firmware and configuration.</p>
-      <h2>A Wired PoE Recorder</h2>
-      <p>The included NVR has four camera channels, four PoE ports and support for 6MP input. Suitable network cabling carries power and video to the cameras. Future expansion requires a compatibility and power-budget check. AcuPick and Quick Pick are not advertised as included features of this recorder.</p>
-      <p><a href="/contact?service=security-camera-kit&amp;product=Dahua%206MP%20Smart%20Dual%20Light%202-Camera%20PoE%20Kit#quote">Enquire about the A$590 camera kit</a>, compare our <a href="/products/security-camera-kits">Adelaide security camera packages</a> or read our <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera buying guide</a>.</p>
-      <h2>Manufacturer Specifications</h2>
-      <p><a href="/downloads/dahua/DH-IPC-HDW3667EM-S-IL-ANZ-datasheet.pdf">Download the Dahua 6MP camera datasheet (PDF)</a>. Camera details are based on <a href="https://www.dahuasecurity.com/au/products/network-products/network-cameras/WizSense-3-Series/Smart-Dual-Light/IPC-HDW3667EM-S-IL-ANZ">Dahua's official camera specifications</a>; see the <a href="https://www.dahuasecurity.com/tr/products/All-Products/Network-Recorders/Lite-Series/NVR4/L-Series/1HDD/NVR4104HS-P-4KS2/L">official recorder specifications</a> for recorder capabilities.</p>
-    `,
-    categories: [{ id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" }],
-    tags: [
-      { id: 30, name: "Dahua", slug: "dahua" },
-      { id: 34, name: "6MP Camera", slug: "6mp-camera" },
-      { id: 35, name: "Smart Dual Light", slug: "smart-dual-light" },
-      { id: 32, name: "PoE NVR", slug: "poe-nvr" },
-    ],
-    brands: [{ id: 5, name: "Dahua", slug: "dahua" }],
-    prices: {
-      price: "59000", regular_price: "59000", sale_price: "59000",
-      currency_code: "AUD", currency_symbol: "$", currency_minor_unit: 2,
-    },
-    price_includes_installation: false,
-    images: [
-      { id: 901010, src: "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png", alt: "Dahua 6MP Smart Dual Light kit: two cameras and a four-channel PoE recorder, A$590", width: 1254, height: 1254 },
-      { id: 901011, src: "/img/products/dahua-6mp-dual-light-kit/dahua-hdw3667em-official.png", alt: "Dahua DH-IPC-HDW3667EM-S-IL-ANZ white 6MP turret camera with separate dual-light window", width: 8688, height: 5788 },
-      { id: 901003, src: "/img/products/dahua-2-camera-kit/dahua-nvr4104hs-p-4ks2-l.webp", alt: "Dahua DHI-NVR4104HS-P-4KS2/L four-channel PoE recorder", width: 1200, height: 1200 },
-    ],
-    attributes: [
-      { id: 1, name: "Brand", options: ["Dahua"] },
-      { id: 2, name: "Package", options: ["2 cameras", "1 four-channel PoE NVR"] },
-      { id: 3, name: "Camera Model", options: ["DH-IPC-HDW3667EM-S-IL-ANZ"] },
-      { id: 4, name: "Camera Resolution", options: ["6MP (3288 x 1850)"] },
-      { id: 5, name: "Night Vision", options: ["Smart Dual Light", "IR and warm light up to 30 m"] },
-      { id: 6, name: "Camera Features", options: ["SMD 4.0", "Built-in microphone", "IP67", "PoE"] },
-      { id: 7, name: "Recorder Model", options: ["DHI-NVR4104HS-P-4KS2/L"] },
-      { id: 8, name: "Recorder", options: ["4 channels", "4 PoE ports", "6MP input support"] },
-      { id: 9, name: "Lens", options: ["Confirm lens option before ordering"] },
-    ],
-  },
-  {
     id: 900008,
     name: "Smart Lock Installation Only - Adelaide",
     slug: "smart-lock-installation-only-service",
@@ -406,99 +351,6 @@ export const localProducts = [
       { id: 5, name: "Before Booking", options: ["Exact lock model or product link", "Outside and inside door photos", "Door edge, existing lock and frame photos"] },
       { id: 6, name: "Compatibility", options: ["Confirmed before the appointment"] },
       { id: 7, name: "Not Included", options: ["Smart lock", "Extra parts", "Repairs", "Custom or non-standard work"] },
-    ],
-  },
-  {
-    id: 900009,
-    name: "Dahua 5MP 2-Camera PoE Security Kit",
-    slug: "dahua-5mp-2-camera-poe-security-kit",
-    sku: "DAHUA-2CAM-2541-4104",
-    in_stock: true,
-    short_description:
-      "A compact Dahua security package with two 5MP WizSense turret cameras and one four-channel PoE network video recorder for homes and small businesses.",
-    description: `
-      <h2>Dahua 5MP Two-Camera Security Package</h2>
-      <p>This A$443 package combines two Dahua 5MP turret cameras with a compact four-channel PoE network video recorder. It is a practical foundation for monitoring key areas around a home, shop, office or small commercial property.</p>
-      <h2>Package Contents</h2>
-      <ul>
-        <li><strong>2 x DH-IPC-HDW2541EMP-AS-ANZ</strong> 5MP IR fixed-focal eyeball network cameras.</li>
-        <li><strong>1 x DHI-NVR4104HS-P-4KS2/L</strong> four-channel compact PoE network video recorder.</li>
-      </ul>
-      <h2>Clear 5MP Monitoring</h2>
-      <p>Each camera captures up to 5MP video and includes infrared illumination up to 30 metres. Smart H.265+ compression helps reduce bandwidth and storage use, while built-in intelligent monitoring can distinguish people and vehicles for supported tripwire and intrusion events.</p>
-      <h2>Simple PoE Recorder</h2>
-      <p>The compact recorder provides four PoE camera ports, supports Smart H.265+ and Smart H.264+ compression, and offers simultaneous HDMI and VGA output with up to 4K HDMI display output. The four-channel design leaves room to expand the system with up to two additional compatible cameras.</p>
-      <p>This exact Dahua package is currently in stock and available while supplies last.</p>
-      <p>Explore our <a href="/products/security-camera-kits">security camera kits in Adelaide</a> or compare model specifications in our <a href="/blog/security-camera-kits-adelaide-buying-guide">PoE camera kit guide</a>.</p>
-    `,
-    categories: [
-      { id: 8, name: "SECURITY CAMERA KITS", slug: "security-camera-kits" },
-    ],
-    tags: [
-      { id: 30, name: "Dahua", slug: "dahua" },
-      { id: 31, name: "5MP Camera", slug: "5mp-camera" },
-      { id: 32, name: "PoE NVR", slug: "poe-nvr" },
-      { id: 33, name: "Two Camera Kit", slug: "two-camera-kit" },
-    ],
-    brands: [{ id: 5, name: "Dahua", slug: "dahua" }],
-    prices: {
-      price: "44300",
-      regular_price: "44300",
-      sale_price: "44300",
-      currency_code: "AUD",
-      currency_symbol: "$",
-      currency_minor_unit: 2,
-    },
-    price_includes_installation: false,
-    images: [
-      {
-        id: 901001,
-        src: "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png",
-        alt: "Dahua 5MP two-camera PoE security kit with two cameras and one four-channel NVR",
-        width: 1254,
-        height: 1254,
-      },
-      {
-        id: 901002,
-        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-product.jpg",
-        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ 5MP WizSense turret camera",
-        width: 500,
-        height: 500,
-      },
-      {
-        id: 901003,
-        src: "/img/products/dahua-2-camera-kit/dahua-nvr4104hs-p-4ks2-l.webp",
-        alt: "Dahua DHI-NVR4104HS-P-4KS2/L four-channel PoE network video recorder",
-        width: 1200,
-        height: 1200,
-      },
-    ],
-    detail_images: [
-      {
-        id: 901004,
-        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-5mp-camera.jpg",
-        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ camera features and specifications",
-        width: 927,
-        height: 1200,
-      },
-      {
-        id: 901005,
-        src: "/img/products/dahua-2-camera-kit/dahua-hdw2541emp-camera-detail.jpg",
-        alt: "Dahua DH-IPC-HDW2541EMP-AS-ANZ detailed camera specifications",
-        width: 927,
-        height: 1200,
-      },
-    ],
-    attributes: [
-      { id: 1, name: "Brand", options: ["Dahua"] },
-      { id: 2, name: "Package", options: ["2 cameras", "1 four-channel PoE NVR"] },
-      { id: 3, name: "Camera Model", options: ["DH-IPC-HDW2541EMP-AS-ANZ"] },
-      { id: 4, name: "Camera Resolution", options: ["5MP (2960 x 1668)"] },
-      { id: 5, name: "Night Vision", options: ["Infrared illumination up to 30 m"] },
-      { id: 6, name: "Camera Features", options: ["Built-in microphone", "SMD Plus", "IP67", "PoE"] },
-      { id: 7, name: "Recorder Model", options: ["DHI-NVR4104HS-P-4KS2/L"] },
-      { id: 8, name: "Recorder", options: ["4 channels", "4 PoE ports", "1 HDD bay", "4K HDMI output"] },
-      { id: 9, name: "Video Compression", options: ["Smart H.265+", "Smart H.264+"] },
     ],
   },
   {
@@ -690,9 +542,9 @@ export const localProducts = [
       { id: 5, name: "Adelaide Installation", slug: "adelaide-installation" },
     ],
     prices: {
-      price: "69900",
-      regular_price: "69900",
-      sale_price: "69900",
+      price: "59900",
+      regular_price: "59900",
+      sale_price: "59900",
       currency_code: "AUD",
       currency_symbol: "$",
       currency_minor_unit: 2,

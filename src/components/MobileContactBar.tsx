@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Camera, Cctv, Mail, MessageSquareText, Phone, Tag } from "lucide-react";
+import { Camera, Mail, MessageSquareText, Tag } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { businessInfo, telHref } from "@/lib/seoData";
+import { businessInfo } from "@/lib/seoData";
 import { trackEvent } from "@/lib/analytics";
 import { useEffect, useRef, useState } from "react";
 
@@ -69,32 +69,21 @@ export function MobileContactBar({ lang = "en" }: { lang?: "en" | "zh" }) {
   }, [pathname]);
   // The enquiry page already provides contact links; keep its form unobstructed.
   if (pathname === "/contact") return null;
-  const isCameraPage =
-    pathname.includes("security-camera") || (pathname.includes("dahua-") && pathname.includes("camera"));
   const isMixedProductsPage = pathname === "/products" || pathname === "/" || pathname.startsWith("/contact");
   const smsHref = `sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(
-    zh ? "你好，我想咨询智能锁安装。" : isCameraPage
-      ? "Hi ADE Smart Home, I would like a security camera kit quote."
-      : isMixedProductsPage
-        ? "Hi ADE Smart Home, I would like a product quote."
+    zh ? "你好，我想咨询智能锁安装。" : isMixedProductsPage
+      ? "Hi ADE Smart Home, I would like a product quote."
       : "Hi ADE Smart Home, I would like a smart lock quote.",
   )}`;
   const mailHref = `mailto:${businessInfo.email}?subject=${encodeURIComponent(
-    isCameraPage
-      ? "Security camera kit enquiry"
-      : isMixedProductsPage
-        ? "ADE Smart Home product enquiry"
-        : "Smart lock quote with door photos",
+    isMixedProductsPage
+      ? "ADE Smart Home product enquiry"
+      : "Smart lock quote with door photos",
   )}&body=${encodeURIComponent(
-    isCameraPage
-      ? "Hi ADE Smart Home, I would like more information about a security camera kit."
-      : isMixedProductsPage
-        ? "Hi ADE Smart Home, I would like more information about one of your products."
+    isMixedProductsPage
+      ? "Hi ADE Smart Home, I would like more information about one of your products."
       : "Hi ADE Smart Home, I have a smart lock enquiry and door photos to share.",
   )}`;
-  const onCallClick = () =>
-    trackEvent("mobile_call_cta_click", { location: "fixed_mobile_bar" });
-
   const onSmsClick = () =>
     trackEvent("mobile_sms_cta_click", { location: "fixed_mobile_bar" });
 
@@ -110,38 +99,27 @@ export function MobileContactBar({ lang = "en" }: { lang?: "en" | "zh" }) {
       <nav ref={dockRef} aria-label={zh ? "快速联系" : "Quick contact"} data-primary-visible={visiblePrimaryPath === pathname} data-form-active={formActive}
         className="liquid-glass mobile-contact-dock fixed z-[70] grid items-center rounded-lg border md:hidden">
         <a
-          href={telHref}
-          onClick={onCallClick}
-          aria-label={zh ? `打电话 ${businessInfo.phoneDisplay}` : `Call ${businessInfo.phoneDisplay}`}
+          href={smsHref}
+          onClick={onSmsClick}
+          aria-label={zh ? `发短信 ${businessInfo.phoneDisplay}` : `Text ${businessInfo.phoneDisplay}`}
           className="flex min-h-12 items-center justify-center gap-2 rounded-md text-sm font-bold text-white"
         >
-          <Phone className="h-4 w-4 text-[#c5a47e]" aria-hidden="true" />
-          <span>{zh ? "打电话" : "Call"}</span>
+          <MessageSquareText className="h-4 w-4 text-[#c5a47e]" aria-hidden="true" />
+          <span>{zh ? "发短信" : "Text us"}</span>
         </a>{" "}
         <Link
-          href={zh ? "#lianxi" : isCameraPage ? "/contact?service=security-camera-kit#quote" : pathname === "/" ? "#quote" : "/contact#quote"}
+          href={zh ? "#lianxi" : pathname === "/" ? "#quote" : "/contact#quote"}
           onClick={onQuoteFormClick}
-          aria-label={zh ? "免费报价" : isCameraPage ? "Get a quote for a camera kit" : isMixedProductsPage ? "Get a quote" : "Get a quote with door photos"}
+          aria-label={zh ? "免费报价" : isMixedProductsPage ? "Get a quote" : "Get a quote with door photos"}
           className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-2 text-sm font-bold text-black"
         >
-          <span className="flex shrink-0" aria-hidden="true">{isCameraPage ? (
-            <Cctv className="h-4 w-4" />
-          ) : isMixedProductsPage ? (
+          <span className="flex shrink-0" aria-hidden="true">{isMixedProductsPage ? (
             <Tag className="h-4 w-4" />
           ) : (
             <Camera className="h-4 w-4" />
           )}</span>{" "}
           <span>{zh ? "免费报价" : "Get a quote"}</span>
         </Link>{" "}
-        <a
-          href={smsHref}
-          onClick={onSmsClick}
-          title={zh ? "发短信" : "Text us"}
-          className="glass-control flex h-11 w-11 items-center justify-center rounded-md border text-white"
-        >
-          <MessageSquareText className="h-5 w-5" aria-hidden="true" />
-          <span className="sr-only">{zh ? "发短信" : "Text us"}</span>
-        </a>{" "}
         <a
           href={mailHref}
           onClick={onMailClick}

@@ -12,6 +12,22 @@ const nextConfig: NextConfig = {
         destination: "/blog/ezviz-dl05-retrofit-adelaide",
         permanent: true,
       },
+      // CCTV kits are no longer sold; the site covers smart locks only.
+      { source: "/products/security-camera-kits", destination: "/products", permanent: true },
+      { source: "/products/dahua-5mp-2-camera-poe-security-kit", destination: "/products", permanent: true },
+      { source: "/products/dahua-6mp-smart-dual-light-2-camera-poe-kit", destination: "/products", permanent: true },
+      { source: "/blog/security-camera-kits-adelaide-buying-guide", destination: "/blog", permanent: true },
+      // Near-duplicate installation pages were competing for the same searches; one hub page now covers them.
+      {
+        source: "/smart-lock-installer-adelaide",
+        destination: "/smart-lock-installation-adelaide",
+        permanent: true,
+      },
+      {
+        source: "/digital-door-lock-adelaide",
+        destination: "/smart-lock-installation-adelaide",
+        permanent: true,
+      },
     ];
   },
   async headers() {

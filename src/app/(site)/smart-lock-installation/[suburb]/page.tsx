@@ -312,7 +312,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const detail = localPageDetails[area.slug];
   const enhancement = localPageEnhancements[area.slug];
   const title = `Smart Lock Installation ${area.name} from $200`;
-  const description = `Smart lock installation in ${area.name} and nearby suburbs. Installation-only from $200, supplied packages from $699 and free door photo checks.`;
+  const description = `Smart lock installation in ${area.name} and nearby suburbs. Installation-only from $200, supplied packages from $599 and free door photo checks.`;
   const image = detail?.image ?? "/img/products/lockin-x9/real-install-02.jpg";
 
   return {
@@ -369,7 +369,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
     {
       question: "Can you supply the smart lock as well?",
       answer:
-        "Yes. Supply-and-install packages start from $699 and include the selected lock and standard Adelaide installation. Warranty and support terms are shown for each model.",
+        "Yes. Supply-and-install packages start from $599 and include the selected lock and standard Adelaide installation. Warranty and support terms are shown for each model.",
     },
     {
       question: "How do you check whether my door is suitable?",
@@ -484,7 +484,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
             </a>
           </div>
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
-            {["Installation only from $200", "Supply + install from $699", "Door compatibility checked first"].map((item) => (
+            {["Installation only from $200", "Supply + install from $599", "Door compatibility checked first"].map((item) => (
               <span key={item} className="inline-flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" aria-hidden="true" /> {item}
               {" "}</span>
@@ -507,7 +507,7 @@ export default async function SuburbSmartLockPage({ params }: PageProps) {
           <div className="mt-12 grid border-y border-zinc-800 md:grid-cols-2">
             <article className="py-9 md:py-12 md:pr-10">
               <PackageCheck className="h-8 w-8 text-[#d9b98f]" strokeWidth={1.6} aria-hidden="true" />
-              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">From $699</p>
+              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-[#d9b98f]">From $599</p>
               <h3 className="mt-3 text-2xl font-black">Smart lock supplied and installed</h3>
               <p className="mt-4 max-w-xl text-base leading-7 text-zinc-300">
                 Compare installed-price packages. The displayed package price includes the selected

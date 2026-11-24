@@ -16,7 +16,7 @@ The [Lockin X9](/products/lockin-x9-smart-lock), [S6 Max](/products/lockin-s6-ma
 
 All three prices below are ADE Smart Home supplied-and-installed packages for standard Adelaide installation after a door compatibility check. Non-standard door repairs, extra parts or unusual preparation are explained and quoted before booking.
 
-## Lockin X9: Practical Keyless Entry at A$699 Installed
+## Lockin X9: Practical Keyless Entry at A$599 Installed
 
 The X9 is the straightforward choice when you want fingerprint and PIN access without a front-door camera or large indoor screen. Its access options include fingerprint, passcode, mobile app, NFC card, Bluetooth key and physical backup key.
 
@@ -60,7 +60,7 @@ Choose the V5 Max when:
 
 ## Price and Warranty Summary
 
-- **Lockin X9:** A$699 including the lock and standard Adelaide installation
+- **Lockin X9:** A$599 including the lock and standard Adelaide installation
 - **Lockin S6 Max:** A$1,199 including the lock and standard Adelaide installation
 - **Lockin V5 Max:** A$1,350 including the lock and standard Adelaide installation
 

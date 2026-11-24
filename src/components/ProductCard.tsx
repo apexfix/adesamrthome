@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import type { Product } from "@/types";
-import { isSecurityCameraKit } from "@/lib/productType";
 import { getPrice, getOptionalPrice, priceLabel } from "@/lib/productPricing";
 import { GalleryImage } from "@/components/GalleryImage";
 import { getProductStock } from "@/lib/productStock";
@@ -21,7 +20,6 @@ export function ProductCard({
   const hasPrice = currentPrice !== null;
   const installedPrice = getOptionalPrice(product, product.installed_price);
   const isService = product.kind === "service";
-  const isCameraKit = isSecurityCameraKit(product);
   const serviceOptions = product.service_options || [];
   const standardMortisePrice = getOptionalPrice(product, serviceOptions[1]?.price);
   const priceIncludesInstallation = product.price_includes_installation !== false;
@@ -30,7 +28,7 @@ export function ProductCard({
   const displayImage = product.images?.[0]?.src || "";
   const displayCategory = isService
     ? "Installation Service"
-    : product.categories?.[0]?.name || (isCameraKit ? "Security Camera Kit" : "Smart Lock");
+    : product.categories?.[0]?.name || "Smart Lock";
 
   return (
     <Link 
@@ -64,7 +62,7 @@ export function ProductCard({
           </h3>
           <p data-product-scope className="mt-3 flex items-start gap-1.5 text-xs font-semibold leading-5 text-zinc-300">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#c5a47e]" aria-hidden="true" />
-            <span>{isService ? "Installation Only" : isCameraKit ? "2-Camera PoE Kit" : priceIncludesInstallation ? "Standard Install Included" : "Installation Available"}</span>
+            <span>{isService ? "Installation Only" : priceIncludesInstallation ? "Standard Install Included" : "Installation Available"}</span>
           </p>
           {stock && <p data-product-stock className={`mt-3 text-sm font-semibold ${product.in_stock ? "text-emerald-400" : "text-amber-300"}`}>{stock.label}</p>}
         </div>
@@ -77,8 +75,6 @@ export function ProductCard({
                 ? "Quote Required"
                 : isService
                   ? "Installation from"
-                : isCameraKit
-                  ? "Equipment Package"
                 : priceIncludesInstallation
                     ? "Installed Package"
                     : "Lock Only"}

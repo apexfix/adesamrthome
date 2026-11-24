@@ -26,12 +26,12 @@ const pageUrl = `${siteUrl}/smart-lock-supply-installation-adelaide`;
 export const metadata: Metadata = {
   title: "Smart Locks Supplied & Installed Adelaide",
   description:
-    "Compare Lockin and Kaadas smart locks supplied and installed in Adelaide from $699. Clear package pricing, a free door compatibility check and local support.",
+    "Compare Lockin and Kaadas smart locks supplied and installed in Adelaide from $599. Clear package pricing, a free door compatibility check and local support.",
   alternates: { canonical: pageUrl },
   openGraph: {
     title: "Smart Locks Supplied & Installed in Adelaide",
     description:
-      "Compare installed-price Lockin and Kaadas smart lock packages from $699, with a free door compatibility check before booking.",
+      "Compare installed-price Lockin and Kaadas smart lock packages from $599, with a free door compatibility check before booking.",
     url: pageUrl,
     siteName: "ADE Smart Home",
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Locks Supplied & Installed Adelaide",
     description:
-      "Installed-price smart lock options from $699 with an Adelaide door compatibility check.",
+      "Installed-price smart lock options from $599 with an Adelaide door compatibility check.",
     images: ["/img/products/lockin-sv40/real-install-03.jpg"],
   },
 };
@@ -59,7 +59,7 @@ const packages = [
     name: "Lockin X9",
     brand: "Lockin",
     slug: "lockin-x9-smart-lock",
-    price: 699,
+    price: 599,
     label: "Everyday value",
     bestFor: "Simple, reliable keyless entry",
     image: "/img/products/lockin-x9/real-install-02.jpg",
@@ -141,7 +141,7 @@ const priorities = [
   {
     icon: Fingerprint,
     title: "Best value",
-    choice: "Lockin X9 · $699 all-inclusive",
+    choice: "Lockin X9 · $599 all-inclusive",
     detail:
       "Includes the Lockin X9, standard installation and a 2-year local warranty. A practical choice for fingerprint, PIN, NFC and app access.",
   },
@@ -348,7 +348,7 @@ export default function SupplyInstallationPage() {
             <span className="block text-[#d9b98f]">and Installed in Adelaide</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg">
-            Supply-and-install packages start at $699. Already bought a compatible smart lock?
+            Supply-and-install packages start at $599. Already bought a compatible smart lock?
             Installation-only service is $200 for smaller locks and $350 for larger locks,
             subject to a door compatibility check. Every supply-and-install package includes the
             lock and standard installation, with warranty and support terms shown by model.
@@ -387,7 +387,7 @@ export default function SupplyInstallationPage() {
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/25 pt-5 text-xs text-zinc-200">
             {[
-              "Supply + install from $699",
+              "Supply + install from $599",
               "Lock + standard installation",
               "Lockin and Kaadas options",
               "Small lock installation $200",

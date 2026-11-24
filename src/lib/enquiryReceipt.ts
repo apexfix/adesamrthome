@@ -26,11 +26,6 @@ const receiptDetails: Record<string, { intro: string; review: string; next: stri
     review: "We check the model you have purchased, your existing lock and the door details supplied.",
     next: "We confirm compatibility, installation scope and the installation-only price before booking.",
   },
-  "security-camera-kit": {
-    intro: "We will review your camera equipment enquiry and reply by SMS or email.",
-    review: "We review the package name, quantity and product enquiry you shared.",
-    next: "We confirm equipment availability, package contents and pricing before you order.",
-  },
   "portfolio-project": {
     intro: "We will review your property or project enquiry and reply by SMS or email.",
     review: "We review the properties, quantities and requirements you have shared.",

@@ -4,8 +4,8 @@ import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } f
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { ArrowUpRight, ChevronDown, Clock, Languages, Menu, MessageSquareText, Phone, X } from "lucide-react";
-import { BUSINESS_HOURS, SERVICE_AREA_LABEL, SERVICE_AREA_LABEL_ZH, businessInfo, smsHref as buildSmsHref, telHref } from "@/lib/seoData";
+import { ArrowUpRight, ChevronDown, Clock, Languages, Menu, MessageSquareText, X } from "lucide-react";
+import { BUSINESS_HOURS, SERVICE_AREA_LABEL, SERVICE_AREA_LABEL_ZH, businessInfo, smsHref as buildSmsHref } from "@/lib/seoData";
 import { activeNavigationHref, type ProductNavigationRoutes } from "@/lib/navigation";
 
 const navLinks = [
@@ -18,13 +18,11 @@ const productLinks = [
   { name: "All Products", href: "/products" },
   { name: "Smart Locks", href: "/products?category=smart-lock" },
   { name: "Browse Lock Brands", href: "/brands" },
-  { name: "Security Camera Kits", href: "/products/security-camera-kits" },
   { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
 ];
 const primaryLinks = [
   { name: "Smart Locks", href: "/products?category=smart-lock" },
   { name: "Installation Only", href: "/smart-lock-installation-only-adelaide" },
-  { name: "CCTV Kits", href: "/products/security-camera-kits" },
 ];
 const moreLinks = [productLinks[0], productLinks[2], ...navLinks.filter(link => link.href !== "/gallery")];
 // Chinese page sections; the /zh page is one long page with these anchors.
@@ -232,15 +230,12 @@ export function Header({ productNavigation, lang = "en" }: { productNavigation: 
           </>}
         </nav>
         <div className="header-contact flex shrink-0 items-center gap-2">
-        <Link href={languageSwitch.href} hrefLang={languageSwitch.hrefLang} lang={zh ? "en" : "zh-CN"} title={languageSwitch.title} onClick={closeMenus}
+        {zh && <Link href={languageSwitch.href} hrefLang={languageSwitch.hrefLang} lang={zh ? "en" : "zh-CN"} title={languageSwitch.title} onClick={closeMenus}
           className="header-lang glass-control inline-flex min-h-11 items-center gap-1.5 rounded-md border px-3 text-sm font-semibold">
           <Languages className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span>{languageSwitch.label}</span>
-        </Link>{" "}
-        <a href={telHref} className="header-call glass-control inline-flex min-h-11 items-center gap-2 rounded-md border px-3 text-sm font-semibold" aria-label={zh ? `打电话 ${businessInfo.phoneDisplay}` : `Call ${businessInfo.phoneDisplay}`}>
-          <Phone className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span className="header-call-number">{businessInfo.phoneDisplay}</span>
-        </a>{" "}
-        <a href={smsHref} className="header-text-button glass-control hidden min-h-11 items-center gap-2 rounded-md border px-4 text-sm font-semibold sm:inline-flex">
-          <MessageSquareText className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span>{zh ? "短信" : "Text us"}</span>
+        </Link>}{" "}
+        <a href={smsHref} className="header-call glass-control inline-flex min-h-11 items-center gap-2 rounded-md border px-3 text-sm font-semibold" aria-label={zh ? `发短信 ${businessInfo.phoneDisplay}` : `Text ${businessInfo.phoneDisplay}`}>
+          <MessageSquareText className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" /><span className="header-call-number">{zh ? "短信" : "Text"} {businessInfo.phoneDisplay}</span>
         </a>
         </div>
         <button ref={menuButton} type="button" aria-label={isMenuOpen ? (zh ? "关闭菜单" : "Close navigation menu") : (zh ? "打开菜单" : "Open navigation menu")} aria-expanded={isMenuOpen} aria-controls="mobile-navigation" className="mobile-menu-button glass-control h-12 w-12 shrink-0 items-center justify-center rounded-md border" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -263,9 +258,8 @@ export function Header({ productNavigation, lang = "en" }: { productNavigation: 
           </div>
           {navLinks.map((link) => <Link key={link.href} href={link.href} onClick={closeMenus} aria-current={current(link.href)} className="block rounded-md px-3 py-3 hover:bg-white/10">{link.name}</Link>)}
           </>}
-          <Link href={languageSwitch.href} hrefLang={languageSwitch.hrefLang} onClick={closeMenus} className="flex items-center gap-2 rounded-md px-3 py-3 hover:bg-white/10"><Languages className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />{zh ? "English site" : "中文页面"}</Link>
+          {zh && <Link href={languageSwitch.href} hrefLang={languageSwitch.hrefLang} onClick={closeMenus} className="flex items-center gap-2 rounded-md px-3 py-3 hover:bg-white/10"><Languages className="h-4 w-4 text-[#d9b98f]" aria-hidden="true" />{zh ? "English site" : "中文页面"}</Link>}
           <div className="mt-2 space-y-1 border-t border-white/15 pt-3">
-            <a href={telHref} className="flex min-h-11 items-center gap-2 px-3 font-semibold text-[#d9b98f]"><Phone className="h-4 w-4" aria-hidden="true" />{zh ? "打电话" : "Call"} {businessInfo.phoneDisplay}</a>{" "}
             <a href={smsHref} className="flex min-h-11 items-center gap-2 px-3 font-semibold text-[#d9b98f]"><MessageSquareText className="h-4 w-4" aria-hidden="true" />{zh ? "发短信" : "Text"} {businessInfo.phoneDisplay}</a>
             <p className="flex items-center gap-2 px-3 py-2 text-sm text-white/70"><Clock className="h-4 w-4 shrink-0" aria-hidden="true" />{zh ? BUSINESS_HOURS.labelZh : BUSINESS_HOURS.label} · {zh ? SERVICE_AREA_LABEL_ZH : SERVICE_AREA_LABEL}</p>
           </div>

@@ -10,12 +10,11 @@ import {
   ImagePlus,
   Mail,
   MessageSquareText,
-  Phone,
   Send,
   X,
 } from "lucide-react";
 import { captureLeadAttribution, trackEvent } from "@/lib/analytics";
-import { BUSINESS_HOURS, businessInfo, telHref } from "@/lib/seoData";
+import { BUSINESS_HOURS, businessInfo } from "@/lib/seoData";
 import { analyticsProductId, contactValidationIssue, propertyOptions, serviceOptions, timingOptions } from "@/lib/enquiry";
 import { ContactCopyButton } from "@/components/ContactCopyButton";
 import { MAX_PHOTO_COUNT as MAX_PHOTOS, MAX_PHOTO_BYTES as MAX_PREPARED_PHOTO_BYTES, PHOTO_MIME_TYPES, photoSelectionError } from "@/lib/enquiryPhotoLimits";
@@ -156,8 +155,7 @@ export function ContactForm({
   const [isDeliveryUncertain, setIsDeliveryUncertain] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoError, setPhotoError] = useState("");
-  const isCameraKitEnquiry = formData.service === "security-camera-kit";
-  const photoLimitError = isCameraKitEnquiry ? null : photoSelectionError(photos);
+  const photoLimitError = photoSelectionError(photos);
   const contactIssue = contactValidationAttempt ? contactValidationIssue(formData.phone, formData.email) : null;
   const latestFunnelStateRef = useRef({
     service: selectedService,
@@ -295,7 +293,7 @@ export function ContactForm({
       const payload = new FormData();
       Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
       payload.append("attribution", JSON.stringify(captureLeadAttribution()));
-      if (!isCameraKitEnquiry) photos.forEach((photo) => payload.append("photos", photo, photo.name));
+      photos.forEach((photo) => payload.append("photos", photo, photo.name));
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -320,7 +318,7 @@ export function ContactForm({
           JSON.stringify({
             service: formData.service,
             product: analyticsProductId(formData.product),
-            photoCount: isCameraKitEnquiry ? 0 : photos.length,
+            photoCount: photos.length,
             preferredTiming: formData.preferredTiming,
             leadId: result.leadId,
           }),
@@ -488,13 +486,11 @@ export function ContactForm({
       <div className="container mx-auto max-w-[1500px] px-5 md:px-8 xl:px-10">
         {!compact && <div className="mb-10 max-w-3xl">
           <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">
-            {isCameraKitEnquiry ? "Camera Equipment Enquiry" : mixedServices ? "Get a smart lock or CCTV quote" : "Tell Us About Your Door"}
+            {mixedServices ? "Get a smart lock quote" : "Tell Us About Your Door"}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400">
             {mixedServices
-              ? "Smart locks, installation-only service or CCTV camera kits. Choose your service below and we will reply by SMS or email."
-              : isCameraKitEnquiry
-              ? "Tell us which equipment package interests you. We will confirm availability and reply by SMS or email."
+              ? "Supply and install, or fitting for a lock you already own. Choose your service below and we will reply by SMS or email."
               : "Add your suburb, preferred timing and door photos for a faster compatibility check. We will review the details and reply by SMS or email with the next step."}
           </p>
         </div>}
@@ -502,21 +498,11 @@ export function ContactForm({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-12">
           <div className="enquiry-contact-options order-2 min-w-0 self-start border-t border-white/15 py-6 wrap-anywhere lg:order-1 lg:border-t-0 lg:py-8">
             <SectionHeading className="text-xl font-bold text-white">Prefer to message us directly?</SectionHeading>
-            <p className="mt-2 max-w-[48ch] text-sm leading-6 text-zinc-400">Call or text {businessInfo.phoneDisplay} ({BUSINESS_HOURS.label}), or email door photos any time.</p>
+            <p className="mt-2 max-w-[48ch] text-sm leading-6 text-zinc-400">Text {businessInfo.phoneDisplay} ({BUSINESS_HOURS.label}) or email door photos any time.</p>
             <div className="mt-6 space-y-3">
               <div className="flex items-center gap-2">
               <a
-                href={telHref}
-                data-contact="phone"
-                className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
-              >
-                <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />
-                <span className="min-w-0">Call {businessInfo.phoneDisplay}</span>
-              </a>
-              </div>
-              <div className="flex items-center gap-2">
-              <a
-                href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent(isCameraKitEnquiry ? `Hi ADE Smart Home, I am interested in ${formData.product || "a Dahua security camera kit"}.` : "Hi ADE Smart Home, I would like a smart lock quote.")}`}
+                href={`sms:${businessInfo.phoneInternational}?body=${encodeURIComponent("Hi ADE Smart Home, I would like a smart lock quote.")}`}
                 className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
                 <MessageSquareText className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -526,28 +512,17 @@ export function ContactForm({
               </div>
               <div className="flex items-center gap-2">
               <a
-                href={`mailto:${businessInfo.email}?subject=${isCameraKitEnquiry ? "Dahua%20camera%20kit%20enquiry" : "Door%20photos%20for%20installation%20check"}`}
+                href={`mailto:${businessInfo.email}?subject=Door%20photos%20for%20installation%20check`}
                 className="flex min-h-14 min-w-0 flex-1 items-center gap-3 border border-zinc-800 px-4 text-sm font-bold text-white transition-colors hover:border-[#c5a47e] hover:text-[#c5a47e]"
               >
-                <span aria-hidden="true">{isCameraKitEnquiry ? <Mail className="h-5 w-5" /> : <Camera className="h-5 w-5" />}</span>{" "}
-                <span className="min-w-0">{isCameraKitEnquiry ? "Email product enquiry" : "Email door photos"}{" "}<span className="mt-1 block text-sm font-normal">{businessInfo.email}</span></span>
+                <span aria-hidden="true"><Camera className="h-5 w-5" /></span>{" "}
+                <span className="min-w-0">Email door photos{" "}<span className="mt-1 block text-sm font-normal">{businessInfo.email}</span></span>
               </a>{" "}
               <ContactCopyButton value={businessInfo.email} label="Email address" />
               </div>
             </div>
 
-            {isCameraKitEnquiry ? (
-              <div className="mt-8 border-t border-zinc-800 pt-7">
-                <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
-                  Camera package options
-                </h3>
-                <ul className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-400">
-                  <li><strong className="text-[#c5a47e]">A$443</strong> Dahua 5MP two-camera kit</li>
-                  <li><strong className="text-[#c5a47e]">A$590</strong> Dahua 6MP Smart Dual Light two-camera kit</li>
-                  <li>Each equipment package has two cameras and one four-channel PoE recorder. Tell us your preferred kit below.</li>
-                </ul>
-              </div>
-            ) : <div className="mt-8 border-t border-zinc-800 pt-7">
+            <div className="mt-8 border-t border-zinc-800 pt-7">
               <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-white">
                 Four helpful photo angles
               </h3>
@@ -566,21 +541,17 @@ export function ContactForm({
                 <span className="min-w-0">View door measurement guide</span>{" "}
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
-            </div>}
+            </div>
           </div>
 
           <div className="enquiry-panel relative order-1 min-w-0 rounded-lg border p-5 md:p-9 lg:order-2">
             <SectionHeading className="break-words text-2xl font-bold text-white">
               {formData.product
                 ? `Ask about ${formData.product}`
-                : isCameraKitEnquiry
-                  ? "Request a security camera quote"
-                  : "Request an installation quote"}
+                : "Request an installation quote"}
             </SectionHeading>
             <p id={contactHintId} className="enquiry-muted mt-3 text-base leading-7">
-              {isCameraKitEnquiry
-                ? "Leave your name, suburb and mobile or email. We will confirm the equipment and availability before you order."
-                : "Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome."}
+              Leave your name, suburb and mobile or email. Photos are optional and can be sent later. Compatible locks bought elsewhere are welcome.
             </p>
 
               <div className="enquiry-direct mt-5 flex flex-wrap items-center gap-x-6 border-y border-[#3f3f46] py-1">
@@ -718,17 +689,16 @@ export function ContactForm({
 
               <div key={formData.service} data-enquiry-service-fields data-enhanced={enhanced} className="space-y-5">
               <label className="block space-y-2 enquiry-label">
-                {isCameraKitEnquiry ? "Preferred package" : "Preferred model"} <span className="enquiry-muted font-normal">optional</span>
+                Preferred model <span className="enquiry-muted font-normal">optional</span>
                 <input
                   name="product"
                   list="smart-lock-models"
                   value={formData.product}
                   onChange={handleChange}
                   className="enquiry-input h-12 w-full px-4 font-normal"
-                  placeholder={isCameraKitEnquiry ? "e.g. Dahua 6MP Smart Dual Light kit" : "e.g. Lockin X9, customer-supplied lock, or not sure"}
+                  placeholder="e.g. Lockin X9, customer-supplied lock, or not sure"
                 />
                 <datalist id="smart-lock-models">
-                  {!isCameraKitEnquiry && <>
                   <option value="Not sure – please recommend" />
                   <option value="Customer-supplied smart lock" />
                   <option value="Other brand smart lock (compatible model link)" />
@@ -742,15 +712,10 @@ export function ContactForm({
                   <option value="Lockin S6 Max" />
                   <option value="Lockin V5 Max" />
                   <option value="Kaadas K70 SE" />
-                  </>}
-                  {isCameraKitEnquiry && <>
-                  <option value="Dahua 5MP 2-Camera PoE Security Kit" />
-                  <option value="Dahua 6MP Smart Dual Light 2-Camera PoE Kit" />
-                  </>}
                 </datalist>
               </label>
 
-              {!isCameraKitEnquiry && <fieldset>
+              <fieldset>
                 <legend className="enquiry-label">
                   Door photos <span className="enquiry-muted font-normal">recommended for a more accurate quote</span>
                 </legend>
@@ -816,7 +781,7 @@ export function ContactForm({
                 )}
                 {photoError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm [overflow-wrap:anywhere]">{photoError}</p>}
                 {photoLimitError && <p role="alert" className="enquiry-error mt-3 border-l-4 px-3 py-3 text-sm">{photoLimitError}</p>}
-              </fieldset>}
+              </fieldset>
 
               </div>
 
@@ -828,13 +793,13 @@ export function ContactForm({
                   value={formData.message}
                   onChange={handleChange}
                   className="enquiry-input w-full resize-y p-4 font-normal"
-                  placeholder={isCameraKitEnquiry ? "Enter the package name, quantity or a question about listed product specifications." : "Tell us about the existing lock, security screen, building access or any special requirements."}
+                  placeholder="Tell us about the existing lock, security screen, building access or any special requirements."
                 />
               </label>
 
               {errorMessage && (
                 <p role="alert" className="enquiry-error border-l-4 px-4 py-3 text-base leading-6">
-                  {errorMessage} Call or text {businessInfo.phoneDisplay}, or email us if the problem continues.
+                  {errorMessage} Text {businessInfo.phoneDisplay} or email us if the problem continues.
                 </p>
               )}
 
@@ -848,14 +813,12 @@ export function ContactForm({
                   ? "Sending…"
                   : isDeliveryUncertain
                     ? "Send another copy"
-                  : isCameraKitEnquiry
-                    ? "Request product enquiry"
-                    : "Request an installation quote"}</span>
+                  : "Request an installation quote"}</span>
                 </span>{" "}
                 <Send className={`h-4 w-4 shrink-0 ${isSubmitting ? "invisible" : ""}`} aria-hidden="true" />
               </button>
               <p className="enquiry-muted text-center text-sm leading-6">
-                <span>{isCameraKitEnquiry ? "No payment required. We confirm package contents and pricing before you order." : "No payment required. We confirm scope and pricing before booking."}</span>{" "}By submitting,
+                <span>No payment required. We confirm scope and pricing before booking.</span>{" "}By submitting,
                 you agree that we may use these details and photos to respond to your enquiry. See our{" "}
                 <Link href="/privacy-policy" className="font-semibold text-[#d9b98f] underline underline-offset-4 hover:text-white">
                   Privacy Policy

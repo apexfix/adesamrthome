@@ -96,7 +96,6 @@ export async function POST(request: Request) {
       referrer: readField(attributionPayload.referrer, 500),
     };
     const contactError = contactValidationError(phone, email);
-    const isCameraKit = service === "security-camera-kit";
 
     if (
       !name ||
@@ -116,12 +115,6 @@ export async function POST(request: Request) {
       );
     }
 
-    if (isCameraKit && photoFiles.length) {
-      return NextResponse.json(
-        { success: false, message: "Camera equipment enquiries do not accept door photos. Please remove the photos and try again." },
-        { status: 400 },
-      );
-    }
     const photoError = photoSelectionError(photoFiles);
     if (photoError) {
       return NextResponse.json(
@@ -186,7 +179,7 @@ Email: ${email || "Not provided"}
 Suburb / postcode: ${suburb}
 Property type: ${propertyLabel}
 Service: ${serviceLabel}
-${isCameraKit ? "Preferred equipment package" : "Preferred model"}: ${product || "Not specified"}
+Preferred model: ${product || "Not specified"}
 Preferred timing: ${timingLabel}
 Door photos attached: ${photoFiles.length}
 
@@ -215,7 +208,7 @@ ${message || "No additional details provided."}
         <p><strong>Suburb / postcode:</strong> ${escapeHtml(suburb)}</p>
         <p><strong>Property type:</strong> ${escapeHtml(propertyLabel)}</p>
         <p><strong>Service:</strong> ${escapeHtml(serviceLabel)}</p>
-        <p><strong>${isCameraKit ? "Preferred equipment package" : "Preferred model"}:</strong> ${escapeHtml(product || "Not specified")}</p>
+        <p><strong>Preferred model:</strong> ${escapeHtml(product || "Not specified")}</p>
         <p><strong>Preferred timing:</strong> ${escapeHtml(timingLabel)}</p>
         <p><strong>Door photos attached:</strong> ${photoFiles.length}</p>
         <hr>

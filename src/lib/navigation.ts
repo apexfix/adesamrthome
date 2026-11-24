@@ -1,10 +1,9 @@
-export type ProductNavigationSection = "locks" | "installation" | "cctv";
+export type ProductNavigationSection = "locks" | "installation";
 export type ProductNavigationRoutes = Record<string, ProductNavigationSection>;
 
 export const serviceNavigation = {
   locks: "/products?category=smart-lock",
   installation: "/smart-lock-installation-only-adelaide",
-  cctv: "/products/security-camera-kits",
 } as const;
 
 export function activeNavigationHref(pathname: string, category: string | null | undefined, products: ProductNavigationRoutes): string | null {
@@ -15,7 +14,6 @@ export function activeNavigationHref(pathname: string, category: string | null |
     if (category === undefined) return null;
     if (category === null) return "/products";
     const normalized = category.toLowerCase().replace(/[^a-z0-9]/g, "");
-    if (normalized === "securitycamerakits") return serviceNavigation.cctv;
     if (["smartlock", "smartlocks", "smartlockwithcamera", "lockin", "kaadas", "philips", "ezviz", "samsung", "dessmann", "aqara", "eufy", "yale"].includes(normalized)) return serviceNavigation.locks;
     return null;
   }

@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { Clock, MessageSquareText, ShieldCheck } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { BusinessDetails } from "@/components/BusinessDetails";
-import { BUSINESS_HOURS, SERVICE_AREA_LABEL, businessInfo, siteUrl, telHref } from "@/lib/seoData";
+import { BUSINESS_HOURS, SERVICE_AREA_LABEL, businessInfo, siteUrl, smsHref } from "@/lib/seoData";
 
 const baseMetadata: Metadata = {
   title: "Contact & Free Smart Lock Quote Adelaide",
   description:
-    "Call or text 0431 060 390 for a smart lock quote across Adelaide metro, Mon–Sat 8am–6pm. Send door photos for a free remote check. No deposit required.",
+    "Text 0431 060 390 for a smart lock quote across Adelaide metro, Mon–Sat 8am–6pm. Send door photos for a free remote check. No deposit required.",
   alternates: { canonical: `${siteUrl}/contact` },
   openGraph: {
     title: "Smart Lock Installation Quote Adelaide | ADE Smart Home",
     description:
-      "Request smart lock supply, installation-only service or a security camera equipment package in Adelaide.",
+      "Request smart lock supply and installation, or installation-only service, in Adelaide.",
     url: `${siteUrl}/contact`,
     siteName: "ADE Smart Home",
     images: [{ url: "/img/og/ade-smart-home-adelaide.jpg", width: 1200, height: 630 }],
@@ -23,7 +23,7 @@ const baseMetadata: Metadata = {
     card: "summary_large_image",
     title: "Smart Lock Installation Quote Adelaide",
     description:
-      "Request smart lock, installation-only or security camera kit quotes in Adelaide. We reply by SMS or email.",
+      "Request smart lock or installation-only quotes in Adelaide. We reply by SMS or email.",
     images: ["/img/og/ade-smart-home-adelaide.jpg"],
   },
 };
@@ -82,11 +82,11 @@ export default async function ContactPage({
             Get a local quote
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
-            Smart locks, installation only or camera kits. Call, text or send the form;
+            Smart locks supplied and fitted, or installation only. Text us or send the form;
             we confirm the price before booking and never ask for a deposit.
           </p>
           <p className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-base font-semibold">
-            <a href={telHref} data-contact="phone" className="inline-flex min-h-11 items-center text-[#d9b98f] underline underline-offset-4">Call {businessInfo.phoneDisplay}</a>{" "}
+            <a href={smsHref("Hi ADE Smart Home, I would like a quote.")} data-contact="sms" className="inline-flex min-h-11 items-center text-[#d9b98f] underline underline-offset-4">Text {businessInfo.phoneDisplay}</a>{" "}
             <span className="text-zinc-400">{BUSINESS_HOURS.label} · {SERVICE_AREA_LABEL}</span>
           </p>
         </div>
@@ -125,7 +125,7 @@ export default async function ContactPage({
             <MessageSquareText className="h-8 w-8 text-[#c5a47e]" aria-hidden="true" />
             <h2 className="mt-4 text-lg font-bold">Message-Friendly Support</h2>
             <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-              Call or text {businessInfo.phoneDisplay}, or email us about smart locks, installation-only jobs or security camera kits.
+              Text {businessInfo.phoneDisplay} or email us about smart locks or installation-only jobs.
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Camera, Check, Fingerprint, MessageSquareText, Phone, Wrench } from "lucide-react";
+import { ArrowRight, Camera, Check, Fingerprint, MessageSquareText, Wrench } from "lucide-react";
 import { BusinessDetails } from "@/components/BusinessDetails";
 import {
   BUSINESS_HOURS,
@@ -12,13 +12,12 @@ import {
   serviceAreas,
   siteUrl,
   smsHref,
-  telHref,
 } from "@/lib/seoData";
 
 const pageUrl = `${siteUrl}/zh`;
 
 export const metadata: Metadata = {
-  title: { absolute: "阿德莱德智能锁安装 | 含锁上门安装 $699 起 | ADE Smart Home" },
+  title: { absolute: "阿德莱德智能锁安装 | 含锁上门安装 $599 起 | ADE Smart Home" },
   description:
     `阿德莱德智能锁供货加安装，$${PACKAGE_FROM_PRICE} 起含锁含安装。先看门的照片免费评估，不收预付款，装完现场教你用 App、录指纹、设密码。电话 ${businessInfo.phoneDisplay}。`,
   alternates: {
@@ -47,7 +46,7 @@ export const metadata: Metadata = {
 };
 
 const packages = [
-  { name: "Lockin X9", price: 699, note: "入门款：指纹、密码、App、NFC 卡都能开，性价比最高", href: "/products/lockin-x9-smart-lock" },
+  { name: "Lockin X9", price: 599, note: "入门款：指纹、密码、App、NFC 卡都能开，性价比最高", href: "/products/lockin-x9-smart-lock" },
   { name: "Lockin OLA Slim", price: 899, note: "窄款机身，适合门边比较窄的门（单买锁 $559）", href: "/products/lockin-ola-slim-smart-lock" },
   { name: "Lockin Veno Pro", price: 999, note: "掌静脉 + 指纹，带 2K 可视门铃和本地存储", href: "/products/lockin-veno-pro-smart-lock" },
   { name: "Lockin S6 Max", price: 1199, note: "带摄像头，3D 人脸识别，站门口就开", href: "/products/lockin-s6-max-smart-lock" },
@@ -89,7 +88,7 @@ const faqs = [
   },
   {
     q: "可以用中文沟通吗？",
-    a: "可以，打电话、发短信、发邮件都可以用中文。",
+    a: "可以，发短信、发邮件都可以用中文。",
   },
 ];
 
@@ -143,17 +142,13 @@ export default function ChineseHomePage() {
             ))}
           </ul>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href={telHref} data-primary-quote data-contact="phone" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-6 py-3 font-semibold text-black transition-colors hover:bg-white">
-              <Phone className="h-5 w-5" aria-hidden="true" />
-              <span>打电话 {businessInfo.phoneDisplay}</span>
-            </a>{" "}
-            <a href={smsLink} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-zinc-600 px-6 py-3 font-semibold transition-colors hover:bg-zinc-800">
+            <a href={smsLink} data-primary-quote data-contact="sms" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-6 py-3 font-semibold text-black transition-colors hover:bg-white">
               <MessageSquareText className="h-5 w-5" aria-hidden="true" />
-              <span>发短信咨询</span>
+              <span>发短信 {businessInfo.phoneDisplay}</span>
             </a>
           </div>
           <p className="mt-4 text-sm text-zinc-400">
-            {BUSINESS_HOURS.labelZh}接电话 · 服务{SERVICE_AREA_LABEL_ZH}
+            {BUSINESS_HOURS.labelZh}回复短信 · 服务{SERVICE_AREA_LABEL_ZH}
           </p>
         </div>
       </section>
@@ -274,9 +269,9 @@ export default function ChineseHomePage() {
               最快的方式：拍 4 张照片（门外侧、门内侧、门侧边、门框）短信或邮件发给我们，写上你在哪个区。我们看完回复能装哪几款、多少钱。
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a href={telHref} data-contact="phone" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-6 py-3 font-semibold text-black transition-colors hover:bg-white">
-                <Phone className="h-5 w-5" aria-hidden="true" />
-                <span>打电话</span>
+              <a href={smsLink} data-contact="sms" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#d9b98f] px-6 py-3 font-semibold text-black transition-colors hover:bg-white">
+                <MessageSquareText className="h-5 w-5" aria-hidden="true" />
+                <span>发短信</span>
               </a>{" "}
               <a href={mailHref("智能锁安装咨询（附门的照片）")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-zinc-600 px-6 py-3 font-semibold transition-colors hover:bg-zinc-800">
                 <span>邮件发照片</span>

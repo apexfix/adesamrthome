@@ -109,11 +109,10 @@ export async function GET() {
     xmlUrl(
       `${siteUrl}/`,
       "2026-09-25",
-      ["/img/hero/lockin-v5max-composition-v1.webp", "/img/hero/lockin-x9-composition-v1.webp", "/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png"],
+      ["/img/hero/lockin-v5max-composition-v1.webp", "/img/hero/lockin-x9-composition-v1.webp"],
       homeLanguages,
     ),
     xmlUrl(`${siteUrl}/products`, "2026-11-16"),
-    xmlUrl(`${siteUrl}/products/security-camera-kits`, siteLastModified, ["/img/products/dahua-2-camera-kit/dahua-2-camera-kit-poster-v1.png", "/img/products/dahua-6mp-dual-light-kit/dahua-6mp-kit-poster-v1.png"]),
     xmlUrl(`${siteUrl}/about`, siteLastModified, [installationImages.v5Max]),
     xmlUrl(`${siteUrl}/brands`, siteLastModified),
     xmlUrl(`${siteUrl}/brands/lockin`, "2026-10-28", [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
@@ -122,8 +121,6 @@ export async function GET() {
     xmlUrl(`${siteUrl}/smart-lock-supply-installation-adelaide`, siteLastModified, [installationImages.x9, installationImages.s6Max, installationImages.v5Max]),
     xmlUrl(`${siteUrl}/smart-lock-installation-only-adelaide`, siteLastModified, [installationImages.x9, "/img/products/lockin-ola-slim/real-install-edge.jpg"]),
     xmlUrl(`${siteUrl}/smart-lock-installation-adelaide`, siteLastModified, [installationImages.x9]),
-    xmlUrl(`${siteUrl}/digital-door-lock-adelaide`, siteLastModified, [installationImages.v5Max]),
-    xmlUrl(`${siteUrl}/smart-lock-installer-adelaide`, siteLastModified, ["/img/products/lockin-x9/real-install-03.jpg"]),
     xmlUrl(`${siteUrl}/airbnb-smart-lock-installation-adelaide`, siteLastModified, ["/img/products/lockin-x9/real-install-03.jpg"]),
     xmlUrl(`${siteUrl}/apartment-smart-lock-installation-adelaide`, siteLastModified, ["/img/products/lockin-x9/real-install-01.jpg"]),
     xmlUrl(`${siteUrl}/property-manager-smart-lock-installation-adelaide`, siteLastModified, [installationImages.s50m]),
@@ -151,6 +148,8 @@ export async function GET() {
     const products = await getProducts(1, 100);
 
     productPages = products
+      // The installation-only service product canonicalises to its landing page, which is listed above.
+      .filter((product) => product.kind !== "service")
       .map((product) => {
         const slug = product.slug || product.id;
         const productImages = [
