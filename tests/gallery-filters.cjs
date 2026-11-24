@@ -23,7 +23,7 @@ fs.mkdirSync(output, { recursive: true });
   for (const params of [{}, { model: '' }, { model: 'X9' }, { model: 'v5 max' }, { suburb: 'Adelaide' }, { model: 'X9', suburb: 'Adelaide' }]) {
     const selected = selectGallery(real, params);
     assert.equal(selected.valid, true);
-    assert.equal(selected.results.length, params.model ? 1 : 6);
+    assert.equal(selected.results.length, params.model ? real.filter(p => p.category.toLowerCase() === params.model.toLowerCase()).length : real.length);
     const metadata = await generateMetadata({ searchParams: Promise.resolve(params) });
     assert.equal(metadata.robots?.index, selected.filtered ? false : undefined);
     const html = renderToStaticMarkup(await GalleryPage({ searchParams: Promise.resolve(params) }));
@@ -55,6 +55,6 @@ fs.mkdirSync(output, { recursive: true });
   await assert.rejects(() => GalleryPage({}), TypeError);
   source.installationProjects = real;
   assert.deepEqual(selectGallery(real, {}).suburbs, ['Adelaide']);
-  assert.deepEqual(selectGallery(real, {}).models, real.map(p => p.category));
+  assert.deepEqual(selectGallery(real, {}).models, [...new Set(real.map(p => p.category))]);
   console.log(`PASS ${checks} real/invalid filter cases; real-data options, matching schema, valid empty combination, absent data and source failure.`);
 })().catch(error => { console.error(error); process.exitCode = 1; });
